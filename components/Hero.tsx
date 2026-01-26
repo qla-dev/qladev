@@ -276,37 +276,39 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => 
         <div ref={scrollRef} className="p-8 font-mono text-lg md:text-xl h-full overflow-y-auto relative bg-black/95 text-left custom-scrollbar">
           <div className="absolute inset-0 bg-blue-500/5 pointer-events-none"></div>
           
-          {history.map((line, idx) => (
-            <div key={idx} className={`mb-1 min-h-[1.5rem] break-words flex flex-row items-start`}>
-               <span className="text-red-500 font-bold mr-3 shrink-0 select-none">$</span>
-               <span className={line.startsWith('user') ? 'text-white' : 'text-blue-400'}>
-                {line}
-               </span>
-            </div>
-          ))}
+          <div className="max-w-[85vw] lg:max-w-xl w-full">
+            {history.map((line, idx) => (
+                <div key={idx} className={`mb-1 min-h-[1.5rem] break-words flex flex-row items-start`}>
+                <span className="text-red-500 font-bold mr-3 shrink-0 select-none">$</span>
+                <span className={line.startsWith('user') ? 'text-white' : 'text-blue-400'}>
+                    {line}
+                </span>
+                </div>
+            ))}
 
-          {/* Input Line */}
-          {!isSystemTyping && step >= 2 && step < 5 && (
-            <div className="flex items-center text-white mt-2">
-              <span className="text-red-500 font-bold mr-3 shrink-0 select-none">$</span>
-              <span className="text-green-500 mr-3 whitespace-nowrap">user@qla:~$</span>
-              <input 
-                ref={inputRef}
-                type="text" 
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="bg-transparent border-none outline-none text-white w-full caret-blue-500"
-                autoFocus
-                placeholder={step === 2 ? t.placeholders[0] : step === 3 ? t.placeholders[1] : t.placeholders[2]}
-              />
-            </div>
-          )}
-          
-          {/* Blinking Cursor block when system is typing */}
-          {isSystemTyping && (
-             <div className="w-3 h-6 bg-blue-500 animate-blink inline-block ml-3 align-middle"></div>
-          )}
+            {/* Input Line */}
+            {!isSystemTyping && step >= 2 && step < 5 && (
+                <div className="flex items-center text-white mt-2">
+                <span className="text-red-500 font-bold mr-3 shrink-0 select-none">$</span>
+                <span className="text-green-500 mr-3 whitespace-nowrap">user@qla:~$</span>
+                <input 
+                    ref={inputRef}
+                    type="text" 
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    className="bg-transparent border-none outline-none text-white w-full caret-blue-500"
+                    autoFocus
+                    placeholder={step === 2 ? t.placeholders[0] : step === 3 ? t.placeholders[1] : t.placeholders[2]}
+                />
+                </div>
+            )}
+            
+            {/* Blinking Cursor block when system is typing */}
+            {isSystemTyping && (
+                <div className="w-3 h-6 bg-blue-500 animate-blink inline-block ml-3 align-middle"></div>
+            )}
+          </div>
         </div>
 
         {/* Decorative Glow */}
@@ -402,7 +404,7 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
                  Desktop: Absolute positioned to screen right edge using massive width or positioning.
                  We use width: 140% and negative margin to push it off-screen on the right.
              */}
-             <div className="w-[120%] -mr-[20%] lg:w-[150vw] lg:-mr-[80vw] lg:ml-0 h-full transition-all duration-1000">
+             <div className="w-[120%] -mr-[20%] lg:w-[150vw] lg:-mr-[80vw] lg:ml-0 h-full">
                 <InteractiveTerminal t={t.terminal} startQuoteMode={startQuoteMode} />
              </div>
           </div>
