@@ -176,15 +176,8 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode, onRes
 
       } else {
         // --- QUOTE SEQUENCE ---
-        await delay(500, myId);
-        if (sequenceId.current !== myId) return;
-        
-        for (const line of t.quoteIntro) {
-            if (sequenceId.current !== myId) break;
-            await typeLine(line, 30, myId);
-            await delay(300, myId);
-        }
-        
+        // Jump straight to input mode without typing intro lines
+        await delay(300, myId);
         if (sequenceId.current === myId && isMounted.current) {
             setStep(2); 
             setIsSystemTyping(false);
@@ -376,57 +369,114 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full h-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-full">
           
-          {/* Text Content */}
+          {/* Text Content Column */}
           <div className="text-left relative z-20 py-10 lg:py-0">
-             <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-blue-500/30 rounded-full bg-blue-500/10 backdrop-blur-sm">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                </span>
-                <span className="text-blue-400 font-mono text-xs tracking-widest">SYSTEM ONLINE v2.0</span>
-            </div>
+             
+             {/* 
+                 Grid Overlay Technique:
+                 We place both content blocks in the same grid cell (1/1).
+                 This ensures the container height adapts to the tallest content 
+                 without layout jumps, and allows for perfect cross-fading overlap.
+             */}
+             <div className="grid grid-cols-1 items-center">
+                
+                {/* --- STATE A: DEFAULT HERO --- */}
+                <div 
+                  className={`col-start-1 row-start-1 transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform
+                    ${!startQuoteMode 
+                      ? 'opacity-100 translate-x-0 blur-none scale-100 pointer-events-auto' 
+                      : 'opacity-0 -translate-x-12 blur-sm scale-95 pointer-events-none select-none'
+                    }
+                  `}
+                >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-blue-500/30 rounded-full bg-blue-500/10 backdrop-blur-sm">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                      </span>
+                      <span className="text-blue-400 font-mono text-xs tracking-widest">SYSTEM ONLINE v2.0</span>
+                    </div>
 
-            <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter font-sans mb-6 leading-none">
-              DEVELOPING <br />
-              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
-                THE NEXT
-              </span> <br />
-              GENERATION <br />
-              <span className="text-gray-500">OF TECH</span>
-            </h1>
-            
-            <p className="mt-6 max-w-xl text-lg text-gray-400 font-mono leading-relaxed border-l-2 border-blue-500 pl-6">
-              {t.subtitle}
-            </p>
+                    <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter font-sans mb-6 leading-none">
+                      DEVELOPING <br />
+                      <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
+                        THE NEXT
+                      </span> <br />
+                      GENERATION <br />
+                      <span className="text-gray-500">OF TECH</span>
+                    </h1>
+                    
+                    <p className="mt-6 max-w-xl text-lg text-gray-400 font-mono leading-relaxed border-l-2 border-blue-500 pl-6">
+                      {t.subtitle}
+                    </p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
-              {/* Updated Button: Now triggers quote mode */}
-              <button 
-                onClick={handleGetQuote}
-                className="relative px-8 py-4 bg-blue-600 text-white font-bold font-mono tracking-wider overflow-hidden rounded-sm group cursor-pointer z-20"
-              >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                <span className="relative flex items-center gap-2">
-                  {t.quote} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </button>
-              
-              <button className="px-8 py-4 bg-transparent border border-gray-700 text-white font-bold font-mono tracking-wider rounded-sm hover:border-blue-500 hover:text-blue-400 transition-all flex items-center gap-2 group z-20">
-                <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                {t.call}
-              </button>
-            </div>
-            
-            <div className="mt-12 flex items-center gap-8 text-gray-500 font-mono text-xs">
-              <div className="flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-blue-500" />
-                <span>HIGH PERFORMANCE</span>
-              </div>
-               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-cyan-500" />
-                <span>SECURE ARCHITECTURE</span>
-              </div>
-            </div>
+                    <div className="mt-10 flex flex-wrap gap-4">
+                      <button 
+                        onClick={handleGetQuote}
+                        className="relative px-8 py-4 bg-blue-600 text-white font-bold font-mono tracking-wider overflow-hidden rounded-sm group cursor-pointer z-20"
+                      >
+                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                        <span className="relative flex items-center gap-2">
+                          {t.quote} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </span>
+                      </button>
+                      
+                      <button className="px-8 py-4 bg-transparent border border-gray-700 text-white font-bold font-mono tracking-wider rounded-sm hover:border-blue-500 hover:text-blue-400 transition-all flex items-center gap-2 group z-20">
+                        <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                        {t.call}
+                      </button>
+                    </div>
+                    
+                    <div className="mt-12 flex items-center gap-8 text-gray-500 font-mono text-xs">
+                      <div className="flex items-center gap-2">
+                        <Cpu className="w-4 h-4 text-blue-500" />
+                        <span>HIGH PERFORMANCE</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <ShieldCheck className="w-4 h-4 text-cyan-500" />
+                        <span>SECURE ARCHITECTURE</span>
+                      </div>
+                    </div>
+                </div>
+
+                {/* --- STATE B: QUOTE MODE --- */}
+                <div 
+                  className={`col-start-1 row-start-1 transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform
+                    ${startQuoteMode 
+                      ? 'opacity-100 translate-x-0 blur-none scale-100 pointer-events-auto' 
+                      : 'opacity-0 translate-x-12 blur-sm scale-95 pointer-events-none select-none'
+                    }
+                  `}
+                >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-blue-500/30 rounded-full bg-blue-500/10 backdrop-blur-sm">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        <span className="text-green-400 font-mono text-xs tracking-widest">SECURE CHANNEL ESTABLISHED</span>
+                    </div>
+
+                    <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter font-sans mb-6 leading-none uppercase">
+                       <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
+                        {t.terminal.quoteIntro[0]}
+                      </span>
+                    </h1>
+                    <p className="mt-6 max-w-xl text-lg text-gray-400 font-mono leading-relaxed border-l-2 border-green-500 pl-6">
+                      {t.terminal.quoteIntro[1]}
+                    </p>
+                    
+                    <div className="mt-8 flex items-center gap-4">
+                      <button 
+                        onClick={handleReset}
+                        className="px-6 py-3 border border-red-500/30 text-red-500 font-mono text-xs hover:bg-red-500/10 hover:border-red-500 transition-all flex items-center gap-2 rounded-sm"
+                      >
+                         <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                         [ ABORT SEQUENCE ]
+                      </button>
+                    </div>
+                </div>
+
+             </div>
           </div>
 
           {/* Interactive Terminal - Overflow Layout */}
