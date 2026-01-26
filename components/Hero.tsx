@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Translations } from '../types';
-import { ArrowRight, Phone, Terminal, Cpu, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Phone, Cpu, ShieldCheck } from 'lucide-react';
 
 interface HeroProps {
   t: Translations['hero'];
@@ -27,14 +27,11 @@ const TechParticles = () => {
     // Use a grid system to ensure even distribution
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        // 10% chance to skip a cell for organic randomness
         if (Math.random() > 0.9) continue;
 
         const cellWidth = 100 / cols;
         const cellHeight = 100 / rows;
         
-        // Calculate position within the specific grid cell
-        // Adding random offset within the cell dimensions
         const left = (c * cellWidth) + (Math.random() * (cellWidth * 0.8));
         const top = (r * cellHeight) + (Math.random() * (cellHeight * 0.8));
 
@@ -77,61 +74,239 @@ const TechParticles = () => {
   );
 };
 
-const CodeWindow = () => {
-  const [lines, setLines] = useState<string[]>([]);
-  
-  useEffect(() => {
-    const codeLines = [
-      "> initializing core systems...",
-      "> establishing secure handshake...",
-      "> loading modules: [AI, IoT, WEB3]...",
-      "> connecting to neural interface...",
-      "> optimizing performance metrics...",
-      "> allocating memory blocks [0x00...0xFF]...",
-      "> compiling assets...",
-      "> deploying to production...",
-      "> system_ready: true",
-      "> welcome to qla.dev"
-    ];
-    
-    let currentLine = 0;
-    const interval = setInterval(() => {
-      if (currentLine < codeLines.length) {
-        setLines(prev => [...prev, codeLines[currentLine]]);
-        currentLine++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 600);
+interface TerminalProps {
+  t: Translations['hero']['terminal'];
+  startQuoteMode: boolean;
+}
 
-    return () => clearInterval(interval);
-  }, []);
+const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => {
+  const [history, setHistory] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState("");
+  const [step, setStep] = useState(0); // 0: Boot, 1: Quote Intro, 2: Q1, 3: Q2, 4: Q3, 5: Success
+  const [isSystemTyping, setIsSystemTyping] = useState(true);
+  
+  const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const sequenceId = useRef(0);
+
+  // Focus input when user starts typing phase
+  useEffect(() => {
+    if (step >= 2 && !isSystemTyping && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [step, isSystemTyping]);
+
+  // Auto-scroll
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [history, inputValue, isSystemTyping]);
+
+  const typeLine = async (text: string, delay: number, id: number) => {
+    if (sequenceId.current !== id) return;
+
+    // Start new line
+    setHistory(prev => [...prev, ""]);
+    
+    let currentLineText = ""; 
+    
+    for (let i = 0; i < text.length; i++) {
+        if (sequenceId.current !== id) return;
+        await new Promise(resolve => setTimeout(resolve, delay));
+        if (sequenceId.current !== id) return;
+        
+        currentLineText += text[i];
+        
+        setHistory(prev => {
+            const newHistory = [...prev];
+            // Ensure we are updating the last line
+            if (newHistory.length > 0) {
+                 newHistory[newHistory.length - 1] = currentLineText;
+            }
+            return newHistory;
+        });
+    }
+  };
+
+  const delay = (ms: number, id: number) => {
+    return new Promise<void>((resolve) => {
+      const start = Date.now();
+      const check = () => {
+         if (sequenceId.current !== id) return;
+         if (Date.now() - start >= ms) resolve();
+         else requestAnimationFrame(check);
+      };
+      check();
+    });
+  };
+
+  // Initial Boot Sequence
+  useEffect(() => {
+    if (startQuoteMode) return;
+
+    sequenceId.current++;
+    const myId = sequenceId.current;
+
+    const bootSequence = async () => {
+        setIsSystemTyping(true);
+        setHistory([]); 
+        
+        await new Promise(r => setTimeout(r, 100));
+        if (sequenceId.current !== myId) return;
+
+        for (const line of t.initial) {
+          if (sequenceId.current !== myId) break;
+          // Clean text without '>' prefix as we have '$' now
+          await typeLine(line, 10, myId); 
+          await delay(50, myId);
+        }
+        
+        if (sequenceId.current === myId) setIsSystemTyping(false);
+    };
+
+    bootSequence();
+  }, []); 
+
+  // Quote Sequence Trigger
+  useEffect(() => {
+    if (startQuoteMode) {
+       sequenceId.current++;
+       const myId = sequenceId.current;
+
+       const startQuoteSequence = async () => {
+          setIsSystemTyping(true);
+          setHistory([]); 
+          
+          await delay(500, myId);
+          if (sequenceId.current !== myId) return;
+          
+          for (const line of t.quoteIntro) {
+              if (sequenceId.current !== myId) break;
+              await typeLine(line, 30, myId);
+              await delay(300, myId);
+          }
+          
+          if (sequenceId.current === myId) {
+              setStep(2); 
+              setIsSystemTyping(false);
+          }
+       };
+       startQuoteSequence();
+    }
+  }, [startQuoteMode, t]);
+
+  // Success Sequence
+  useEffect(() => {
+      if (step === 5) {
+         sequenceId.current++;
+         const myId = sequenceId.current;
+
+         const runSuccessSequence = async () => {
+             setIsSystemTyping(true);
+             await delay(600, myId);
+             if (sequenceId.current !== myId) return;
+             
+             setHistory([""]); 
+             await delay(400, myId);
+            
+             for (const line of t.success) {
+               if (sequenceId.current !== myId) break;
+               await typeLine(line, 30, myId);
+               await delay(300, myId);
+             }
+             if (sequenceId.current === myId) setIsSystemTyping(false);
+         }
+         runSuccessSequence();
+      }
+  }, [step, t]);
+
+
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && inputValue.trim() !== "" && !isSystemTyping) {
+      const userText = inputValue;
+      setInputValue("");
+      
+      // Manually update history for user input
+      setHistory(prev => [...prev, `user@qla:~$ ${userText}`]);
+      setIsSystemTyping(true);
+      
+      sequenceId.current++;
+      const myId = sequenceId.current;
+
+      await delay(600, myId);
+      if (sequenceId.current !== myId) return;
+
+      if (step === 2) {
+        await typeLine(t.questions[1], 30, myId);
+        if (sequenceId.current === myId) {
+            setIsSystemTyping(false);
+            setStep(3);
+        }
+      } else if (step === 3) {
+        await typeLine(t.questions[2], 30, myId);
+        if (sequenceId.current === myId) {
+            setIsSystemTyping(false);
+            setStep(4);
+        }
+      } else if (step === 4) {
+        setStep(5);
+      }
+    }
+  };
 
   return (
-    // Oversized container bleeding off screen
-    <div className="w-full lg:w-[120vw] relative transition-all duration-1000 lg:-mr-[50vw]">
-      <div className="glass-card rounded-lg overflow-hidden shadow-[0_0_80px_rgba(0,123,255,0.2)] border border-white/10 relative group h-[400px] lg:h-[600px] flex flex-col">
+    <div className="w-full h-full relative">
+      <div 
+        className="w-full h-full glass-card rounded-lg lg:rounded-r-none lg:border-r-0 overflow-hidden shadow-[0_0_80px_rgba(0,123,255,0.2)] border border-white/10 relative group flex flex-col"
+        onClick={() => inputRef.current?.focus()}
+      >
         {/* Window Header */}
-        <div className="bg-gray-900/95 px-6 py-4 flex items-center gap-4 border-b border-white/5">
+        <div className="bg-gray-900/95 px-6 py-4 flex items-center gap-4 border-b border-white/5 cursor-text">
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
             <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
             <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
           </div>
           <div className="text-sm font-mono text-gray-500 ml-4 flex-grow">root@qla-server:~</div>
-          <div className="text-xs font-mono text-blue-500 animate-pulse hidden sm:block">CONNECTION_SECURE</div>
+          <div className="text-xs font-mono text-blue-500 animate-pulse hidden sm:block">INTERACTIVE_SESSION</div>
         </div>
         
         {/* Window Body */}
-        <div className="p-8 font-mono text-lg md:text-xl h-full overflow-y-auto relative bg-black/90 text-left">
+        <div ref={scrollRef} className="p-8 font-mono text-lg md:text-xl h-full overflow-y-auto relative bg-black/95 text-left custom-scrollbar">
           <div className="absolute inset-0 bg-blue-500/5 pointer-events-none"></div>
-          {lines.map((line, idx) => (
-            <div key={idx} className="mb-3 text-blue-400/90 break-words">
-              <span className="text-gray-600 mr-3 opacity-50">$</span>
-              <span className={idx === lines.length - 1 ? "animate-pulse text-blue-300" : ""}>{line}</span>
+          
+          {history.map((line, idx) => (
+            <div key={idx} className={`mb-1 min-h-[1.5rem] break-words flex flex-row items-start`}>
+               <span className="text-red-500 font-bold mr-3 shrink-0 select-none">$</span>
+               <span className={line.startsWith('user') ? 'text-white' : 'text-blue-400'}>
+                {line}
+               </span>
             </div>
           ))}
-          <div className="w-3 h-6 bg-blue-500 animate-blink inline-block mt-2 align-middle"></div>
+
+          {/* Input Line */}
+          {!isSystemTyping && step >= 2 && step < 5 && (
+            <div className="flex items-center text-white mt-2">
+              <span className="text-red-500 font-bold mr-3 shrink-0 select-none">$</span>
+              <span className="text-green-500 mr-3 whitespace-nowrap">user@qla:~$</span>
+              <input 
+                ref={inputRef}
+                type="text" 
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="bg-transparent border-none outline-none text-white w-full caret-blue-500"
+                autoFocus
+                placeholder={step === 2 ? t.placeholders[0] : step === 3 ? t.placeholders[1] : t.placeholders[2]}
+              />
+            </div>
+          )}
+          
+          {/* Blinking Cursor block when system is typing */}
+          {isSystemTyping && (
+             <div className="w-3 h-6 bg-blue-500 animate-blink inline-block ml-3 align-middle"></div>
+          )}
         </div>
 
         {/* Decorative Glow */}
@@ -142,32 +317,32 @@ const CodeWindow = () => {
 };
 
 export const Hero: React.FC<HeroProps> = ({ t }) => {
+  const [startQuoteMode, setStartQuoteMode] = useState(false);
+
+  const handleGetQuote = () => {
+    setStartQuoteMode(true);
+  };
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-qla-dark pt-20">
       {/* Background Grid & Effects */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(30,30,30,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(30,30,30,0.5)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)] opacity-20 animate-grid-move"></div>
       
-      {/* Animated Orbs - Changed cyan to indigo to avoid green tint */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[128px] animate-pulse-fast pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[128px] pointer-events-none"></div>
 
-      {/* Subtle Moving Searchlight/Aurora Background */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Rotating subtle radial gradient - Changed to blue/indigo */}
         <div className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.08)_0%,transparent_50%)] animate-spin-slow opacity-60"></div>
-        
-        {/* Linear swipe similar to "The Next" text but full screen and faint - Changed second color from cyan to indigo */}
         <div className="absolute inset-0 bg-[linear-gradient(110deg,transparent_25%,rgba(0,123,255,0.05)_45%,rgba(99,102,241,0.05)_55%,transparent_75%)] bg-[length:200%_100%] animate-shimmer-slow mix-blend-screen"></div>
       </div>
 
-      {/* Floating Tech Particles */}
       <TechParticles />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full h-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-full">
           
           {/* Text Content */}
-          <div className="text-left relative z-20">
+          <div className="text-left relative z-20 py-10 lg:py-0">
              <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-blue-500/30 rounded-full bg-blue-500/10 backdrop-blur-sm">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
@@ -178,7 +353,6 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
 
             <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter font-sans mb-6 leading-none">
               DEVELOPING <br />
-              {/* Shimmer/Glance Animation */}
               <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
                 THE NEXT
               </span> <br />
@@ -191,14 +365,18 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <button className="relative px-8 py-4 bg-blue-600 text-white font-bold font-mono tracking-wider overflow-hidden rounded-sm group">
+              {/* Updated Button: Now triggers quote mode */}
+              <button 
+                onClick={handleGetQuote}
+                className="relative px-8 py-4 bg-blue-600 text-white font-bold font-mono tracking-wider overflow-hidden rounded-sm group cursor-pointer z-20"
+              >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                 <span className="relative flex items-center gap-2">
                   {t.quote} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
               
-              <button className="px-8 py-4 bg-transparent border border-gray-700 text-white font-bold font-mono tracking-wider rounded-sm hover:border-blue-500 hover:text-blue-400 transition-all flex items-center gap-2 group">
+              <button className="px-8 py-4 bg-transparent border border-gray-700 text-white font-bold font-mono tracking-wider rounded-sm hover:border-blue-500 hover:text-blue-400 transition-all flex items-center gap-2 group z-20">
                 <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 {t.call}
               </button>
@@ -216,16 +394,24 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
             </div>
           </div>
 
-          {/* Code Window / Visual */}
-          <div className="relative z-10">
-            <CodeWindow />
+          {/* Interactive Terminal - Overflow Layout */}
+          <div className="relative z-10 w-full flex items-center h-[400px] lg:h-[600px]">
+             {/* 
+                 Container logic:
+                 Mobile: Width > 100% to simulate overflow right.
+                 Desktop: Absolute positioned to screen right edge using massive width or positioning.
+                 We use width: 140% and negative margin to push it off-screen on the right.
+             */}
+             <div className="w-[120%] -mr-[20%] lg:w-[150vw] lg:-mr-[80vw] lg:ml-0 h-full transition-all duration-1000">
+                <InteractiveTerminal t={t.terminal} startQuoteMode={startQuoteMode} />
+             </div>
           </div>
 
         </div>
       </div>
       
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 pointer-events-none">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 pointer-events-none z-20">
         <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-blue-500 to-transparent animate-pulse"></div>
       </div>
     </section>

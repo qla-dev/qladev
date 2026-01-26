@@ -56,6 +56,13 @@ export interface Translations {
     subtitle: string;
     quote: string;
     call: string;
+    terminal: {
+      initial: string[];
+      quoteIntro: string[];
+      placeholders: string[];
+      questions: string[];
+      success: string[];
+    }
   };
   stats: {
     years: string;
@@ -102,12 +109,5 @@ export interface Translations {
     visit: string;
     email: string;
     call: string;
-    form: {
-      name: string;
-      email: string;
-      type: string;
-      message: string;
-      submit: string;
-    }
   }
 }

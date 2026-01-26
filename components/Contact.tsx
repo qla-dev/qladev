@@ -1,6 +1,6 @@
 import React from 'react';
 import { Translations } from '../types';
-import { MapPin, Mail, Phone, Send } from 'lucide-react';
+import { MapPin, Mail, Phone } from 'lucide-react';
 
 interface ContactProps {
   t: Translations['contact'];
@@ -43,39 +43,26 @@ export const Contact: React.FC<ContactProps> = ({ t }) => {
                 </div>
             </div>
 
-            {/* Form */}
-            <div className="bg-white text-gray-900 p-8 md:p-12 rounded-2xl shadow-2xl">
-                <form className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-bold mb-2 uppercase text-gray-500">{t.form.name}</label>
-                            <input type="text" className="w-full bg-gray-100 border-none p-4 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="John Doe" />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold mb-2 uppercase text-gray-500">{t.form.email}</label>
-                            <input type="email" className="w-full bg-gray-100 border-none p-4 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="john@example.com" />
-                        </div>
-                    </div>
-                    
-                    <div>
-                         <label className="block text-sm font-bold mb-2 uppercase text-gray-500">{t.form.type}</label>
-                         <select className="w-full bg-gray-100 border-none p-4 rounded-lg focus:ring-2 focus:ring-blue-500">
-                             <option>Web Application</option>
-                             <option>Mobile App</option>
-                             <option>Hardware/IoT</option>
-                             <option>Consulting</option>
-                         </select>
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-bold mb-2 uppercase text-gray-500">{t.form.message}</label>
-                        <textarea className="w-full bg-gray-100 border-none p-4 rounded-lg h-32 resize-none focus:ring-2 focus:ring-blue-500" placeholder="..."></textarea>
-                    </div>
-
-                    <button type="submit" className="w-full bg-black text-white font-bold py-4 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
-                        {t.form.submit} <Send className="w-4 h-4" />
-                    </button>
-                </form>
+            {/* Map */}
+            <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10 h-[400px] lg:h-auto relative group">
+                {/* CSS Filter for Dark Mode Map Effect */}
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2877.375252875151!2d18.39763737666275!3d43.85434197109315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4758c8cf71317427%3A0x867332356525790d!2sVilsonovo%20%C5%A1etali%C5%A1te%209%2C%20Sarajevo%2071000!5e0!3m2!1sen!2sba!4v1714567890123!5m2!1sen!2sba" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }} 
+                    allowFullScreen 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="qla.dev location"
+                    className="w-full h-full"
+                ></iframe>
+                
+                {/* Overlay to re-tint slightly blue */}
+                <div className="absolute inset-0 bg-blue-500/10 pointer-events-none mix-blend-overlay"></div>
+                
+                {/* Border Glow */}
+                <div className="absolute inset-0 border border-white/5 pointer-events-none group-hover:border-blue-500/50 transition-colors duration-500 rounded-2xl"></div>
             </div>
 
         </div>

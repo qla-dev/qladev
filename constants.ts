@@ -16,9 +16,46 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
     },
     hero: {
       title: 'DEVELOPING THE NEXT GENERATION OF TECH',
-      subtitle: 'Building tailored software and hardware solutions for all kinds and shapes of business.',
+      subtitle: 'Building tailored software and hardware solutions for businesses of all sizes.',
       quote: 'GET A QUOTE',
       call: 'CALL',
+      terminal: {
+        initial: [
+          "Initializing qla.dev kernel v4.2.0...",
+          "Verifying system integrity... [OK]",
+          "Mounting virtual file system... [RW]",
+          "Loading core modules:",
+          "  > Artificial Intelligence... [LOADED]",
+          "  > Internet of Things... [LOADED]",
+          "  > Cloud Infrastructure... [LOADED]",
+          "Starting background services:",
+          "  [+] SecureProtocol_v3",
+          "  [+] DataStream_Sync",
+          "  [+] NeuralNet_Optimizer",
+          "Allocating memory blocks... [DONE]",
+          "Establishing secure uplink... [CONNECTED]",
+          "System ONLINE. Waiting for input..."
+        ],
+        quoteIntro: [
+          "GET A QUOTE FROM US",
+          "Tell us more about your needs"
+        ],
+        placeholders: [
+          "Type your project details here...",
+          "Type your email address...",
+          "Type your name..."
+        ],
+        questions: [
+          "What functionality are you looking for?",
+          "Where can we send the proposal? (Email)",
+          "Who should we address it to? (Name)"
+        ],
+        success: [
+          "Thank you for reaching out.",
+          "Our team has received your request.",
+          "We will contact you shortly."
+        ]
+      }
     },
     stats: {
       years: 'IN BUSINESS',
@@ -65,13 +102,6 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       visit: 'VISIT US',
       email: 'SEND US EMAIL',
       call: 'GIVE US A CALL',
-      form: {
-        name: 'Full Name',
-        email: 'Email Address',
-        type: 'Web Application',
-        message: 'Tell us about your dreams',
-        submit: 'SUBMIT'
-      }
     }
   },
   bs: {
@@ -90,6 +120,43 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       subtitle: 'Izrada prilagođenih softverskih i hardverskih rješenja za sve vrste i oblike poslovanja.',
       quote: 'ZATRAŽI PONUDU',
       call: 'POZOVI',
+      terminal: {
+        initial: [
+          "Inicijalizacija qla.dev kernela v4.2.0...",
+          "Provjera integriteta sistema... [OK]",
+          "Montiranje fajl sistema... [RW]",
+          "Učitavanje osnovnih modula:",
+          "  > Vještačka Inteligencija... [UČITANO]",
+          "  > Internet of Things... [UČITANO]",
+          "  > Cloud Infrastruktura... [UČITANO]",
+          "Pokretanje servisa:",
+          "  [+] SecureProtocol_v3",
+          "  [+] DataStream_Sync",
+          "  [+] NeuralNet_Optimizer",
+          "Alociranje memorijskih blokova... [GOTOVO]",
+          "Uspostavljanje sigurne veze... [POVEZANO]",
+          "Sistem ONLINE. Čekam unos..."
+        ],
+        quoteIntro: [
+          "ZATRAŽITE PONUDU OD NAS",
+          "Recite nam više o tome šta vam treba"
+        ],
+        placeholders: [
+          "Upišite detalje projekta ovdje...",
+          "Upišite vašu email adresu...",
+          "Vaše ime..."
+        ],
+        questions: [
+          "Kakvu funkcionalnost tražite?",
+          "Gdje da pošaljemo ponudu? (Email)",
+          "Na koga da naslovimo? (Ime)"
+        ],
+        success: [
+          "Hvala što ste nas kontaktirali.",
+          "Naš tim je primio vaš zahtjev.",
+          "Javit ćemo vam se uskoro."
+        ]
+      }
     },
     stats: {
       years: 'GODINA POSLOVANJA',
@@ -136,13 +203,6 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       visit: 'POSJETITE NAS',
       email: 'POŠALJITE NAM EMAIL',
       call: 'NAZOVITE NAS',
-      form: {
-        name: 'Ime i Prezime',
-        email: 'Email Adresa',
-        type: 'Web Aplikacija',
-        message: 'Recite nam o vašim snovima',
-        submit: 'POŠALJI'
-      }
     }
   }
 };
