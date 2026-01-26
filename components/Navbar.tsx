@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Globe, Terminal } from 'lucide-react';
+import { Menu, X, Terminal } from 'lucide-react';
 import { Language, Translations } from '../types';
 
 interface NavbarProps {
   lang: Language;
   setLang: (lang: Language) => void;
   t: Translations['nav'];
+  onStartProject: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
+export const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t, onStartProject }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -37,6 +38,14 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
       setIsMobileMenuOpen(false);
     }
   };
+
+  const FlagIcon = ({ countryCode }: { countryCode: string }) => (
+    <img 
+      src={`https://flagsapi.com/${countryCode}/flat/64.png`} 
+      alt={`${countryCode} Flag`} 
+      className="w-6 h-6 object-contain"
+    />
+  );
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10' : 'bg-transparent'}`}>
@@ -70,13 +79,16 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
           <div className="hidden lg:flex items-center gap-4">
             <button
               onClick={() => setLang(lang === 'en' ? 'bs' : 'en')}
-              className="text-gray-300 hover:text-white flex items-center gap-1 text-sm font-mono border border-white/20 px-2 py-1 rounded"
+              className="text-gray-300 hover:text-white flex items-center gap-2 text-sm font-mono border border-white/20 px-3 py-1.5 rounded transition-colors"
             >
-              <Globe className="w-3 h-3" />
-              {lang.toUpperCase()}
+              <FlagIcon countryCode={lang === 'en' ? 'US' : 'BA'} />
+              <span className="leading-none">{lang.toUpperCase()}</span>
             </button>
             <button 
-              onClick={() => scrollToSection('contact')}
+              onClick={() => {
+                onStartProject();
+                setIsMobileMenuOpen(false);
+              }}
               className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-sm font-bold font-mono text-sm transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
             >
               {t.cta}
@@ -108,16 +120,24 @@ export const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
                 {link.label}
               </button>
             ))}
-            <div className="flex items-center justify-between px-3 py-4">
+            <div className="flex items-center justify-between px-3 py-4 gap-4">
                <button
                   onClick={() => {
                     setLang(lang === 'en' ? 'bs' : 'en');
-                    setIsMobileMenuOpen(false);
                   }}
                   className="text-gray-300 hover:text-white flex items-center gap-2 text-sm font-mono border border-white/20 px-3 py-2 rounded"
                 >
-                  <Globe className="w-4 h-4" />
-                  {lang.toUpperCase()}
+                  <FlagIcon countryCode={lang === 'en' ? 'US' : 'BA'} />
+                  <span className="leading-none">{lang.toUpperCase()}</span>
+                </button>
+                <button 
+                  onClick={() => {
+                    onStartProject();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-sm font-bold font-mono text-sm flex-grow"
+                >
+                  {t.cta}
                 </button>
             </div>
           </div>

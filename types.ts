@@ -52,10 +52,12 @@ export interface Translations {
     cta: string;
   };
   hero: {
-    title: string;
+    titleParts: string[];
     subtitle: string;
     quote: string;
     call: string;
+    highPerformance: string;
+    secureArchitecture: string;
     terminal: {
       initial: string[];
       quoteIntro: string[];

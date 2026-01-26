@@ -16,15 +16,34 @@ import { Language } from './types';
 
 const App: React.FC = () => {
   const [lang, setLang] = useState<Language>('en');
+  const [startQuoteMode, setStartQuoteMode] = useState(false);
   const t = TEXT_CONTENT[lang];
+
+  const handleStartProject = () => {
+    setStartQuoteMode(true);
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="font-sans antialiased text-white selection:bg-blue-500 selection:text-white">
       
-      <Navbar lang={lang} setLang={setLang} t={t.nav} />
+      <Navbar 
+        lang={lang} 
+        setLang={setLang} 
+        t={t.nav} 
+        onStartProject={handleStartProject}
+      />
       
       <main>
-        <Hero t={t.hero} />
+        <Hero 
+          t={t.hero} 
+          lang={lang}
+          startQuoteMode={startQuoteMode} 
+          setStartQuoteMode={setStartQuoteMode} 
+        />
         
         <Stats t={t.stats} />
         

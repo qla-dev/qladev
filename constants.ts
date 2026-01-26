@@ -15,10 +15,17 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       cta: 'START A PROJECT',
     },
     hero: {
-      title: 'DEVELOPING THE NEXT GENERATION OF TECH',
-      subtitle: 'Building tailored software and hardware solutions for businesses of all sizes.',
+      titleParts: [
+        'DEVELOPING',
+        'THE NEXT',
+        'GENERATION',
+        'OF TECH'
+      ],
+      subtitle: 'Building powerful and tailored software and hardware for in-house as well as for businesses of all sizes.',
       quote: 'GET A QUOTE',
       call: 'CALL',
+      highPerformance: 'HIGH PERFORMANCE',
+      secureArchitecture: 'SECURE ARCHITECTURE',
       terminal: {
         initial: [
           "Initializing qla.dev kernel v4.2.0...",
@@ -116,10 +123,17 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       cta: 'ZAPOČNI PROJEKAT',
     },
     hero: {
-      title: 'RAZVIJAMO SLJEDEĆU GENERACIJU TEHNOLOGIJE',
-      subtitle: 'Izrada prilagođenih softverskih i hardverskih rješenja za sve vrste i oblike poslovanja.',
+      titleParts: [
+        'RAZVIJAMO',
+        'SLJEDEĆU',
+        'GENERACIJU',
+        'TEHNOLOGIJE'
+      ],
+      subtitle: 'Izrada moćnih i prilagođenih softverskih i hardverskih rješenja za in-house potrebe kao i za sve vrste i oblike biznisa.',
       quote: 'ZATRAŽI PONUDU',
       call: 'POZOVI',
+      highPerformance: 'VISOKE PERFORMANSE',
+      secureArchitecture: 'SIGURNA ARHITEKTURA',
       terminal: {
         initial: [
           "Inicijalizacija qla.dev kernela v4.2.0...",

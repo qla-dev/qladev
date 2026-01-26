@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Translations } from '../types';
+import { Translations, Language } from '../types';
 import { ArrowRight, Phone, Cpu, ShieldCheck } from 'lucide-react';
 
 interface HeroProps {
   t: Translations['hero'];
+  lang: Language;
+  startQuoteMode: boolean;
+  setStartQuoteMode: (active: boolean) => void;
 }
 
 const TechParticles = () => {
@@ -340,8 +343,7 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode, onRes
   );
 };
 
-export const Hero: React.FC<HeroProps> = ({ t }) => {
-  const [startQuoteMode, setStartQuoteMode] = useState(false);
+export const Hero: React.FC<HeroProps> = ({ t, lang, startQuoteMode, setStartQuoteMode }) => {
 
   const handleGetQuote = () => {
     setStartQuoteMode(true);
@@ -398,12 +400,12 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
                     </div>
 
                     <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter font-sans mb-6 leading-none">
-                      DEVELOPING <br />
+                      {t.titleParts[0]} <br />
                       <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
-                        THE NEXT
+                        {t.titleParts[1]}
                       </span> <br />
-                      GENERATION <br />
-                      <span className="text-gray-500">OF TECH</span>
+                      {t.titleParts[2]} <br />
+                      <span>{t.titleParts[3]}</span>
                     </h1>
                     
                     <p className="mt-6 max-w-xl text-lg text-gray-400 font-mono leading-relaxed border-l-2 border-blue-500 pl-6">
@@ -430,11 +432,11 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
                     <div className="mt-12 flex items-center gap-8 text-gray-500 font-mono text-xs">
                       <div className="flex items-center gap-2">
                         <Cpu className="w-4 h-4 text-blue-500" />
-                        <span>HIGH PERFORMANCE</span>
+                        <span>{t.highPerformance}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <ShieldCheck className="w-4 h-4 text-cyan-500" />
-                        <span>SECURE ARCHITECTURE</span>
+                        <span>{t.secureArchitecture}</span>
                       </div>
                     </div>
                 </div>
@@ -489,7 +491,7 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
              */}
              <div className="w-[120%] -mr-[20%] lg:w-[150vw] lg:-mr-[80vw] lg:ml-0 h-full">
                 <InteractiveTerminal 
-                  key={startQuoteMode ? 'mode-quote' : 'mode-terminal'}
+                  key={`${startQuoteMode ? 'mode-quote' : 'mode-terminal'}-${lang}`}
                   t={t.terminal} 
                   startQuoteMode={startQuoteMode} 
                   onReset={handleReset} 
