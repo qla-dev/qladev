@@ -62,19 +62,22 @@ class QlaDev extends Future {
   const visibleCode = codeString.substring(0, charsToShow);
 
   return (
-    <section ref={containerRef} className="py-24 bg-qla-dark relative border-y border-white/5 overflow-hidden">
+    <section ref={containerRef} className="py-24 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* UNIFIED TITLE */}
+        <div className="flex items-center gap-4 mb-16">
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-center uppercase">
+                <span className="text-blue-600">/</span> {tMission.title}
+            </h2>
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
           {/* Left Column: Mission Text */}
           <div className="text-left">
-             <div className="inline-block mb-6">
-                <h3 className="text-3xl md:text-5xl font-black leading-tight uppercase bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
-                    {tMission.title}
-                </h3>
-                <div className="h-1 w-1/3 bg-blue-600 mt-2"></div>
-             </div>
-             
              <p className="text-gray-400 text-lg leading-relaxed mb-6">
                 {tMission.text}
              </p>

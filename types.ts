@@ -1,3 +1,4 @@
+
 export type Language = 'en' | 'bs';
 
 export interface NavItem {
@@ -72,6 +73,7 @@ export interface Translations {
     title: string; 
     active: string;
     launchDay: string;
+    subtitle: string;
   };
   mission: {
     title: string;

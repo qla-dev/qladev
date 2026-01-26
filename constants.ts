@@ -1,3 +1,4 @@
+
 import { Translations, Product, Service, NewsItem, PortfolioItem, StatItem } from './types';
 import { Monitor, Smartphone, Server, Scan, Bot, Cloud } from 'lucide-react';
 
@@ -35,6 +36,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       title: 'PRODUCTS',
       active: 'ACTIVE',
       launchDay: 'LAUNCH DAY',
+      subtitle: 'Our flagship products are developed entirely in-house, showcasing our capability to build scalable, mission-critical systems from the ground up.',
     },
     mission: {
       title: 'POWERING THE DIGITAL REVOLUTION',
@@ -105,6 +107,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       title: 'PROIZVODI',
       active: 'AKTIVNO',
       launchDay: 'DAN LANSIRANJA',
+      subtitle: 'Naši vodeći proizvodi su razvijeni u potpunosti interno, pokazujući našu sposobnost da izgradimo skalabilne sisteme od kritičnog značaja od nule.',
     },
     mission: {
       title: 'POKREĆEMO DIGITALNU REVOLUCIJU',

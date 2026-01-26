@@ -70,11 +70,18 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ t }) => {
       <div className="absolute inset-0 bg-cyber-grid bg-[size:40px_40px] opacity-10"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col items-center justify-center mb-12">
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-4 text-center">
-              {t.title}
+        
+        {/* UNIFIED TITLE */}
+        <div className="flex items-center gap-4 mb-8">
+             <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-center uppercase">
+                <span className="text-blue-600">/</span> {t.title}
             </h2>
-            <p className="text-xl text-blue-200 font-light max-w-2xl text-center">
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+        </div>
+
+        <div className="text-center mb-16">
+            <p className="text-xl text-blue-200 font-light max-w-2xl mx-auto">
               {t.subtitle}
             </p>
         </div>

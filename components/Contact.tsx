@@ -11,14 +11,19 @@ export const Contact: React.FC<ContactProps> = ({ t }) => {
     <section id="contact" className="py-24 bg-qla-blue text-white relative">
        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        {/* UNIFIED TITLE */}
+        <div className="flex items-center gap-4 mb-16">
+             <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-center uppercase">
+                <span className="text-blue-600">/</span> {t.title}
+            </h2>
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+        </div>
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             
             {/* Contact Info */}
             <div className="space-y-12">
-                <h2 className="text-5xl font-black mb-8 leading-tight">
-                    {t.title}
-                </h2>
-                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="bg-white/10 backdrop-blur p-6 rounded-lg">
                         <MapPin className="w-8 h-8 mb-4 text-cyan-300" />

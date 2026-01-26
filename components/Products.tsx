@@ -10,17 +10,20 @@ interface ProductsProps {
 
 export const Products: React.FC<ProductsProps> = ({ t, lang }) => {
   return (
-    <section id="products" className="py-32 bg-[#050505] relative overflow-hidden">
-      {/* Background Tech Lines */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]"></div>
-        
+    <section id="products" className="py-32 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex items-center gap-4 mb-16">
+        <div className="flex items-center gap-4 mb-8">
              <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight font-mono text-center">
                 <span className="text-blue-600">/</span> {t.title}
             </h2>
             <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+        </div>
+
+        <div className="text-center mb-16 max-w-3xl mx-auto px-4">
+             <p className="text-blue-100 text-lg font-mono">
+                {t.subtitle}
+             </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

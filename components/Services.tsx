@@ -9,17 +9,19 @@ interface ServicesProps {
 
 export const Services: React.FC<ServicesProps> = ({ t }) => {
   return (
-    <section id="services" className="py-32 bg-gradient-to-b from-blue-900 via-blue-950 to-black text-white relative">
-      
-      {/* Texture Overlay */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
-
+    <section id="services" className="py-32 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mb-20 text-center md:text-left">
-            <h2 className="text-5xl md:text-7xl font-black mb-6 text-white tracking-tighter">
-                {t.title}
+        
+        {/* LEFT ALIGNED TITLE STYLE */}
+        <div className="flex items-center gap-6 mb-8">
+             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-left uppercase whitespace-nowrap">
+                <span className="text-blue-600">/</span> {t.title}
             </h2>
-            <p className="max-w-2xl text-blue-100 text-lg font-mono border-l-4 border-white pl-6">
+            <div className="h-px bg-gradient-to-r from-blue-600 to-transparent flex-grow opacity-50"></div>
+        </div>
+        
+        <div className="text-left mb-16 pl-2">
+            <p className="max-w-2xl text-blue-100 text-lg font-mono">
                 {t.subtitle}
             </p>
         </div>

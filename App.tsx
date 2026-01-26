@@ -28,13 +28,23 @@ const App: React.FC = () => {
         
         <Stats t={t.stats} />
         
-        <About t={t.about} />
-        
-        <Mission tMission={t.mission} tAlgo={t.algorithm} />
+        {/* Unified Section for smooth blend (About + Mission) */}
+        <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">
+          {/* Shared Texture Overlay */}
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+          
+          <About t={t.about} />
+          <Mission tMission={t.mission} tAlgo={t.algorithm} />
+        </div>
 
-        <Products t={t.products} lang={lang} />
-        
-        <Services t={t.services} />
+        {/* Unified Section for Products + Services (Matched Style) */}
+        <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">
+           {/* Shared Carbon Fibre Texture Overlay */}
+           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+           
+           <Products t={t.products} lang={lang} />
+           <Services t={t.services} />
+        </div>
 
         <Algorithm t={t.algorithm} />
         

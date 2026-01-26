@@ -12,9 +12,17 @@ export const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-black to-black"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-4">{t.title}</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">{t.subtitle}</p>
+        
+        {/* LEFT ALIGNED TITLE STYLE */}
+        <div className="flex items-center gap-6 mb-8">
+             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-left uppercase whitespace-nowrap">
+                <span className="text-blue-600">/</span> {t.title}
+            </h2>
+            <div className="h-px bg-gradient-to-r from-blue-600 to-transparent flex-grow opacity-50"></div>
+        </div>
+
+        <div className="text-left mb-16 pl-2">
+            <p className="text-gray-400 max-w-2xl">{t.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

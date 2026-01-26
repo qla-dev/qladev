@@ -113,15 +113,21 @@ export const About: React.FC<AboutProps> = ({ t }) => {
     <section 
       id="about" 
       ref={containerRef}
-      className="py-32 bg-gradient-to-b from-blue-900 via-blue-950 to-black text-white relative overflow-hidden min-h-screen flex items-center"
+      className="py-32 bg-transparent text-white relative z-10"
     >
-      {/* Texture Overlay */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
-
-      {/* Decorative Background Elements */}
+      {/* Decorative Background Elements Local to this section */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/10 to-transparent pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        
+        {/* LEFT ALIGNED TITLE STYLE */}
+        <div className="flex items-center gap-6 mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-left uppercase whitespace-nowrap">
+                <span className="text-blue-600">/</span> {t.title}
+            </h2>
+            <div className="h-px bg-gradient-to-r from-blue-600 to-transparent flex-grow opacity-50"></div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           
           {/* IMAGE COLUMN */}
@@ -165,11 +171,6 @@ export const About: React.FC<AboutProps> = ({ t }) => {
 
           {/* TEXT COLUMN */}
           <div className="order-1 lg:order-2">
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-none tracking-tight">
-              {t.title}
-              <span className="text-blue-400 animate-pulse">.</span>
-            </h2>
-            
             <div className="space-y-16">
                 {bullets.map((bullet, idx) => (
                     <div 
@@ -201,8 +202,6 @@ export const About: React.FC<AboutProps> = ({ t }) => {
                     </div>
                 ))}
             </div>
-            
-            {/* Pagination removed as requested */}
           </div>
 
         </div>
