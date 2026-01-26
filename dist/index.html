@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>qla.dev - Developing the Next Generation of Tech</title>
+    <meta name="title" content="qla.dev - Developing the Next Generation of Tech">
+    <meta name="description" content="Building powerful and tailored software and hardware for in-house as well as for businesses of all sizes. Specializing in AI, IoT, and Cloud solutions.">
+    <meta name="keywords" content="software development, hardware solutions, in-house software, AI, IoT, cloud computing, web development, mobile apps, qla.dev, Sarajevo, Bosnia, tech innovation">
+    <meta name="author" content="qla.dev">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qla.dev/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qla.dev/">
+    <meta property="og:title" content="qla.dev - Developing the Next Generation of Tech">
+    <meta property="og:description" content="Building powerful and tailored software and hardware for in-house as well as for businesses of all sizes. Specializing in AI, IoT, and Cloud solutions.">
+    <meta property="og:image" content="https://qla.dev/favicon.png">
+    <meta property="og:site_name" content="qla.dev">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="bs_BA">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://qla.dev/">
+    <meta property="twitter:title" content="qla.dev - Developing the Next Generation of Tech">
+    <meta property="twitter:description" content="Building powerful and tailored software and hardware for in-house as well as for businesses of all sizes.">
+    <meta property="twitter:image" content="https://qla.dev/favicon.png">
+
+    <!-- Favicon -->
+    <link rel="icon" href="./favicon.png">
+    <link rel="apple-touch-icon" href="./favicon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              qla: {
+                blue: '#007bff', 
+                cyan: '#06b6d4',
+                dark: '#050505',
+                card: '#0a0a0a',
+                border: '#1f1f1f'
+              }
+            },
+            backgroundImage: {
+              'grid-pattern': "linear-gradient(to right, #1f1f1f 1px, transparent 1px), linear-gradient(to bottom, #1f1f1f 1px, transparent 1px)",
+              'cyber-grid': "radial-gradient(circle at 50% 50%, rgba(0, 123, 255, 0.1) 0%, transparent 50%)",
+            },
+            animation: {
+              'grid-move': 'gridMove 20s linear infinite',
+              'pulse-fast': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'type': 'type 3s steps(40, end)',
+              'blink': 'blink 1s step-end infinite',
+              'float': 'float 8s ease-in-out infinite',
+              'shimmer': 'shimmer 4s linear infinite',
+              'shimmer-slow': 'shimmer 10s linear infinite',
+              'spin-slow': 'spin 20s linear infinite',
+            },
+            keyframes: {
+              gridMove: {
+                '0%': { transform: 'translateY(0)' },
+                '100%': { transform: 'translateY(40px)' },
+              },
+              type: {
+                '0%': { width: '0' },
+                '100%': { width: '100%' },
+              },
+              blink: {
+                '0%, 100%': { opacity: '1' },
+                '50%': { opacity: '0' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translate(0, 0)' },
+                '50%': { transform: 'translate(10px, -20px)' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '200% 0' },
+                '100%': { backgroundPosition: '-200% 0' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #007bff; 
+      }
+      body {
+        background-color: #000;
+        color: #fff;
+      }
+      
+      .scanline {
+        background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+        background-size: 100% 4px;
+        pointer-events: none;
+      }
+      
+      .glass-card {
+        background: rgba(10, 10, 10, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .text-glow {
+        text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+      }
+    </style>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+  <script type="module" crossorigin src="./assets/index-4aX59PDI.js"></script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
