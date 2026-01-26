@@ -11,6 +11,7 @@ export interface Product {
   title: string;
   description: string;
   image: string;
+  logo?: string;
   cta: string;
   secondaryCta?: string;
   launchDate?: string;

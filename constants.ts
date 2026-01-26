@@ -2,6 +2,9 @@
 import { Translations, Product, Service, NewsItem, PortfolioItem, StatItem } from './types';
 import { Monitor, Smartphone, Server, Scan, Bot, Cloud } from 'lucide-react';
 
+// Environment variable for resources, defaulting to the production domain
+export const RESOURCES_URL = 'https://qla.dev';
+
 export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
   en: {
     nav: {
@@ -226,7 +229,8 @@ export const PRODUCTS_DATA: Product[] = [
     status: 'active',
     title: 'deklarant.ai',
     description: 'An AI-powered platform that scans invoices, extracts data, and automatically fills customs declarations. It suggests correct tariff codes and streamlines documentation.',
-    image: 'https://picsum.photos/600/300?random=1',
+    image: `${RESOURCES_URL}/comp-min-e1736531140565.png`,
+    logo: `${RESOURCES_URL}/logo-light-ai-1024x133.png`,
     cta: 'REGISTER',
     secondaryCta: 'WEB'
   },
@@ -234,7 +238,8 @@ export const PRODUCTS_DATA: Product[] = [
     status: 'active',
     title: 'Property Management',
     description: 'A comprehensive Property Management and Booking System designed for modern hospitality needs.',
-    image: 'https://picsum.photos/600/300?random=2',
+    image: `${RESOURCES_URL}/laptab-min-e1736282362439.png`,
+    logo: `${RESOURCES_URL}/logo1-1-1024x150.png`,
     cta: 'WEBAPP',
     secondaryCta: 'ADMIN'
   },
@@ -242,7 +247,7 @@ export const PRODUCTS_DATA: Product[] = [
     status: 'launch',
     title: 'Social Media App',
     description: 'A social media app leaning towards web shopping, NFC/QR technologies for on-table self-ordering, and room service.',
-    image: 'https://picsum.photos/600/300?random=3',
+    image: `${RESOURCES_URL}/home-slika-telefoni.png`,
     cta: 'COMING SOON',
     launchDate: '01.06.2026'
   }

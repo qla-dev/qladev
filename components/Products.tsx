@@ -45,19 +45,32 @@ export const Products: React.FC<ProductsProps> = ({ t, lang }) => {
                 </span>
               </div>
               
-              <div className="aspect-video bg-gray-900 relative overflow-hidden">
+              {/* Main Image (Mockup) */}
+              <div className="aspect-video bg-gray-900 relative overflow-hidden flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
                 <img 
                     src={product.image} 
                     alt={product.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100 scanline"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                 />
               </div>
 
               <div className="p-8 relative z-10 flex flex-col flex-grow">
-                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors flex items-center gap-2">
-                    {product.title}
-                </h3>
+                {/* Title or Logo */}
+                <div className="mb-4 h-12 flex items-center">
+                  {product.logo ? (
+                    <img 
+                      src={product.logo} 
+                      alt={`${product.title} logo`} 
+                      className="h-full max-w-[200px] object-contain object-left"
+                    />
+                  ) : (
+                    <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors flex items-center gap-2">
+                        {product.title}
+                    </h3>
+                  )}
+                </div>
+
                 <p className="text-gray-400 mb-8 text-sm leading-relaxed flex-grow font-light border-l border-white/10 pl-4">
                     {product.description}
                 </p>
