@@ -77,9 +77,10 @@ const TechParticles = () => {
 interface TerminalProps {
   t: Translations['hero']['terminal'];
   startQuoteMode: boolean;
+  onReset: () => void;
 }
 
-const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => {
+const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode, onReset }) => {
   const [history, setHistory] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [step, setStep] = useState(0); // 0: Boot, 1: Quote Intro, 2: Q1, 3: Q2, 4: Q3, 5: Success
@@ -87,7 +88,15 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => 
   
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  
+  // Refs for managing async operations and cancellation
   const sequenceId = useRef(0);
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => { isMounted.current = false; };
+  }, []);
 
   // Focus input when user starts typing phase
   useEffect(() => {
@@ -104,7 +113,7 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => 
   }, [history, inputValue, isSystemTyping]);
 
   const typeLine = async (text: string, delay: number, id: number) => {
-    if (sequenceId.current !== id) return;
+    if (sequenceId.current !== id || !isMounted.current) return;
 
     // Start new line
     setHistory(prev => [...prev, ""]);
@@ -112,9 +121,9 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => 
     let currentLineText = ""; 
     
     for (let i = 0; i < text.length; i++) {
-        if (sequenceId.current !== id) return;
+        if (sequenceId.current !== id || !isMounted.current) return;
         await new Promise(resolve => setTimeout(resolve, delay));
-        if (sequenceId.current !== id) return;
+        if (sequenceId.current !== id || !isMounted.current) return;
         
         currentLineText += text[i];
         
@@ -133,7 +142,7 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => 
     return new Promise<void>((resolve) => {
       const start = Date.now();
       const check = () => {
-         if (sequenceId.current !== id) return;
+         if (sequenceId.current !== id || !isMounted.current) return; // Stop if cancelled or unmounted
          if (Date.now() - start >= ms) resolve();
          else requestAnimationFrame(check);
       };
@@ -141,85 +150,104 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => 
     });
   };
 
-  // Initial Boot Sequence
+  // Main Logic Loop - Runs once on mount
   useEffect(() => {
-    if (startQuoteMode) return;
-
     sequenceId.current++;
     const myId = sequenceId.current;
 
-    const bootSequence = async () => {
-        setIsSystemTyping(true);
-        setHistory([]); 
-        
+    const run = async () => {
+      setIsSystemTyping(true);
+      setHistory([]); // Always start fresh
+
+      if (!startQuoteMode) {
+        // --- BOOT SEQUENCE ---
         await new Promise(r => setTimeout(r, 100));
         if (sequenceId.current !== myId) return;
 
         for (const line of t.initial) {
           if (sequenceId.current !== myId) break;
-          // Clean text without '>' prefix as we have '$' now
           await typeLine(line, 10, myId); 
           await delay(50, myId);
         }
         
-        if (sequenceId.current === myId) setIsSystemTyping(false);
+        if (sequenceId.current === myId && isMounted.current) {
+           setIsSystemTyping(false);
+        }
+
+      } else {
+        // --- QUOTE SEQUENCE ---
+        await delay(500, myId);
+        if (sequenceId.current !== myId) return;
+        
+        for (const line of t.quoteIntro) {
+            if (sequenceId.current !== myId) break;
+            await typeLine(line, 30, myId);
+            await delay(300, myId);
+        }
+        
+        if (sequenceId.current === myId && isMounted.current) {
+            setStep(2); 
+            setIsSystemTyping(false);
+        }
+      }
     };
 
-    bootSequence();
-  }, []); 
+    run();
+  }, [startQuoteMode]); // Technically runs on mount due to key prop in parent, but dependency safe to keep
 
-  // Quote Sequence Trigger
+  // Handle Success Step specially
   useEffect(() => {
-    if (startQuoteMode) {
+    if (step === 5) {
        sequenceId.current++;
        const myId = sequenceId.current;
 
-       const startQuoteSequence = async () => {
-          setIsSystemTyping(true);
-          setHistory([]); 
+       const runSuccess = async () => {
+           setIsSystemTyping(true);
+           setHistory([]); // Clear previous interaction
+           await delay(400, myId);
           
-          await delay(500, myId);
-          if (sequenceId.current !== myId) return;
-          
-          for (const line of t.quoteIntro) {
-              if (sequenceId.current !== myId) break;
-              await typeLine(line, 30, myId);
-              await delay(300, myId);
-          }
-          
-          if (sequenceId.current === myId) {
-              setStep(2); 
-              setIsSystemTyping(false);
-          }
+           for (const line of t.success) {
+             if (sequenceId.current !== myId) break;
+             await typeLine(line, 30, myId);
+             await delay(300, myId);
+           }
+
+           if (sequenceId.current === myId) {
+              await delay(800, myId);
+              // Adding blank line for separation
+              setHistory(prev => [...prev, ""]);
+              
+              const countdownLine = "Redirecting in ";
+              setHistory(prev => [...prev, countdownLine]);
+              
+              // Animated countdown on the same line
+              const counts = ["4...", "3...", "2...", "1...", "0"];
+              let currentSuffix = "";
+              
+              for (const count of counts) {
+                  if (sequenceId.current !== myId) return;
+                  
+                  // Typing effect for the dots/numbers if desired, or just updating the line
+                  // Simple update for countdown feels more "terminal"
+                  currentSuffix = count;
+                  
+                  setHistory(prev => {
+                      const newH = [...prev];
+                      newH[newH.length - 1] = `${countdownLine}${currentSuffix}`;
+                      return newH;
+                  });
+                  
+                  await delay(1000, myId);
+              }
+
+              if (sequenceId.current === myId && isMounted.current) {
+                  onReset(); // This triggers parent state change -> Remounts component -> Boot sequence
+              }
+           }
        };
-       startQuoteSequence();
+       runSuccess();
     }
-  }, [startQuoteMode, t]);
-
-  // Success Sequence
-  useEffect(() => {
-      if (step === 5) {
-         sequenceId.current++;
-         const myId = sequenceId.current;
-
-         const runSuccessSequence = async () => {
-             setIsSystemTyping(true);
-             await delay(600, myId);
-             if (sequenceId.current !== myId) return;
-             
-             setHistory([""]); 
-             await delay(400, myId);
-            
-             for (const line of t.success) {
-               if (sequenceId.current !== myId) break;
-               await typeLine(line, 30, myId);
-               await delay(300, myId);
-             }
-             if (sequenceId.current === myId) setIsSystemTyping(false);
-         }
-         runSuccessSequence();
-      }
-  }, [step, t]);
+  }, [step]);
 
 
   const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -227,7 +255,6 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => 
       const userText = inputValue;
       setInputValue("");
       
-      // Manually update history for user input
       setHistory(prev => [...prev, `user@qla:~$ ${userText}`]);
       setIsSystemTyping(true);
       
@@ -250,7 +277,7 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => 
             setStep(4);
         }
       } else if (step === 4) {
-        setStep(5);
+        setStep(5); // Triggers success effect
       }
     }
   };
@@ -279,7 +306,9 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode }) => 
           <div className="max-w-[85vw] lg:max-w-xl w-full">
             {history.map((line, idx) => (
                 <div key={idx} className={`mb-1 min-h-[1.5rem] break-words flex flex-row items-start`}>
-                <span className="text-red-500 font-bold mr-3 shrink-0 select-none">$</span>
+                {line !== "" && (
+                     <span className="text-red-500 font-bold mr-3 shrink-0 select-none">$</span>
+                )}
                 <span className={line.startsWith('user') ? 'text-white' : 'text-blue-400'}>
                     {line}
                 </span>
@@ -323,6 +352,10 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
 
   const handleGetQuote = () => {
     setStartQuoteMode(true);
+  };
+  
+  const handleReset = () => {
+    setStartQuoteMode(false);
   };
 
   return (
@@ -405,7 +438,12 @@ export const Hero: React.FC<HeroProps> = ({ t }) => {
                  We use width: 140% and negative margin to push it off-screen on the right.
              */}
              <div className="w-[120%] -mr-[20%] lg:w-[150vw] lg:-mr-[80vw] lg:ml-0 h-full">
-                <InteractiveTerminal t={t.terminal} startQuoteMode={startQuoteMode} />
+                <InteractiveTerminal 
+                  key={startQuoteMode ? 'mode-quote' : 'mode-terminal'}
+                  t={t.terminal} 
+                  startQuoteMode={startQuoteMode} 
+                  onReset={handleReset} 
+                />
              </div>
           </div>
 
