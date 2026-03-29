@@ -30,6 +30,98 @@
     <meta property="twitter:description" content="Building powerful and tailored software and hardware for in-house as well as for businesses of all sizes.">
     <meta property="twitter:image" content="https://qla.dev/favicon.png">
 
+    <script>
+      (function () {
+        var trimTrailingSlash = function (value) {
+          return value.length > 1 && value.endsWith('/') ? value.slice(0, -1) : value;
+        };
+
+        var routes = ['/', '/technopark', '/technopark/instructions', '/technopark/membership', '/technopark/sign-in'];
+        var cleanPath = trimTrailingSlash(window.location.pathname);
+        var currentRoute = '/';
+
+        for (var i = 1; i < routes.length; i += 1) {
+          if (cleanPath === routes[i] || cleanPath.endsWith(routes[i])) {
+            currentRoute = routes[i];
+            break;
+          }
+        }
+
+        var lang = currentRoute.startsWith('/technopark') ? 'bs' : 'en';
+        var metaMap = {
+          en: {
+            '/': {
+              title: 'qla.dev - Developing the Next Generation of Tech',
+              description: 'Building powerful and tailored software and hardware for in-house teams and businesses of all sizes.'
+            },
+            '/technopark': {
+              title: 'qla.dev Technopark - Creative Tech Space for Under 18',
+              description: 'Technopark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.'
+            },
+            '/technopark/instructions': {
+              title: 'qla.dev Technopark - Programs and Instructions',
+              description: 'Explore Technopark instruction tracks across web, app, AI, 3D, game development, Roblox, design, and video editing.'
+            },
+            '/technopark/membership': {
+              title: 'qla.dev Technopark - Membership Reservations',
+              description: 'Reserve Technopark open-space slots from 08:00 to 16:00 with a 15-person limit and a 4-hour daily maximum.'
+            },
+            '/technopark/sign-in': {
+              title: 'qla.dev Technopark - Member Sign In',
+              description: 'Multi-step member sign-in for Technopark reservations, programs, and future attendance check-in.'
+            }
+          },
+          bs: {
+            '/': {
+              title: 'qla.dev - Razvijamo novu generaciju tehnologije',
+              description: 'Gradimo mocna i prilagodjena softverska i hardverska rjesenja za interne timove i biznise svih velicina.'
+            },
+            '/technopark': {
+              title: 'qla.dev Technopark - Kreativni tech prostor za djecu i mlade',
+              description: 'Technopark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.'
+            },
+            '/technopark/instructions': {
+              title: 'qla.dev Technopark - Programi i instrukcije',
+              description: 'Pregledaj Technopark instrukcije za web, app, AI, 3D, game development, Roblox, dizajn i video editing.'
+            },
+            '/technopark/membership': {
+              title: 'qla.dev Technopark - Membership rezervacije',
+              description: 'Rezervisi Technopark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.'
+            },
+            '/technopark/sign-in': {
+              title: 'qla.dev Technopark - Prijava clanova',
+              description: 'Visekorak prijava za Technopark clanove, rezervacije, programe i buduci attendance check-in.'
+            }
+          }
+        };
+
+        var meta = metaMap[lang][currentRoute];
+        var setMetaContent = function (selector, content) {
+          var element = document.head.querySelector(selector);
+          if (element) {
+            element.setAttribute('content', content);
+          }
+        };
+
+        document.documentElement.lang = lang;
+        document.title = meta.title;
+        setMetaContent('meta[name="title"]', meta.title);
+        setMetaContent('meta[name="description"]', meta.description);
+        setMetaContent('meta[property="og:title"]', meta.title);
+        setMetaContent('meta[property="og:description"]', meta.description);
+        setMetaContent('meta[property="og:url"]', window.location.href);
+        setMetaContent('meta[property="og:locale"]', lang === 'bs' ? 'bs_BA' : 'en_US');
+        setMetaContent('meta[property="twitter:title"]', meta.title);
+        setMetaContent('meta[property="twitter:description"]', meta.description);
+        setMetaContent('meta[property="twitter:url"]', window.location.href);
+
+        var canonical = document.head.querySelector('link[rel="canonical"]');
+        if (canonical) {
+          canonical.setAttribute('href', window.location.href);
+        }
+      })();
+    </script>
+
     <!-- Favicon -->
     <link rel="icon" href="./favicon.png">
     <link rel="apple-touch-icon" href="./favicon.png">
@@ -143,7 +235,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="./assets/index-4aX59PDI.js"></script>
+  <script type="module" crossorigin src="./assets/index-BS9of1py.js"></script>
 </head>
   <body>
     <div id="root"></div>

@@ -28,7 +28,7 @@ export const Contact: React.FC<ContactProps> = ({ t }) => {
                     <div className="bg-white/10 backdrop-blur p-6 rounded-lg">
                         <MapPin className="w-8 h-8 mb-4 text-cyan-300" />
                         <h3 className="font-bold text-lg mb-2">{t.visit}</h3>
-                        <p className="text-blue-100 text-sm">Vilsonovo šetalište 9<br/>71000 Sarajevo<br/>Bosnia & Herzegovina</p>
+                        <p className="text-blue-100 text-sm">Braće Mulić 81<br/>71000 Sarajevo<br/>Bosnia & Herzegovina</p>
                     </div>
                     <div className="bg-white/10 backdrop-blur p-6 rounded-lg">
                         <Phone className="w-8 h-8 mb-4 text-cyan-300" />
@@ -47,7 +47,7 @@ export const Contact: React.FC<ContactProps> = ({ t }) => {
             <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10 h-[400px] lg:h-auto relative group">
                 {/* CSS Filter for Dark Mode Map Effect */}
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2877.375252875151!2d18.39763737666275!3d43.85434197109315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4758c8cf71317427%3A0x867332356525790d!2sVilsonovo%20%C5%A1etali%C5%A1te%209%2C%20Sarajevo%2071000!5e0!3m2!1sen!2sba!4v1714567890123!5m2!1sen!2sba" 
+                    src="https://www.google.com/maps?q=Bra%C4%87e%20Muli%C4%87%2081%2C%2071000%20Sarajevo%2C%20Bosnia%20and%20Herzegovina&z=16&output=embed" 
                     width="100%" 
                     height="100%" 
                     style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }} 

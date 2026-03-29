@@ -8,6 +8,7 @@ export const RESOURCES_URL = 'https://qla.dev';
 export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
   en: {
     nav: {
+      technopark: 'TECHNOPARK',
       home: 'HOMEPAGE',
       about: 'ABOUT',
       products: 'PRODUCTS',
@@ -116,6 +117,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
   },
   bs: {
     nav: {
+      technopark: 'TECHNOPARK',
       home: 'POČETNA',
       about: 'O NAMA',
       products: 'PROIZVODI',
