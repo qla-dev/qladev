@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   Sparkles,
   SunMedium,
+  Ticket,
   Users,
   type LucideIcon,
 } from 'lucide-react';
@@ -102,6 +103,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         ? 'Rezervacije idu u 2h slotovima, maksimalno 4h dnevno, uz limit od 15 ljudi po terminu.'
         : 'Reservations run in 2-hour slots, with a 4-hour daily maximum and a 15-person cap per slot.',
       cta: isBs ? 'OTVORI CLANSTVO' : 'OPEN MEMBERSHIP',
+      heroCta: isBs ? 'CLANSTVO' : 'MEMBERSHIP',
     },
     programsCard: {
       eyebrow: isBs ? 'PROGRAMI OD 17:00' : 'PROGRAMS FROM 17:00',
@@ -110,6 +112,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         ? 'Web, app, AI, dizajn, 3D, game dev, Roblox i video editing u grupama do 15 polaznika.'
         : 'Web, app, AI, design, 3D, game dev, Roblox, and video editing in groups of up to 15 participants.',
       cta: isBs ? 'OTVORI PROGRAME' : 'OPEN PROGRAMS',
+      heroCta: isBs ? 'INSTRUKCIJE' : 'INSTRUCTIONS',
     },
     pricingCards: {
       membership: {
@@ -266,12 +269,35 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         current="/technopark"
         lang={lang}
         onNavigate={onNavigate}
+        showSubnav={false}
         badge={labels.badge}
         badgeIcon={BadgeCheck}
         title={labels.title}
         subtitle={labels.subtitle}
+        leftContent={
+          <div className="mt-8 flex flex-wrap gap-4">
+            <button
+              type="button"
+              onClick={() => onNavigate('/technopark/instructions')}
+              className="inline-flex items-center gap-2 rounded-sm bg-blue-600 px-6 py-4 text-sm font-bold font-mono uppercase tracking-[0.18em] text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_18px_rgba(37,99,235,0.55)]"
+            >
+              <CalendarDays className="h-4 w-4" />
+              {labels.programsCard.heroCta}
+              <ArrowRight className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigate('/technopark/membership')}
+              className="inline-flex items-center gap-2 rounded-sm border border-white/15 px-6 py-4 text-sm font-bold font-mono uppercase tracking-[0.18em] text-white transition-colors hover:border-blue-500 hover:bg-blue-500/10"
+            >
+              <Ticket className="h-4 w-4 text-blue-300" />
+              {labels.membershipCard.heroCta}
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        }
         rightContent={
-          <div className="grid gap-4 sm:grid-cols-2 lg:w-full lg:max-w-[34rem] lg:justify-self-center">
+          <div className="grid grid-cols-2 gap-4 lg:w-full lg:max-w-[34rem] lg:justify-self-center">
             {heroCards.map((card) => (
               <TechnoparkStatCard
                 key={card.label}
@@ -284,10 +310,10 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         }
       />
 
-      <section className="py-24">
+      <section id="technopark-ambijent" className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.amenitiesTitle} subtitle={labels.amenitiesSubtitle} />
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div id="technopark-sadrzaj" className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {amenities.map((amenity) => {
               const Icon = amenity.icon;
               return (
@@ -313,7 +339,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         </div>
       </section>
 
-      <section className="border-t border-white/5 py-24">
+      <section id="technopark-lokacija" className="border-t border-white/5 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.spaceTitle} subtitle={labels.spaceSubtitle} />
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">

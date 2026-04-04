@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Menu, Terminal, Users, X } from 'lucide-react';
+import { Menu, Users, X } from 'lucide-react';
 import { Language, Translations } from '../types';
 
 interface NavbarProps {
@@ -11,7 +11,7 @@ interface NavbarProps {
   onNavigateHomeSection: (id: string) => void;
   onNavigateHomeTop: () => void;
   onNavigateRoute: (path: '/technopark' | '/technopark/instructions' | '/technopark/membership' | '/technopark/sign-in') => void;
-  onNavigateTechnoparkPricing: () => void;
+  onNavigateTechnoparkSection: (sectionId: string) => void;
   onPrimaryAction: () => void;
 }
 
@@ -24,7 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigateHomeSection,
   onNavigateHomeTop,
   onNavigateRoute,
-  onNavigateTechnoparkPricing,
+  onNavigateTechnoparkSection,
   onPrimaryAction,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,6 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isTechnoparkRoute = route.startsWith('/technopark');
   const technoparkPeopleCount = '0/15';
   const showMobileFloatingBack = route === '/technopark' || route === '/technopark/sign-in';
+  const logoSrc = 'https://deklarant.ai/build/images/logo-qla-dark.png';
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -46,6 +47,12 @@ export const Navbar: React.FC<NavbarProps> = ({
     { kind: 'anchor' as const, id: 'services', label: t.services },
     { kind: 'anchor' as const, id: 'news', label: t.news },
     { kind: 'anchor' as const, id: 'contact', label: t.contact },
+  ];
+  const technoparkNavLinks = [
+    { id: 'technopark-ambijent', label: lang === 'bs' ? 'AMBIJENT' : 'AMBIENT' },
+    { id: 'technopark-sadrzaj', label: lang === 'bs' ? 'SADRZAJ' : 'AMENITIES' },
+    { id: 'technopark-lokacija', label: lang === 'bs' ? 'LOKACIJA' : 'LOCATION' },
+    { id: 'technopark-pricing', label: lang === 'bs' ? 'CJENOVNIK' : 'PRICING' },
   ];
 
   const handleNavClick = (link: (typeof navLinks)[number]) => {
@@ -75,11 +82,15 @@ export const Navbar: React.FC<NavbarProps> = ({
               setIsMobileMenuOpen(false);
             }}
             className="flex-shrink-0 flex items-center cursor-pointer"
+            aria-label="qla.dev"
           >
-            <span className="text-2xl font-mono font-bold text-white tracking-tighter">
-              qla<span className="text-blue-500">.dev</span>
-            </span>
-            <Terminal className="ml-2 w-5 h-5 text-blue-500 animate-pulse" />
+            <img
+              src={logoSrc}
+              alt="qla.dev"
+              className="h-10 w-auto object-contain sm:h-11"
+              loading="eager"
+              decoding="async"
+            />
           </button>
 
           <div className="hidden xl:block">
@@ -95,15 +106,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                   >
                     qla.dev
                   </button>
-                  <button
-                    onClick={() => {
-                      onNavigateTechnoparkPricing();
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="relative px-3 py-2 text-sm font-medium font-mono text-gray-300 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full"
-                  >
-                    {lang === 'bs' ? 'CJENOVNIK' : 'PRICING'}
-                  </button>
+                  {technoparkNavLinks.map((link) => (
+                    <button
+                      key={link.id}
+                      onClick={() => {
+                        onNavigateTechnoparkSection(link.id);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="relative px-3 py-2 text-sm font-medium font-mono text-gray-300 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full"
+                    >
+                      {link.label}
+                    </button>
+                  ))}
                 </>
               ) : (
                 navLinks.map((link) => (
@@ -212,15 +226,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   qla.dev
                 </button>
-                <button
-                  onClick={() => {
-                    onNavigateTechnoparkPricing();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="text-gray-300 hover:text-white block w-full text-left px-3 py-4 rounded-md text-base font-medium font-mono border-b border-gray-800"
-                >
-                  {lang === 'bs' ? 'CJENOVNIK' : 'PRICING'}
-                </button>
+                {technoparkNavLinks.map((link) => (
+                  <button
+                    key={link.id}
+                    onClick={() => {
+                      onNavigateTechnoparkSection(link.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="text-gray-300 hover:text-white block w-full text-left px-3 py-4 rounded-md text-base font-medium font-mono border-b border-gray-800"
+                  >
+                    {link.label}
+                  </button>
+                ))}
               </>
             ) : (
               navLinks.map((link) => (

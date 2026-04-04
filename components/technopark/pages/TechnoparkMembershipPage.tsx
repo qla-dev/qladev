@@ -1,16 +1,13 @@
 import React, { useMemo, useState } from 'react';
-import { Ticket } from 'lucide-react';
 import { createAvailability, membershipDays, membershipSlots, slotOrder } from '../data';
 import { MembershipDayCard } from '../membership/MembershipDayCard';
 import { MembershipSlotCard } from '../membership/MembershipSlotCard';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
 import { FloatingActionButton } from '../shared/FloatingActionButton';
 import { FormStatusMessage } from '../shared/FormStatusMessage';
-import { SectionHeader } from '../shared/SectionHeader';
 import { SplitActionModal } from '../shared/SplitActionModal';
-import { TechnoparkHeroSection } from '../shared/TechnoparkHeroSection';
 import { TechnoparkPageShell } from '../shared/TechnoparkPageShell';
-import { TechnoparkStatCard } from '../shared/TechnoparkStatCard';
+import { TechnoparkSubnavSection } from '../shared/TechnoparkSubnavSection';
 import type {
   FormStatus,
   MembershipDayKey,
@@ -30,11 +27,8 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
   const [focusedSlot, setFocusedSlot] = useState<MembershipSlotKey | null>(null);
 
   const labels = {
-    badge: isBs ? 'mjesecni membership' : 'monthly membership',
-    title: isBs ? 'REZERVISI SVOJ 2H TECH BLOK' : 'RESERVE YOUR 2H TECH BLOCK',
-    subtitle: isBs
-      ? 'Open-space clanstvo radi od 08:00 do 16:00. Jedan clan moze rezervisati najvise 2 termina dnevno, odnosno maksimalno 4h. Nedjeljom je zatvoreno.'
-      : 'Open-space membership runs from 08:00 to 16:00. Each member can reserve up to 2 slots per day, for a maximum of 4 hours. Sunday stays closed.',
+    sectionTitle: isBs ? 'REZERVACIJE' : 'RESERVATIONS',
+    sectionSubtitle: isBs ? 'Izaberi dan, klikni slobodan termin i potvrdi rezervaciju kroz modal prozor.' : 'Choose a day, click an available slot, and confirm the reservation through the modal.',
     reserveTitle: isBs ? 'REZERVACIJE' : 'RESERVATIONS',
     reserveSubtitle: isBs ? 'Izaberi dan, klikni slobodan termin i potvrdi rezervaciju kroz modal prozor.' : 'Choose a day, click an available slot, and confirm the reservation through the modal.',
     summaryTitle: isBs ? 'TVOJ DAN' : 'YOUR DAY',
@@ -64,7 +58,6 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
     oldPrice: '100 KM',
     newPrice: '60 KM',
     focusedSlot: isBs ? 'Fokus termin' : 'Focused slot',
-    priceCard: isBs ? 'Promo cijena' : 'Promo price',
     crossSellBadge: isBs ? 'PROGRAM BONUS' : 'PROGRAM BONUS',
     crossSellTitle: isBs ? 'Uz open space dobijas 40% popusta na svaki program.' : 'Get 40% off every program with open space.',
     crossSellText: isBs ? 'Ako zelis i instrukcije od 17:00, membership ti otvara povoljniji ulaz u svaki Technopark program.' : 'If you also want 17:00 instruction tracks, membership unlocks a better entry price for every Technopark program.',
@@ -195,32 +188,17 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
   };
 
   return (
-    <TechnoparkPageShell>
-      <TechnoparkHeroSection
+    <TechnoparkPageShell showBackdrop>
+      <TechnoparkSubnavSection
         current="/technopark/membership"
         lang={lang}
         onNavigate={onNavigate}
-        badge={labels.badge}
-        badgeIcon={Ticket}
-        title={labels.title}
-        subtitle={labels.subtitle}
-        rightContent={
-          <div className="grid gap-4 sm:grid-cols-2 lg:w-full lg:max-w-[34rem] lg:justify-self-center">
-            {[
-              { label: labels.priceCard, value: labels.newPrice, subvalue: labels.oldPrice, badge: labels.discount },
-              { label: labels.maxDaily, value: '2 x 2h' },
-              { label: labels.maxCapacity, value: '15' },
-              { label: labels.under18, value: 'U18' },
-            ].map((card) => (
-              <TechnoparkStatCard key={card.label} value={card.value} label={card.label} subvalue={card.subvalue} badge={card.badge} />
-            ))}
-          </div>
-        }
+        title={labels.sectionTitle}
+        subtitle={labels.sectionSubtitle}
       />
 
-      <section className="py-24">
+      <section className="pt-10 pb-24 lg:pt-12 lg:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader title={labels.reserveTitle} subtitle={labels.reserveSubtitle} />
           <div className="space-y-8">
             <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-blue-950/30 via-black to-black p-7">
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 xl:items-center">

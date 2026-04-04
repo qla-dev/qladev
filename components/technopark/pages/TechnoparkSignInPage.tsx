@@ -88,9 +88,9 @@ export const TechnoparkSignInPage: React.FC<TechnoparkPageProps> = ({ lang }) =>
 
   return (
     <TechnoparkPageShell>
-      <section className="relative min-h-[calc(100vh-4rem)] overflow-hidden border-b border-white/5">
+      <section className="relative min-h-screen overflow-hidden border-b border-white/5 bg-qla-dark">
         <TechHeroBackdrop />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 lg:pt-12 lg:pb-20">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-28 lg:pb-20">
           <div className="mx-auto max-w-xl">
             <div className="rounded-[2rem] border border-white/10 bg-[#070b12]/90 p-2 shadow-[0_0_50px_rgba(0,123,255,0.18)]">
               <div className="rounded-[calc(2rem-2px)] border border-white/5 bg-gradient-to-br from-blue-950/25 via-[#06080d] to-black p-5 sm:p-6 md:p-7">

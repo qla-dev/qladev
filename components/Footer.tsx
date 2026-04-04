@@ -2,12 +2,20 @@ import React from 'react';
 import { Linkedin, Facebook, Instagram } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const logoSrc = 'https://deklarant.ai/build/images/logo-qla-dark.png';
+
   return (
     <footer className="bg-black text-white py-12 border-t border-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
         
         <div className="mb-6 md:mb-0 text-center md:text-left">
-            <h4 className="text-2xl font-mono font-bold mb-2">qla<span className="text-blue-600">.dev</span></h4>
+            <img
+              src={logoSrc}
+              alt="qla.dev"
+              className="mb-2 h-10 w-auto object-contain"
+              loading="lazy"
+              decoding="async"
+            />
             <p className="text-gray-500 text-sm">Shaping the tech of the future.</p>
         </div>
 

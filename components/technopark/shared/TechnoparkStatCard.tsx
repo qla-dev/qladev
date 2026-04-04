@@ -18,40 +18,37 @@ export const TechnoparkStatCard: React.FC<TechnoparkStatCardProps> = ({
   icon: Icon,
   className = '',
 }) => (
-  <div className={`relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 ${className}`.trim()}>
+  <div className={`relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 lg:p-6 ${className}`.trim()}>
     {Icon ? (
-      <>
-        <div className={`flex min-h-[11.5rem] flex-col justify-center ${badge ? 'pb-20' : ''}`}>
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div className="text-3xl font-black tracking-tight">{value}</div>
-              {subvalue ? <div className="mt-1 text-sm text-gray-500 line-through font-mono">{subvalue}</div> : null}
-            </div>
-            <div className="w-12 h-12 shrink-0 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-300">
-              <Icon className="w-6 h-6" />
-            </div>
-          </div>
-          <div className="mt-4 text-sm font-mono uppercase tracking-[0.16em] text-gray-400">{label}</div>
+      <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-600/20 text-blue-300 sm:right-5 sm:top-5 sm:h-12 sm:w-12">
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+      </div>
+    ) : null}
+
+    <div
+      className={`flex min-h-[10rem] sm:min-h-[11.5rem] flex-col justify-between ${
+        badge ? 'pb-14 sm:pb-16' : ''
+      } ${Icon ? 'pr-14 sm:pr-20' : ''}`}
+    >
+      <div className="pt-5 sm:pt-6">
+        <div className="text-[1.55rem] sm:text-[1.7rem] lg:text-[1.85rem] xl:text-[2rem] font-black tracking-tight leading-none whitespace-nowrap">
+          {value}
         </div>
-        {badge ? (
-          <div className="pointer-events-none absolute bottom-6 left-1/2 inline-flex max-w-[calc(100%-2rem)] -translate-x-1/2 whitespace-nowrap rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-[11px] font-mono uppercase tracking-[0.14em] leading-none text-emerald-300">
-            {badge}
-          </div>
-        ) : null}
-      </>
-    ) : (
-      <>
-        <div className={`min-h-[10rem] flex flex-col justify-center text-left ${badge ? 'pb-20' : ''}`}>
-          <div className="text-3xl font-black">{value}</div>
-          {subvalue ? <div className="mt-1 text-sm text-gray-500 line-through font-mono">{subvalue}</div> : null}
-          <div className="mt-2 text-sm font-mono uppercase tracking-[0.16em] text-gray-400">{label}</div>
+        {subvalue ? <div className="mt-1 text-xs sm:text-sm text-gray-500 line-through font-mono">{subvalue}</div> : null}
+      </div>
+
+      <div className="mt-6">
+        <div className="mb-3 h-px w-10 bg-gradient-to-r from-blue-500/70 to-transparent"></div>
+        <div className="max-w-[11rem] text-[11px] sm:text-sm font-mono uppercase tracking-[0.14em] sm:tracking-[0.16em] leading-tight text-gray-400">
+          {label}
         </div>
-        {badge ? (
-          <div className="pointer-events-none absolute bottom-6 left-1/2 inline-flex max-w-[calc(100%-2rem)] -translate-x-1/2 whitespace-nowrap rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-[11px] font-mono uppercase tracking-[0.14em] leading-none text-emerald-300">
-            {badge}
-          </div>
-        ) : null}
-      </>
-    )}
+      </div>
+    </div>
+
+    {badge ? (
+      <div className="pointer-events-none absolute bottom-4 left-1/2 inline-flex max-w-[calc(100%-2rem)] -translate-x-1/2 whitespace-nowrap rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] sm:bottom-6 sm:px-4 sm:text-[11px] font-mono uppercase tracking-[0.12em] sm:tracking-[0.14em] leading-none text-emerald-300">
+        {badge}
+      </div>
+    ) : null}
   </div>
 );

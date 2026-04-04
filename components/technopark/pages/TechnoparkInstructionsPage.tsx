@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { CalendarDays, ShieldCheck, Ticket, Users } from 'lucide-react';
 import { programs } from '../data';
 import { ProgramCard } from '../instructions/ProgramCard';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
 import { FloatingActionButton } from '../shared/FloatingActionButton';
 import { FormStatusMessage } from '../shared/FormStatusMessage';
-import { SectionHeader } from '../shared/SectionHeader';
 import { SplitActionModal } from '../shared/SplitActionModal';
-import { TechnoparkHeroSection } from '../shared/TechnoparkHeroSection';
 import { TechnoparkPageShell } from '../shared/TechnoparkPageShell';
-import { TechnoparkStatCard } from '../shared/TechnoparkStatCard';
+import { TechnoparkSubnavSection } from '../shared/TechnoparkSubnavSection';
 import type { FormStatus, ProgramLevel, TechnoparkPageProps } from '../types';
 
 export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang, onNavigate }) => {
@@ -28,11 +25,8 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
     : undefined;
 
   const labels = {
-    badge: isBs ? 'instrukcije od 17:00' : 'instruction tracks from 17:00',
-    title: isBs ? 'IZABERI PROGRAM I PRIDRUZI SE BRZO' : 'CHOOSE A TRACK AND JOIN FAST',
-    subtitle: isBs
-      ? 'Osam programa, svaki sa Beginner putem od 3 mjeseca i Advanced putem od 6 mjeseci. Sve grupe su za osobe ispod 18 godina.'
-      : 'Eight programs, each with a Beginner path of 3 months and an Advanced path of 6 months. Every group is built for participants under 18.',
+    sectionTitle: isBs ? 'PROGRAMI' : 'PROGRAMS',
+    sectionSubtitle: isBs ? 'Klik na Beginner ili Advanced odmah puni formu za prijavu.' : 'Click Beginner or Advanced and the join form updates instantly.',
     programsTitle: isBs ? 'PROGRAMI' : 'PROGRAMS',
     programsSubtitle: isBs ? 'Klik na Beginner ili Advanced odmah puni formu za prijavu.' : 'Click Beginner or Advanced and the join form updates instantly.',
     joinTitle: isBs ? 'PRIJAVA NA PROGRAM' : 'PROGRAM ENROLLMENT',
@@ -109,32 +103,17 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
   };
 
   return (
-    <TechnoparkPageShell>
-      <TechnoparkHeroSection
+    <TechnoparkPageShell showBackdrop>
+      <TechnoparkSubnavSection
         current="/technopark/instructions"
         lang={lang}
         onNavigate={onNavigate}
-        badge={labels.badge}
-        badgeIcon={CalendarDays}
-        title={labels.title}
-        subtitle={labels.subtitle}
-        rightContent={
-          <div className="grid gap-4 sm:grid-cols-2 lg:w-full lg:max-w-[34rem] lg:justify-self-center">
-            {[
-              { value: '17:00 +', label: isBs ? 'Pocetak programa' : 'Program start time', icon: CalendarDays },
-              { value: selectedProgramPrice, label: labels.programPriceLabel, subvalue: selectedProgramOldPrice, badge: selectedProgramDiscount, icon: Ticket },
-              { value: `0/${selectedProgram.seats}`, label: labels.enrolled, icon: Users },
-              { value: 'U18', label: isBs ? 'Samo za djecu i mlade' : 'For children and youth', icon: ShieldCheck },
-            ].map((card) => (
-              <TechnoparkStatCard key={card.label} value={card.value} label={card.label} subvalue={card.subvalue} badge={card.badge} icon={card.icon} />
-            ))}
-          </div>
-        }
+        title={labels.sectionTitle}
+        subtitle={labels.sectionSubtitle}
       />
 
-      <section className="py-24">
+      <section className="pt-10 pb-24 lg:pt-12 lg:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader title={labels.programsTitle} subtitle={labels.programsSubtitle} />
           <div className="space-y-6">
             <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-blue-950/30 via-black to-black p-7">
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 xl:items-center">

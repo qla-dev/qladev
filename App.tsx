@@ -107,6 +107,10 @@ const normalizeRoute = (pathname: string, basePath: string): AppRoute => {
 };
 
 const buildPath = (route: AppRoute, basePath: string) => (route === '/' ? `${basePath || ''}/` : `${basePath}${route}`);
+const getAnchorNavOffset = () => {
+  const nav = document.querySelector('nav');
+  return nav instanceof HTMLElement ? nav.offsetHeight : 80;
+};
 
 const App: React.FC = () => {
   const [siteLang, setSiteLang] = useState<Language>('en');
@@ -222,8 +226,7 @@ const App: React.FC = () => {
         return;
       }
 
-      const nav = document.querySelector('nav');
-      const navOffset = nav instanceof HTMLElement ? nav.offsetHeight + 20 : 100;
+      const navOffset = getAnchorNavOffset();
       const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - navOffset);
 
       window.scrollTo({ top, left: 0, behavior: 'smooth' });
@@ -300,8 +303,7 @@ const App: React.FC = () => {
         return false;
       }
 
-      const nav = document.querySelector('nav');
-      const navOffset = nav instanceof HTMLElement ? nav.offsetHeight + 20 : 100;
+      const navOffset = getAnchorNavOffset();
       const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - navOffset);
 
       window.scrollTo({ top, left: 0, behavior: 'smooth' });
@@ -436,7 +438,7 @@ const App: React.FC = () => {
         onNavigateHomeSection={navigateToHomeSection}
         onNavigateHomeTop={navigateToHomeTop}
         onNavigateRoute={navigateToRoute}
-        onNavigateTechnoparkPricing={() => navigateToRouteSection('/technopark', 'technopark-pricing')}
+        onNavigateTechnoparkSection={(sectionId) => navigateToRouteSection('/technopark', sectionId)}
         onPrimaryAction={handlePrimaryAction}
       />
 
