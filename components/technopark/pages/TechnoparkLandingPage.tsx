@@ -40,16 +40,17 @@ interface SpaceTab {
 export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onNavigate }) => {
   const isBs = lang === 'bs';
   const [activeSpaceTab, setActiveSpaceTab] = React.useState<SpaceTabId>('location');
+  const technoparkPeopleCount = '0/15';
 
   const labels = {
     badge: 'qla.dev technopark',
     title: isBs ? 'TECHNOPARK ZA NOVU DIGITALNU GENERACIJU' : 'TECHNOPARK FOR THE NEXT DIGITAL GENERATION',
     subtitle: isBs
-      ? 'Open space radi od 08:00 do 16:00, programi krecu od 17:00, a cijeli prostor je slozen za djecu i mlade koji zele spojiti produktivan rad, ucenje i chill.'
+      ? 'Technopark je osmisljen kao strukturiran prostor za djecu i mlade: open space dio dostupan je od 08:00 do 16:00 za produktivan rad, ucenje i boravak, dok od 17:00 pocinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
       : 'Open space runs from 08:00 to 16:00, programs start from 17:00, and the entire space is built for children and youth who want to combine productive work, learning, and chill time.',
     heroStats: {
       membership: isBs ? 'Open-space clanstvo' : 'Open-space membership',
-      instructions: isBs ? 'Mentorski programi' : 'Mentor-led instruction',
+      instructions: isBs ? 'Boot-camp programi' : 'Boot-camp programs',
       seats: isBs ? 'Mjesta u prostoru i grupi' : 'Places in the room and group',
       under18: isBs ? 'Samo za djecu i mlade' : 'For children and youth',
     },
@@ -70,7 +71,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
       },
       {
         value: '17:00 +',
-        label: isBs ? 'Instrukcije i programi' : 'Programs and instruction',
+        label: isBs ? 'Boot-camp programi' : 'Boot-camp programs',
         text: isBs ? 'Mentorski rad u manjim grupama do 15 ljudi.' : 'Mentor-led work in groups of up to 15 people.',
       },
       {
@@ -86,12 +87,12 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
     ],
     routesTitle: isBs ? 'ODABERI SVOJ ULAZ' : 'CHOOSE YOUR WAY IN',
     routesSubtitle: isBs
-      ? 'Technopark ima dva jasna ulaza: dnevni open space membership i vecernje programe od 17:00.'
-      : 'Technopark has two clear entry points: daytime open-space membership and evening programs from 17:00 onward.',
+      ? 'Technopark ima dva jasna ulaza: dnevni open space membership i vecernji boot-camp od 17:00.'
+      : 'Technopark has two clear entry points: daytime open-space membership and the evening boot-camp from 17:00 onward.',
     pricingTitle: isBs ? 'CJENOVNIK' : 'PRICING',
     pricingSubtitle: isBs
-      ? 'Sve cijene su po mjesecu. Early-bird cijene su aktivne do 1. maja, a membership i programi mogu se kombinovati kroz dodatne bundle pogodnosti.'
-      : 'All prices are per month. Early-bird prices stay active until May 1, and membership and programs can be combined through extra bundle benefits.',
+      ? 'Sve cijene su po mjesecu. Early-bird cijene su aktivne do 1. maja, a membership i boot-camp programi mogu se kombinovati kroz dodatne bundle pogodnosti.'
+      : 'All prices are per month. Early-bird prices stay active until May 1, and membership and boot-camp programs can be combined through extra bundle benefits.',
     extrasTitle: isBs ? 'DODATNE POGODNOSTI' : 'EXTRA BENEFITS',
     extrasSubtitle: isBs
       ? 'Ovo nije dio cjenovnika nego vrijednost samog prostora: limit, rooftop osjecaj, parking i dodatni membership + program bundle.'
@@ -106,13 +107,13 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
       heroCta: isBs ? 'CLANSTVO' : 'MEMBERSHIP',
     },
     programsCard: {
-      eyebrow: isBs ? 'PROGRAMI OD 17:00' : 'PROGRAMS FROM 17:00',
-      title: isBs ? 'Osam programa sa Beginner i Advanced putem' : 'Eight programs with Beginner and Advanced paths',
+      eyebrow: isBs ? 'BOOT-CAMP OD 17:00' : 'BOOT-CAMP FROM 17:00',
+      title: isBs ? 'Osam boot-camp programa sa Beginner i Advanced putem' : 'Eight boot-camp programs with Beginner and Advanced paths',
       text: isBs
         ? 'Web, app, AI, dizajn, 3D, game dev, Roblox i video editing u grupama do 15 polaznika.'
         : 'Web, app, AI, design, 3D, game dev, Roblox, and video editing in groups of up to 15 participants.',
-      cta: isBs ? 'OTVORI PROGRAME' : 'OPEN PROGRAMS',
-      heroCta: isBs ? 'INSTRUKCIJE' : 'INSTRUCTIONS',
+      cta: isBs ? 'OTVORI BOOT-CAMP' : 'OPEN BOOT-CAMP',
+      heroCta: 'BOOT-CAMP',
     },
     pricingCards: {
       membership: {
@@ -150,17 +151,17 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
       },
     },
     bundleBadge: isBs ? 'BUNDLE BONUS' : 'BUNDLE BONUS',
-    bundleTitle: isBs ? 'Membership i program mogu ici zajedno.' : 'Membership and programs can work together.',
+    bundleTitle: isBs ? 'Membership i boot-camp mogu ici zajedno.' : 'Membership and boot-camp can work together.',
     bundleText: isBs
-      ? 'Ako neko uzme open space, otvara se 40% popusta na programe. Ako krene program, open space moze ici uz 50% bundle pogodnost.'
-      : 'If someone takes open space, they unlock 40% off programs. If they start a program, open space can be added with a 50% bundle benefit.',
+      ? 'Ako neko uzme open space, otvara se 40% popusta na boot-camp programe. Ako krene boot-camp, open space moze ici uz 50% bundle pogodnost.'
+      : 'If someone takes open space, they unlock 40% off boot-camp programs. If they start boot-camp, open space can be added with a 50% bundle benefit.',
     bundleButton: isBs ? 'OTVORI CLANSTVO' : 'OPEN MEMBERSHIP',
   };
 
   const heroCards = [
     { value: '08:00 - 16:00', label: labels.heroStats.membership, icon: Clock3 },
     { value: '17:00 +', label: labels.heroStats.instructions, icon: CalendarDays },
-    { value: '15', label: labels.heroStats.seats, icon: Users },
+    { value: technoparkPeopleCount, label: labels.heroStats.seats, icon: Users },
     { value: 'U18', label: labels.heroStats.under18, icon: ShieldCheck },
   ];
 
@@ -262,6 +263,23 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
   ];
 
   const activeSpaceSection = spaceTabs.find((tab) => tab.id === activeSpaceTab) ?? spaceTabs[0];
+  const heroTitle = isBs ? (
+    <>
+      <span className="block">TECHNOPARK ZA</span>
+      <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
+        NOVU DIGITALNU
+      </span>
+      <span className="block">GENERACIJU</span>
+    </>
+  ) : (
+    <>
+      <span className="block">TECHNOPARK FOR</span>
+      <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
+        THE NEXT
+      </span>
+      <span className="block">DIGITAL GENERATION</span>
+    </>
+  );
 
   return (
     <TechnoparkPageShell>
@@ -272,27 +290,27 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         showSubnav={false}
         badge={labels.badge}
         badgeIcon={BadgeCheck}
-        title={labels.title}
+        title={heroTitle}
         subtitle={labels.subtitle}
         leftContent={
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
             <button
               type="button"
               onClick={() => onNavigate('/technopark/instructions')}
-              className="inline-flex items-center gap-2 rounded-sm bg-blue-600 px-6 py-4 text-sm font-bold font-mono uppercase tracking-[0.18em] text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_18px_rgba(37,99,235,0.55)]"
+              className="inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm bg-blue-600 px-2.5 py-3 text-[10px] font-bold font-mono uppercase tracking-[0.12em] leading-none text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_18px_rgba(37,99,235,0.55)] sm:gap-2 sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.18em]"
             >
-              <CalendarDays className="h-4 w-4" />
+              <CalendarDays className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               {labels.programsCard.heroCta}
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </button>
             <button
               type="button"
               onClick={() => onNavigate('/technopark/membership')}
-              className="inline-flex items-center gap-2 rounded-sm border border-white/15 px-6 py-4 text-sm font-bold font-mono uppercase tracking-[0.18em] text-white transition-colors hover:border-blue-500 hover:bg-blue-500/10"
+              className="inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm border border-white/15 px-2.5 py-3 text-[10px] font-bold font-mono uppercase tracking-[0.12em] leading-none text-white transition-colors hover:border-blue-500 hover:bg-blue-500/10 sm:gap-2 sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.18em]"
             >
-              <Ticket className="h-4 w-4 text-blue-300" />
+              <Ticket className="h-3.5 w-3.5 text-blue-300 sm:h-4 sm:w-4" />
               {labels.membershipCard.heroCta}
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </button>
           </div>
         }
@@ -313,23 +331,23 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
       <section id="technopark-ambijent" className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.amenitiesTitle} subtitle={labels.amenitiesSubtitle} />
-          <div id="technopark-sadrzaj" className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div id="technopark-sadrzaj" className="grid grid-cols-2 gap-5 xl:grid-cols-3">
             {amenities.map((amenity) => {
               const Icon = amenity.icon;
               return (
                 <article
                   key={isBs ? amenity.titleBs : amenity.title}
-                  className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#05070c] to-black p-8"
+                  className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#05070c] to-black p-5 sm:p-8"
                 >
-                  <div className="flex h-20 w-20">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-[1.35rem] bg-blue-600 text-white shadow-[0_0_30px_rgba(37,99,235,0.35)]">
-                      <Icon className="h-8 w-8" />
+                  <div className="flex h-14 w-14 sm:h-20 sm:w-20">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-[1rem] bg-blue-600 text-white shadow-[0_0_30px_rgba(37,99,235,0.35)] sm:h-20 sm:w-20 sm:rounded-[1.35rem]">
+                      <Icon className="h-6 w-6 sm:h-8 sm:w-8" />
                     </div>
                   </div>
-                  <h3 className="mt-8 text-3xl font-black leading-tight">
+                  <h3 className="mt-5 text-xl font-black leading-tight sm:mt-8 sm:text-3xl">
                     {isBs ? amenity.titleBs : amenity.title}
                   </h3>
-                  <p className="mt-5 text-lg text-gray-300 font-mono leading-relaxed">
+                  <p className="mt-4 text-sm text-gray-300 font-mono leading-relaxed sm:mt-5 sm:text-lg">
                     {isBs ? amenity.descriptionBs : amenity.description}
                   </p>
                 </article>

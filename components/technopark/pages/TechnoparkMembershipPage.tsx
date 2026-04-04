@@ -3,7 +3,6 @@ import { createAvailability, membershipDays, membershipSlots, slotOrder } from '
 import { MembershipDayCard } from '../membership/MembershipDayCard';
 import { MembershipSlotCard } from '../membership/MembershipSlotCard';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
-import { FloatingActionButton } from '../shared/FloatingActionButton';
 import { FormStatusMessage } from '../shared/FormStatusMessage';
 import { SplitActionModal } from '../shared/SplitActionModal';
 import { TechnoparkPageShell } from '../shared/TechnoparkPageShell';
@@ -25,12 +24,27 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
   const [status, setStatus] = useState<FormStatus | null>(null);
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const [focusedSlot, setFocusedSlot] = useState<MembershipSlotKey | null>(null);
+  const reservationFlowText: React.ReactNode = isBs ? (
+    <>
+      Izaberi dan, klikni slobodan termin i potvrdi rezervaciju. Tokom svog rezervisanog termina mozes koristiti puni
+      Technopark open-space setup:
+      <br />
+      AI coding mjesta, chill lounge, gaming zonu, snack zonu i ostale sadrzaje prostora.
+    </>
+  ) : (
+    <>
+      Choose a day, click an available slot, and confirm the reservation. During the reserved slot, members can use
+      the full Technopark open-space setup:
+      <br />
+      AI coding stations, the chill lounge, gaming zone, snack zone, and the rest of the space amenities.
+    </>
+  );
 
   const labels = {
     sectionTitle: isBs ? 'REZERVACIJE' : 'RESERVATIONS',
-    sectionSubtitle: isBs ? 'Izaberi dan, klikni slobodan termin i potvrdi rezervaciju kroz modal prozor.' : 'Choose a day, click an available slot, and confirm the reservation through the modal.',
+    sectionSubtitle: reservationFlowText,
     reserveTitle: isBs ? 'REZERVACIJE' : 'RESERVATIONS',
-    reserveSubtitle: isBs ? 'Izaberi dan, klikni slobodan termin i potvrdi rezervaciju kroz modal prozor.' : 'Choose a day, click an available slot, and confirm the reservation through the modal.',
+    reserveSubtitle: reservationFlowText,
     summaryTitle: isBs ? 'TVOJ DAN' : 'YOUR DAY',
     formTitle: isBs ? 'POTVRDI REZERVACIJU' : 'CONFIRM RESERVATION',
     formButton: isBs ? 'REZERVISI TERMINE' : 'RESERVE SLOTS',
@@ -45,8 +59,6 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
     age: isBs ? 'Godine' : 'Age',
     guardian: isBs ? 'Roditelj / kontakt telefon' : 'Guardian / contact phone',
     notes: isBs ? 'Napomena' : 'Notes',
-    floatingReserve: isBs ? 'REZERVISI' : 'RESERVE',
-    floatingHint: isBs ? 'Otvara info i prijavu' : 'Open info and booking',
     modalTitle: isBs ? 'EARLY BIRD MEMBERSHIP' : 'EARLY BIRD MEMBERSHIP',
     modalSubtitle: isBs ? 'Prijava je otvorena za u18 clanove. Zakljucaj 60 KM cijenu prije 1. maja.' : 'Enrollment is open for under-18 members. Lock the 60 KM offer before May 1.',
     promoText: isBs ? 'Mjesecni pass ukljucuje open space, gaming zonu, snack zonu i dnevni limit od 4h.' : 'The monthly pass includes open space, gaming zone, snack zone, and a 4-hour daily limit.',
@@ -58,10 +70,10 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
     oldPrice: '100 KM',
     newPrice: '60 KM',
     focusedSlot: isBs ? 'Fokus termin' : 'Focused slot',
-    crossSellBadge: isBs ? 'PROGRAM BONUS' : 'PROGRAM BONUS',
-    crossSellTitle: isBs ? 'Uz open space dobijas 40% popusta na svaki program.' : 'Get 40% off every program with open space.',
-    crossSellText: isBs ? 'Ako zelis i instrukcije od 17:00, membership ti otvara povoljniji ulaz u svaki Technopark program.' : 'If you also want 17:00 instruction tracks, membership unlocks a better entry price for every Technopark program.',
-    crossSellButton: isBs ? 'POGLEDAJ PROGRAME' : 'VIEW PROGRAMS',
+    crossSellBadge: 'BOOT-CAMP BONUS',
+    crossSellTitle: isBs ? 'Uz open space dobijas 40% popusta na svaki boot-camp program.' : 'Get 40% off every boot-camp program with open space.',
+    crossSellText: isBs ? 'Ako zelis i boot-camp od 17:00, membership ti otvara povoljniji ulaz u svaki Technopark boot-camp program.' : 'If you also want the 17:00 boot-camp, membership unlocks a better entry price for every Technopark boot-camp program.',
+    crossSellButton: isBs ? 'POGLEDAJ BOOT-CAMP' : 'VIEW BOOT-CAMP',
   };
 
   const selectedDayConfig = membershipDays.find((day) => day.key === selectedDay) ?? membershipDays[0];
@@ -197,22 +209,9 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
         subtitle={labels.sectionSubtitle}
       />
 
-      <section className="pt-10 pb-24 lg:pt-12 lg:pb-24">
+      <section className="pt-3 pb-24 lg:pt-5 lg:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-8">
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-blue-950/30 via-black to-black p-7">
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 xl:items-center">
-                <div>
-                  <div className="text-xs font-mono tracking-[0.2em] text-blue-400 uppercase">{labels.summaryTitle}</div>
-                  <div className="mt-3 text-3xl font-black">{isBs ? selectedDayConfig.labelBs : selectedDayConfig.label}</div>
-                  <div className="mt-2 text-gray-400 font-mono">{selectedSlotLabels.length ? selectedSlotLabels.join(' + ') : labels.selectedEmpty}</div>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-2xl font-black">{selectedSlots.length * 2}h</div><div className="mt-1 text-xs text-gray-500 font-mono uppercase tracking-[0.14em]">{labels.maxDaily}</div></div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-2xl font-black">{selectedDaySpots}</div><div className="mt-1 text-xs text-gray-500 font-mono uppercase tracking-[0.14em]">{labels.spotsLeft}</div></div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-2xl font-black">{labels.newPrice}</div><div className="mt-1 text-xs text-gray-500 font-mono uppercase tracking-[0.14em]">{labels.discount}</div></div>
-              </div>
-            </div>
-
+          <div className="space-y-4 lg:space-y-5">
             <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
               {membershipDays.map((day) => {
                 const totalSpots = membershipSlots.reduce((sum, slot) => sum + availability[day.key][slot.key], 0);
@@ -260,8 +259,6 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
           </div>
         </div>
       </section>
-
-      <FloatingActionButton label={labels.floatingReserve} hint={labels.floatingHint} onClick={() => openReserveModal()} />
 
       <SplitActionModal
         open={isReserveModalOpen}

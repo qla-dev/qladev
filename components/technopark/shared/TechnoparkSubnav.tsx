@@ -11,7 +11,7 @@ interface TechnoparkSubnavProps {
 export const TechnoparkSubnav: React.FC<TechnoparkSubnavProps> = ({ current, lang, onNavigate }) => {
   const items = [
     { path: '/technopark' as const, label: lang === 'bs' ? 'PREGLED' : 'OVERVIEW' },
-    { path: '/technopark/instructions' as const, label: lang === 'bs' ? 'INSTRUKCIJE' : 'INSTRUCTIONS' },
+    { path: '/technopark/instructions' as const, label: 'BOOT-CAMP' },
     { path: '/technopark/membership' as const, label: lang === 'bs' ? 'CLANSTVO' : 'MEMBERSHIP' },
   ];
 

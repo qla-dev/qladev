@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { programs } from '../data';
 import { ProgramCard } from '../instructions/ProgramCard';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
-import { FloatingActionButton } from '../shared/FloatingActionButton';
 import { FormStatusMessage } from '../shared/FormStatusMessage';
 import { SplitActionModal } from '../shared/SplitActionModal';
 import { TechnoparkPageShell } from '../shared/TechnoparkPageShell';
@@ -25,11 +24,35 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
     : undefined;
 
   const labels = {
-    sectionTitle: isBs ? 'PROGRAMI' : 'PROGRAMS',
-    sectionSubtitle: isBs ? 'Klik na Beginner ili Advanced odmah puni formu za prijavu.' : 'Click Beginner or Advanced and the join form updates instantly.',
-    programsTitle: isBs ? 'PROGRAMI' : 'PROGRAMS',
-    programsSubtitle: isBs ? 'Klik na Beginner ili Advanced odmah puni formu za prijavu.' : 'Click Beginner or Advanced and the join form updates instantly.',
-    joinTitle: isBs ? 'PRIJAVA NA PROGRAM' : 'PROGRAM ENROLLMENT',
+    sectionTitle: 'BOOT-CAMP',
+    sectionSubtitle: isBs ? (
+      <div className="space-y-4">
+        <p>
+          Boot-camp je simulacija stvarnog rada u modernim tehnoloskim kompanijama: ucesnici se dijele u timove od po
+          3 clana i kroz mentorisani rad prolaze kroz procese razvoja proizvoda, od ideje i planiranja do izrade
+          funkcionalnog krajnjeg proizvoda.
+        </p>
+        <p>
+          Svaki tim radi kao mini tech ekipa, sa jasnim ulogama, zadacima, rokovima, feedbackom i prezentacijom
+          rezultata, tako da znanje ne ostane samo teorija nego zavrsi kao konkretan output.
+        </p>
+      </div>
+    ) : (
+      <div className="space-y-4">
+        <p>
+          Boot-camp is not a classic course, but a simulation of real work inside modern tech companies: participants
+          are split into teams of 3 and move through mentored product-development processes, from idea and planning to
+          a functional end product.
+        </p>
+        <p>
+          Each team works like a mini tech unit with clear roles, tasks, deadlines, feedback, and result
+          presentations, so the learning does not stay theoretical but ends in concrete output.
+        </p>
+      </div>
+    ),
+    programsTitle: 'BOOT-CAMP',
+    programsSubtitle: isBs ? 'Boot-camp simulira stvaran product rad u timovima od 3 clana, sa ciljem da svaka grupa dodje do konkretnog krajnjeg proizvoda.' : 'Boot-camp simulates real product work in teams of 3, with the goal that each group reaches a concrete end product.',
+    joinTitle: isBs ? 'PRIJAVA NA BOOT-CAMP' : 'BOOT-CAMP ENROLLMENT',
     joinButton: isBs ? 'POSALJI PRIJAVU' : 'SEND ENROLLMENT',
     beginner: 'BEGINNER · 3M',
     advanced: 'ADVANCED · 6M',
@@ -40,11 +63,9 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
     age: isBs ? 'Godine' : 'Age',
     guardian: isBs ? 'Roditelj / kontakt telefon' : 'Guardian / contact phone',
     motivation: isBs ? 'Sta zelis nauciti?' : 'What do you want to learn?',
-    floatingJoin: isBs ? 'PRIDRUZI SE' : 'JOIN NOW',
-    floatingHint: isBs ? 'Otvara prijavu programa' : 'Open program enrollment',
-    modalTitle: 'PROGRAM ENROLLMENT',
-    modalSubtitle: isBs ? 'Odaberi smjer i posalji prijavu kroz split modal prozor.' : 'Choose a track and send the enrollment through the split modal flow.',
-    modalText: isBs ? 'Svaki program ima Beginner 3M i Advanced 6M put, sa mentorisanim radom i prostorom za showcase projekte.' : 'Each program has a Beginner 3M path and Advanced 6M path, with mentored work and room for showcase projects.',
+    modalTitle: isBs ? 'BOOT-CAMP PRIJAVA' : 'BOOT-CAMP ENROLLMENT',
+    modalSubtitle: isBs ? 'Odaberi smjer i posalji prijavu za boot-camp.' : 'Choose a track and send the boot-camp enrollment.',
+    modalText: isBs ? 'Svaki boot-camp ima Beginner i Advanced put, a rad se odvija kroz male timove, simulaciju product procesa i razvoj stvarnog finalnog rezultata koji se moze pokazati, testirati i unaprijediti.' : 'Each boot-camp has Beginner and Advanced paths, and the work runs through small teams, simulated product processes, and the development of a real final result that can be shown, tested, and improved.',
     selectedProgram: isBs ? 'Odabrani program' : 'Selected program',
     enrolled: isBs ? 'upisano / limit' : 'enrolled / cap',
     programPriceLabel: isBs ? 'mjesecna cijena kursa' : 'monthly course price',
@@ -57,8 +78,8 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
   const beginnerLabel = isBs ? 'BEGINNER · 3 MJESECA' : 'BEGINNER · 3 MONTHS';
   const advancedLabel = isBs ? 'ADVANCED · 6 MJESECI' : 'ADVANCED · 6 MONTHS';
   const modalText = isBs
-    ? 'Svaki program ima Beginner put od 3 mjeseca i Advanced put od 6 mjeseci, sa mentorisanim radom i prostorom za showcase projekte.'
-    : 'Each program has a Beginner path of 3 months and an Advanced path of 6 months, with mentored work and room for showcase projects.';
+    ? 'Svaki boot-camp ima Beginner put od 3 mjeseca i Advanced put od 6 mjeseci, uz rad u timovima od 3 clana, simulaciju product procesa i prostor da ideja zavrsi kao konkretan, pokaziv krajnji proizvod.'
+    : 'Each boot-camp has a 3-month Beginner path and a 6-month Advanced path, with work in teams of 3, simulated product processes, and enough room for an idea to become a concrete final product.';
   const selectedDuration = selectedLevel === 'beginner'
     ? (isBs ? '3 mjeseca' : '3 months')
     : (isBs ? '6 mjeseci' : '6 months');
@@ -84,7 +105,7 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
     const age = Number(formData.age);
 
     if (!formData.fullName || !formData.guardianContact || !formData.email || !formData.motivation || Number.isNaN(age)) {
-      setStatus({ type: 'error', message: isBs ? 'Popuni sva polja prije prijave na program.' : 'Fill in all fields before sending the enrollment.' });
+      setStatus({ type: 'error', message: isBs ? 'Popuni sva polja prije prijave na boot-camp.' : 'Fill in all fields before sending the boot-camp enrollment.' });
       return;
     }
 
@@ -112,22 +133,9 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
         subtitle={labels.sectionSubtitle}
       />
 
-      <section className="pt-10 pb-24 lg:pt-12 lg:pb-24">
+      <section className="pt-3 pb-24 lg:pt-5 lg:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-6">
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-blue-950/30 via-black to-black p-7">
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 xl:items-center">
-                <div>
-                  <div className="text-xs font-mono tracking-[0.2em] text-blue-400 uppercase">{labels.selectedTrack}</div>
-                  <div className="mt-3 text-3xl font-black">{isBs ? selectedProgram.titleBs : selectedProgram.title}</div>
-                  <div className="mt-2 text-gray-400 font-mono">{selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}</div>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-2xl font-black">{selectedDuration}</div><div className="mt-1 text-xs text-gray-500 font-mono uppercase tracking-[0.14em]">{selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}</div></div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-2xl font-black">0/{selectedProgram.seats}</div><div className="mt-1 text-xs text-gray-500 font-mono uppercase tracking-[0.14em]">{labels.enrolled}</div></div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-2xl font-black">{isBs ? selectedProgram.scheduleBs : selectedProgram.schedule}</div><div className="mt-1 text-xs text-gray-500 font-mono uppercase tracking-[0.14em]">{labels.under18}</div></div>
-              </div>
-            </div>
-
+          <div className="space-y-4 lg:space-y-5">
             <div className="space-y-5">
               {programs.map((program) => (
                 <ProgramCard
@@ -147,8 +155,6 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
           </div>
         </div>
       </section>
-
-      <FloatingActionButton label={labels.floatingJoin} hint={labels.floatingHint} onClick={() => setIsJoinModalOpen(true)} />
 
       <SplitActionModal
         open={isJoinModalOpen}
@@ -187,8 +193,8 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
             ))}
           </select>
           <div className="grid grid-cols-2 gap-3">
-            <button type="button" onClick={() => setSelectedLevel('beginner')} className={`px-4 py-3 rounded-2xl font-bold font-mono text-xs tracking-[0.16em] uppercase transition-colors ${selectedLevel === 'beginner' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{beginnerLabel}</button>
-            <button type="button" onClick={() => setSelectedLevel('advanced')} className={`px-4 py-3 rounded-2xl font-bold font-mono text-xs tracking-[0.16em] uppercase transition-colors ${selectedLevel === 'advanced' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{advancedLabel}</button>
+            <button type="button" onClick={() => setSelectedLevel('beginner')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'beginner' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{beginnerLabel}</button>
+            <button type="button" onClick={() => setSelectedLevel('advanced')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'advanced' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{advancedLabel}</button>
           </div>
           <input value={formData.fullName} onChange={(event) => setField('fullName', event.target.value)} placeholder={labels.name} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
           <div className="grid md:grid-cols-2 gap-4">

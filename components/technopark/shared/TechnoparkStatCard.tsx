@@ -18,15 +18,15 @@ export const TechnoparkStatCard: React.FC<TechnoparkStatCardProps> = ({
   icon: Icon,
   className = '',
 }) => (
-  <div className={`relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 lg:p-6 ${className}`.trim()}>
+  <div className={`relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:aspect-auto sm:p-5 lg:p-6 ${className}`.trim()}>
     {Icon ? (
-      <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-600/20 text-blue-300 sm:right-5 sm:top-5 sm:h-12 sm:w-12">
+      <div className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-600/20 text-blue-300 sm:bottom-5 sm:right-5 sm:h-12 sm:w-12">
         <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
       </div>
     ) : null}
 
-    <div
-      className={`flex min-h-[10rem] sm:min-h-[11.5rem] flex-col justify-between ${
+      <div
+      className={`flex h-full min-h-0 sm:min-h-[11.5rem] flex-col justify-between ${
         badge ? 'pb-14 sm:pb-16' : ''
       } ${Icon ? 'pr-14 sm:pr-20' : ''}`}
     >

@@ -74,7 +74,7 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
               event.stopPropagation();
               onChooseTrack(program.id, 'beginner');
             }}
-            className="px-4 py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold font-mono text-xs tracking-[0.16em] uppercase transition-colors"
+            className="px-3 py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors"
           >
             {beginnerLabel}
           </button>
@@ -83,7 +83,7 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
               event.stopPropagation();
               onChooseTrack(program.id, 'advanced');
             }}
-            className="px-4 py-4 rounded-2xl border border-white/15 hover:border-blue-500 text-white font-bold font-mono text-xs tracking-[0.16em] uppercase transition-colors"
+            className="px-3 py-4 rounded-2xl border border-white/15 hover:border-blue-500 text-white font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors"
           >
             {advancedLabel}
           </button>

@@ -44,8 +44,8 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
       description: 'Technopark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.',
     },
     '/technopark/instructions': {
-      title: 'qla.dev Technopark - Programs and Instructions',
-      description: 'Explore Technopark instruction tracks across web, app, AI, 3D, game development, Roblox, design, and video editing.',
+      title: 'qla.dev Technopark - Boot-camp Programs',
+      description: 'Explore Technopark boot-camp programs across web, app, AI, 3D, game development, Roblox, design, and video editing.',
     },
     '/technopark/membership': {
       title: 'qla.dev Technopark - Membership Reservations',
@@ -66,8 +66,8 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
       description: 'Technopark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.',
     },
     '/technopark/instructions': {
-      title: 'qla.dev Technopark - Programi i instrukcije',
-      description: 'Pregledaj Technopark instrukcije za web, app, AI, 3D, game development, Roblox, dizajn i video editing.',
+      title: 'qla.dev Technopark - Boot-camp programi',
+      description: 'Pregledaj Technopark boot-camp programe za web, app, AI, 3D, game development, Roblox, dizajn i video editing.',
     },
     '/technopark/membership': {
       title: 'qla.dev Technopark - Membership rezervacije',

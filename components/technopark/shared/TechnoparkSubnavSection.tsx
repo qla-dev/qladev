@@ -8,7 +8,7 @@ interface TechnoparkSubnavSectionProps {
   lang: Language;
   onNavigate: (path: TechnoparkRoute) => void;
   title?: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
 }
 
 export const TechnoparkSubnavSection: React.FC<TechnoparkSubnavSectionProps> = ({
@@ -18,7 +18,7 @@ export const TechnoparkSubnavSection: React.FC<TechnoparkSubnavSectionProps> = (
   title,
   subtitle,
 }) => (
-  <section className="relative overflow-hidden border-b border-white/5">
+  <section className="relative overflow-hidden">
     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-6 lg:pt-28 lg:pb-8">
       <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
         {title ? (
@@ -34,9 +34,9 @@ export const TechnoparkSubnavSection: React.FC<TechnoparkSubnavSectionProps> = (
         </div>
       </div>
       {subtitle ? (
-        <p className="mt-6 max-w-4xl text-base text-blue-100 font-mono leading-relaxed md:text-lg">
+        <div className="mt-6 w-full text-base text-blue-100 font-mono leading-relaxed md:text-lg">
           {subtitle}
-        </p>
+        </div>
       ) : null}
     </div>
   </section>

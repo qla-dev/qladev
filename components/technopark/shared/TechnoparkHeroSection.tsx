@@ -12,7 +12,7 @@ interface TechnoparkHeroSectionProps {
   showSubnav?: boolean;
   badge: string;
   badgeIcon: LucideIcon;
-  title: string;
+  title: React.ReactNode;
   subtitle: string;
   rightContent: React.ReactNode;
   leftContent?: React.ReactNode;
@@ -33,7 +33,7 @@ export const TechnoparkHeroSection: React.FC<TechnoparkHeroSectionProps> = ({
   subtitle,
   rightContent,
   leftContent,
-  containerClassName = 'relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-28 lg:pb-16',
+  containerClassName = 'relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12 sm:pb-16 lg:pt-28 lg:pb-16',
   gridClassName = 'grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-center',
   titleClassName = 'mt-6 text-5xl md:text-6xl font-black tracking-tight leading-none',
   subtitleClassName = 'mt-6 max-w-3xl text-lg text-gray-300 font-mono leading-relaxed border-l-2 border-blue-500 pl-6',
