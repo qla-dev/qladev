@@ -1,17 +1,18 @@
 RewriteEngine On
 
-# Canonicalize old /dist URLs back to the domain root.
-RewriteRule ^dist/?$ / [R=302,L]
-RewriteRule ^dist/(.+)$ /$1 [R=302,L]
+# Prevent rewrite loops once the request is already inside /dist.
+RewriteRule ^dist/ - [L]
 
-# Serve the built app from /dist while the repo root remains the Apache document root.
+# Always serve the built entry file instead of the Vite source index.html.
+RewriteRule ^index\.html$ dist/index.html [L]
+
+# Root domain should open the built app.
 RewriteRule ^$ dist/index.html [L]
 
-# If the requested file or directory exists inside /dist, serve it from there.
-RewriteCond %{REQUEST_URI} !^/dist/
+# If the requested path exists inside /dist, serve that built file or directory.
 RewriteCond %{DOCUMENT_ROOT}/dist/$1 -f [OR]
 RewriteCond %{DOCUMENT_ROOT}/dist/$1 -d
-RewriteRule ^(.*)$ dist/$1 [L]
+RewriteRule ^(.+)$ dist/$1 [L]
 
-# SPA fallback for client-side routes such as /technopark and /technopark/membership.
+# SPA fallback for client-side routes such as /technopark and nested pages.
 RewriteRule ^ dist/index.html [L]
