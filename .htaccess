@@ -1,7 +1,17 @@
 RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
+# Canonicalize old /dist URLs back to the domain root.
+RewriteRule ^dist/?$ / [R=302,L]
+RewriteRule ^dist/(.+)$ /$1 [R=302,L]
 
-RewriteRule . index.html [L]
+# Serve the built app from /dist while the repo root remains the Apache document root.
+RewriteRule ^$ dist/index.html [L]
+
+# If the requested file or directory exists inside /dist, serve it from there.
+RewriteCond %{REQUEST_URI} !^/dist/
+RewriteCond %{DOCUMENT_ROOT}/dist/$1 -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/dist/$1 -d
+RewriteRule ^(.*)$ dist/$1 [L]
+
+# SPA fallback for client-side routes such as /technopark and /technopark/membership.
+RewriteRule ^ dist/index.html [L]
