@@ -28,13 +28,13 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     sectionSubtitle: isBs ? (
       <div className="space-y-4">
         <p>
-          Boot-camp je simulacija stvarnog rada u modernim tehnoloskim kompanijama: ucesnici se dijele u timove od po
-          3 clana i kroz mentorisani rad prolaze kroz procese razvoja proizvoda, od ideje i planiranja do izrade
+          Boot-camp je simulacija stvarnog rada u modernim tehnološkim kompanijama: učesnici se dijele u timove od po
+          3 člana i kroz mentorisani rad prolaze kroz procese razvoja proizvoda, od ideje i planiranja do izrade
           funkcionalnog krajnjeg proizvoda.
         </p>
         <p>
           Svaki tim radi kao mini tech ekipa, sa jasnim ulogama, zadacima, rokovima, feedbackom i prezentacijom
-          rezultata, tako da znanje ne ostane samo teorija nego zavrsi kao konkretan output.
+          rezultata, tako da znanje ne ostane samo teorija nego završi kao konkretan output.
         </p>
       </div>
     ) : (

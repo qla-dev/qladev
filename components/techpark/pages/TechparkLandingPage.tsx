@@ -46,7 +46,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     badge: 'qla.dev techpark',
     title: isBs ? 'TECHPARK ZA NOVU DIGITALNU GENERACIJU' : 'TECHPARK FOR THE NEXT DIGITAL GENERATION',
     subtitle: isBs
-      ? 'Techpark je osmisljen kao strukturiran prostor za djecu i mlade: open space dio dostupan je od 08:00 do 16:00 za produktivan rad, ucenje i boravak, dok od 17:00 pocinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
+      ? 'Techpark je osmišljen kao strukturiran prostor za djecu i mlade: open-space dio dostupan je od 08:00 do 16:00 za produktivan rad u tech okruženju, učenje i boravak, dok od 17:00 počinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
       : 'Open space runs from 08:00 to 16:00, programs start from 17:00, and the entire space is built for children and youth who want to combine productive work, learning, and chill time.',
     heroStats: {
       membership: isBs ? 'Open-space clanstvo' : 'Open-space membership',
@@ -54,9 +54,9 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       seats: isBs ? 'Mjesta u prostoru i grupi' : 'Places in the room and group',
       under18: isBs ? 'Samo za djecu i mlade' : 'For children and youth',
     },
-    amenitiesTitle: isBs ? 'AMBIJENT + SADRZAJ' : 'AMBIENT + AMENITIES',
+    amenitiesTitle: isBs ? 'AMBIJENT + SADRŽAJ' : 'AMBIENT + AMENITIES',
     amenitiesSubtitle: isBs
-      ? '15-place coding + chill lounge, PS5, VR, 3D printer, rooftop lokacija i sve ostalo sto Techpark cini mjestom u koje se ulazi da se napravi nesto dobro.'
+      ? '15-place coding + chill lounge, PS5, VR, 3D printer, rooftop lokacija i sve ostalo što Techpark čini mjestom u koje se ulazi da se napravi nešto dobro.'
       : 'A 15-place coding + chill lounge, PS5, VR, 3D printer, rooftop location, and everything else that makes Techpark a space you enter to build something meaningful.',
     spaceTitle: isBs ? 'PROSTOR + LOKACIJA' : 'SPACE + LOCATION',
     spaceSubtitle: isBs

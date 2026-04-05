@@ -26,10 +26,10 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
   const [focusedSlot, setFocusedSlot] = useState<MembershipSlotKey | null>(null);
   const reservationFlowText: React.ReactNode = isBs ? (
     <>
-      Izaberi dan, klikni slobodan termin i potvrdi rezervaciju. Tokom svog rezervisanog termina mozes koristiti puni
+      Izaberi dan, klikni slobodan termin i potvrdi rezervaciju. Tokom svog rezervisanog termina možeš koristiti puni
       Techpark open-space setup:
       <br />
-      AI coding mjesta, chill lounge, gaming zonu, snack zonu i ostale sadrzaje prostora.
+      AI coding mjesta, chill lounge, gaming zonu, snack zonu i ostale sadržaje prostora.
     </>
   ) : (
     <>

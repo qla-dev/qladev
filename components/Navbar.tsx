@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
   const techparkNavLinks = [
     { id: 'techpark-ambijent', label: lang === 'bs' ? 'AMBIJENT' : 'AMBIENT' },
-    { id: 'techpark-sadrzaj', label: lang === 'bs' ? 'SADRZAJ' : 'AMENITIES' },
+    { id: 'techpark-sadrzaj', label: lang === 'bs' ? 'SADRŽAJ' : 'AMENITIES' },
     { id: 'techpark-lokacija', label: lang === 'bs' ? 'LOKACIJA' : 'LOCATION' },
     { id: 'techpark-pricing', label: lang === 'bs' ? 'CJENOVNIK' : 'PRICING' },
   ];
