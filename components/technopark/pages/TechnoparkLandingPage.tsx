@@ -179,7 +179,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
       title: labels.programsCard.title,
       text: labels.programsCard.text,
       cta: labels.programsCard.cta,
-      route: '/technopark/instructions' as const,
+      route: '/technopark/boot-camp' as const,
       highlight: isBs ? 'OD 180 KM / MJ.' : 'FROM 180 KM / MO.',
     },
   ];
@@ -296,7 +296,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
           <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
             <button
               type="button"
-              onClick={() => onNavigate('/technopark/instructions')}
+              onClick={() => onNavigate('/technopark/boot-camp')}
               className="inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm bg-blue-600 px-2.5 py-3 text-[10px] font-bold font-mono uppercase tracking-[0.12em] leading-none text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_18px_rgba(37,99,235,0.55)] sm:gap-2 sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.18em]"
             >
               <CalendarDays className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -475,11 +475,11 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
               },
               {
                 ...labels.pricingCards.beginnerPrograms,
-                onClick: () => onNavigate('/technopark/instructions'),
+                onClick: () => onNavigate('/technopark/boot-camp'),
               },
               {
                 ...labels.pricingCards.advancedPrograms,
-                onClick: () => onNavigate('/technopark/instructions'),
+                onClick: () => onNavigate('/technopark/boot-camp'),
               },
             ].map((card) => (
               <div

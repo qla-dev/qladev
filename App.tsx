@@ -20,11 +20,14 @@ import {
 import { TEXT_CONTENT } from './constants';
 import { Language } from './types';
 
-type AppRoute = '/' | '/technopark' | '/technopark/instructions' | '/technopark/membership' | '/technopark/sign-in';
+type AppRoute = '/' | '/technopark' | '/technopark/boot-camp' | '/technopark/membership' | '/technopark/sign-in';
 type TransitionDirection = 'forward' | 'backward' | 'auth';
 type RouteTransitionPhase = 'steady' | 'exit' | 'enter';
 
-const ROUTES: AppRoute[] = ['/', '/technopark', '/technopark/instructions', '/technopark/membership', '/technopark/sign-in'];
+const ROUTES: AppRoute[] = ['/', '/technopark', '/technopark/boot-camp', '/technopark/membership', '/technopark/sign-in'];
+const LEGACY_ROUTE_REDIRECTS: Record<string, AppRoute> = {
+  '/technopark/instructions': '/technopark/boot-camp',
+};
 
 const trimTrailingSlash = (value: string) => (value.length > 1 && value.endsWith('/') ? value.slice(0, -1) : value);
 
@@ -43,7 +46,7 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
       title: 'qla.dev Technopark - Creative Tech Space for Under 18',
       description: 'Technopark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.',
     },
-    '/technopark/instructions': {
+    '/technopark/boot-camp': {
       title: 'qla.dev Technopark - Boot-camp Programs',
       description: 'Explore Technopark boot-camp programs across web, app, AI, 3D, game development, Roblox, design, and video editing.',
     },
@@ -65,7 +68,7 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
       title: 'qla.dev Technopark - Kreativni tech prostor za djecu i mlade',
       description: 'Technopark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.',
     },
-    '/technopark/instructions': {
+    '/technopark/boot-camp': {
       title: 'qla.dev Technopark - Boot-camp programi',
       description: 'Pregledaj Technopark boot-camp programe za web, app, AI, 3D, game development, Roblox, dizajn i video editing.',
     },
@@ -82,7 +85,8 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
 
 const detectBasePath = (pathname: string) => {
   const cleanPath = trimTrailingSlash(pathname);
-  const matchedRoute = ROUTES.filter((route) => route !== '/').find(
+  const routeMatchers = [...ROUTES.filter((route) => route !== '/'), ...Object.keys(LEGACY_ROUTE_REDIRECTS)];
+  const matchedRoute = routeMatchers.find(
     (route) => cleanPath === route || cleanPath.endsWith(route)
   );
 
@@ -98,12 +102,22 @@ const normalizeRoute = (pathname: string, basePath: string): AppRoute => {
   const pathWithoutBase = basePath && cleanPath.startsWith(basePath)
     ? cleanPath.slice(basePath.length) || '/'
     : cleanPath || '/';
+  const canonicalPath = LEGACY_ROUTE_REDIRECTS[pathWithoutBase] ?? pathWithoutBase;
 
-  if (pathWithoutBase === '' || pathWithoutBase === '/') {
+  if (canonicalPath === '' || canonicalPath === '/') {
     return '/';
   }
 
-  return ROUTES.includes(pathWithoutBase as AppRoute) ? (pathWithoutBase as AppRoute) : '/';
+  return ROUTES.includes(canonicalPath as AppRoute) ? (canonicalPath as AppRoute) : '/';
+};
+
+const getLegacyRedirectRoute = (pathname: string, basePath: string) => {
+  const cleanPath = trimTrailingSlash(pathname);
+  const pathWithoutBase = basePath && cleanPath.startsWith(basePath)
+    ? cleanPath.slice(basePath.length) || '/'
+    : cleanPath || '/';
+
+  return LEGACY_ROUTE_REDIRECTS[pathWithoutBase] ?? null;
 };
 
 const buildPath = (route: AppRoute, basePath: string) => (route === '/' ? `${basePath || ''}/` : `${basePath}${route}`);
@@ -142,7 +156,18 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const legacyRedirectRoute = getLegacyRedirectRoute(window.location.pathname, basePath);
+    if (legacyRedirectRoute) {
+      window.history.replaceState({}, '', buildPath(legacyRedirectRoute, basePath));
+    }
+  }, [basePath]);
+
+  useEffect(() => {
     const handlePopState = () => {
+      const legacyRedirectRoute = getLegacyRedirectRoute(window.location.pathname, basePath);
+      if (legacyRedirectRoute) {
+        window.history.replaceState({}, '', buildPath(legacyRedirectRoute, basePath));
+      }
       setRoute(normalizeRoute(window.location.pathname, basePath));
       setPendingRouteSection(null);
     };
@@ -370,7 +395,7 @@ const App: React.FC = () => {
       return <TechnoparkLandingPage lang={lang} onNavigate={navigateToRoute} />;
     }
 
-    if (displayRoute === '/technopark/instructions') {
+    if (displayRoute === '/technopark/boot-camp') {
       return <TechnoparkInstructionsPage lang={lang} onNavigate={navigateToRoute} />;
     }
 

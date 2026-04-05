@@ -126,7 +126,7 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
   return (
     <TechnoparkPageShell showBackdrop>
       <TechnoparkSubnavSection
-        current="/technopark/instructions"
+        current="/technopark/boot-camp"
         lang={lang}
         onNavigate={onNavigate}
         title={labels.sectionTitle}

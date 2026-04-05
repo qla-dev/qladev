@@ -1,7 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 import { Language } from '../../types';
 
-export type TechnoparkRoute = '/technopark' | '/technopark/instructions' | '/technopark/membership' | '/technopark/sign-in';
+export type TechnoparkRoute = '/technopark' | '/technopark/boot-camp' | '/technopark/membership' | '/technopark/sign-in';
 
 export type MembershipDayKey =
   | 'monday'

@@ -134,7 +134,7 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
 
   const openProgramsOffer = () => {
     setIsReserveModalOpen(false);
-    onNavigate('/technopark/instructions');
+    onNavigate('/technopark/boot-camp');
   };
 
   const handleReservation = (event: React.FormEvent<HTMLFormElement>) => {

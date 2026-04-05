@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# Redirect the old boot-camp URL to the new canonical route.
+RewriteRule ^technopark/instructions/?$ /technopark/boot-camp [R=302,L]
+
 # Prevent rewrite loops once the request is already inside /dist.
 RewriteRule ^dist/ - [L]
 

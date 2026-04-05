@@ -36,14 +36,23 @@
           return value.length > 1 && value.endsWith('/') ? value.slice(0, -1) : value;
         };
 
-        var routes = ['/', '/technopark', '/technopark/instructions', '/technopark/membership', '/technopark/sign-in'];
+        var routes = ['/', '/technopark', '/technopark/boot-camp', '/technopark/membership', '/technopark/sign-in'];
+        var legacyRouteRedirects = {
+          '/technopark/instructions': '/technopark/boot-camp'
+        };
         var cleanPath = trimTrailingSlash(window.location.pathname);
         var currentRoute = '/';
 
-        for (var i = 1; i < routes.length; i += 1) {
-          if (cleanPath === routes[i] || cleanPath.endsWith(routes[i])) {
-            currentRoute = routes[i];
-            break;
+        if (legacyRouteRedirects[cleanPath]) {
+          currentRoute = legacyRouteRedirects[cleanPath];
+        }
+
+        if (currentRoute === '/') {
+          for (var i = 1; i < routes.length; i += 1) {
+            if (cleanPath === routes[i] || cleanPath.endsWith(routes[i])) {
+              currentRoute = routes[i];
+              break;
+            }
           }
         }
 
@@ -58,7 +67,7 @@
               title: 'qla.dev Technopark - Creative Tech Space for Under 18',
               description: 'Technopark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.'
             },
-            '/technopark/instructions': {
+            '/technopark/boot-camp': {
               title: 'qla.dev Technopark - Boot-camp Programs',
               description: 'Explore Technopark boot-camp programs across web, app, AI, 3D, game development, Roblox, design, and video editing.'
             },
@@ -80,7 +89,7 @@
               title: 'qla.dev Technopark - Kreativni tech prostor za djecu i mlade',
               description: 'Technopark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.'
             },
-            '/technopark/instructions': {
+            '/technopark/boot-camp': {
               title: 'qla.dev Technopark - Boot-camp programi',
               description: 'Pregledaj Technopark boot-camp programe za web, app, AI, 3D, game development, Roblox, dizajn i video editing.'
             },

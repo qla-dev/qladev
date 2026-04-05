@@ -10,7 +10,7 @@ interface NavbarProps {
   primaryActionLabel: string;
   onNavigateHomeSection: (id: string) => void;
   onNavigateHomeTop: () => void;
-  onNavigateRoute: (path: '/technopark' | '/technopark/instructions' | '/technopark/membership' | '/technopark/sign-in') => void;
+  onNavigateRoute: (path: '/technopark' | '/technopark/boot-camp' | '/technopark/membership' | '/technopark/sign-in') => void;
   onNavigateTechnoparkSection: (sectionId: string) => void;
   onPrimaryAction: () => void;
 }
