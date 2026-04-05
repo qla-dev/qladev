@@ -1,7 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 import { Language } from '../../types';
 
-export type TechnoparkRoute = '/technopark' | '/technopark/boot-camp' | '/technopark/membership' | '/technopark/sign-in';
+export type TechparkRoute = '/techpark' | '/techpark/boot-camp' | '/techpark/membership' | '/techpark/sign-in';
 
 export type MembershipDayKey =
   | 'monday'
@@ -15,9 +15,9 @@ export type MembershipDayKey =
 export type MembershipSlotKey = 'slot1' | 'slot2' | 'slot3' | 'slot4';
 export type ProgramLevel = 'beginner' | 'advanced';
 
-export interface TechnoparkPageProps {
+export interface TechparkPageProps {
   lang: Language;
-  onNavigate: (path: TechnoparkRoute) => void;
+  onNavigate: (path: TechparkRoute) => void;
 }
 
 export interface Amenity {

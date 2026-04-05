@@ -1,17 +1,17 @@
 import React from 'react';
 import type { Language } from '../../../types';
-import type { TechnoparkRoute } from '../types';
-import { TechnoparkSubnav } from './TechnoparkSubnav';
+import type { TechparkRoute } from '../types';
+import { TechparkSubnav } from './TechparkSubnav';
 
-interface TechnoparkSubnavSectionProps {
-  current: TechnoparkRoute;
+interface TechparkSubnavSectionProps {
+  current: TechparkRoute;
   lang: Language;
-  onNavigate: (path: TechnoparkRoute) => void;
+  onNavigate: (path: TechparkRoute) => void;
   title?: string;
   subtitle?: React.ReactNode;
 }
 
-export const TechnoparkSubnavSection: React.FC<TechnoparkSubnavSectionProps> = ({
+export const TechparkSubnavSection: React.FC<TechparkSubnavSectionProps> = ({
   current,
   lang,
   onNavigate,
@@ -30,7 +30,7 @@ export const TechnoparkSubnavSection: React.FC<TechnoparkSubnavSectionProps> = (
           </div>
         ) : null}
         <div className={title ? 'order-1 xl:order-2 xl:flex xl:justify-end' : ''}>
-          <TechnoparkSubnav current={current} lang={lang} onNavigate={onNavigate} />
+          <TechparkSubnav current={current} lang={lang} onNavigate={onNavigate} />
         </div>
       </div>
       {subtitle ? (

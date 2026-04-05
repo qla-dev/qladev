@@ -1,7 +1,12 @@
 RewriteEngine On
 
-# Redirect the old boot-camp URL to the new canonical route.
-RewriteRule ^technopark/instructions/?$ /technopark/boot-camp [R=302,L]
+# Redirect legacy Technopark and deprecated instruction URLs to the new Techpark routes.
+RewriteRule ^technopark/instructions/?$ /techpark/boot-camp [R=301,L]
+RewriteRule ^technopark/boot-camp/?$ /techpark/boot-camp [R=301,L]
+RewriteRule ^technopark/membership/?$ /techpark/membership [R=301,L]
+RewriteRule ^technopark/sign-in/?$ /techpark/sign-in [R=301,L]
+RewriteRule ^technopark/?$ /techpark [R=301,L]
+RewriteRule ^techpark/instructions/?$ /techpark/boot-camp [R=301,L]
 
 # Prevent rewrite loops once the request is already inside /dist.
 RewriteRule ^dist/ - [L]
@@ -17,5 +22,5 @@ RewriteCond %{DOCUMENT_ROOT}/dist/$1 -f [OR]
 RewriteCond %{DOCUMENT_ROOT}/dist/$1 -d
 RewriteRule ^(.+)$ dist/$1 [L]
 
-# SPA fallback for client-side routes such as /technopark and nested pages.
+# SPA fallback for client-side routes such as /techpark and nested pages.
 RewriteRule ^ dist/index.html [L]

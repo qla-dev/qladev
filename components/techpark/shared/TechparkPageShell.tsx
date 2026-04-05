@@ -1,12 +1,12 @@
 import React from 'react';
 import { TechHeroBackdrop } from '../../TechHeroBackdrop';
 
-interface TechnoparkPageShellProps {
+interface TechparkPageShellProps {
   children: React.ReactNode;
   showBackdrop?: boolean;
 }
 
-export const TechnoparkPageShell: React.FC<TechnoparkPageShellProps> = ({ children, showBackdrop = false }) => (
+export const TechparkPageShell: React.FC<TechparkPageShellProps> = ({ children, showBackdrop = false }) => (
   <div className="relative overflow-hidden bg-qla-dark text-white">
     {showBackdrop ? (
       <div className="pointer-events-none absolute inset-0 opacity-90">

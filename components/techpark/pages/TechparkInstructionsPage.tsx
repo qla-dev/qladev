@@ -4,11 +4,11 @@ import { ProgramCard } from '../instructions/ProgramCard';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
 import { FormStatusMessage } from '../shared/FormStatusMessage';
 import { SplitActionModal } from '../shared/SplitActionModal';
-import { TechnoparkPageShell } from '../shared/TechnoparkPageShell';
-import { TechnoparkSubnavSection } from '../shared/TechnoparkSubnavSection';
-import type { FormStatus, ProgramLevel, TechnoparkPageProps } from '../types';
+import { TechparkPageShell } from '../shared/TechparkPageShell';
+import { TechparkSubnavSection } from '../shared/TechparkSubnavSection';
+import type { FormStatus, ProgramLevel, TechparkPageProps } from '../types';
 
-export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang, onNavigate }) => {
+export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, onNavigate }) => {
   const isBs = lang === 'bs';
   const [selectedProgramId, setSelectedProgramId] = useState(programs[0].id);
   const [selectedLevel, setSelectedLevel] = useState<ProgramLevel>('beginner');
@@ -93,7 +93,7 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
 
   const openMembershipOffer = () => {
     setIsJoinModalOpen(false);
-    onNavigate('/technopark/membership');
+    onNavigate('/techpark/membership');
   };
 
   const setField = (field: keyof typeof formData, value: string) => {
@@ -124,9 +124,9 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
   };
 
   return (
-    <TechnoparkPageShell showBackdrop>
-      <TechnoparkSubnavSection
-        current="/technopark/boot-camp"
+    <TechparkPageShell showBackdrop>
+      <TechparkSubnavSection
+        current="/techpark/boot-camp"
         lang={lang}
         onNavigate={onNavigate}
         title={labels.sectionTitle}
@@ -210,6 +210,6 @@ export const TechnoparkInstructionsPage: React.FC<TechnoparkPageProps> = ({ lang
           </div>
         </form>
       </SplitActionModal>
-    </TechnoparkPageShell>
+    </TechparkPageShell>
   );
 };

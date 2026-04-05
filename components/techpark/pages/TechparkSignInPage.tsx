@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, ShieldCheck } from 'lucide-react';
 import { TechHeroBackdrop } from '../../TechHeroBackdrop';
 import { FormStatusMessage } from '../shared/FormStatusMessage';
-import { TechnoparkPageShell } from '../shared/TechnoparkPageShell';
-import type { FormStatus, TechnoparkPageProps } from '../types';
+import { TechparkPageShell } from '../shared/TechparkPageShell';
+import type { FormStatus, TechparkPageProps } from '../types';
 
 type SignInStep = 'member' | 'pin';
 
 const PIN_LENGTH = 4;
 
-export const TechnoparkSignInPage: React.FC<TechnoparkPageProps> = ({ lang }) => {
+export const TechparkSignInPage: React.FC<TechparkPageProps> = ({ lang }) => {
   const isBs = lang === 'bs';
   const [step, setStep] = useState<SignInStep>('member');
   const [memberId, setMemberId] = useState('');
@@ -17,7 +17,7 @@ export const TechnoparkSignInPage: React.FC<TechnoparkPageProps> = ({ lang }) =>
   const [status, setStatus] = useState<FormStatus | null>(null);
 
   const copy = {
-    badge: isBs ? 'technopark prijava' : 'technopark sign in',
+    badge: isBs ? 'techpark prijava' : 'techpark sign in',
     title: isBs ? 'PRIJAVA CLANA' : 'MEMBER SIGN IN',
     subtitle: isBs ? 'Prvo korisnicko ime, zatim PIN preko ekrana.' : 'First the username, then the PIN on screen.',
     memberStep: isBs ? 'KORAK 1' : 'STEP 1',
@@ -87,7 +87,7 @@ export const TechnoparkSignInPage: React.FC<TechnoparkPageProps> = ({ lang }) =>
   };
 
   return (
-    <TechnoparkPageShell>
+    <TechparkPageShell>
       <section className="relative min-h-screen overflow-hidden border-b border-white/5 bg-qla-dark">
         <TechHeroBackdrop />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-28 lg:pb-20">
@@ -246,6 +246,6 @@ export const TechnoparkSignInPage: React.FC<TechnoparkPageProps> = ({ lang }) =>
           </div>
         </div>
       </section>
-    </TechnoparkPageShell>
+    </TechparkPageShell>
   );
 };

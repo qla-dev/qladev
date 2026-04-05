@@ -36,9 +36,14 @@
           return value.length > 1 && value.endsWith('/') ? value.slice(0, -1) : value;
         };
 
-        var routes = ['/', '/technopark', '/technopark/boot-camp', '/technopark/membership', '/technopark/sign-in'];
+        var routes = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/sign-in'];
         var legacyRouteRedirects = {
-          '/technopark/instructions': '/technopark/boot-camp'
+          '/technopark': '/techpark',
+          '/technopark/instructions': '/techpark/boot-camp',
+          '/technopark/boot-camp': '/techpark/boot-camp',
+          '/technopark/membership': '/techpark/membership',
+          '/technopark/sign-in': '/techpark/sign-in',
+          '/techpark/instructions': '/techpark/boot-camp'
         };
         var cleanPath = trimTrailingSlash(window.location.pathname);
         var currentRoute = '/';
@@ -56,28 +61,28 @@
           }
         }
 
-        var lang = currentRoute.startsWith('/technopark') ? 'bs' : 'en';
+        var lang = currentRoute.startsWith('/techpark') ? 'bs' : 'en';
         var metaMap = {
           en: {
             '/': {
               title: 'qla.dev - Developing the Next Generation of Tech',
               description: 'Building powerful and tailored software and hardware for in-house teams and businesses of all sizes.'
             },
-            '/technopark': {
-              title: 'qla.dev Technopark - Creative Tech Space for Under 18',
-              description: 'Technopark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.'
+            '/techpark': {
+              title: 'qla.dev Techpark - Creative Tech Space for Under 18',
+              description: 'Techpark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.'
             },
-            '/technopark/boot-camp': {
-              title: 'qla.dev Technopark - Boot-camp Programs',
-              description: 'Explore Technopark boot-camp programs across web, app, AI, 3D, game development, Roblox, design, and video editing.'
+            '/techpark/boot-camp': {
+              title: 'qla.dev Techpark - Boot-camp Programs',
+              description: 'Explore Techpark boot-camp programs across web, app, AI, 3D, game development, Roblox, design, and video editing.'
             },
-            '/technopark/membership': {
-              title: 'qla.dev Technopark - Membership Reservations',
-              description: 'Reserve Technopark open-space slots from 08:00 to 16:00 with a 15-person limit and a 4-hour daily maximum.'
+            '/techpark/membership': {
+              title: 'qla.dev Techpark - Membership Reservations',
+              description: 'Reserve Techpark open-space slots from 08:00 to 16:00 with a 15-person limit and a 4-hour daily maximum.'
             },
-            '/technopark/sign-in': {
-              title: 'qla.dev Technopark - Member Sign In',
-              description: 'Multi-step member sign-in for Technopark reservations, programs, and future attendance check-in.'
+            '/techpark/sign-in': {
+              title: 'qla.dev Techpark - Member Sign In',
+              description: 'Multi-step member sign-in for Techpark reservations, programs, and future attendance check-in.'
             }
           },
           bs: {
@@ -85,21 +90,21 @@
               title: 'qla.dev - Razvijamo novu generaciju tehnologije',
               description: 'Gradimo mocna i prilagodjena softverska i hardverska rjesenja za interne timove i biznise svih velicina.'
             },
-            '/technopark': {
-              title: 'qla.dev Technopark - Kreativni tech prostor za djecu i mlade',
-              description: 'Technopark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.'
+            '/techpark': {
+              title: 'qla.dev Techpark - Kreativni tech prostor za djecu i mlade',
+              description: 'Techpark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.'
             },
-            '/technopark/boot-camp': {
-              title: 'qla.dev Technopark - Boot-camp programi',
-              description: 'Pregledaj Technopark boot-camp programe za web, app, AI, 3D, game development, Roblox, dizajn i video editing.'
+            '/techpark/boot-camp': {
+              title: 'qla.dev Techpark - Boot-camp programi',
+              description: 'Pregledaj Techpark boot-camp programe za web, app, AI, 3D, game development, Roblox, dizajn i video editing.'
             },
-            '/technopark/membership': {
-              title: 'qla.dev Technopark - Membership rezervacije',
-              description: 'Rezervisi Technopark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.'
+            '/techpark/membership': {
+              title: 'qla.dev Techpark - Membership rezervacije',
+              description: 'Rezervisi Techpark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.'
             },
-            '/technopark/sign-in': {
-              title: 'qla.dev Technopark - Prijava clanova',
-              description: 'Visekorak prijava za Technopark clanove, rezervacije, programe i buduci attendance check-in.'
+            '/techpark/sign-in': {
+              title: 'qla.dev Techpark - Prijava clanova',
+              description: 'Visekorak prijava za Techpark clanove, rezervacije, programe i buduci attendance check-in.'
             }
           }
         };
@@ -244,7 +249,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/assets/index-o7XEQrbx.js"></script>
+  <script type="module" crossorigin src="/assets/index-CymFSxeC.js"></script>
 </head>
   <body>
     <div id="root"></div>

@@ -43,7 +43,7 @@ export interface StatItem {
 
 export interface Translations {
   nav: {
-    technopark: string;
+    techpark: string;
     home: string;
     about: string;
     products: string;

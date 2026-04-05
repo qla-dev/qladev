@@ -17,10 +17,10 @@ import {
 import { amenities, programs } from '../data';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
 import { SectionHeader } from '../shared/SectionHeader';
-import { TechnoparkHeroSection } from '../shared/TechnoparkHeroSection';
-import { TechnoparkPageShell } from '../shared/TechnoparkPageShell';
-import { TechnoparkStatCard } from '../shared/TechnoparkStatCard';
-import type { TechnoparkPageProps } from '../types';
+import { TechparkHeroSection } from '../shared/TechparkHeroSection';
+import { TechparkPageShell } from '../shared/TechparkPageShell';
+import { TechparkStatCard } from '../shared/TechparkStatCard';
+import type { TechparkPageProps } from '../types';
 
 type SpaceTabId = 'location' | 'layout' | 'rhythm';
 
@@ -37,16 +37,16 @@ interface SpaceTab {
   cards: SpaceTabCard[];
 }
 
-export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onNavigate }) => {
+export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavigate }) => {
   const isBs = lang === 'bs';
   const [activeSpaceTab, setActiveSpaceTab] = React.useState<SpaceTabId>('location');
-  const technoparkPeopleCount = '0/15';
+  const techparkPeopleCount = '0/15';
 
   const labels = {
-    badge: 'qla.dev technopark',
-    title: isBs ? 'TECHNOPARK ZA NOVU DIGITALNU GENERACIJU' : 'TECHNOPARK FOR THE NEXT DIGITAL GENERATION',
+    badge: 'qla.dev techpark',
+    title: isBs ? 'TECHPARK ZA NOVU DIGITALNU GENERACIJU' : 'TECHPARK FOR THE NEXT DIGITAL GENERATION',
     subtitle: isBs
-      ? 'Technopark je osmisljen kao strukturiran prostor za djecu i mlade: open space dio dostupan je od 08:00 do 16:00 za produktivan rad, ucenje i boravak, dok od 17:00 pocinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
+      ? 'Techpark je osmisljen kao strukturiran prostor za djecu i mlade: open space dio dostupan je od 08:00 do 16:00 za produktivan rad, ucenje i boravak, dok od 17:00 pocinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
       : 'Open space runs from 08:00 to 16:00, programs start from 17:00, and the entire space is built for children and youth who want to combine productive work, learning, and chill time.',
     heroStats: {
       membership: isBs ? 'Open-space clanstvo' : 'Open-space membership',
@@ -56,8 +56,8 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
     },
     amenitiesTitle: isBs ? 'AMBIJENT + SADRZAJ' : 'AMBIENT + AMENITIES',
     amenitiesSubtitle: isBs
-      ? '15-place coding + chill lounge, PS5, VR, 3D printer, rooftop lokacija i sve ostalo sto Technopark cini mjestom u koje se ulazi da se napravi nesto dobro.'
-      : 'A 15-place coding + chill lounge, PS5, VR, 3D printer, rooftop location, and everything else that makes Technopark a space you enter to build something meaningful.',
+      ? '15-place coding + chill lounge, PS5, VR, 3D printer, rooftop lokacija i sve ostalo sto Techpark cini mjestom u koje se ulazi da se napravi nesto dobro.'
+      : 'A 15-place coding + chill lounge, PS5, VR, 3D printer, rooftop location, and everything else that makes Techpark a space you enter to build something meaningful.',
     spaceTitle: isBs ? 'PROSTOR + LOKACIJA' : 'SPACE + LOCATION',
     spaceSubtitle: isBs
       ? 'Tri pogleda na isti prostor: gdje smo, kako je slozen i zasto dnevni ritam ostaje siguran i jasan za djecu, mlade i roditelje.'
@@ -87,8 +87,8 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
     ],
     routesTitle: isBs ? 'ODABERI SVOJ ULAZ' : 'CHOOSE YOUR WAY IN',
     routesSubtitle: isBs
-      ? 'Technopark ima dva jasna ulaza: dnevni open space membership i vecernji boot-camp od 17:00.'
-      : 'Technopark has two clear entry points: daytime open-space membership and the evening boot-camp from 17:00 onward.',
+      ? 'Techpark ima dva jasna ulaza: dnevni open space membership i vecernji boot-camp od 17:00.'
+      : 'Techpark has two clear entry points: daytime open-space membership and the evening boot-camp from 17:00 onward.',
     pricingTitle: isBs ? 'CJENOVNIK' : 'PRICING',
     pricingSubtitle: isBs
       ? 'Sve cijene su po mjesecu. Early-bird cijene su aktivne do 1. maja, a membership i boot-camp programi mogu se kombinovati kroz dodatne bundle pogodnosti.'
@@ -161,7 +161,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
   const heroCards = [
     { value: '08:00 - 16:00', label: labels.heroStats.membership, icon: Clock3 },
     { value: '17:00 +', label: labels.heroStats.instructions, icon: CalendarDays },
-    { value: technoparkPeopleCount, label: labels.heroStats.seats, icon: Users },
+    { value: techparkPeopleCount, label: labels.heroStats.seats, icon: Users },
     { value: 'U18', label: labels.heroStats.under18, icon: ShieldCheck },
   ];
 
@@ -171,7 +171,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
       title: labels.membershipCard.title,
       text: labels.membershipCard.text,
       cta: labels.membershipCard.cta,
-      route: '/technopark/membership' as const,
+      route: '/techpark/membership' as const,
       highlight: labels.pricingCards.membership.badge,
     },
     {
@@ -179,7 +179,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
       title: labels.programsCard.title,
       text: labels.programsCard.text,
       cta: labels.programsCard.cta,
-      route: '/technopark/boot-camp' as const,
+      route: '/techpark/boot-camp' as const,
       highlight: isBs ? 'OD 180 KM / MJ.' : 'FROM 180 KM / MO.',
     },
   ];
@@ -190,8 +190,8 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
       label: 'Bra\u0107e Muli\u0107 81',
       icon: MapPin,
       description: isBs
-        ? 'Technopark je na adresi Bra\u0107e Muli\u0107 81, na vrhu zgrade, sa otvorenim pogledom, prirodnim svjetlom i suncem koje prostor drzi zivim kroz citav dan.'
-        : 'Technopark is located at Bra\u0107e Muli\u0107 81, at the top of the building, with an open view, natural light, and steady sunlight that keeps the space alive through the day.',
+        ? 'Techpark je na adresi Bra\u0107e Muli\u0107 81, na vrhu zgrade, sa otvorenim pogledom, prirodnim svjetlom i suncem koje prostor drzi zivim kroz citav dan.'
+        : 'Techpark is located at Bra\u0107e Muli\u0107 81, at the top of the building, with an open view, natural light, and steady sunlight that keeps the space alive through the day.',
       cards: isBs
         ? [
             { title: 'Rooftop lokacija', text: 'Vrh zgrade daje vise mira, bolji pogled i cistiji dnevni osjecaj prostora.' },
@@ -215,8 +215,8 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
       label: '140M2',
       icon: Building2,
       description: isBs
-        ? 'Na 140m2 Technopark spaja 15 AI coding mjesta, chill lounge, gaming kutke, maker opremu i dovoljno prostora da i rad i pauza imaju smisla.'
-        : 'Across 140m2, Technopark combines 15 AI coding places, a chill lounge, gaming corners, maker equipment, and enough breathing room for both work and breaks to make sense.',
+        ? 'Na 140m2 Techpark spaja 15 AI coding mjesta, chill lounge, gaming kutke, maker opremu i dovoljno prostora da i rad i pauza imaju smisla.'
+        : 'Across 140m2, Techpark combines 15 AI coding places, a chill lounge, gaming corners, maker equipment, and enough breathing room for both work and breaks to make sense.',
       cards: isBs
         ? [
             { title: '15 AI mjesta', text: 'Svaka stanica je pripremljena za ucenje, testiranje ideja i brzi rad uz AI alate.' },
@@ -265,7 +265,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
   const activeSpaceSection = spaceTabs.find((tab) => tab.id === activeSpaceTab) ?? spaceTabs[0];
   const heroTitle = isBs ? (
     <>
-      <span className="block">TECHNOPARK ZA</span>
+      <span className="block">TECHPARK ZA</span>
       <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
         NOVU DIGITALNU
       </span>
@@ -273,7 +273,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
     </>
   ) : (
     <>
-      <span className="block">TECHNOPARK FOR</span>
+      <span className="block">TECHPARK FOR</span>
       <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
         THE NEXT
       </span>
@@ -282,9 +282,9 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
   );
 
   return (
-    <TechnoparkPageShell>
-      <TechnoparkHeroSection
-        current="/technopark"
+    <TechparkPageShell>
+      <TechparkHeroSection
+        current="/techpark"
         lang={lang}
         onNavigate={onNavigate}
         showSubnav={false}
@@ -296,7 +296,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
           <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
             <button
               type="button"
-              onClick={() => onNavigate('/technopark/boot-camp')}
+              onClick={() => onNavigate('/techpark/boot-camp')}
               className="inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm bg-blue-600 px-2.5 py-3 text-[10px] font-bold font-mono uppercase tracking-[0.12em] leading-none text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_18px_rgba(37,99,235,0.55)] sm:gap-2 sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.18em]"
             >
               <CalendarDays className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -305,7 +305,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
             </button>
             <button
               type="button"
-              onClick={() => onNavigate('/technopark/membership')}
+              onClick={() => onNavigate('/techpark/membership')}
               className="inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm border border-white/15 px-2.5 py-3 text-[10px] font-bold font-mono uppercase tracking-[0.12em] leading-none text-white transition-colors hover:border-blue-500 hover:bg-blue-500/10 sm:gap-2 sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.18em]"
             >
               <Ticket className="h-3.5 w-3.5 text-blue-300 sm:h-4 sm:w-4" />
@@ -317,7 +317,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         rightContent={
           <div className="grid grid-cols-2 gap-4 lg:w-full lg:max-w-[34rem] lg:justify-self-center">
             {heroCards.map((card) => (
-              <TechnoparkStatCard
+              <TechparkStatCard
                 key={card.label}
                 value={card.value}
                 label={card.label}
@@ -328,10 +328,10 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         }
       />
 
-      <section id="technopark-ambijent" className="py-24">
+      <section id="techpark-ambijent" className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.amenitiesTitle} subtitle={labels.amenitiesSubtitle} />
-          <div id="technopark-sadrzaj" className="grid grid-cols-2 gap-5 xl:grid-cols-3">
+          <div id="techpark-sadrzaj" className="grid grid-cols-2 gap-5 xl:grid-cols-3">
             {amenities.map((amenity) => {
               const Icon = amenity.icon;
               return (
@@ -357,7 +357,7 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         </div>
       </section>
 
-      <section id="technopark-lokacija" className="border-t border-white/5 py-24">
+      <section id="techpark-lokacija" className="border-t border-white/5 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.spaceTitle} subtitle={labels.spaceSubtitle} />
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
@@ -464,22 +464,22 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
         </div>
       </section>
 
-      <section id="technopark-pricing" className="border-t border-white/5 py-24">
+      <section id="techpark-pricing" className="border-t border-white/5 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.pricingTitle} subtitle={labels.pricingSubtitle} />
           <div className="grid gap-6 xl:grid-cols-3">
             {[
               {
                 ...labels.pricingCards.membership,
-                onClick: () => onNavigate('/technopark/membership'),
+                onClick: () => onNavigate('/techpark/membership'),
               },
               {
                 ...labels.pricingCards.beginnerPrograms,
-                onClick: () => onNavigate('/technopark/boot-camp'),
+                onClick: () => onNavigate('/techpark/boot-camp'),
               },
               {
                 ...labels.pricingCards.advancedPrograms,
-                onClick: () => onNavigate('/technopark/boot-camp'),
+                onClick: () => onNavigate('/techpark/boot-camp'),
               },
             ].map((card) => (
               <div
@@ -586,12 +586,12 @@ export const TechnoparkLandingPage: React.FC<TechnoparkPageProps> = ({ lang, onN
                 title={labels.bundleTitle}
                 text={labels.bundleText}
                 buttonLabel={labels.bundleButton}
-                onClick={() => onNavigate('/technopark/membership')}
+                onClick={() => onNavigate('/techpark/membership')}
               />
             </div>
           </div>
         </div>
       </section>
-    </TechnoparkPageShell>
+    </TechparkPageShell>
   );
 };

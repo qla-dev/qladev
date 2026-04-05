@@ -10,8 +10,8 @@ interface NavbarProps {
   primaryActionLabel: string;
   onNavigateHomeSection: (id: string) => void;
   onNavigateHomeTop: () => void;
-  onNavigateRoute: (path: '/technopark' | '/technopark/boot-camp' | '/technopark/membership' | '/technopark/sign-in') => void;
-  onNavigateTechnoparkSection: (sectionId: string) => void;
+  onNavigateRoute: (path: '/techpark' | '/techpark/boot-camp' | '/techpark/membership' | '/techpark/sign-in') => void;
+  onNavigateTechparkSection: (sectionId: string) => void;
   onPrimaryAction: () => void;
 }
 
@@ -24,17 +24,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigateHomeSection,
   onNavigateHomeTop,
   onNavigateRoute,
-  onNavigateTechnoparkSection,
+  onNavigateTechparkSection,
   onPrimaryAction,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isTechnoparkRoute = route.startsWith('/technopark');
-  const technoparkPeopleCount = '0/15';
-  const showMobileFloatingBack = isTechnoparkRoute;
-  const logoSrc = isTechnoparkRoute ? '/logo-technopark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
-  const logoAlt = isTechnoparkRoute ? 'qla.dev Technopark' : 'qla.dev';
-  const logoClassName = isTechnoparkRoute
+  const isTechparkRoute = route.startsWith('/techpark');
+  const techparkPeopleCount = '0/15';
+  const showMobileFloatingBack = isTechparkRoute;
+  const logoSrc = isTechparkRoute ? '/logo-techpark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
+  const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
+  const logoClassName = isTechparkRoute
     ? 'h-11 w-auto object-contain sm:h-12'
     : 'h-10 w-auto object-contain sm:h-11';
 
@@ -52,11 +52,11 @@ export const Navbar: React.FC<NavbarProps> = ({
     { kind: 'anchor' as const, id: 'news', label: t.news },
     { kind: 'anchor' as const, id: 'contact', label: t.contact },
   ];
-  const technoparkNavLinks = [
-    { id: 'technopark-ambijent', label: lang === 'bs' ? 'AMBIJENT' : 'AMBIENT' },
-    { id: 'technopark-sadrzaj', label: lang === 'bs' ? 'SADRZAJ' : 'AMENITIES' },
-    { id: 'technopark-lokacija', label: lang === 'bs' ? 'LOKACIJA' : 'LOCATION' },
-    { id: 'technopark-pricing', label: lang === 'bs' ? 'CJENOVNIK' : 'PRICING' },
+  const techparkNavLinks = [
+    { id: 'techpark-ambijent', label: lang === 'bs' ? 'AMBIJENT' : 'AMBIENT' },
+    { id: 'techpark-sadrzaj', label: lang === 'bs' ? 'SADRZAJ' : 'AMENITIES' },
+    { id: 'techpark-lokacija', label: lang === 'bs' ? 'LOKACIJA' : 'LOCATION' },
+    { id: 'techpark-pricing', label: lang === 'bs' ? 'CJENOVNIK' : 'PRICING' },
   ];
 
   const handleNavClick = (link: (typeof navLinks)[number]) => {
@@ -86,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center justify-between h-20">
             <button
               onClick={() => {
-                if (isTechnoparkRoute) {
+                if (isTechparkRoute) {
                   onNavigateHomeTop();
                 } else {
                   onNavigateHomeSection('hero');
@@ -107,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <div className="hidden xl:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                {isTechnoparkRoute ? (
+                {isTechparkRoute ? (
                   <>
                     <button
                       onClick={() => {
@@ -118,11 +118,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                     >
                       qla.dev
                     </button>
-                    {technoparkNavLinks.map((link) => (
+                    {techparkNavLinks.map((link) => (
                       <button
                         key={link.id}
                         onClick={() => {
-                          onNavigateTechnoparkSection(link.id);
+                          onNavigateTechparkSection(link.id);
                           setIsMobileMenuOpen(false);
                         }}
                         className="relative px-3 py-2 text-sm font-medium font-mono text-gray-300 hover:text-white transition-colors duration-300 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full"
@@ -146,11 +146,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <div className="hidden xl:flex items-center gap-4">
-              {isTechnoparkRoute && (
+              {isTechparkRoute && (
                 <div className="inline-flex items-center gap-2 rounded-sm border border-white/10 bg-white/5 px-3 py-2 text-white">
                   <LiveDot />
                   <Users className="h-4 w-4 text-blue-300" />
-                  <span className="font-mono text-sm font-bold tracking-[0.14em]">{technoparkPeopleCount}</span>
+                  <span className="font-mono text-sm font-bold tracking-[0.14em]">{techparkPeopleCount}</span>
                 </div>
               )}
               <button
@@ -160,15 +160,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <FlagIcon countryCode={lang === 'en' ? 'US' : 'BA'} />
                 <span className="leading-none">{lang.toUpperCase()}</span>
               </button>
-              {!isTechnoparkRoute && (
+              {!isTechparkRoute && (
                 <button
                   onClick={() => {
-                    onNavigateRoute('/technopark');
+                    onNavigateRoute('/techpark');
                     setIsMobileMenuOpen(false);
                   }}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-sm font-bold font-mono text-sm transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
                 >
-                  {t.technopark}
+                  {t.techpark}
                 </button>
               )}
               <button
@@ -183,32 +183,32 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <div className="-mr-2 flex xl:hidden items-center gap-2">
-              {!isTechnoparkRoute && (
+              {!isTechparkRoute && (
                 <button
                   onClick={() => {
-                    onNavigateRoute('/technopark');
+                    onNavigateRoute('/techpark');
                     setIsMobileMenuOpen(false);
                   }}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-sm font-bold font-mono text-[11px] tracking-[0.14em] uppercase transition-all"
                 >
-                  {t.technopark}
+                  {t.techpark}
                 </button>
               )}
-              {isTechnoparkRoute && (
+              {isTechparkRoute && (
                 <div className="inline-flex items-center gap-1.5 rounded-sm border border-white/10 bg-white/5 px-2.5 py-2 text-white">
                   <LiveDot />
                   <Users className="h-3.5 w-3.5 text-blue-300" />
-                  <span className="font-mono text-[11px] font-bold tracking-[0.14em]">{technoparkPeopleCount}</span>
+                  <span className="font-mono text-[11px] font-bold tracking-[0.14em]">{techparkPeopleCount}</span>
                 </div>
               )}
-              {isTechnoparkRoute && (
+              {isTechparkRoute && (
                 <button
                   onClick={() => {
                     onPrimaryAction();
                     setIsMobileMenuOpen(false);
                   }}
                   className={`px-3 py-2 rounded-sm font-bold font-mono text-[11px] tracking-[0.14em] uppercase transition-all ${
-                    route === '/technopark/sign-in'
+                    route === '/techpark/sign-in'
                       ? 'border border-blue-500/40 bg-blue-500/15 text-blue-200'
                       : 'bg-blue-600 hover:bg-blue-700 text-white'
                   }`}
@@ -229,7 +229,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {isMobileMenuOpen && (
           <div className="xl:hidden bg-black/95 backdrop-blur-xl border-b border-white/10">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {isTechnoparkRoute ? (
+              {isTechparkRoute ? (
                 <>
                   <button
                     onClick={() => {
@@ -240,11 +240,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                   >
                     qla.dev
                   </button>
-                  {technoparkNavLinks.map((link) => (
+                  {techparkNavLinks.map((link) => (
                     <button
                       key={link.id}
                       onClick={() => {
-                        onNavigateTechnoparkSection(link.id);
+                        onNavigateTechparkSection(link.id);
                         setIsMobileMenuOpen(false);
                       }}
                       className="text-gray-300 hover:text-white block w-full text-left px-3 py-4 rounded-md text-base font-medium font-mono border-b border-gray-800"
@@ -275,15 +275,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               </div>
               <div className="grid grid-cols-1 gap-3 px-3 py-4">
-                {!isTechnoparkRoute && (
+                {!isTechparkRoute && (
                   <button
                     onClick={() => {
-                      onNavigateRoute('/technopark');
+                      onNavigateRoute('/techpark');
                       setIsMobileMenuOpen(false);
                     }}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-sm font-bold font-mono text-sm transition-all"
                   >
-                    {t.technopark}
+                    {t.techpark}
                   </button>
                 )}
                 <button

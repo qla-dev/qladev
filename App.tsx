@@ -12,21 +12,26 @@ import { Portfolio } from './components/Portfolio';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import {
-  TechnoparkInstructionsPage,
-  TechnoparkLandingPage,
-  TechnoparkMembershipPage,
-  TechnoparkSignInPage,
-} from './components/technopark';
+  TechparkInstructionsPage,
+  TechparkLandingPage,
+  TechparkMembershipPage,
+  TechparkSignInPage,
+} from './components/techpark';
 import { TEXT_CONTENT } from './constants';
 import { Language } from './types';
 
-type AppRoute = '/' | '/technopark' | '/technopark/boot-camp' | '/technopark/membership' | '/technopark/sign-in';
+type AppRoute = '/' | '/techpark' | '/techpark/boot-camp' | '/techpark/membership' | '/techpark/sign-in';
 type TransitionDirection = 'forward' | 'backward' | 'auth';
 type RouteTransitionPhase = 'steady' | 'exit' | 'enter';
 
-const ROUTES: AppRoute[] = ['/', '/technopark', '/technopark/boot-camp', '/technopark/membership', '/technopark/sign-in'];
+const ROUTES: AppRoute[] = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/sign-in'];
 const LEGACY_ROUTE_REDIRECTS: Record<string, AppRoute> = {
-  '/technopark/instructions': '/technopark/boot-camp',
+  '/technopark': '/techpark',
+  '/technopark/instructions': '/techpark/boot-camp',
+  '/technopark/boot-camp': '/techpark/boot-camp',
+  '/technopark/membership': '/techpark/membership',
+  '/technopark/sign-in': '/techpark/sign-in',
+  '/techpark/instructions': '/techpark/boot-camp',
 };
 
 const trimTrailingSlash = (value: string) => (value.length > 1 && value.endsWith('/') ? value.slice(0, -1) : value);
@@ -42,21 +47,21 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
       title: 'qla.dev - Developing the Next Generation of Tech',
       description: 'Building powerful and tailored software and hardware for in-house teams and businesses of all sizes.',
     },
-    '/technopark': {
-      title: 'qla.dev Technopark - Creative Tech Space for Under 18',
-      description: 'Technopark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.',
+    '/techpark': {
+      title: 'qla.dev Techpark - Creative Tech Space for Under 18',
+      description: 'Techpark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.',
     },
-    '/technopark/boot-camp': {
-      title: 'qla.dev Technopark - Boot-camp Programs',
-      description: 'Explore Technopark boot-camp programs across web, app, AI, 3D, game development, Roblox, design, and video editing.',
+    '/techpark/boot-camp': {
+      title: 'qla.dev Techpark - Boot-camp Programs',
+      description: 'Explore Techpark boot-camp programs across web, app, AI, 3D, game development, Roblox, design, and video editing.',
     },
-    '/technopark/membership': {
-      title: 'qla.dev Technopark - Membership Reservations',
-      description: 'Reserve Technopark open-space slots from 08:00 to 16:00 with a 15-person limit and a 4-hour daily maximum.',
+    '/techpark/membership': {
+      title: 'qla.dev Techpark - Membership Reservations',
+      description: 'Reserve Techpark open-space slots from 08:00 to 16:00 with a 15-person limit and a 4-hour daily maximum.',
     },
-    '/technopark/sign-in': {
-      title: 'qla.dev Technopark - Member Sign In',
-      description: 'Multi-step member sign-in for Technopark reservations, programs, and future attendance check-in.',
+    '/techpark/sign-in': {
+      title: 'qla.dev Techpark - Member Sign In',
+      description: 'Multi-step member sign-in for Techpark reservations, programs, and future attendance check-in.',
     },
   },
   bs: {
@@ -64,21 +69,21 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
       title: 'qla.dev - Razvijamo novu generaciju tehnologije',
       description: 'Gradimo mocna i prilagodjena softverska i hardverska rjesenja za interne timove i biznise svih velicina.',
     },
-    '/technopark': {
-      title: 'qla.dev Technopark - Kreativni tech prostor za djecu i mlade',
-      description: 'Technopark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.',
+    '/techpark': {
+      title: 'qla.dev Techpark - Kreativni tech prostor za djecu i mlade',
+      description: 'Techpark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.',
     },
-    '/technopark/boot-camp': {
-      title: 'qla.dev Technopark - Boot-camp programi',
-      description: 'Pregledaj Technopark boot-camp programe za web, app, AI, 3D, game development, Roblox, dizajn i video editing.',
+    '/techpark/boot-camp': {
+      title: 'qla.dev Techpark - Boot-camp programi',
+      description: 'Pregledaj Techpark boot-camp programe za web, app, AI, 3D, game development, Roblox, dizajn i video editing.',
     },
-    '/technopark/membership': {
-      title: 'qla.dev Technopark - Membership rezervacije',
-      description: 'Rezervisi Technopark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.',
+    '/techpark/membership': {
+      title: 'qla.dev Techpark - Membership rezervacije',
+      description: 'Rezervisi Techpark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.',
     },
-    '/technopark/sign-in': {
-      title: 'qla.dev Technopark - Prijava clanova',
-      description: 'Visekorak prijava za Technopark clanove, rezervacije, programe i buduci attendance check-in.',
+    '/techpark/sign-in': {
+      title: 'qla.dev Techpark - Prijava clanova',
+      description: 'Visekorak prijava za Techpark clanove, rezervacije, programe i buduci attendance check-in.',
     },
   },
 };
@@ -128,7 +133,7 @@ const getAnchorNavOffset = () => {
 
 const App: React.FC = () => {
   const [siteLang, setSiteLang] = useState<Language>('en');
-  const [technoparkLang, setTechnoparkLang] = useState<Language>('bs');
+  const [techparkLang, setTechparkLang] = useState<Language>('bs');
   const [startQuoteMode, setStartQuoteMode] = useState(false);
   // Keep the detected base path stable so the app works both at `/` and in a local subfolder.
   const [basePath] = useState(() => detectBasePath(window.location.pathname));
@@ -139,7 +144,7 @@ const App: React.FC = () => {
     phase: RouteTransitionPhase;
     direction: TransitionDirection;
   }>({ phase: 'steady', direction: 'forward' });
-  const lang = displayRoute.startsWith('/technopark') ? technoparkLang : siteLang;
+  const lang = displayRoute.startsWith('/techpark') ? techparkLang : siteLang;
   const t = TEXT_CONTENT[lang];
 
   useEffect(() => {
@@ -182,9 +187,9 @@ const App: React.FC = () => {
     }
 
     const direction: TransitionDirection =
-      route === '/technopark/sign-in' || displayRoute === '/technopark/sign-in'
+      route === '/techpark/sign-in' || displayRoute === '/techpark/sign-in'
         ? 'auth'
-        : displayRoute.startsWith('/technopark') && route === '/'
+        : displayRoute.startsWith('/techpark') && route === '/'
           ? 'backward'
           : 'forward';
 
@@ -361,8 +366,8 @@ const App: React.FC = () => {
   };
 
   const handlePrimaryAction = () => {
-    if (displayRoute.startsWith('/technopark')) {
-      navigateToRoute('/technopark/sign-in');
+    if (displayRoute.startsWith('/techpark')) {
+      navigateToRoute('/techpark/sign-in');
       return;
     }
 
@@ -377,13 +382,13 @@ const App: React.FC = () => {
     document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const primaryActionLabel = displayRoute.startsWith('/technopark')
+  const primaryActionLabel = displayRoute.startsWith('/techpark')
     ? (lang === 'bs' ? 'PRIJAVA' : 'SIGN IN')
     : t.nav.cta;
 
   const handleSetLang = (nextLang: Language) => {
-    if (displayRoute.startsWith('/technopark')) {
-      setTechnoparkLang(nextLang);
+    if (displayRoute.startsWith('/techpark')) {
+      setTechparkLang(nextLang);
       return;
     }
 
@@ -391,20 +396,20 @@ const App: React.FC = () => {
   };
 
   const renderMainContent = () => {
-    if (displayRoute === '/technopark') {
-      return <TechnoparkLandingPage lang={lang} onNavigate={navigateToRoute} />;
+    if (displayRoute === '/techpark') {
+      return <TechparkLandingPage lang={lang} onNavigate={navigateToRoute} />;
     }
 
-    if (displayRoute === '/technopark/boot-camp') {
-      return <TechnoparkInstructionsPage lang={lang} onNavigate={navigateToRoute} />;
+    if (displayRoute === '/techpark/boot-camp') {
+      return <TechparkInstructionsPage lang={lang} onNavigate={navigateToRoute} />;
     }
 
-    if (displayRoute === '/technopark/membership') {
-      return <TechnoparkMembershipPage lang={lang} onNavigate={navigateToRoute} />;
+    if (displayRoute === '/techpark/membership') {
+      return <TechparkMembershipPage lang={lang} onNavigate={navigateToRoute} />;
     }
 
-    if (displayRoute === '/technopark/sign-in') {
-      return <TechnoparkSignInPage lang={lang} onNavigate={navigateToRoute} />;
+    if (displayRoute === '/techpark/sign-in') {
+      return <TechparkSignInPage lang={lang} onNavigate={navigateToRoute} />;
     }
 
     return (
@@ -463,7 +468,7 @@ const App: React.FC = () => {
         onNavigateHomeSection={navigateToHomeSection}
         onNavigateHomeTop={navigateToHomeTop}
         onNavigateRoute={navigateToRoute}
-        onNavigateTechnoparkSection={(sectionId) => navigateToRouteSection('/technopark', sectionId)}
+        onNavigateTechparkSection={(sectionId) => navigateToRouteSection('/techpark', sectionId)}
         onPrimaryAction={handlePrimaryAction}
       />
 

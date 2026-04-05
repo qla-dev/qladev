@@ -1,7 +1,7 @@
 import React from 'react';
 import type { LucideIcon } from 'lucide-react';
 
-interface TechnoparkStatCardProps {
+interface TechparkStatCardProps {
   value: React.ReactNode;
   label: React.ReactNode;
   subvalue?: React.ReactNode;
@@ -10,7 +10,7 @@ interface TechnoparkStatCardProps {
   className?: string;
 }
 
-export const TechnoparkStatCard: React.FC<TechnoparkStatCardProps> = ({
+export const TechparkStatCard: React.FC<TechparkStatCardProps> = ({
   value,
   label,
   subvalue,

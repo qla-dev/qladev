@@ -1,18 +1,18 @@
 import React from 'react';
 import type { Language } from '../../../types';
-import type { TechnoparkRoute } from '../types';
+import type { TechparkRoute } from '../types';
 
-interface TechnoparkSubnavProps {
-  current: TechnoparkRoute;
+interface TechparkSubnavProps {
+  current: TechparkRoute;
   lang: Language;
-  onNavigate: (path: TechnoparkRoute) => void;
+  onNavigate: (path: TechparkRoute) => void;
 }
 
-export const TechnoparkSubnav: React.FC<TechnoparkSubnavProps> = ({ current, lang, onNavigate }) => {
+export const TechparkSubnav: React.FC<TechparkSubnavProps> = ({ current, lang, onNavigate }) => {
   const items = [
-    { path: '/technopark' as const, label: lang === 'bs' ? 'PREGLED' : 'OVERVIEW' },
-    { path: '/technopark/boot-camp' as const, label: 'BOOT-CAMP' },
-    { path: '/technopark/membership' as const, label: lang === 'bs' ? 'CLANSTVO' : 'MEMBERSHIP' },
+    { path: '/techpark' as const, label: lang === 'bs' ? 'PREGLED' : 'OVERVIEW' },
+    { path: '/techpark/boot-camp' as const, label: 'BOOT-CAMP' },
+    { path: '/techpark/membership' as const, label: lang === 'bs' ? 'CLANSTVO' : 'MEMBERSHIP' },
   ];
 
   return (

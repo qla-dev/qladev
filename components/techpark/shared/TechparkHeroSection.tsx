@@ -1,14 +1,14 @@
 import React from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { TechHeroBackdrop } from '../../TechHeroBackdrop';
-import { TechnoparkSubnav } from './TechnoparkSubnav';
-import type { TechnoparkRoute } from '../types';
+import { TechparkSubnav } from './TechparkSubnav';
+import type { TechparkRoute } from '../types';
 import type { Language } from '../../../types';
 
-interface TechnoparkHeroSectionProps {
-  current: TechnoparkRoute;
+interface TechparkHeroSectionProps {
+  current: TechparkRoute;
   lang: Language;
-  onNavigate: (path: TechnoparkRoute) => void;
+  onNavigate: (path: TechparkRoute) => void;
   showSubnav?: boolean;
   badge: string;
   badgeIcon: LucideIcon;
@@ -22,7 +22,7 @@ interface TechnoparkHeroSectionProps {
   subtitleClassName?: string;
 }
 
-export const TechnoparkHeroSection: React.FC<TechnoparkHeroSectionProps> = ({
+export const TechparkHeroSection: React.FC<TechparkHeroSectionProps> = ({
   current,
   lang,
   onNavigate,
@@ -43,7 +43,7 @@ export const TechnoparkHeroSection: React.FC<TechnoparkHeroSectionProps> = ({
     <div className={containerClassName}>
       {showSubnav ? (
         <div className="mb-6">
-          <TechnoparkSubnav current={current} lang={lang} onNavigate={onNavigate} />
+          <TechparkSubnav current={current} lang={lang} onNavigate={onNavigate} />
         </div>
       ) : null}
       <div className={gridClassName}>

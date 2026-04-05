@@ -5,17 +5,17 @@ import { MembershipSlotCard } from '../membership/MembershipSlotCard';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
 import { FormStatusMessage } from '../shared/FormStatusMessage';
 import { SplitActionModal } from '../shared/SplitActionModal';
-import { TechnoparkPageShell } from '../shared/TechnoparkPageShell';
-import { TechnoparkSubnavSection } from '../shared/TechnoparkSubnavSection';
+import { TechparkPageShell } from '../shared/TechparkPageShell';
+import { TechparkSubnavSection } from '../shared/TechparkSubnavSection';
 import type {
   FormStatus,
   MembershipDayKey,
   MembershipSlotKey,
-  TechnoparkPageProps,
+  TechparkPageProps,
 } from '../types';
 import { getSpotsTone } from '../utils';
 
-export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, onNavigate }) => {
+export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNavigate }) => {
   const isBs = lang === 'bs';
   const [availability, setAvailability] = useState(createAvailability);
   const [selectedDay, setSelectedDay] = useState<MembershipDayKey>('monday');
@@ -27,14 +27,14 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
   const reservationFlowText: React.ReactNode = isBs ? (
     <>
       Izaberi dan, klikni slobodan termin i potvrdi rezervaciju. Tokom svog rezervisanog termina mozes koristiti puni
-      Technopark open-space setup:
+      Techpark open-space setup:
       <br />
       AI coding mjesta, chill lounge, gaming zonu, snack zonu i ostale sadrzaje prostora.
     </>
   ) : (
     <>
       Choose a day, click an available slot, and confirm the reservation. During the reserved slot, members can use
-      the full Technopark open-space setup:
+      the full Techpark open-space setup:
       <br />
       AI coding stations, the chill lounge, gaming zone, snack zone, and the rest of the space amenities.
     </>
@@ -72,7 +72,7 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
     focusedSlot: isBs ? 'Fokus termin' : 'Focused slot',
     crossSellBadge: 'BOOT-CAMP BONUS',
     crossSellTitle: isBs ? 'Uz open space dobijas 40% popusta na svaki boot-camp program.' : 'Get 40% off every boot-camp program with open space.',
-    crossSellText: isBs ? 'Ako zelis i boot-camp od 17:00, membership ti otvara povoljniji ulaz u svaki Technopark boot-camp program.' : 'If you also want the 17:00 boot-camp, membership unlocks a better entry price for every Technopark boot-camp program.',
+    crossSellText: isBs ? 'Ako zelis i boot-camp od 17:00, membership ti otvara povoljniji ulaz u svaki Techpark boot-camp program.' : 'If you also want the 17:00 boot-camp, membership unlocks a better entry price for every Techpark boot-camp program.',
     crossSellButton: isBs ? 'POGLEDAJ BOOT-CAMP' : 'VIEW BOOT-CAMP',
   };
 
@@ -134,7 +134,7 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
 
   const openProgramsOffer = () => {
     setIsReserveModalOpen(false);
-    onNavigate('/technopark/boot-camp');
+    onNavigate('/techpark/boot-camp');
   };
 
   const handleReservation = (event: React.FormEvent<HTMLFormElement>) => {
@@ -162,7 +162,7 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
     if (age <= 0 || age >= 18) {
       setStatus({
         type: 'error',
-        message: isBs ? 'Technopark membership je samo za osobe ispod 18 godina.' : 'Technopark membership is only available for people under 18.',
+        message: isBs ? 'Techpark membership je samo za osobe ispod 18 godina.' : 'Techpark membership is only available for people under 18.',
       });
       return;
     }
@@ -200,9 +200,9 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
   };
 
   return (
-    <TechnoparkPageShell showBackdrop>
-      <TechnoparkSubnavSection
-        current="/technopark/membership"
+    <TechparkPageShell showBackdrop>
+      <TechparkSubnavSection
+        current="/techpark/membership"
         lang={lang}
         onNavigate={onNavigate}
         title={labels.sectionTitle}
@@ -316,6 +316,6 @@ export const TechnoparkMembershipPage: React.FC<TechnoparkPageProps> = ({ lang, 
           </div>
         </form>
       </SplitActionModal>
-    </TechnoparkPageShell>
+    </TechparkPageShell>
   );
 };
