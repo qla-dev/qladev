@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createAvailability, membershipDays, membershipSlots, slotOrder } from '../data';
 import { MembershipDayCard } from '../membership/MembershipDayCard';
 import { MembershipSlotCard } from '../membership/MembershipSlotCard';
@@ -24,6 +24,8 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
   const [status, setStatus] = useState<FormStatus | null>(null);
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const [focusedSlot, setFocusedSlot] = useState<MembershipSlotKey | null>(null);
+  const dayRailRef = useRef<HTMLDivElement | null>(null);
+  const dayItemRefs = useRef<Partial<Record<MembershipDayKey, HTMLDivElement | null>>>({});
   const reservationFlowText: React.ReactNode = isBs ? (
     <>
       Izaberi dan, klikni slobodan termin i potvrdi rezervaciju. Tokom svog rezervisanog termina možeš koristiti puni
@@ -39,12 +41,63 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
       AI coding stations, the chill lounge, gaming zone, snack zone, and the rest of the space amenities.
     </>
   );
+  const formattedReservationFlowText: React.ReactNode = isBs ? (
+    <div className="space-y-4">
+      <p>
+        Izaberi dan, klikni slobodan termin i potvrdi rezervaciju. Tokom svog rezervisanog termina možeš koristiti puni
+        Techpark open-space setup.
+      </p>
+      <p>
+        AI coding mjesta, chill lounge, gaming zonu, snack zonu i ostale sadržaje prostora. Boravak je organizovan kao
+        produktivno tech okruženje u kojem su djeci i mladima uz membership besplatno dostupne sve tehnologije, alati
+        i pogodnosti prostora, kako bi vrijeme u Techparku bilo korisno, sigurno i kvalitetno provedeno.
+      </p>
+    </div>
+  ) : (
+    <div className="space-y-4">
+      <p>
+        Choose a day, click an available slot, and confirm the reservation. During the reserved slot, members can use
+        the full Techpark open-space setup.
+      </p>
+      <p>
+        AI coding stations, the chill lounge, gaming zone, snack zone, and the rest of the space amenities. The stay
+        is structured as a productive tech environment where membership includes free access to all in-space
+        technologies, tools, and amenities, making time in Techpark useful, safe, and well spent for children and
+        youth.
+      </p>
+    </div>
+  );
+  const refinedReservationFlowText: React.ReactNode = isBs ? (
+    <div className="space-y-4">
+      <p>
+        Izaberi dan, klikni slobodan termin i potvrdi rezervaciju. Tokom svog rezervisanog termina imas pristup punom
+        Techpark open-space setupu.
+      </p>
+      <p>
+        Membership ti otvara pristup AI coding mjestima, chill loungeu, gaming zoni, snack zoni, VR-u, Arduino
+        opremi, 3D printeru, materijalima i ostalim sadrzajima prostora, tako da svaki dolazak u Techpark bude prilika
+        za istrazivanje tehnologije, ucenje i kvalitetno provedeno vrijeme u produktivnom i sigurnom okruzenju.
+      </p>
+    </div>
+  ) : (
+    <div className="space-y-4">
+      <p>
+        Choose a day, click an available slot, and confirm the reservation. During the reserved slot, members get
+        access to the full Techpark open-space setup.
+      </p>
+      <p>
+        Membership opens access to AI coding stations, the chill lounge, gaming zone, snack zone, VR, Arduino
+        equipment, the 3D printer, materials, and the rest of the space amenities, so every visit to Techpark becomes
+        a chance for exploration, learning, and well-spent time in a productive and safe environment.
+      </p>
+    </div>
+  );
 
   const labels = {
     sectionTitle: isBs ? 'REZERVACIJE' : 'RESERVATIONS',
-    sectionSubtitle: reservationFlowText,
+    sectionSubtitle: refinedReservationFlowText,
     reserveTitle: isBs ? 'REZERVACIJE' : 'RESERVATIONS',
-    reserveSubtitle: reservationFlowText,
+    reserveSubtitle: refinedReservationFlowText,
     summaryTitle: isBs ? 'TVOJ DAN' : 'YOUR DAY',
     formTitle: isBs ? 'POTVRDI REZERVACIJU' : 'CONFIRM RESERVATION',
     formButton: isBs ? 'REZERVISI TERMINE' : 'RESERVE SLOTS',
@@ -89,6 +142,28 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
     [selectedSlots]
   );
   const focusedSlotLabel = focusedSlot ? membershipSlots.find((slot) => slot.key === focusedSlot)?.label ?? '--' : '--';
+
+  useEffect(() => {
+    if (window.matchMedia('(min-width: 1024px)').matches) {
+      return;
+    }
+
+    const dayRail = dayRailRef.current;
+    const selectedDayItem = dayItemRefs.current[selectedDay];
+    if (!dayRail || !selectedDayItem) {
+      return;
+    }
+
+    const dayRailRect = dayRail.getBoundingClientRect();
+    const selectedDayRect = selectedDayItem.getBoundingClientRect();
+    const paddingLeft = Number.parseFloat(window.getComputedStyle(dayRail).paddingLeft) || 0;
+    const nextScrollLeft = Math.max(0, dayRail.scrollLeft + selectedDayRect.left - dayRailRect.left - paddingLeft);
+
+    dayRail.scrollTo({
+      left: nextScrollLeft,
+      behavior: 'smooth',
+    });
+  }, [selectedDay]);
 
   const setField = (field: keyof typeof formData, value: string) => {
     setFormData((current) => ({ ...current, [field]: value }));
@@ -212,27 +287,38 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
       <section className="pt-3 pb-24 lg:pt-5 lg:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-4 lg:space-y-5">
-            <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
-              {membershipDays.map((day) => {
-                const totalSpots = membershipSlots.reduce((sum, slot) => sum + availability[day.key][slot.key], 0);
-                return (
-                  <MembershipDayCard
-                    key={day.key}
-                    day={day}
-                    selected={day.key === selectedDay}
-                    totalSpots={totalSpots}
-                    spotsLabel={labels.spotsLeft}
-                    closedLabel={labels.closed}
-                    lang={lang}
-                    onClick={() => {
-                      setSelectedDay(day.key);
-                      setSelectedSlots([]);
-                      setFocusedSlot(null);
-                      setStatus(null);
-                    }}
-                  />
-                );
-              })}
+            <div
+              ref={dayRailRef}
+              className="-mx-4 overflow-x-auto px-4 touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0"
+            >
+              <div className="flex min-w-max snap-x snap-mandatory gap-3 lg:grid lg:min-w-0 lg:grid-cols-7 lg:gap-4">
+                {membershipDays.map((day) => {
+                  const totalSpots = membershipSlots.reduce((sum, slot) => sum + availability[day.key][slot.key], 0);
+                  return (
+                    <div
+                      key={day.key}
+                      ref={(node) => {
+                        dayItemRefs.current[day.key] = node;
+                      }}
+                      className="min-w-[8.75rem] snap-start lg:min-w-0"
+                    >
+                      <MembershipDayCard
+                        day={day}
+                        selected={day.key === selectedDay}
+                        totalSpots={totalSpots}
+                        closedLabel={labels.closed}
+                        lang={lang}
+                        onClick={() => {
+                          setSelectedDay(day.key);
+                          setSelectedSlots([]);
+                          setFocusedSlot(null);
+                          setStatus(null);
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">

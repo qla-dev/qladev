@@ -26,13 +26,13 @@ import type {
 } from './types';
 
 export const membershipDays: MembershipDay[] = [
-  { key: 'monday', label: 'Monday', labelBs: 'Ponedjeljak', summary: 'Fresh start', summaryBs: 'Novi start' },
-  { key: 'tuesday', label: 'Tuesday', labelBs: 'Utorak', summary: 'Build mode', summaryBs: 'Build mode' },
-  { key: 'wednesday', label: 'Wednesday', labelBs: 'Srijeda', summary: 'Midweek focus', summaryBs: 'Sredina sedmice' },
-  { key: 'thursday', label: 'Thursday', labelBs: 'Cetvrtak', summary: 'Creative flow', summaryBs: 'Kreativni flow' },
-  { key: 'friday', label: 'Friday', labelBs: 'Petak', summary: 'Launch energy', summaryBs: 'Launch energija' },
-  { key: 'saturday', label: 'Saturday', labelBs: 'Subota', summary: 'Weekend lab', summaryBs: 'Vikend lab' },
-  { key: 'sunday', label: 'Sunday', labelBs: 'Nedjelja', summary: 'Closed', summaryBs: 'Zatvoreno', closed: true },
+  { key: 'monday', label: 'Monday', labelBs: 'Ponedjeljak', shortLabel: 'MON', shortLabelBs: 'PON', summary: 'Fresh start', summaryBs: 'Novi start' },
+  { key: 'tuesday', label: 'Tuesday', labelBs: 'Utorak', shortLabel: 'TUE', shortLabelBs: 'UTO', summary: 'Build mode', summaryBs: 'Build mode' },
+  { key: 'wednesday', label: 'Wednesday', labelBs: 'Srijeda', shortLabel: 'WED', shortLabelBs: 'SRI', summary: 'Midweek focus', summaryBs: 'Sredina sedmice' },
+  { key: 'thursday', label: 'Thursday', labelBs: 'Cetvrtak', shortLabel: 'THU', shortLabelBs: 'CET', summary: 'Creative flow', summaryBs: 'Kreativni flow' },
+  { key: 'friday', label: 'Friday', labelBs: 'Petak', shortLabel: 'FRI', shortLabelBs: 'PET', summary: 'Launch energy', summaryBs: 'Launch energija' },
+  { key: 'saturday', label: 'Saturday', labelBs: 'Subota', shortLabel: 'SAT', shortLabelBs: 'SUB', summary: 'Weekend lab', summaryBs: 'Vikend lab' },
+  { key: 'sunday', label: 'Sunday', labelBs: 'Nedjelja', shortLabel: 'SUN', shortLabelBs: 'NED', summary: 'Closed', summaryBs: 'Zatvoreno', closed: true },
 ];
 
 export const membershipSlots: MembershipSlot[] = [

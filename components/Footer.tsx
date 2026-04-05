@@ -1,8 +1,14 @@
 import React from 'react';
 import { Linkedin, Facebook, Instagram } from 'lucide-react';
 
-export const Footer: React.FC = () => {
-  const logoSrc = 'https://deklarant.ai/build/images/logo-qla-dark.png';
+interface FooterProps {
+  route: string;
+}
+
+export const Footer: React.FC<FooterProps> = ({ route }) => {
+  const isTechparkRoute = route.startsWith('/techpark');
+  const logoSrc = isTechparkRoute ? '/logo-techpark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
+  const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
 
   return (
     <footer className="bg-black text-white py-12 border-t border-gray-900">
@@ -11,8 +17,8 @@ export const Footer: React.FC = () => {
         <div className="mb-6 md:mb-0 text-center md:text-left">
             <img
               src={logoSrc}
-              alt="qla.dev"
-              className="mb-2 h-10 w-auto object-contain"
+              alt={logoAlt}
+              className="mb-2 block h-10 w-auto object-contain mx-auto md:mx-0"
               loading="lazy"
               decoding="async"
             />

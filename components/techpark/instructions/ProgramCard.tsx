@@ -43,28 +43,28 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
       }`}
     >
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-        <div className="flex gap-5">
-          <div className="w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-[0_0_24px_rgba(37,99,235,0.4)]">
-            <Icon className="w-7 h-7" />
-          </div>
-          <div>
-            <h3 className="text-2xl font-bold tracking-tight">{isBs ? program.titleBs : program.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-gray-300 font-mono max-w-2xl">{isBs ? program.descriptionBs : program.description}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <span className="px-3 py-1 rounded-full border border-white/10 bg-black/40 text-xs font-mono tracking-[0.14em] uppercase text-blue-300">
-                {isBs ? program.scheduleBs : program.schedule}
-              </span>
-              <span
-                title={groupSizeLabel}
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/40 text-xs font-mono tracking-[0.14em] uppercase text-gray-300"
-              >
-                <Users className="w-3.5 h-3.5 text-blue-300" />
-                0/{program.seats}
-              </span>
-              <span className="px-3 py-1 rounded-full border border-white/10 bg-black/40 text-xs font-mono tracking-[0.14em] uppercase text-gray-300">
-                {under18Label}
-              </span>
+        <div className="min-w-0">
+          <div className="flex items-center gap-4">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-[0_0_24px_rgba(37,99,235,0.4)]">
+              <Icon className="h-7 w-7 shrink-0" />
             </div>
+            <h3 className="min-w-0 text-2xl font-bold tracking-tight">{isBs ? program.titleBs : program.title}</h3>
+          </div>
+          <p className="mt-4 text-sm leading-relaxed text-gray-300 font-mono max-w-2xl">{isBs ? program.descriptionBs : program.description}</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span className="px-3 py-1 rounded-full border border-white/10 bg-black/40 text-xs font-mono tracking-[0.14em] uppercase text-blue-300">
+              {isBs ? program.scheduleBs : program.schedule}
+            </span>
+            <span
+              title={groupSizeLabel}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/40 text-xs font-mono tracking-[0.14em] uppercase text-gray-300"
+            >
+              <Users className="w-3.5 h-3.5 text-blue-300" />
+              0/{program.seats}
+            </span>
+            <span className="px-3 py-1 rounded-full border border-white/10 bg-black/40 text-xs font-mono tracking-[0.14em] uppercase text-gray-300">
+              {under18Label}
+            </span>
           </div>
         </div>
 

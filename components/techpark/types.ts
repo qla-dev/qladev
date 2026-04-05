@@ -48,6 +48,8 @@ export interface MembershipDay {
   key: MembershipDayKey;
   label: string;
   labelBs: string;
+  shortLabel: string;
+  shortLabelBs: string;
   summary: string;
   summaryBs: string;
   closed?: boolean;

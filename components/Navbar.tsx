@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Menu, Users, X } from 'lucide-react';
+import { ArrowRight, CalendarDays, Menu, Ticket, Users, X } from 'lucide-react';
 import { Language, Translations } from '../types';
 
 interface NavbarProps {
@@ -31,7 +31,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isTechparkRoute = route.startsWith('/techpark');
   const techparkPeopleCount = '0/15';
-  const showMobileFloatingBack = isTechparkRoute;
+  const showMobileFloatingTechparkSwitcher = isTechparkRoute && route !== '/techpark/sign-in';
   const logoSrc = isTechparkRoute ? '/logo-techpark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
   const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
   const logoClassName = isTechparkRoute
@@ -57,6 +57,21 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'techpark-sadrzaj', label: lang === 'bs' ? 'SADRŽAJ' : 'AMENITIES' },
     { id: 'techpark-lokacija', label: lang === 'bs' ? 'LOKACIJA' : 'LOCATION' },
     { id: 'techpark-pricing', label: lang === 'bs' ? 'CJENOVNIK' : 'PRICING' },
+  ];
+
+  const techparkFloatingActions = [
+    {
+      path: '/techpark/boot-camp' as const,
+      label: 'BOOT-CAMP',
+      icon: CalendarDays,
+      variant: 'primary' as const,
+    },
+    {
+      path: '/techpark/membership' as const,
+      label: lang === 'bs' ? 'ČLANSTVO' : 'MEMBERSHIP',
+      icon: Ticket,
+      variant: 'secondary' as const,
+    },
   ];
 
   const handleNavClick = (link: (typeof navLinks)[number]) => {
@@ -301,20 +316,39 @@ export const Navbar: React.FC<NavbarProps> = ({
         )}
       </nav>
 
-      {showMobileFloatingBack && (
-        <div className="fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 xl:hidden">
-          <button
-            onClick={() => {
-              onNavigateHomeTop();
-              setIsMobileMenuOpen(false);
-            }}
-            className="w-full rounded-sm border border-white/10 bg-blue-600 px-5 py-4 text-white font-bold font-mono text-sm tracking-[0.16em] uppercase shadow-[0_0_20px_rgba(37,99,235,0.45)] transition-all hover:bg-blue-700"
-          >
-            <span className="block">{lang === 'bs' ? 'NAZAD' : 'BACK'}</span>
-            <span className="mt-1 block text-[10px] tracking-[0.18em] text-blue-100/80">
-              {lang === 'bs' ? 'Povratak na qla.dev home' : 'Return to qla.dev home'}
-            </span>
-          </button>
+      {showMobileFloatingTechparkSwitcher && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 w-full xl:hidden">
+          <div className="w-full rounded-[1.15rem] border border-white/10 bg-black/80 p-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-md">
+            <div className="grid grid-cols-2 gap-2.5">
+              {techparkFloatingActions.map((action) => {
+                const isActive = route === action.path;
+                const Icon = action.icon;
+
+                return (
+                  <button
+                    key={action.path}
+                    onClick={() => {
+                      onNavigateRoute(action.path);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`inline-flex min-w-0 items-center justify-center gap-2 whitespace-nowrap rounded-sm border px-4 py-3.5 text-[11px] font-bold font-mono uppercase tracking-[0.14em] leading-none transition-all shadow-[0_8px_24px_rgba(0,0,0,0.28)] ${
+                      action.variant === 'primary'
+                        ? isActive
+                          ? 'border-blue-500 bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.45)]'
+                          : 'border-blue-600 bg-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 hover:shadow-[0_0_18px_rgba(37,99,235,0.45)]'
+                        : isActive
+                          ? 'border-blue-500/50 bg-blue-500/10 text-white shadow-[0_0_16px_rgba(37,99,235,0.2)]'
+                          : 'border-white/12 bg-[#0a101a]/96 text-gray-200 hover:border-blue-500/30 hover:bg-blue-500/10 hover:text-white'
+                    }`}
+                  >
+                    <Icon className={`h-4 w-4 shrink-0 ${action.variant === 'secondary' && !isActive ? 'text-blue-300' : ''}`} />
+                    <span className="truncate">{action.label}</span>
+                    <ArrowRight className="h-4 w-4 shrink-0" />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       )}
     </>

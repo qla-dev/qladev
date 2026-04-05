@@ -25,7 +25,9 @@ type TransitionDirection = 'forward' | 'backward' | 'auth';
 type RouteTransitionPhase = 'steady' | 'exit' | 'enter';
 
 const ROUTES: AppRoute[] = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/sign-in'];
-const LEGACY_ROUTE_REDIRECTS: Record<string, AppRoute> = {
+const ROUTE_SET = new Set<string>(ROUTES);
+const isAppRoute = (route: string): route is AppRoute => ROUTE_SET.has(route);
+const LEGACY_ROUTE_REDIRECTS: Partial<Record<string, AppRoute>> = {
   '/technopark': '/techpark',
   '/technopark/instructions': '/techpark/boot-camp',
   '/technopark/boot-camp': '/techpark/boot-camp',
@@ -71,7 +73,7 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
     },
     '/techpark': {
       title: 'qla.dev Techpark - Kreativni tech prostor za djecu i mlade u Sarajevu',
-      description: 'Techpark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.',
+      description: 'Techpark je kreativni tech prostor za djecu i mlade, sa open-space članstvom, programima, gaming sadrzajem i maker opremom.',
     },
     '/techpark/boot-camp': {
       title: 'qla.dev Techpark - Boot-camp programi',
@@ -113,7 +115,7 @@ const normalizeRoute = (pathname: string, basePath: string): AppRoute => {
     return '/';
   }
 
-  return ROUTES.includes(canonicalPath as AppRoute) ? (canonicalPath as AppRoute) : '/';
+  return isAppRoute(canonicalPath) ? canonicalPath : '/';
 };
 
 const getLegacyRedirectRoute = (pathname: string, basePath: string) => {
@@ -476,7 +478,7 @@ const App: React.FC = () => {
         {renderMainContent()}
       </div>
 
-      <Footer />
+      <Footer route={displayRoute} />
     </div>
   );
 };

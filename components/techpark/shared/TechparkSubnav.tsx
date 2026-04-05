@@ -12,7 +12,7 @@ export const TechparkSubnav: React.FC<TechparkSubnavProps> = ({ current, lang, o
   const items = [
     { path: '/techpark' as const, label: lang === 'bs' ? 'PREGLED' : 'OVERVIEW' },
     { path: '/techpark/boot-camp' as const, label: 'BOOT-CAMP' },
-    { path: '/techpark/membership' as const, label: lang === 'bs' ? 'CLANSTVO' : 'MEMBERSHIP' },
+    { path: '/techpark/membership' as const, label: lang === 'bs' ? 'ČLANSTVO' : 'MEMBERSHIP' },
   ];
 
   return (

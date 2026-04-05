@@ -32,6 +32,7 @@ interface SpaceTabCard {
 interface SpaceTab {
   id: SpaceTabId;
   label: string;
+  mobileLabel: string;
   icon: LucideIcon;
   description: string;
   cards: SpaceTabCard[];
@@ -49,7 +50,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       ? 'Techpark je osmišljen kao strukturiran prostor za djecu i mlade: open-space dio dostupan je od 08:00 do 16:00 za produktivan rad u tech okruženju, učenje i boravak, dok od 17:00 počinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
       : 'Open space runs from 08:00 to 16:00, programs start from 17:00, and the entire space is built for children and youth who want to combine productive work, learning, and chill time.',
     heroStats: {
-      membership: isBs ? 'Open-space clanstvo' : 'Open-space membership',
+      membership: isBs ? 'Open-space članstvo' : 'Open-space membership',
       instructions: isBs ? 'Boot-camp programi' : 'Boot-camp programs',
       seats: isBs ? 'Mjesta u prostoru i grupi' : 'Places in the room and group',
       under18: isBs ? 'Samo za djecu i mlade' : 'For children and youth',
@@ -103,8 +104,8 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       text: isBs
         ? 'Rezervacije idu u 2h slotovima, maksimalno 4h dnevno, uz limit od 15 ljudi po terminu.'
         : 'Reservations run in 2-hour slots, with a 4-hour daily maximum and a 15-person cap per slot.',
-      cta: isBs ? 'OTVORI CLANSTVO' : 'OPEN MEMBERSHIP',
-      heroCta: isBs ? 'CLANSTVO' : 'MEMBERSHIP',
+      cta: isBs ? 'OTVORI ČLANSTVO' : 'OPEN MEMBERSHIP',
+      heroCta: isBs ? 'ČLANSTVO' : 'MEMBERSHIP',
     },
     programsCard: {
       eyebrow: isBs ? 'BOOT-CAMP OD 17:00' : 'BOOT-CAMP FROM 17:00',
@@ -188,6 +189,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     {
       id: 'location',
       label: 'Bra\u0107e Muli\u0107 81',
+      mobileLabel: 'BM 81',
       icon: MapPin,
       description: isBs
         ? 'Techpark je na adresi Bra\u0107e Muli\u0107 81, na vrhu zgrade, sa otvorenim pogledom, prirodnim svjetlom i suncem koje prostor drzi zivim kroz citav dan.'
@@ -213,6 +215,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     {
       id: 'layout',
       label: '140M2',
+      mobileLabel: '140M2',
       icon: Building2,
       description: isBs
         ? 'Na 140m2 Techpark spaja 15 AI coding mjesta, chill lounge, gaming kutke, maker opremu i dovoljno prostora da i rad i pauza imaju smisla.'
@@ -238,6 +241,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     {
       id: 'rhythm',
       label: isBs ? 'SIGURAN DNEVNI RITAM' : 'SAFE DAYTIME RHYTHM',
+      mobileLabel: isBs ? 'RITAM' : 'RHYTHM',
       icon: ShieldCheck,
       description: isBs
         ? 'Dio dana do 17:00 je slozen kao membership ritam za produktivan boravak, a nakon toga prostor prelazi u mentorski program. Fokus je da se svaki dolazak iskoristi za nesto korisno, ali gaming i dalje ostaje slobodan dio iskustva.'
@@ -265,17 +269,17 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   const activeSpaceSection = spaceTabs.find((tab) => tab.id === activeSpaceTab) ?? spaceTabs[0];
   const heroTitle = isBs ? (
     <>
-      <span className="block">TECHPARK ZA</span>
-      <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
-        NOVU DIGITALNU
+      <span className="block">TECHPARK ZA{' '}</span>
+      <span className="relative block whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
+        NOVU DIGITALNU{' '}
       </span>
       <span className="block">GENERACIJU</span>
     </>
   ) : (
     <>
-      <span className="block">TECHPARK FOR</span>
-      <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
-        THE NEXT
+      <span className="block">TECHPARK FOR{' '}</span>
+      <span className="relative block whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-white to-blue-600 bg-[length:200%_auto] animate-shimmer">
+        THE NEXT{' '}
       </span>
       <span className="block">DIGITAL GENERATION</span>
     </>
@@ -291,9 +295,10 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         badge={labels.badge}
         badgeIcon={BadgeCheck}
         title={heroTitle}
+        titleClassName="mt-6 text-[2.7rem] font-black tracking-tight leading-none sm:text-5xl md:text-6xl"
         subtitle={labels.subtitle}
         leftContent={
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
+          <div className="mt-8 hidden sm:flex sm:flex-wrap sm:gap-4">
             <button
               type="button"
               onClick={() => onNavigate('/techpark/boot-camp')}
@@ -361,9 +366,9 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.spaceTitle} subtitle={labels.spaceSubtitle} />
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/5 via-[#070b12] to-black p-6 sm:p-8">
-              <div className="overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                <div className="inline-flex min-w-max flex-nowrap gap-3">
+            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/5 via-[#070b12] to-black p-4 sm:p-8">
+              <div className="w-full overflow-x-auto pb-1 touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div className="inline-flex min-w-max snap-x snap-mandatory flex-nowrap gap-2 sm:gap-3">
                   {spaceTabs.map((tab) => {
                     const Icon = tab.icon;
                     const isActive = tab.id === activeSpaceTab;
@@ -373,14 +378,15 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
                         key={tab.id}
                         type="button"
                         onClick={() => setActiveSpaceTab(tab.id)}
-                        className={`inline-flex items-center gap-2 rounded-full border px-5 py-3 text-xs font-mono tracking-[0.22em] uppercase transition-colors ${
+                        className={`inline-flex shrink-0 snap-start items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2.5 text-[11px] font-mono tracking-[0.16em] uppercase transition-colors sm:px-5 sm:py-3 sm:text-xs sm:tracking-[0.22em] ${
                           isActive
                             ? 'border-blue-500/40 bg-blue-500/10 text-blue-200'
                             : 'border-white/10 bg-white/5 text-gray-300 hover:border-blue-500/30 hover:text-white'
                         }`}
                       >
                         <Icon className="h-4 w-4" />
-                        <span>{tab.label}</span>
+                        <span className="sm:hidden">{tab.mobileLabel}</span>
+                        <span className="hidden sm:inline">{tab.label}</span>
                       </button>
                     );
                   })}
@@ -388,17 +394,17 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
               </div>
 
               <div key={activeSpaceSection.id} className="mt-8">
-                <p className="max-w-4xl border-l-2 border-blue-500 pl-6 font-mono text-base leading-relaxed text-blue-100 md:text-[1.35rem] md:leading-[1.65]">
+                <p className="max-w-full border-l-2 border-blue-500 pl-4 font-mono text-sm leading-7 text-blue-100 sm:pl-6 sm:text-base md:text-[1.35rem] md:leading-[1.65]">
                   {activeSpaceSection.description}
                 </p>
 
                 <div className="mt-8 grid gap-4 md:grid-cols-2">
                   {activeSpaceSection.cards.map((card) => (
-                    <div key={card.title} className="rounded-[1.7rem] border border-white/10 bg-black/55 p-6">
-                      <div className="text-[1.05rem] font-mono leading-relaxed text-gray-100">
+                    <div key={card.title} className="rounded-[1.7rem] border border-white/10 bg-black/55 p-5 sm:p-6">
+                      <div className="text-base font-mono leading-relaxed text-gray-100 sm:text-[1.05rem]">
                         {card.title}
                       </div>
-                      <p className="mt-3 text-sm font-mono leading-relaxed text-gray-400">
+                      <p className="mt-3 text-xs font-mono leading-relaxed text-gray-400 sm:text-sm">
                         {card.text}
                       </p>
                     </div>
@@ -407,7 +413,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#06080d] to-black p-6 sm:p-8">
+            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#06080d] to-black p-4 sm:p-8">
               <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-mono tracking-[0.22em] uppercase text-blue-300">
                 <Sparkles className="h-4 w-4" />
                 {labels.flowEyebrow}
@@ -415,12 +421,12 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
 
               <div className="mt-6 space-y-4">
                 {labels.flowCards.map((card) => (
-                  <div key={card.label} className="rounded-[1.7rem] border border-white/10 bg-white/5 p-5">
-                    <div className="text-3xl font-black tracking-tight">{card.value}</div>
-                    <div className="mt-2 text-xs font-mono uppercase tracking-[0.18em] text-blue-300">
+                  <div key={card.label} className="rounded-[1.7rem] border border-white/10 bg-white/5 p-4 sm:p-5">
+                    <div className="text-[1.75rem] font-black tracking-tight sm:text-3xl">{card.value}</div>
+                    <div className="mt-2 text-[11px] font-mono uppercase tracking-[0.15em] text-blue-300 sm:text-xs sm:tracking-[0.18em]">
                       {card.label}
                     </div>
-                    <p className="mt-3 text-sm font-mono leading-relaxed text-gray-400">
+                    <p className="mt-3 text-xs font-mono leading-relaxed text-gray-400 sm:text-sm">
                       {card.text}
                     </p>
                   </div>
