@@ -5,9 +5,9 @@ import { X } from 'lucide-react';
 interface SplitActionModalProps {
   open: boolean;
   onClose: () => void;
-  eyebrow: string;
-  title: string;
-  description: string;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
   promoPanel: React.ReactNode;
   children: React.ReactNode;
 }
@@ -54,9 +54,15 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
             <div className="relative h-full p-5 md:p-6 xl:p-7">
               <div className="absolute inset-0 bg-[linear-gradient(rgba(30,30,30,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(30,30,30,0.25)_1px,transparent_1px)] bg-[size:36px_36px] opacity-20 pointer-events-none"></div>
               <div className="relative mx-auto flex h-full w-full max-w-3xl flex-col justify-center">
-                <div className="text-xs font-mono tracking-[0.22em] text-blue-300 uppercase">{eyebrow}</div>
-                <div className="mt-3 text-3xl font-black tracking-tight md:text-4xl">{title}</div>
-                <p className="mt-2 text-sm font-mono leading-relaxed text-blue-100/80 md:text-base">{description}</p>
+                {eyebrow ? (
+                  <div className="text-xs font-mono tracking-[0.22em] text-blue-300 uppercase">{eyebrow}</div>
+                ) : null}
+                {title ? (
+                  <div className="mt-3 text-3xl font-black tracking-tight md:text-4xl">{title}</div>
+                ) : null}
+                {description ? (
+                  <p className="mt-2 text-sm font-mono leading-relaxed text-blue-100/80 md:text-base">{description}</p>
+                ) : null}
                 <div className="mt-6">{promoPanel}</div>
               </div>
             </div>
@@ -74,8 +80,10 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
             </div>
 
             <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-5 md:px-6 md:pb-6 xl:px-7 xl:pb-7">
-              <div className="mx-auto w-full max-w-3xl py-2 md:py-4">
-                {children}
+              <div className="mx-auto flex min-h-full w-full max-w-3xl items-center py-2 md:py-4">
+                <div className="w-full">
+                  {children}
+                </div>
               </div>
             </div>
           </div>

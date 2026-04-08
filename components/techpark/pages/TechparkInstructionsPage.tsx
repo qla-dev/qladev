@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { programs } from '../data';
 import { ProgramCard } from '../instructions/ProgramCard';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
@@ -8,6 +8,37 @@ import { TechparkPageShell } from '../shared/TechparkPageShell';
 import { TechparkSubnavSection } from '../shared/TechparkSubnavSection';
 import type { FormStatus, ProgramLevel, TechparkPageProps } from '../types';
 
+const PROGRAM_START_DATE = new Date(2026, 5, 1, 0, 0, 0, 0);
+
+const getCountdownParts = (targetDate: Date) => {
+  const diff = Math.max(targetDate.getTime() - Date.now(), 0);
+
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  };
+};
+
+const getBosnianCountdownLabel = (unit: 'days' | 'hours' | 'minutes' | 'seconds', value: number) => {
+  const mod10 = value % 10;
+  const mod100 = value % 100;
+  const fewForm = mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14);
+
+  if (unit === 'days') return value === 1 ? 'DAN' : 'DANA';
+  if (unit === 'hours') return value === 1 ? 'SAT' : fewForm ? 'SATA' : 'SATI';
+  if (unit === 'minutes') return value === 1 ? 'MINUTA' : fewForm ? 'MINUTE' : 'MINUTA';
+  return value === 1 ? 'SEKUNDA' : fewForm ? 'SEKUNDE' : 'SEKUNDI';
+};
+
+const getEnglishCountdownLabel = (unit: 'days' | 'hours' | 'minutes' | 'seconds', value: number) => {
+  if (unit === 'days') return value === 1 ? 'DAY' : 'DAYS';
+  if (unit === 'hours') return value === 1 ? 'HOUR' : 'HOURS';
+  if (unit === 'minutes') return value === 1 ? 'MIN' : 'MINS';
+  return value === 1 ? 'SEC' : 'SECS';
+};
+
 export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, onNavigate }) => {
   const isBs = lang === 'bs';
   const [selectedProgramId, setSelectedProgramId] = useState(programs[0].id);
@@ -15,6 +46,8 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
   const [formData, setFormData] = useState({ fullName: '', age: '', guardianContact: '', email: '', motivation: '' });
   const [status, setStatus] = useState<FormStatus | null>(null);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  const [programStartDate] = useState(() => PROGRAM_START_DATE);
+  const [countdown, setCountdown] = useState(() => getCountdownParts(programStartDate));
 
   const selectedProgram = programs.find((program) => program.id === selectedProgramId) ?? programs[0];
   const selectedProgramPrice = selectedLevel === 'beginner' ? '180 KM' : '300 KM';
@@ -22,6 +55,14 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
   const selectedProgramDiscount = selectedLevel === 'beginner'
     ? (isBs ? '10% POPUST DO 1. MAJA' : '10% OFF BEFORE MAY 1')
     : undefined;
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setCountdown(getCountdownParts(programStartDate));
+    }, 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, [programStartDate]);
 
   const labels = {
     sectionTitle: 'BOOT-CAMP',
@@ -64,9 +105,8 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     guardian: isBs ? 'Roditelj / kontakt telefon' : 'Guardian / contact phone',
     motivation: isBs ? 'Sta zelis nauciti?' : 'What do you want to learn?',
     modalTitle: isBs ? 'BOOT-CAMP PRIJAVA' : 'BOOT-CAMP ENROLLMENT',
-    modalSubtitle: isBs ? 'Odaberi smjer i posalji prijavu za boot-camp.' : 'Choose a track and send the boot-camp enrollment.',
-    modalText: isBs ? 'Svaki boot-camp ima Beginner i Advanced put, a rad se odvija kroz male timove, simulaciju product procesa i razvoj stvarnog finalnog rezultata koji se moze pokazati, testirati i unaprijediti.' : 'Each boot-camp has Beginner and Advanced paths, and the work runs through small teams, simulated product processes, and the development of a real final result that can be shown, tested, and improved.',
     selectedProgram: isBs ? 'Odabrani program' : 'Selected program',
+    programDescription: isBs ? 'Opis programa' : 'Program description',
     enrolled: isBs ? 'upisano / limit' : 'enrolled / cap',
     schedule: isBs ? 'Raspored' : 'Schedule',
     programPriceLabel: isBs ? 'mjesecna cijena kursa' : 'monthly course price',
@@ -79,12 +119,54 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
 
   const beginnerLabel = isBs ? 'BEGINNER · 3 MJESECA' : 'BEGINNER · 3 MONTHS';
   const advancedLabel = isBs ? 'ADVANCED · 6 MJESECI' : 'ADVANCED · 6 MONTHS';
-  const modalText = isBs
-    ? 'Svaki boot-camp ima Beginner put od 3 mjeseca i Advanced put od 6 mjeseci, uz rad u timovima od 3 clana, simulaciju product procesa i prostor da ideja zavrsi kao konkretan, pokaziv krajnji proizvod.'
-    : 'Each boot-camp has a 3-month Beginner path and a 6-month Advanced path, with work in teams of 3, simulated product processes, and enough room for an idea to become a concrete final product.';
   const selectedDuration = selectedLevel === 'beginner'
     ? (isBs ? '3 mjeseca' : '3 months')
     : (isBs ? '6 mjeseci' : '6 months');
+  const countdownLabels = {
+    eyebrow: isBs ? 'POČETAK PROGRAMA' : 'PROGRAM START',
+    note: isBs ? 'Svi boot-camp programi počinju istog datuma.' : 'All boot-camp programs start on the same date.',
+  };
+  const countdownDate = isBs ? '1. JUNI 2026. godine' : 'JUNE 1, 2026';
+  const countdownUnits = [
+    {
+      label: isBs ? getBosnianCountdownLabel('days', countdown.days) : getEnglishCountdownLabel('days', countdown.days),
+      value: countdown.days,
+    },
+    {
+      label: isBs ? getBosnianCountdownLabel('hours', countdown.hours) : getEnglishCountdownLabel('hours', countdown.hours),
+      value: countdown.hours,
+    },
+    {
+      label: isBs ? getBosnianCountdownLabel('minutes', countdown.minutes) : getEnglishCountdownLabel('minutes', countdown.minutes),
+      value: countdown.minutes,
+    },
+    {
+      label: isBs ? getBosnianCountdownLabel('seconds', countdown.seconds) : getEnglishCountdownLabel('seconds', countdown.seconds),
+      value: countdown.seconds,
+    },
+  ];
+  const sectionContent = (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+        <div className="min-w-0">
+          <div className="text-[11px] font-mono tracking-[0.2em] text-blue-300 uppercase">{countdownLabels.eyebrow}</div>
+          <div className="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">{countdownDate}</div>
+          <p className="mt-2 text-sm font-mono text-gray-400">{countdownLabels.note}</p>
+        </div>
+
+        <div className="grid grid-cols-4 gap-2 sm:gap-3">
+          {countdownUnits.map((unit) => (
+            <div key={unit.label} className="rounded-2xl border border-white/10 bg-black/30 px-2 py-3 text-center sm:px-4">
+              <div className="text-xl font-black text-white sm:text-3xl">{String(unit.value).padStart(2, '0')}</div>
+              <div className="mt-1 text-[9px] font-mono tracking-[0.14em] text-blue-300 uppercase sm:text-[10px] sm:tracking-[0.18em]">{unit.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {labels.sectionSubtitle}
+    </div>
+  );
 
   const chooseTrack = (programId: string, level: ProgramLevel) => {
     setSelectedProgramId(programId);
@@ -132,7 +214,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
         lang={lang}
         onNavigate={onNavigate}
         title={labels.sectionTitle}
-        subtitle={labels.sectionSubtitle}
+        subtitle={sectionContent}
       />
 
       <section className="pt-3 pb-24 lg:pt-5 lg:pb-24">
@@ -161,19 +243,22 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
       <SplitActionModal
         open={isJoinModalOpen}
         onClose={() => setIsJoinModalOpen(false)}
-        eyebrow={labels.modalTitle}
-        title={`${isBs ? selectedProgram.titleBs : selectedProgram.title} / ${selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}`}
-        description={labels.modalSubtitle}
+        eyebrow=""
+        title=""
+        description=""
         promoPanel={
           <div className="space-y-4">
             <div className="inline-flex px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 text-[11px] font-mono tracking-[0.16em] uppercase">{labels.selectedProgram}</div>
-            <div className="text-4xl font-black tracking-tight">{isBs ? selectedProgram.titleBs : selectedProgram.title}</div>
-            <div className="text-lg text-gray-300 font-mono">{selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}</div>
-            <p className="text-sm text-blue-100/80 font-mono leading-relaxed">{modalText}</p>
+            <div className="text-3xl font-black tracking-tight sm:text-[2.35rem]">{isBs ? selectedProgram.titleBs : selectedProgram.title}</div>
+            <div className="text-base text-gray-300 font-mono sm:text-lg">{selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}</div>
             <div className="grid gap-3 md:grid-cols-3">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-xs font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.enrolled}</div><div className="mt-2 text-2xl font-black">0/{selectedProgram.seats}</div><div className="mt-2 text-sm text-gray-400 font-mono">{labels.under18}</div></div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-xs font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.schedule}</div><div className="mt-2 text-2xl font-black">{isBs ? selectedProgram.scheduleBs : selectedProgram.schedule}</div><div className="mt-2 text-sm text-gray-400 font-mono">{selectedDuration}</div></div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-xs font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.programPriceLabel}</div><div className="mt-2 text-2xl font-black">{selectedProgramPrice}</div>{selectedProgramOldPrice ? <div className="mt-2 text-sm text-gray-400 line-through font-mono">{selectedProgramOldPrice}</div> : <div className="mt-2 text-sm text-gray-400 font-mono">{isBs ? 'Advanced put' : 'Advanced path'}</div>}</div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.enrolled}</div><div className="mt-2 text-xl font-black sm:text-2xl">0/{selectedProgram.seats}</div><div className="mt-2 text-xs text-gray-400 font-mono sm:text-sm">{labels.under18}</div></div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.schedule}</div><div className="mt-2 text-xl font-black sm:text-2xl">{isBs ? selectedProgram.scheduleBs : selectedProgram.schedule}</div><div className="mt-2 text-xs text-gray-400 font-mono sm:text-sm">{selectedDuration}</div></div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.programPriceLabel}</div><div className="mt-2 text-xl font-black sm:text-2xl">{selectedProgramPrice}</div>{selectedProgramOldPrice ? <div className="mt-2 text-xs text-gray-400 line-through font-mono sm:text-sm">{selectedProgramOldPrice}</div> : <div className="mt-2 text-xs text-gray-400 font-mono sm:text-sm">{isBs ? 'Advanced put' : 'Advanced path'}</div>}</div>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+              <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.programDescription}</div>
+              <p className="mt-2 text-xs text-blue-100/80 font-mono leading-relaxed sm:text-sm">{isBs ? selectedProgram.descriptionBs : selectedProgram.description}</p>
             </div>
             <CrossSellPanel
               badge={labels.crossSellBadge}
