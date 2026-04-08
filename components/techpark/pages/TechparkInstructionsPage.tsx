@@ -68,11 +68,13 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     modalText: isBs ? 'Svaki boot-camp ima Beginner i Advanced put, a rad se odvija kroz male timove, simulaciju product procesa i razvoj stvarnog finalnog rezultata koji se moze pokazati, testirati i unaprijediti.' : 'Each boot-camp has Beginner and Advanced paths, and the work runs through small teams, simulated product processes, and the development of a real final result that can be shown, tested, and improved.',
     selectedProgram: isBs ? 'Odabrani program' : 'Selected program',
     enrolled: isBs ? 'upisano / limit' : 'enrolled / cap',
+    schedule: isBs ? 'Raspored' : 'Schedule',
     programPriceLabel: isBs ? 'mjesecna cijena kursa' : 'monthly course price',
     crossSellBadge: isBs ? 'OPEN SPACE BONUS' : 'OPEN SPACE BONUS',
     crossSellTitle: isBs ? 'Dodaj open space uz 50% popusta.' : 'Add open space with 50% off.',
     crossSellText: isBs ? 'Ako uz program zelis i dnevni boravak za rad, druzenje ili gaming, open space membership dobijas uz dodatni bundle popust.' : 'If you also want daytime space for building, hanging out, or gaming, you can add open-space membership with an extra bundle discount.',
     crossSellButton: isBs ? 'OTVORI OPEN SPACE' : 'OPEN SPACE OFFER',
+    close: isBs ? 'Zatvori' : 'Close',
   };
 
   const beginnerLabel = isBs ? 'BEGINNER · 3 MJESECA' : 'BEGINNER · 3 MONTHS';
@@ -170,7 +172,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
             <p className="text-sm text-blue-100/80 font-mono leading-relaxed">{modalText}</p>
             <div className="grid gap-3 md:grid-cols-3">
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-xs font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.enrolled}</div><div className="mt-2 text-2xl font-black">0/{selectedProgram.seats}</div><div className="mt-2 text-sm text-gray-400 font-mono">{labels.under18}</div></div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-xs font-mono tracking-[0.16em] text-blue-300 uppercase">Schedule</div><div className="mt-2 text-2xl font-black">{isBs ? selectedProgram.scheduleBs : selectedProgram.schedule}</div><div className="mt-2 text-sm text-gray-400 font-mono">{selectedDuration}</div></div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-xs font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.schedule}</div><div className="mt-2 text-2xl font-black">{isBs ? selectedProgram.scheduleBs : selectedProgram.schedule}</div><div className="mt-2 text-sm text-gray-400 font-mono">{selectedDuration}</div></div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4"><div className="text-xs font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.programPriceLabel}</div><div className="mt-2 text-2xl font-black">{selectedProgramPrice}</div>{selectedProgramOldPrice ? <div className="mt-2 text-sm text-gray-400 line-through font-mono">{selectedProgramOldPrice}</div> : <div className="mt-2 text-sm text-gray-400 font-mono">{isBs ? 'Advanced put' : 'Advanced path'}</div>}</div>
             </div>
             <CrossSellPanel
@@ -205,7 +207,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
           <textarea value={formData.motivation} onChange={(event) => setField('motivation', event.target.value)} placeholder={labels.motivation} rows={4} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
           <FormStatusMessage status={status} />
           <div className="flex flex-col sm:flex-row gap-3">
-            <button type="button" onClick={() => setIsJoinModalOpen(false)} className="sm:flex-1 px-6 py-4 border border-white/15 rounded-sm font-bold font-mono text-sm tracking-[0.16em] uppercase text-gray-300 hover:text-white hover:border-blue-500 transition-colors">Close</button>
+            <button type="button" onClick={() => setIsJoinModalOpen(false)} className="sm:flex-1 px-6 py-4 border border-white/15 rounded-sm font-bold font-mono text-sm tracking-[0.16em] uppercase text-gray-300 hover:text-white hover:border-blue-500 transition-colors">{labels.close}</button>
             <button type="submit" className="sm:flex-1 px-6 py-4 bg-blue-600 hover:bg-blue-700 rounded-sm font-bold font-mono text-sm tracking-[0.18em] uppercase transition-all hover:shadow-[0_0_18px_rgba(37,99,235,0.55)]">{labels.joinButton}</button>
           </div>
         </form>

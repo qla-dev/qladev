@@ -42,6 +42,13 @@ export interface Program {
   advancedFocusBs: string;
   seats: number;
   icon: LucideIcon;
+  tutor: {
+    name: string;
+    title: string;
+    titleBs: string;
+    image: string;
+    link: string | null;
+  };
 }
 
 export interface MembershipDay {
