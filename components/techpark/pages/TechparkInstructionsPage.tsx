@@ -269,31 +269,44 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
             />
           </div>
         }
+        mobileFooter={
+          <button
+            type="submit"
+            form="bootcamp-enrollment-form"
+            className="w-full rounded-sm bg-blue-600 px-5 py-4 font-bold font-mono text-sm tracking-[0.16em] uppercase text-white shadow-[0_0_20px_rgba(37,99,235,0.5)] transition-all hover:bg-blue-700"
+          >
+            <span className="block">{labels.joinButton}</span>
+            <span className="mt-1 block text-[10px] tracking-[0.18em] text-blue-100/80">
+              {selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}
+            </span>
+          </button>
+        }
       >
-        <form onSubmit={handleEnroll} className="space-y-4">
-          <div className="text-xl font-bold">{labels.joinTitle}</div>
-          <select value={selectedProgramId} onChange={(event) => setSelectedProgramId(event.target.value)} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white focus:border-blue-500 focus:outline-none">
-            {programs.map((program) => (
-              <option key={program.id} value={program.id}>
-                {isBs ? program.titleBs : program.title}
-              </option>
-            ))}
-          </select>
-          <div className="grid grid-cols-2 gap-3">
-            <button type="button" onClick={() => setSelectedLevel('beginner')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'beginner' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{beginnerLabel}</button>
-            <button type="button" onClick={() => setSelectedLevel('advanced')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'advanced' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{advancedLabel}</button>
+        <form id="bootcamp-enrollment-form" onSubmit={handleEnroll} className="flex flex-col pb-6 sm:pb-0 lg:min-h-full">
+          <div className="space-y-4">
+            <div className="text-xl font-bold">{labels.joinTitle}</div>
+            <select value={selectedProgramId} onChange={(event) => setSelectedProgramId(event.target.value)} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white focus:border-blue-500 focus:outline-none">
+              {programs.map((program) => (
+                <option key={program.id} value={program.id}>
+                  {isBs ? program.titleBs : program.title}
+                </option>
+              ))}
+            </select>
+            <div className="grid grid-cols-2 gap-3">
+              <button type="button" onClick={() => setSelectedLevel('beginner')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'beginner' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{beginnerLabel}</button>
+              <button type="button" onClick={() => setSelectedLevel('advanced')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'advanced' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{advancedLabel}</button>
+            </div>
+            <input value={formData.fullName} onChange={(event) => setField('fullName', event.target.value)} placeholder={labels.name} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+            <div className="grid md:grid-cols-2 gap-4">
+              <input value={formData.age} onChange={(event) => setField('age', event.target.value)} placeholder={labels.age} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+              <input value={formData.email} onChange={(event) => setField('email', event.target.value)} placeholder="Email" className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+            </div>
+            <input value={formData.guardianContact} onChange={(event) => setField('guardianContact', event.target.value)} placeholder={labels.guardian} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+            <textarea value={formData.motivation} onChange={(event) => setField('motivation', event.target.value)} placeholder={labels.motivation} rows={4} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+            <FormStatusMessage status={status} />
           </div>
-          <input value={formData.fullName} onChange={(event) => setField('fullName', event.target.value)} placeholder={labels.name} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-          <div className="grid md:grid-cols-2 gap-4">
-            <input value={formData.age} onChange={(event) => setField('age', event.target.value)} placeholder={labels.age} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-            <input value={formData.email} onChange={(event) => setField('email', event.target.value)} placeholder="Email" className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-          </div>
-          <input value={formData.guardianContact} onChange={(event) => setField('guardianContact', event.target.value)} placeholder={labels.guardian} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-          <textarea value={formData.motivation} onChange={(event) => setField('motivation', event.target.value)} placeholder={labels.motivation} rows={4} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
-          <FormStatusMessage status={status} />
-          <div className="flex flex-col sm:flex-row gap-3">
-            <button type="button" onClick={() => setIsJoinModalOpen(false)} className="sm:flex-1 px-6 py-4 border border-white/15 rounded-sm font-bold font-mono text-sm tracking-[0.16em] uppercase text-gray-300 hover:text-white hover:border-blue-500 transition-colors">{labels.close}</button>
-            <button type="submit" className="sm:flex-1 px-6 py-4 bg-blue-600 hover:bg-blue-700 rounded-sm font-bold font-mono text-sm tracking-[0.18em] uppercase transition-all hover:shadow-[0_0_18px_rgba(37,99,235,0.55)]">{labels.joinButton}</button>
+          <div className="mt-6 hidden pt-6 sm:block">
+            <button type="submit" className="w-full px-6 py-4 bg-blue-600 hover:bg-blue-700 rounded-sm font-bold font-mono text-sm tracking-[0.18em] uppercase transition-all hover:shadow-[0_0_18px_rgba(37,99,235,0.55)]">{labels.joinButton}</button>
           </div>
         </form>
       </SplitActionModal>

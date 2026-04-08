@@ -10,6 +10,7 @@ interface SplitActionModalProps {
   description?: string;
   promoPanel: React.ReactNode;
   children: React.ReactNode;
+  mobileFooter?: React.ReactNode;
 }
 
 export const SplitActionModal: React.FC<SplitActionModalProps> = ({
@@ -20,6 +21,7 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
   description,
   promoPanel,
   children,
+  mobileFooter,
 }) => {
   React.useEffect(() => {
     if (!open) {
@@ -47,13 +49,14 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-[80] bg-black/88 backdrop-blur-md">
-      <div className="absolute inset-3 sm:inset-4">
-        <div className="grid h-full w-full overflow-hidden rounded-[2rem] border border-white/10 bg-[#05070d] shadow-[0_0_60px_rgba(0,123,255,0.2)] grid-rows-[minmax(0,0.96fr)_minmax(0,1.04fr)] lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)] lg:grid-rows-1">
-          <div className="relative min-h-0 overflow-y-auto border-b border-white/10 bg-gradient-to-br from-blue-900/45 via-[#07111f] to-black lg:border-b-0 lg:border-r">
-            <div className="relative h-full p-5 md:p-6 xl:p-7">
+    <div className="fixed inset-0 z-[80] overflow-y-auto bg-black/88 backdrop-blur-md">
+      <div className={`min-h-full ${mobileFooter ? 'pb-28 sm:pb-0' : ''}`}>
+        <div className="w-full lg:h-screen">
+          <div className="grid w-full bg-[#05070d] lg:h-full lg:overflow-hidden lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
+          <div className="order-2 relative border-b border-white/10 bg-gradient-to-br from-blue-900/45 via-[#07111f] to-black lg:order-1 lg:min-h-0 lg:overflow-y-auto lg:border-b-0 lg:border-r">
+            <div className="relative p-5 md:p-6 xl:p-7 lg:h-full">
               <div className="absolute inset-0 bg-[linear-gradient(rgba(30,30,30,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(30,30,30,0.25)_1px,transparent_1px)] bg-[size:36px_36px] opacity-20 pointer-events-none"></div>
-              <div className="relative mx-auto flex h-full w-full max-w-3xl flex-col justify-center">
+              <div className="relative mx-auto flex w-full max-w-3xl flex-col justify-center lg:h-full">
                 {eyebrow ? (
                   <div className="text-xs font-mono tracking-[0.22em] text-blue-300 uppercase">{eyebrow}</div>
                 ) : null}
@@ -68,8 +71,8 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
             </div>
           </div>
 
-          <div className="relative flex min-h-0 flex-col bg-[#04060b]">
-            <div className="sticky top-0 z-20 flex justify-end bg-gradient-to-b from-[#04060b] via-[#04060b] to-transparent px-5 pt-5 pb-4 md:px-6 md:pt-6 xl:px-7 xl:pt-7">
+          <div className="order-1 relative flex flex-col bg-[#04060b] lg:order-2 lg:min-h-0">
+            <div className="flex justify-end px-5 pt-5 pb-4 md:px-6 md:pt-6 xl:px-7 xl:pt-7 lg:sticky lg:top-0 lg:z-20 lg:bg-gradient-to-b lg:from-[#04060b] lg:via-[#04060b] lg:to-transparent">
               <button
                 type="button"
                 onClick={onClose}
@@ -79,8 +82,8 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
               </button>
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-5 md:px-6 md:pb-6 xl:px-7 xl:pb-7">
-              <div className="mx-auto flex min-h-full w-full max-w-3xl items-center py-2 md:py-4">
+            <div className="px-5 pb-5 md:px-6 md:pb-6 xl:px-7 xl:pb-7 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+              <div className="mx-auto w-full max-w-3xl py-2 md:py-4 lg:flex lg:min-h-full lg:items-center">
                 <div className="w-full">
                   {children}
                 </div>
@@ -88,6 +91,12 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
             </div>
           </div>
         </div>
+      </div>
+      {mobileFooter ? (
+        <div className="fixed inset-x-0 bottom-0 z-[90] border-t border-white/10 bg-[#04060b]/95 px-4 py-4 backdrop-blur-md sm:hidden">
+          {mobileFooter}
+        </div>
+      ) : null}
       </div>
     </div>,
     document.body
