@@ -120,6 +120,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     crossSellButton: isBs ? 'OTVORI OPEN SPACE' : 'OPEN SPACE OFFER',
     close: isBs ? 'Zatvori' : 'Close',
     agendaButton: isBs ? 'PLAN I PROGRAM' : 'PROGRAM AGENDA',
+    applyButton: isBs ? 'PRIJAVI SE' : 'APPLY NOW',
     agendaTitle: isBs ? 'PLAN I PROGRAM' : 'PROGRAM AGENDA',
     agendaOverview: isBs ? 'Pregled puta' : 'Track overview',
     agendaTimeline: isBs ? 'Sedmični plan' : 'Weekly agenda',
@@ -265,6 +266,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
                   beginnerLabel={beginnerLabel}
                   advancedLabel={advancedLabel}
                   agendaButtonLabel={labels.agendaButton}
+                  applyButtonLabel={labels.applyButton}
                   activeLevel={program.id === selectedProgramId ? selectedLevel : 'beginner'}
                   onChooseTrack={chooseTrack}
                   onOpenAgenda={openAgenda}
