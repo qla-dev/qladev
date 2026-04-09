@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Lock, Users } from 'lucide-react';
+import { ExternalLink, FileText, Lock, Users } from 'lucide-react';
 import type { Program, ProgramLevel } from '../types';
 
 interface ProgramCardProps {
@@ -10,8 +10,10 @@ interface ProgramCardProps {
   under18Label: string;
   beginnerLabel: string;
   advancedLabel: string;
+  agendaButtonLabel: string;
   activeLevel: ProgramLevel;
   onChooseTrack: (programId: string, level: 'beginner' | 'advanced') => void;
+  onOpenAgenda: (programId: string, level: 'beginner' | 'advanced') => void;
 }
 
 export const ProgramCard: React.FC<ProgramCardProps> = ({
@@ -22,8 +24,10 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
   under18Label,
   beginnerLabel,
   advancedLabel,
+  agendaButtonLabel,
   activeLevel,
   onChooseTrack,
+  onOpenAgenda,
 }) => {
   const Icon = program.icon;
   const [isTutorHovered, setIsTutorHovered] = useState(false);
@@ -109,10 +113,32 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
         <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
           <div className="text-xs font-mono tracking-[0.16em] text-blue-400 uppercase">{beginnerLabel}</div>
           <p className="mt-2 text-sm text-gray-300 font-mono leading-relaxed">{isBs ? program.beginnerFocusBs : program.beginnerFocus}</p>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onOpenAgenda(program.id, 'beginner');
+            }}
+            className="mt-4 inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:border-blue-500 hover:bg-blue-500/20"
+          >
+            {agendaButtonLabel}
+            <FileText className="h-3.5 w-3.5" />
+          </button>
         </div>
         <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
           <div className="text-xs font-mono tracking-[0.16em] text-blue-400 uppercase">{advancedLabel}</div>
           <p className="mt-2 text-sm text-gray-300 font-mono leading-relaxed">{isBs ? program.advancedFocusBs : program.advancedFocus}</p>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onOpenAgenda(program.id, 'advanced');
+            }}
+            className="mt-4 inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:border-blue-500 hover:bg-blue-500/20"
+          >
+            {agendaButtonLabel}
+            <FileText className="h-3.5 w-3.5" />
+          </button>
         </div>
       </div>
 

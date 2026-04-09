@@ -51,6 +51,27 @@ export interface Program {
   };
 }
 
+export interface ProgramAgendaWeek {
+  id: string;
+  label: string;
+  labelBs: string;
+  title: string;
+  titleBs: string;
+  summary?: string;
+  summaryBs?: string;
+  points: string[];
+  pointsBs: string[];
+}
+
+export interface ProgramAgenda {
+  programId: string;
+  level: ProgramLevel;
+  status: 'ready' | 'coming-soon';
+  overview: string;
+  overviewBs: string;
+  weeks: ProgramAgendaWeek[];
+}
+
 export interface MembershipDay {
   key: MembershipDayKey;
   label: string;

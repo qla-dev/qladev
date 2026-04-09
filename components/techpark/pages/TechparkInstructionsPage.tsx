@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ExternalLink, Lock } from 'lucide-react';
+import { getProgramAgenda } from '../agenda';
 import { programs } from '../data';
 import { ProgramCard } from '../instructions/ProgramCard';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
@@ -46,10 +48,12 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
   const [formData, setFormData] = useState({ fullName: '', age: '', guardianContact: '', email: '', motivation: '' });
   const [status, setStatus] = useState<FormStatus | null>(null);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  const [isAgendaModalOpen, setIsAgendaModalOpen] = useState(false);
   const [programStartDate] = useState(() => PROGRAM_START_DATE);
   const [countdown, setCountdown] = useState(() => getCountdownParts(programStartDate));
 
   const selectedProgram = programs.find((program) => program.id === selectedProgramId) ?? programs[0];
+  const selectedAgenda = getProgramAgenda(selectedProgramId, selectedLevel);
   const selectedProgramPrice = selectedLevel === 'beginner' ? '180 KM' : '300 KM';
   const selectedProgramOldPrice = selectedLevel === 'beginner' ? '200 KM' : undefined;
   const selectedProgramDiscount = selectedLevel === 'beginner'
@@ -115,6 +119,18 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     crossSellText: isBs ? 'Ako uz program zelis i dnevni boravak za rad, druzenje ili gaming, open space membership dobijas uz dodatni bundle popust.' : 'If you also want daytime space for building, hanging out, or gaming, you can add open-space membership with an extra bundle discount.',
     crossSellButton: isBs ? 'OTVORI OPEN SPACE' : 'OPEN SPACE OFFER',
     close: isBs ? 'Zatvori' : 'Close',
+    agendaButton: isBs ? 'PLAN I PROGRAM' : 'PROGRAM AGENDA',
+    agendaTitle: isBs ? 'PLAN I PROGRAM' : 'PROGRAM AGENDA',
+    agendaOverview: isBs ? 'Pregled puta' : 'Track overview',
+    agendaTimeline: isBs ? 'Sedmični plan' : 'Weekly agenda',
+    agendaReady: isBs ? 'Detaljan plan' : 'Detailed agenda',
+    agendaSoon: isBs ? 'Agenda uskoro' : 'Agenda coming soon',
+    agendaStart: isBs ? 'Početak' : 'Start',
+    agendaDuration: isBs ? 'Trajanje' : 'Duration',
+    mentor: isBs ? 'Mentor' : 'Tutor',
+    tutorProfile: 'LinkedIn',
+    tutorBlocked: isBs ? 'Uskoro' : 'Coming soon',
+    weeksCount: isBs ? 'sedmica' : 'weeks',
   };
 
   const beginnerLabel = isBs ? 'BEGINNER · 3 MJESECA' : 'BEGINNER · 3 MONTHS';
@@ -175,6 +191,12 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     setIsJoinModalOpen(true);
   };
 
+  const openAgenda = (programId: string, level: ProgramLevel) => {
+    setSelectedProgramId(programId);
+    setSelectedLevel(level);
+    setIsAgendaModalOpen(true);
+  };
+
   const openMembershipOffer = () => {
     setIsJoinModalOpen(false);
     onNavigate('/techpark/membership');
@@ -207,6 +229,17 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     setFormData({ fullName: '', age: '', guardianContact: '', email: '', motivation: '' });
   };
 
+  const selectedTutorTitle = isBs ? selectedProgram.tutor.titleBs : selectedProgram.tutor.title;
+  const hasTutorLink = Boolean(selectedProgram.tutor.link);
+  const agendaOverview = isBs ? selectedAgenda.overviewBs : selectedAgenda.overview;
+  const agendaWeeks = selectedAgenda.weeks.map((week) => ({
+    ...week,
+    label: isBs ? week.labelBs : week.label,
+    title: isBs ? week.titleBs : week.title,
+    summary: isBs ? week.summaryBs : week.summary,
+    points: isBs ? week.pointsBs : week.points,
+  }));
+
   return (
     <TechparkPageShell showBackdrop>
       <TechparkSubnavSection
@@ -231,8 +264,10 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
                   under18Label={labels.under18}
                   beginnerLabel={beginnerLabel}
                   advancedLabel={advancedLabel}
+                  agendaButtonLabel={labels.agendaButton}
                   activeLevel={program.id === selectedProgramId ? selectedLevel : 'beginner'}
                   onChooseTrack={chooseTrack}
+                  onOpenAgenda={openAgenda}
                 />
               ))}
             </div>
@@ -309,6 +344,132 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
             <button type="submit" className="w-full px-6 py-4 bg-blue-600 hover:bg-blue-700 rounded-sm font-bold font-mono text-sm tracking-[0.18em] uppercase transition-all hover:shadow-[0_0_18px_rgba(37,99,235,0.55)]">{labels.joinButton}</button>
           </div>
         </form>
+      </SplitActionModal>
+
+      <SplitActionModal
+        open={isAgendaModalOpen}
+        onClose={() => setIsAgendaModalOpen(false)}
+        eyebrow=""
+        title=""
+        description=""
+        promoPanel={
+          <div className="space-y-4">
+            <div className="inline-flex rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">
+              {labels.agendaTitle}
+            </div>
+            <div className="text-3xl font-black tracking-tight sm:text-[2.35rem]">{isBs ? selectedProgram.titleBs : selectedProgram.title}</div>
+            <div className="text-base font-mono text-gray-300 sm:text-lg">{selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}</div>
+            <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+              <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">
+                {selectedAgenda.status === 'ready' ? labels.agendaReady : labels.agendaSoon}
+              </div>
+              <p className="mt-3 text-sm font-mono leading-relaxed text-blue-100/85 sm:text-[15px]">{agendaOverview}</p>
+            </div>
+            <div className="grid gap-3 md:grid-cols-3">
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+                <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.agendaStart}</div>
+                <div className="mt-2 text-lg font-black sm:text-xl">{countdownDate}</div>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+                <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.schedule}</div>
+                <div className="mt-2 text-lg font-black sm:text-xl">{isBs ? selectedProgram.scheduleBs : selectedProgram.schedule}</div>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+                <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.agendaDuration}</div>
+                <div className="mt-2 text-lg font-black sm:text-xl">{selectedDuration}</div>
+              </div>
+            </div>
+            {hasTutorLink ? (
+              <a
+                href={selectedProgram.tutor.link ?? undefined}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 p-4 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div className="flex min-w-0 items-center gap-4">
+                  <img
+                    src={selectedProgram.tutor.image}
+                    alt={selectedProgram.tutor.name}
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    className="h-14 w-14 shrink-0 rounded-2xl object-cover"
+                  />
+                  <div className="min-w-0">
+                    <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{labels.mentor}</div>
+                    <div className="mt-1 truncate text-lg font-bold">{selectedProgram.tutor.name}</div>
+                    <p className="text-sm font-mono text-gray-300">{selectedTutorTitle}</p>
+                  </div>
+                </div>
+                <span className="inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors group-hover:border-blue-500 group-hover:bg-blue-500/20">
+                  {labels.tutorProfile}
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </span>
+              </a>
+            ) : (
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex min-w-0 items-center gap-4">
+                    <img
+                      src={selectedProgram.tutor.image}
+                      alt={selectedProgram.tutor.name}
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      className="h-14 w-14 shrink-0 rounded-2xl object-cover"
+                    />
+                    <div className="min-w-0">
+                      <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{labels.mentor}</div>
+                      <div className="mt-1 truncate text-lg font-bold">{selectedProgram.tutor.name}</div>
+                      <p className="text-sm font-mono text-gray-300">{selectedTutorTitle}</p>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-gray-400">
+                    {labels.tutorBlocked}
+                    <Lock className="h-3.5 w-3.5" />
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        }
+      >
+        <div className="space-y-5">
+          <div className="border-b border-white/10 pb-4">
+            <div className="text-[11px] font-mono tracking-[0.2em] text-blue-300 uppercase">{labels.agendaTimeline}</div>
+            <div className="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">
+              {selectedAgenda.status === 'ready' ? labels.agendaReady : labels.agendaSoon}
+            </div>
+            <p className="mt-2 text-sm font-mono text-gray-400">
+              {agendaWeeks.length} {labels.weeksCount}
+            </p>
+          </div>
+
+          <div className="space-y-4 pb-4">
+            {agendaWeeks.map((week, index) => (
+              <div key={week.id} className="rounded-3xl border border-white/10 bg-black/30 p-5">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-500/10 text-sm font-black text-white">
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{week.label}</div>
+                    <div className="mt-1 text-xl font-bold tracking-tight text-white">{week.title}</div>
+                    {week.summary ? (
+                      <p className="mt-2 text-sm font-mono leading-relaxed text-gray-300">{week.summary}</p>
+                    ) : null}
+                    <ul className="mt-4 space-y-2">
+                      {week.points.map((point) => (
+                        <li key={point} className="flex items-start gap-3 text-sm font-mono leading-relaxed text-blue-100/85">
+                          <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-blue-400" />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </SplitActionModal>
     </TechparkPageShell>
   );
