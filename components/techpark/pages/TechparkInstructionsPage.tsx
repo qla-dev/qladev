@@ -355,6 +355,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
       <SplitActionModal
         open={isAgendaModalOpen}
         onClose={() => setIsAgendaModalOpen(false)}
+        mobileColumnOrder="promo-first"
         eyebrow=""
         title=""
         description=""

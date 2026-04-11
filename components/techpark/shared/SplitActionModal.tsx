@@ -11,6 +11,7 @@ interface SplitActionModalProps {
   promoPanel: React.ReactNode;
   children: React.ReactNode;
   mobileFooter?: React.ReactNode;
+  mobileColumnOrder?: 'content-first' | 'promo-first';
 }
 
 export const SplitActionModal: React.FC<SplitActionModalProps> = ({
@@ -22,6 +23,7 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
   promoPanel,
   children,
   mobileFooter,
+  mobileColumnOrder = 'content-first',
 }) => {
   React.useEffect(() => {
     if (!open) {
@@ -48,13 +50,24 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
     return null;
   }
 
+  const promoPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-1' : 'order-2';
+  const contentPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-2' : 'order-1';
+
   return createPortal(
     <div className="fixed inset-0 z-[80] bg-black/88 backdrop-blur-md">
+      <button
+        type="button"
+        onClick={onClose}
+        className="absolute right-[calc(env(safe-area-inset-right)+1rem)] top-[calc(env(safe-area-inset-top)+1rem)] z-[95] flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/30 text-gray-300 backdrop-blur-sm transition-colors hover:border-blue-500 hover:bg-black/45 hover:text-white"
+        aria-label="Close"
+      >
+        <X className="h-5 w-5" />
+      </button>
       <div className={`h-full overflow-y-auto ${mobileFooter ? 'pb-[calc(env(safe-area-inset-bottom)+7rem)] sm:pb-0' : ''}`}>
         <div className="min-h-full">
           <div className="w-full lg:h-screen">
             <div className="grid w-full bg-[#05070d] lg:h-full lg:overflow-hidden lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
-              <div className="order-2 relative border-b border-white/10 bg-gradient-to-br from-blue-900/45 via-[#07111f] to-black lg:order-1 lg:min-h-0 lg:overflow-y-auto lg:border-b-0 lg:border-r">
+              <div className={`${promoPanelOrder} relative border-b border-white/10 bg-gradient-to-br from-blue-900/45 via-[#07111f] to-black lg:order-1 lg:min-h-0 lg:overflow-y-auto lg:border-b-0 lg:border-r`}>
                 <div className="relative p-5 md:p-6 xl:p-7 lg:h-full">
                   <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(30,30,30,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(30,30,30,0.25)_1px,transparent_1px)] bg-[size:36px_36px] opacity-20"></div>
                   <div className="relative mx-auto flex w-full max-w-3xl flex-col justify-center lg:h-full">
@@ -72,18 +85,8 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
                 </div>
               </div>
 
-              <div className="order-1 relative flex flex-col bg-[#04060b] lg:order-2 lg:min-h-0">
-                <div className="flex justify-end px-4 pt-3 pb-2 md:px-6 md:pt-4 md:pb-3 xl:px-7 xl:pt-5 lg:sticky lg:top-0 lg:z-20 lg:border-b lg:border-white/5 lg:bg-gradient-to-b lg:from-[#04060b]/82 lg:via-[#04060b]/55 lg:to-transparent lg:backdrop-blur-xl">
-                  <button
-                    type="button"
-                    onClick={onClose}
-                    className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-black/30 text-gray-300 backdrop-blur-sm transition-colors hover:border-blue-500 hover:bg-black/45 hover:text-white"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-
-                <div className="px-5 pb-5 pt-1 md:px-6 md:pb-6 md:pt-2 xl:px-7 xl:pb-7 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+              <div className={`${contentPanelOrder} relative flex flex-col bg-[#04060b] lg:order-2 lg:min-h-0`}>
+                <div className="px-5 pb-5 pt-5 md:px-6 md:pb-6 md:pt-6 xl:px-7 xl:pb-7 xl:pt-7 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
                   <div className="mx-auto w-full max-w-3xl pb-2 lg:flex lg:min-h-full lg:items-center">
                     <div className="w-full">
                       {children}

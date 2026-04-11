@@ -318,7 +318,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {showMobileFloatingTechparkSwitcher && (
         <div className="fixed bottom-0 left-0 right-0 z-40 w-full xl:hidden">
-          <div className="w-full rounded-[1.15rem] border border-white/10 bg-black/80 p-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-md">
+          <div className="w-full border border-white/10 bg-black/80 p-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-md">
             <div className="grid grid-cols-2 gap-2.5">
               {techparkFloatingActions.map((action) => {
                 const isActive = route === action.path;

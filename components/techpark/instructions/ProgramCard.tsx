@@ -260,6 +260,7 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
             </div>
           </div>
         </div>
+        <div className="h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-50 transition-colors duration-300 group-hover/card:via-blue-500 md:hidden"></div>
         <div className="flex h-full flex-col gap-4">
           <div className="flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/40 text-xs font-mono tracking-[0.14em] uppercase text-blue-300">
