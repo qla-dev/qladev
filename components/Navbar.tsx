@@ -247,9 +247,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="bg-gray-900 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none"
+                className="bg-gray-900 inline-flex items-center justify-center p-1.5 rounded-sm text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none"
               >
-                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
             </div>
           </div>
