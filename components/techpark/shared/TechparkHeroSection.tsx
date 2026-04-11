@@ -10,7 +10,7 @@ interface TechparkHeroSectionProps {
   lang: Language;
   onNavigate: (path: TechparkRoute) => void;
   showSubnav?: boolean;
-  badge: string;
+  badge: React.ReactNode;
   badgeIcon: LucideIcon;
   title: React.ReactNode;
   subtitle: string;

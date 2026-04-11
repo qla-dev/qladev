@@ -342,7 +342,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     }`}
                   >
                     <Icon className={`h-4 w-4 shrink-0 ${action.variant === 'secondary' && !isActive ? 'text-blue-300' : ''}`} />
-                    <span className="truncate">{action.label}</span>
+                    <span className="truncate leading-tight">{action.label}</span>
                     <ArrowRight className="h-4 w-4 shrink-0" />
                   </button>
                 );

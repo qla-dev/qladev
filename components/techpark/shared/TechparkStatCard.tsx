@@ -18,7 +18,7 @@ export const TechparkStatCard: React.FC<TechparkStatCardProps> = ({
   icon: Icon,
   className = '',
 }) => (
-  <div className={`relative aspect-square rounded-2xl border border-white/10 bg-white/5 p-2.5 sm:aspect-auto sm:p-5 lg:p-6 ${className}`.trim()}>
+  <div className={`relative aspect-[4/3] rounded-2xl border border-white/10 bg-white/5 p-2.5 sm:aspect-auto sm:p-5 lg:p-6 ${className}`.trim()}>
     {Icon ? (
       <div className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-600/20 text-blue-300 sm:bottom-5 sm:right-5 sm:h-12 sm:w-12">
         <Icon className="h-[1.125rem] w-[1.125rem] sm:h-6 sm:w-6" />
@@ -30,7 +30,7 @@ export const TechparkStatCard: React.FC<TechparkStatCardProps> = ({
         badge ? 'pb-14 sm:pb-16' : ''
       } ${Icon ? 'pr-12 sm:pr-20' : ''}`}
     >
-      <div className="pt-2 sm:pt-6">
+      <div className="pt-6">
         <div className="text-[1.42rem] sm:text-[1.7rem] lg:text-[1.85rem] xl:text-[2rem] font-black tracking-tight leading-none whitespace-nowrap">
           {value}
         </div>

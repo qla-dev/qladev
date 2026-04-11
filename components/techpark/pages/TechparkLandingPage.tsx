@@ -44,7 +44,11 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   const techparkPeopleCount = '0/15';
 
   const labels = {
-    badge: 'qla.dev techpark',
+    badge: (
+      <>
+        <span className="lowercase">qla.dev</span> techpark
+      </>
+    ),
     title: isBs ? 'TECHPARK ZA NOVU DIGITALNU GENERACIJU' : 'TECHPARK FOR THE NEXT DIGITAL GENERATION',
     subtitle: isBs
       ? 'Techpark je osmišljen kao strukturiran prostor za djecu i mlade: open-space dio dostupan je od 08:00 do 16:00 za produktivan rad u tech okruženju, učenje i boravak, dok od 17:00 počinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
@@ -156,7 +160,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     bundleText: isBs
       ? 'Ako neko uzme open space, otvara se 40% popusta na boot-camp programe. Ako krene boot-camp, open space moze ici uz 50% bundle pogodnost.'
       : 'If someone takes open space, they unlock 40% off boot-camp programs. If they start boot-camp, open space can be added with a 50% bundle benefit.',
-    bundleButton: isBs ? 'OTVORI CLANSTVO' : 'OPEN MEMBERSHIP',
+    bundleButton: isBs ? 'OTVORI ČLANSTVO' : 'OPEN MEMBERSHIP',
   };
 
   const heroCards = [
