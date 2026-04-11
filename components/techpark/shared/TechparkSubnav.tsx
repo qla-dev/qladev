@@ -16,7 +16,7 @@ export const TechparkSubnav: React.FC<TechparkSubnavProps> = ({ current, lang, o
   ];
 
   return (
-    <div className="w-full py-2">
+    <div className="w-full py-2 xl:w-fit">
       <div className="overflow-x-auto px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         <div className="inline-flex min-w-max flex-nowrap gap-3 rounded-full border border-white/10 bg-black/50 p-2 backdrop-blur-xl">
           {items.map((item) => (

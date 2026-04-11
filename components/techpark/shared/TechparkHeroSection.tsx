@@ -10,8 +10,8 @@ interface TechparkHeroSectionProps {
   lang: Language;
   onNavigate: (path: TechparkRoute) => void;
   showSubnav?: boolean;
-  badge: React.ReactNode;
-  badgeIcon: LucideIcon;
+  badge?: React.ReactNode;
+  badgeIcon?: LucideIcon;
   title: React.ReactNode;
   subtitle: string;
   rightContent: React.ReactNode;
@@ -48,10 +48,12 @@ export const TechparkHeroSection: React.FC<TechparkHeroSectionProps> = ({
       ) : null}
       <div className={gridClassName}>
         <div>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 font-mono text-xs tracking-[0.24em] uppercase">
-            <BadgeIcon className="w-4 h-4" />
-            {badge}
-          </div>
+          {badge ? (
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 font-mono text-xs tracking-[0.24em] uppercase">
+              {BadgeIcon ? <BadgeIcon className="w-4 h-4" /> : null}
+              {badge}
+            </div>
+          ) : null}
           <h1 className={titleClassName}>{title}</h1>
           <p className={subtitleClassName}>{subtitle}</p>
           {leftContent}

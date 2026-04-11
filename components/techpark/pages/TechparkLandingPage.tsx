@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   ArrowRight,
-  BadgeCheck,
   Building2,
   CalendarDays,
   CarFront,
@@ -44,11 +43,6 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   const techparkPeopleCount = '0/15';
 
   const labels = {
-    badge: (
-      <>
-        <span className="lowercase">qla.dev</span> techpark
-      </>
-    ),
     title: isBs ? 'TECHPARK ZA NOVU DIGITALNU GENERACIJU' : 'TECHPARK FOR THE NEXT DIGITAL GENERATION',
     subtitle: isBs
       ? 'Techpark je osmišljen kao strukturiran prostor za djecu i mlade: open-space dio dostupan je od 08:00 do 16:00 za produktivan rad u tech okruženju, učenje i boravak, dok od 17:00 počinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
@@ -295,11 +289,9 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         current="/techpark"
         lang={lang}
         onNavigate={onNavigate}
-        showSubnav={false}
-        badge={labels.badge}
-        badgeIcon={BadgeCheck}
+        showSubnav
         title={heroTitle}
-        titleClassName="mt-6 text-[2.7rem] font-black tracking-tight leading-none sm:text-5xl md:text-6xl"
+        titleClassName="text-[2.7rem] font-black tracking-tight leading-none sm:text-5xl md:text-6xl"
         subtitle={labels.subtitle}
         leftContent={
           <div className="mt-8 hidden sm:flex sm:flex-wrap sm:gap-4">

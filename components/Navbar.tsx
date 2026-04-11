@@ -29,9 +29,11 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileFloatingSwitcherVisible, setIsMobileFloatingSwitcherVisible] = useState(false);
   const isTechparkRoute = route.startsWith('/techpark');
   const techparkPeopleCount = '0/15';
-  const showMobileFloatingTechparkSwitcher = isTechparkRoute && route !== '/techpark/sign-in';
+  const showMobileFloatingTechparkSwitcher =
+    isTechparkRoute && route !== '/techpark/sign-in' && isMobileFloatingSwitcherVisible;
   const logoSrc = isTechparkRoute ? '/logo-techpark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
   const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
   const logoClassName = isTechparkRoute
@@ -39,10 +41,22 @@ export const Navbar: React.FC<NavbarProps> = ({
     : 'h-10 w-auto object-contain sm:h-11';
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      setIsScrolled(scrollY > 50);
+      setIsMobileFloatingSwitcherVisible(scrollY > 300);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    setIsScrolled(scrollY > 50);
+    setIsMobileFloatingSwitcherVisible(scrollY > 300);
+  }, [route]);
 
   const navLinks = [
     { kind: 'anchor' as const, id: 'hero', label: t.home },
@@ -102,7 +116,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={() => {
                 if (isTechparkRoute) {
-                  onNavigateHomeTop();
+                  onNavigateRoute('/techpark');
                 } else {
                   onNavigateHomeSection('hero');
                 }
