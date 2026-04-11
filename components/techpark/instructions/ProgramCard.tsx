@@ -11,7 +11,9 @@ interface ProgramCardProps {
   beginnerLabel: string;
   advancedLabel: string;
   agendaButtonLabel: string;
+  agendaButtonLabelMobile: string;
   applyButtonLabel: string;
+  applyButtonLabelMobile: string;
   activeLevel: ProgramLevel;
   onChooseTrack: (programId: string, level: 'beginner' | 'advanced') => void;
   onOpenAgenda: (programId: string, level: 'beginner' | 'advanced') => void;
@@ -48,7 +50,9 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
   beginnerLabel,
   advancedLabel,
   agendaButtonLabel,
+  agendaButtonLabelMobile,
   applyButtonLabel,
+  applyButtonLabelMobile,
   activeLevel,
   onChooseTrack,
   onOpenAgenda,
@@ -238,7 +242,8 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
                 className="mr-auto inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:border-blue-500 hover:bg-blue-500/20"
               >
                 <FileText className="h-3.5 w-3.5" />
-                {agendaButtonLabel}
+                <span className="sm:hidden">{agendaButtonLabelMobile}</span>
+                <span className="hidden sm:inline">{agendaButtonLabel}</span>
               </button>
               <button
                 type="button"
@@ -248,7 +253,8 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
                 }}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:bg-blue-700"
               >
-                {applyButtonLabel}
+                <span className="sm:hidden">{applyButtonLabelMobile}</span>
+                <span className="hidden sm:inline">{applyButtonLabel}</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </button>
             </div>
@@ -281,7 +287,8 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
                 className="mr-auto inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:border-blue-500 hover:bg-blue-500/20"
               >
                 <FileText className="h-3.5 w-3.5" />
-                {agendaButtonLabel}
+                <span className="sm:hidden">{agendaButtonLabelMobile}</span>
+                <span className="hidden sm:inline">{agendaButtonLabel}</span>
               </button>
               <button
                 type="button"
@@ -291,7 +298,8 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
                 }}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:bg-blue-700"
               >
-                {applyButtonLabel}
+                <span className="sm:hidden">{applyButtonLabelMobile}</span>
+                <span className="hidden sm:inline">{applyButtonLabel}</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </button>
             </div>

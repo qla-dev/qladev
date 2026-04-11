@@ -338,7 +338,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           : 'border-blue-600 bg-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 hover:shadow-[0_0_18px_rgba(37,99,235,0.45)]'
                         : isActive
                           ? 'border-blue-500/50 bg-blue-500/10 text-white shadow-[0_0_16px_rgba(37,99,235,0.2)]'
-                          : 'border-white/12 bg-[#0a101a]/96 text-gray-200 hover:border-blue-500/30 hover:bg-blue-500/10 hover:text-white'
+                          : 'border-white/15 bg-[#0a101a]/96 text-gray-200 hover:border-blue-500 hover:bg-blue-500/10 hover:text-white'
                     }`}
                   >
                     <Icon className={`h-4 w-4 shrink-0 ${action.variant === 'secondary' && !isActive ? 'text-blue-300' : ''}`} />
