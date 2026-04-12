@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, CalendarDays, Menu, Ticket, Users, X } from 'lucide-react';
 import { Language, Translations } from '../types';
+import type { TechparkRoute } from './techpark/types';
 
 interface NavbarProps {
   lang: Language;
@@ -10,7 +11,7 @@ interface NavbarProps {
   primaryActionLabel: string;
   onNavigateHomeSection: (id: string) => void;
   onNavigateHomeTop: () => void;
-  onNavigateRoute: (path: '/techpark' | '/techpark/boot-camp' | '/techpark/membership' | '/techpark/sign-in') => void;
+  onNavigateRoute: (path: TechparkRoute) => void;
   onNavigateTechparkSection: (sectionId: string) => void;
   onPrimaryAction: () => void;
 }

@@ -14,17 +14,24 @@ import { Footer } from './components/Footer';
 import {
   TechparkInstructionsPage,
   TechparkLandingPage,
+  TechparkLineFollowerHackathonePage,
   TechparkMembershipPage,
   TechparkSignInPage,
 } from './components/techpark';
 import { TEXT_CONTENT } from './constants';
 import { Language } from './types';
 
-type AppRoute = '/' | '/techpark' | '/techpark/boot-camp' | '/techpark/membership' | '/techpark/sign-in';
+type AppRoute =
+  | '/'
+  | '/techpark'
+  | '/techpark/boot-camp'
+  | '/techpark/membership'
+  | '/techpark/line-follower-hackathone'
+  | '/techpark/sign-in';
 type TransitionDirection = 'forward' | 'backward' | 'auth';
 type RouteTransitionPhase = 'steady' | 'exit' | 'enter';
 
-const ROUTES: AppRoute[] = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/sign-in'];
+const ROUTES: AppRoute[] = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/line-follower-hackathone', '/techpark/sign-in'];
 const ROUTE_SET = new Set<string>(ROUTES);
 const isAppRoute = (route: string): route is AppRoute => ROUTE_SET.has(route);
 const LEGACY_ROUTE_REDIRECTS: Partial<Record<string, AppRoute>> = {
@@ -34,6 +41,7 @@ const LEGACY_ROUTE_REDIRECTS: Partial<Record<string, AppRoute>> = {
   '/technopark/membership': '/techpark/membership',
   '/technopark/sign-in': '/techpark/sign-in',
   '/techpark/instructions': '/techpark/boot-camp',
+  '/techpark/line-follower-hackathon': '/techpark/line-follower-hackathone',
 };
 
 const trimTrailingSlash = (value: string) => (value.length > 1 && value.endsWith('/') ? value.slice(0, -1) : value);
@@ -61,6 +69,10 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
       title: 'qla.dev Techpark - Membership Reservations',
       description: 'Reserve Techpark open-space slots from 08:00 to 16:00 with a 15-person limit and a 4-hour daily maximum.',
     },
+    '/techpark/line-follower-hackathone': {
+      title: 'qla.dev Techpark - Line-Follower Hackathon',
+      description: '48-hour kit-based robotics sprint with Beginner and Advanced tracks. Build a line follower and race on maps revealed at kickoff.',
+    },
     '/techpark/sign-in': {
       title: 'qla.dev Techpark - Member Sign In',
       description: 'Multi-step member sign-in for Techpark reservations, programs, and future attendance check-in.',
@@ -82,6 +94,10 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
     '/techpark/membership': {
       title: 'qla.dev Techpark - Membership rezervacije',
       description: 'Rezervisi Techpark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.',
+    },
+    '/techpark/line-follower-hackathone': {
+      title: 'qla.dev Techpark - Line-Follower Hackathon',
+      description: '48h roboticki sprint sa istim kitom za sve timove, Beginner i Advanced trackovima, i mapama koje se otkrivaju na startu.',
     },
     '/techpark/sign-in': {
       title: 'qla.dev Techpark - Prijava clanova',
@@ -408,6 +424,10 @@ const App: React.FC = () => {
 
     if (displayRoute === '/techpark/membership') {
       return <TechparkMembershipPage lang={lang} onNavigate={navigateToRoute} />;
+    }
+
+    if (displayRoute === '/techpark/line-follower-hackathone') {
+      return <TechparkLineFollowerHackathonePage lang={lang} onNavigate={navigateToRoute} />;
     }
 
     if (displayRoute === '/techpark/sign-in') {
