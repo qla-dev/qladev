@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Activity,
   BatteryCharging,
+  ChevronLeft,
+  ChevronRight,
   ChevronDown,
   CircuitBoard,
   Flag,
@@ -334,9 +336,36 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
     }
   };
 
+  const scrollJudgingRail = (direction: -1 | 1) => {
+    const rail = judgingRailRef.current;
+    if (!rail) {
+      return;
+    }
+
+    const cards = Array.from(rail.querySelectorAll<HTMLElement>('[data-judging-card]'));
+    if (!cards.length) {
+      return;
+    }
+
+    const current = rail.scrollLeft;
+    const epsilon = 2;
+    const offsets = cards.map((card) => card.offsetLeft);
+
+    const targetOffset = direction === 1
+      ? offsets.filter((offset) => offset > current + epsilon).sort((a, b) => a - b)[0]
+      : offsets.filter((offset) => offset < current - epsilon).sort((a, b) => b - a)[0];
+
+    if (typeof targetOffset !== 'number') {
+      return;
+    }
+
+    rail.scrollTo({ left: targetOffset, behavior: 'smooth' });
+  };
+
   const renderJudgingCriterionCard = (criterion: (typeof judgingCriteriaCards)[number], key: string) => (
     <div
       key={key}
+      data-judging-card
       className="shrink-0 w-[21rem] sm:w-[23rem] lg:w-[26rem] snap-start rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/5 via-[#070b12] to-black p-6"
     >
       <div className="flex items-start justify-between gap-4">
@@ -496,7 +525,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
           />
 
           <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/5 via-[#070b12] to-black p-7">
+            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/5 via-[#070b12] to-black p-7 lg:sticky lg:top-28">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="text-[11px] font-mono tracking-[0.18em] uppercase text-blue-300">
@@ -1028,13 +1057,30 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
             </div>
 
             <div className="relative">
+              <button
+                type="button"
+                aria-label={isBs ? 'Prethodna kartica' : 'Previous card'}
+                onClick={() => scrollJudgingRail(-1)}
+                className="hidden lg:inline-flex absolute left-0 top-1/2 z-10 -translate-y-1/2 -translate-x-1/2 h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur transition-colors hover:bg-black/80"
+              >
+                <ChevronLeft className="h-5 w-5 text-white" />
+              </button>
+              <button
+                type="button"
+                aria-label={isBs ? 'Sljedeca kartica' : 'Next card'}
+                onClick={() => scrollJudgingRail(1)}
+                className="hidden lg:inline-flex absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-1/2 h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur transition-colors hover:bg-black/80"
+              >
+                <ChevronRight className="h-5 w-5 text-white" />
+              </button>
+
               <div
                 ref={judgingRailRef}
                 onPointerDown={handleJudgingRailPointerDown}
                 onPointerMove={handleJudgingRailPointerMove}
                 onPointerUp={handleJudgingRailPointerUp}
                 onPointerCancel={handleJudgingRailPointerUp}
-                className="overflow-x-auto pb-4 cursor-grab active:cursor-grabbing snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                className="overflow-x-auto pb-4 cursor-grab active:cursor-grabbing snap-x snap-mandatory touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
               >
                 <div className="flex w-max">
                   <div ref={judgingRailGroupRef} className="flex w-max gap-4 pr-4">
@@ -1115,13 +1161,14 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
             })}
           </div>
         </div>
-      </section>
-
-      <section className="border-t border-white/5 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            title={isBs ? 'MAPE' : 'MAPS'}
-            subtitle={isBs
+      </section> 
+ 
+      {false && (
+      <section className="border-t border-white/5 py-24"> 
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> 
+          <SectionHeader 
+            title={isBs ? 'MAPE' : 'MAPS'} 
+            subtitle={isBs 
               ? 'Mape se otkrivaju na startu. Beginner i Advanced se razlikuju samo po mapi.'
               : 'Maps are revealed at kickoff. Beginner and Advanced differ only by the map.'}
           />
@@ -1320,14 +1367,15 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-white/5 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            title={isBs ? 'TIM (SVAKI TIM)' : 'TEAMS (EACH TEAM)'}
+          </div> 
+        </div> 
+      </section> 
+      )} 
+ 
+      <section className="border-t border-white/5 py-24"> 
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> 
+          <SectionHeader 
+            title={isBs ? 'TIM (SVAKI TIM)' : 'TEAMS (EACH TEAM)'} 
             subtitle={isBs
               ? 'Dobra podjela uloga i disciplina u testiranju su pola pobjede.'
               : 'Clear roles and test discipline are half the win.'}
