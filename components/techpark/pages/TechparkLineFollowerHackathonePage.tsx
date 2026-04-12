@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Activity,
   BatteryCharging,
@@ -83,6 +83,10 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
   const [selectedTrack, setSelectedTrack] = useState<ProgramLevel>('beginner');
   const [hackathonStartDate] = useState(() => HACKATHON_START_DATE);
   const [countdown, setCountdown] = useState(() => getCountdownParts(hackathonStartDate));
+  const judgingRailRef = useRef<HTMLDivElement | null>(null);
+  const judgingRailGroupRef = useRef<HTMLDivElement | null>(null);
+  const judgingRailDragState = useRef<{ pointerId: number; startX: number; startScrollLeft: number } | null>(null);
+  const [judgingRailGroupWidth, setJudgingRailGroupWidth] = useState(0);
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -91,6 +95,69 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
 
     return () => window.clearInterval(intervalId);
   }, [hackathonStartDate]);
+
+  useEffect(() => {
+    const group = judgingRailGroupRef.current;
+    if (!group) {
+      return;
+    }
+
+    const updateWidth = () => {
+      setJudgingRailGroupWidth(group.offsetWidth);
+    };
+
+    updateWidth();
+
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(group);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const rail = judgingRailRef.current;
+    if (!rail || !judgingRailGroupWidth) {
+      return;
+    }
+
+    rail.scrollLeft = judgingRailGroupWidth;
+  }, [judgingRailGroupWidth]);
+
+  useEffect(() => {
+    const rail = judgingRailRef.current;
+    if (!rail || !judgingRailGroupWidth) {
+      return;
+    }
+
+    let raf = 0;
+    const handleScroll = () => {
+      if (raf) {
+        return;
+      }
+
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        const left = rail.scrollLeft;
+        if (left <= 0) {
+          rail.scrollLeft = left + judgingRailGroupWidth;
+        } else if (left >= judgingRailGroupWidth * 2) {
+          rail.scrollLeft = left - judgingRailGroupWidth;
+        }
+      });
+    };
+
+    rail.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      rail.removeEventListener('scroll', handleScroll);
+      if (raf) {
+        window.cancelAnimationFrame(raf);
+      }
+    };
+  }, [judgingRailGroupWidth]);
 
   const countdownLabels = {
     eyebrow: isBs ? 'START HACKATHONA' : 'HACKATHON START',
@@ -142,6 +209,159 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
               : 'Beginner and Advanced differ only by the map. Rules, timebox, and kit remain the same.'}
           </p>
         </div>
+      </div>
+    </div>
+  );
+
+  const judgingCriteriaCards = useMemo(
+    () => [
+      {
+        weight: 50,
+        eyebrow: isBs ? 'VOZNJA' : 'RUN',
+        title: isBs ? 'Performanse na mapi' : 'Map performance',
+        text: isBs
+          ? 'Vrijeme, zavrsavanje mape i kazne. Pobjedjuje robot koji najbrze i najcistije prolazi stazu.'
+          : 'Time, completion, and penalties. The winner is the robot that runs fastest and cleanest.',
+        bullets: [
+          isBs ? 'Cisto pracenje bez “wobble-a”.' : 'Clean tracking without wobble.',
+          isBs ? 'Brzina u krivinama bez gubitka linije.' : 'Corner speed without losing the line.',
+          isBs ? 'Recovery kad se izgubi linija.' : 'Recovery when the line is lost.',
+          isBs ? 'Minimalne intervencije.' : 'Minimal interventions.',
+        ],
+      },
+      {
+        weight: 20,
+        eyebrow: isBs ? 'STABILNOST' : 'STABILITY',
+        title: isBs ? 'Konzistentnost' : 'Consistency',
+        text: isBs
+          ? 'Trazi se robot koji ponavlja rezultat kroz vise runova, bez “random” failova.'
+          : 'We reward robots that repeat results across runs without random failures.',
+        bullets: [
+          isBs ? 'Mala varijacija vremena.' : 'Low time variance.',
+          isBs ? 'Stabilan sensor read.' : 'Stable sensor reads.',
+          isBs ? 'Stabilno napajanje.' : 'Stable power.',
+          isBs ? 'Brz reset u “ready”.' : 'Fast reset to ready.',
+        ],
+      },
+      {
+        weight: 15,
+        eyebrow: isBs ? 'HARDVER' : 'HARDWARE',
+        title: isBs ? 'Kvalitet izrade' : 'Build quality',
+        text: isBs
+          ? 'Uredan kabeling, sigurna baterija i stabilna mehanika smanjuju bugove i podizu brzinu.'
+          : 'Clean wiring, safe battery mounting, and rigid mechanics reduce bugs and increase speed.',
+        bullets: [
+          isBs ? 'Baterija osigurana i stabilna.' : 'Battery secured and stable.',
+          isBs ? 'Senzor visina konzistentna.' : 'Consistent sensor height.',
+          isBs ? 'Konektori sigurni.' : 'Connectors secured.',
+          isBs ? 'Nema pregrijavanja.' : 'No overheating.',
+        ],
+      },
+      {
+        weight: 10,
+        eyebrow: isBs ? 'PROCES' : 'PROCESS',
+        title: isBs ? 'Tuning metoda' : 'Tuning method',
+        text: isBs
+          ? 'Kako dolazite do parametara: kalibracija, biljeske, test matrix, iteracije.'
+          : 'How you reach parameters: calibration, notes, test matrix, iterations.',
+        bullets: [
+          isBs ? 'Baseline -> iterate, ne “random”.' : 'Baseline → iterate, not random.',
+          isBs ? 'Biljeske o promjenama.' : 'Notes of changes.',
+          isBs ? 'Test plan i merenje.' : 'Test plan and measurement.',
+          isBs ? 'Time management (48h).' : 'Time management (48h).',
+        ],
+      },
+      {
+        weight: 5,
+        eyebrow: isBs ? 'PIT' : 'PIT',
+        title: isBs ? 'Objasnjenje rjesenja' : 'Explanation',
+        text: isBs
+          ? 'Kratko i jasno: kako radi robot i zasto ste birali taj pristup.'
+          : 'Short and clear: how it works and why you chose your approach.',
+        bullets: [
+          isBs ? 'Arhitektura: senzori -> kontrola -> motori.' : 'Architecture: sensors → control → motors.',
+          isBs ? 'Sta ste optimizovali i zasto.' : 'What you optimized and why.',
+          isBs ? 'Koji je “next step” da imate jos 12h.' : 'Next step if you had 12 more hours.',
+          isBs ? 'Lekcije i refleksija.' : 'Lessons and reflection.',
+        ],
+      },
+    ],
+    [isBs]
+  );
+
+  const handleJudgingRailPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== 'mouse') {
+      return;
+    }
+
+    const rail = judgingRailRef.current;
+    if (!rail) {
+      return;
+    }
+
+    event.preventDefault();
+    judgingRailDragState.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startScrollLeft: rail.scrollLeft,
+    };
+    rail.setPointerCapture(event.pointerId);
+  };
+
+  const handleJudgingRailPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const rail = judgingRailRef.current;
+    const state = judgingRailDragState.current;
+
+    if (!rail || !state || state.pointerId !== event.pointerId) {
+      return;
+    }
+
+    const delta = event.clientX - state.startX;
+    rail.scrollLeft = state.startScrollLeft - delta;
+  };
+
+  const handleJudgingRailPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    const rail = judgingRailRef.current;
+    const state = judgingRailDragState.current;
+
+    if (!rail || !state || state.pointerId !== event.pointerId) {
+      return;
+    }
+
+    judgingRailDragState.current = null;
+    if (rail.hasPointerCapture(event.pointerId)) {
+      rail.releasePointerCapture(event.pointerId);
+    }
+  };
+
+  const renderJudgingCriterionCard = (criterion: (typeof judgingCriteriaCards)[number], key: string) => (
+    <div
+      key={key}
+      className="shrink-0 w-[21rem] sm:w-[23rem] lg:w-[26rem] snap-start rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/5 via-[#070b12] to-black p-6"
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <div className="text-[11px] font-mono tracking-[0.18em] uppercase text-blue-300">{criterion.eyebrow}</div>
+          <div className="mt-2 text-xl font-black tracking-tight text-white">{criterion.title}</div>
+        </div>
+        <div className="inline-flex rounded-full border border-white/10 bg-black/40 px-3 py-1 text-[11px] font-mono tracking-[0.16em] uppercase text-gray-200">
+          {criterion.weight}%
+        </div>
+      </div>
+      <p className="mt-3 text-sm font-mono leading-relaxed text-gray-300">{criterion.text}</p>
+      <div className="mt-5 h-2 w-full rounded-full bg-white/10">
+        <div
+          className="h-2 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-amber-500"
+          style={{ width: `${criterion.weight}%` }}
+        />
+      </div>
+      <div className="mt-5 space-y-2 text-sm font-mono leading-relaxed text-gray-200">
+        {criterion.bullets.map((item) => (
+          <div key={item} className="flex items-start gap-3">
+            <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-500" aria-hidden="true" />
+            <span>{item}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -763,7 +983,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
               : 'Scoring rewards speed, stability, and strong engineering process.'}
           />
 
-          <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+          <div className="space-y-8">
             <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/25 via-black/35 to-black p-7">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
@@ -807,109 +1027,27 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
               </div>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-2">
-              {[
-                {
-                  weight: 50,
-                  eyebrow: isBs ? 'VOZNJA' : 'RUN',
-                  title: isBs ? 'Performanse na mapi' : 'Map performance',
-                  text: isBs
-                    ? 'Vrijeme, zavrsavanje mape i kazne. Pobjedjuje robot koji najbrze i najcistije prolazi stazu.'
-                    : 'Time, completion, and penalties. The winner is the robot that runs fastest and cleanest.',
-                  bullets: [
-                    isBs ? 'Cisto pracenje bez “wobble-a”.' : 'Clean tracking without wobble.',
-                    isBs ? 'Brzina u krivinama bez gubitka linije.' : 'Corner speed without losing the line.',
-                    isBs ? 'Recovery kad se izgubi linija.' : 'Recovery when the line is lost.',
-                    isBs ? 'Minimalne intervencije.' : 'Minimal interventions.',
-                  ],
-                },
-                {
-                  weight: 20,
-                  eyebrow: isBs ? 'STABILNOST' : 'STABILITY',
-                  title: isBs ? 'Konzistentnost' : 'Consistency',
-                  text: isBs
-                    ? 'Trazi se robot koji ponavlja rezultat kroz vise runova, bez “random” failova.'
-                    : 'We reward robots that repeat results across runs without random failures.',
-                  bullets: [
-                    isBs ? 'Mala varijacija vremena.' : 'Low time variance.',
-                    isBs ? 'Stabilan sensor read.' : 'Stable sensor reads.',
-                    isBs ? 'Stabilno napajanje.' : 'Stable power.',
-                    isBs ? 'Brz reset u “ready”.' : 'Fast reset to ready.',
-                  ],
-                },
-                {
-                  weight: 15,
-                  eyebrow: isBs ? 'HARDVER' : 'HARDWARE',
-                  title: isBs ? 'Kvalitet izrade' : 'Build quality',
-                  text: isBs
-                    ? 'Uredan kabeling, sigurna baterija i stabilna mehanika smanjuju bugove i podizu brzinu.'
-                    : 'Clean wiring, safe battery mounting, and rigid mechanics reduce bugs and increase speed.',
-                  bullets: [
-                    isBs ? 'Baterija osigurana i stabilna.' : 'Battery secured and stable.',
-                    isBs ? 'Senzor visina konzistentna.' : 'Consistent sensor height.',
-                    isBs ? 'Konektori sigurni.' : 'Connectors secured.',
-                    isBs ? 'Nema pregrijavanja.' : 'No overheating.',
-                  ],
-                },
-                {
-                  weight: 10,
-                  eyebrow: isBs ? 'PROCES' : 'PROCESS',
-                  title: isBs ? 'Tuning metoda' : 'Tuning method',
-                  text: isBs
-                    ? 'Kako dolazite do parametara: kalibracija, biljeske, test matrix, iteracije.'
-                    : 'How you reach parameters: calibration, notes, test matrix, iterations.',
-                  bullets: [
-                    isBs ? 'Baseline -> iterate, ne “random”.' : 'Baseline → iterate, not random.',
-                    isBs ? 'Biljeske o promjenama.' : 'Notes of changes.',
-                    isBs ? 'Test plan i merenje.' : 'Test plan and measurement.',
-                    isBs ? 'Time management (48h).' : 'Time management (48h).',
-                  ],
-                },
-                {
-                  weight: 5,
-                  eyebrow: isBs ? 'PIT' : 'PIT',
-                  title: isBs ? 'Objasnjenje rjesenja' : 'Explanation',
-                  text: isBs
-                    ? 'Kratko i jasno: kako radi robot i zasto ste birali taj pristup.'
-                    : 'Short and clear: how it works and why you chose your approach.',
-                  bullets: [
-                    isBs ? 'Arhitektura: senzori -> kontrola -> motori.' : 'Architecture: sensors → control → motors.',
-                    isBs ? 'Sta ste optimizovali i zasto.' : 'What you optimized and why.',
-                    isBs ? 'Koji je “next step” da imate jos 12h.' : 'Next step if you had 12 more hours.',
-                    isBs ? 'Lekcije i refleksija.' : 'Lessons and reflection.',
-                  ],
-                },
-              ].map((criterion) => (
-                <div
-                  key={criterion.title}
-                  className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/5 via-[#070b12] to-black p-6"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="min-w-0">
-                      <div className="text-[11px] font-mono tracking-[0.18em] uppercase text-blue-300">{criterion.eyebrow}</div>
-                      <div className="mt-2 text-xl font-black tracking-tight text-white">{criterion.title}</div>
-                    </div>
-                    <div className="inline-flex rounded-full border border-white/10 bg-black/40 px-3 py-1 text-[11px] font-mono tracking-[0.16em] uppercase text-gray-200">
-                      {criterion.weight}%
-                    </div>
+            <div className="relative">
+              <div
+                ref={judgingRailRef}
+                onPointerDown={handleJudgingRailPointerDown}
+                onPointerMove={handleJudgingRailPointerMove}
+                onPointerUp={handleJudgingRailPointerUp}
+                onPointerCancel={handleJudgingRailPointerUp}
+                className="overflow-x-auto pb-4 cursor-grab active:cursor-grabbing snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              >
+                <div className="flex w-max">
+                  <div ref={judgingRailGroupRef} className="flex w-max gap-4 pr-4">
+                    {judgingCriteriaCards.map((criterion, index) => renderJudgingCriterionCard(criterion, `main-${index}`))}
                   </div>
-                  <p className="mt-3 text-sm font-mono leading-relaxed text-gray-300">{criterion.text}</p>
-                  <div className="mt-5 h-2 w-full rounded-full bg-white/10">
-                    <div
-                      className="h-2 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-amber-500"
-                      style={{ width: `${criterion.weight}%` }}
-                    />
+                  <div className="flex w-max gap-4 pr-4" aria-hidden="true">
+                    {judgingCriteriaCards.map((criterion, index) => renderJudgingCriterionCard(criterion, `clone-a-${index}`))}
                   </div>
-                  <div className="mt-5 space-y-2 text-sm font-mono leading-relaxed text-gray-200">
-                    {criterion.bullets.map((item) => (
-                      <div key={item} className="flex items-start gap-3">
-                        <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-500" aria-hidden="true" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
+                  <div className="flex w-max gap-4 pr-4" aria-hidden="true">
+                    {judgingCriteriaCards.map((criterion, index) => renderJudgingCriterionCard(criterion, `clone-b-${index}`))}
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
 
