@@ -152,74 +152,80 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
           </span>
         </div>
 
-        <p className="text-sm leading-relaxed text-gray-300 font-mono w-full">{isBs ? program.descriptionBs : program.description}</p>
+        <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2">
+          <div className="min-w-0 order-2">
+            <p className="text-sm leading-relaxed text-gray-300 font-mono w-full">{isBs ? program.descriptionBs : program.description}</p>
+          </div>
 
-        {hasTutorLink ? (
-          <a
-            href={program.tutor.link ?? undefined}
-            target="_blank"
-            rel="noreferrer noopener"
-            onMouseEnter={() => setIsTutorHovered(true)}
-            onMouseLeave={() => setIsTutorHovered(false)}
-            onClick={(event) => event.stopPropagation()}
-            onKeyDown={(event) => event.stopPropagation()}
-            className="group flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/40 p-4 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <div className="flex min-w-0 items-center gap-4">
-              <img
-                src={program.tutor.image}
-                alt={program.tutor.name}
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-none"
-              />
-              <div className="min-w-0">
-                <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{tutorLabels.title}</div>
-                <div className="mt-1 truncate text-lg font-bold">{program.tutor.name}</div>
-                <p className="text-sm text-gray-300 font-mono">{tutorTitle}</p>
-              </div>
-            </div>
+          <div className="min-w-0 order-1">
+            {hasTutorLink ? (
+              <a
+                href={program.tutor.link ?? undefined}
+                target="_blank"
+                rel="noreferrer noopener"
+                onMouseEnter={() => setIsTutorHovered(true)}
+                onMouseLeave={() => setIsTutorHovered(false)}
+                onClick={(event) => event.stopPropagation()}
+                onKeyDown={(event) => event.stopPropagation()}
+                className="group flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-black/40 p-4 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div className="flex min-w-0 items-center gap-4">
+                  <img
+                    src={program.tutor.image}
+                    alt={program.tutor.name}
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-none"
+                  />
+                  <div className="min-w-0">
+                    <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{tutorLabels.title}</div>
+                    <div className="mt-1 truncate text-lg font-bold">{program.tutor.name}</div>
+                    <p className="text-sm text-gray-300 font-mono">{tutorTitle}</p>
+                  </div>
+                </div>
 
-            <span className="inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors group-hover:border-blue-500 group-hover:bg-blue-500/20">
-              {tutorLabels.profile}
-              <ExternalLink className="h-3.5 w-3.5" />
-            </span>
-          </a>
-        ) : (
-          <div
-            className="rounded-2xl border border-white/10 bg-black/40 p-4"
-            onMouseEnter={() => setIsTutorHovered(true)}
-            onMouseLeave={() => setIsTutorHovered(false)}
-          >
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex min-w-0 items-center gap-4">
-                <img
-                  src={program.tutor.image}
-                  alt={program.tutor.name}
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                  className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-none"
-                />
-                <div className="min-w-0">
-                  <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{tutorLabels.title}</div>
-                  <div className="mt-1 truncate text-lg font-bold">{program.tutor.name}</div>
-                  <p className="text-sm text-gray-300 font-mono">{tutorTitle}</p>
+                <span className="inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors group-hover:border-blue-500 group-hover:bg-blue-500/20">
+                  {tutorLabels.profile}
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </span>
+              </a>
+            ) : (
+              <div
+                className="h-full rounded-2xl border border-white/10 bg-black/40 p-4"
+                onMouseEnter={() => setIsTutorHovered(true)}
+                onMouseLeave={() => setIsTutorHovered(false)}
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex min-w-0 items-center gap-4">
+                    <img
+                      src={program.tutor.image}
+                      alt={program.tutor.name}
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-none"
+                    />
+                    <div className="min-w-0">
+                      <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{tutorLabels.title}</div>
+                      <div className="mt-1 truncate text-lg font-bold">{program.tutor.name}</div>
+                      <p className="text-sm text-gray-300 font-mono">{tutorTitle}</p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    aria-disabled="true"
+                    tabIndex={-1}
+                    onClick={(event) => event.stopPropagation()}
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-gray-400 cursor-not-allowed"
+                  >
+                    {tutorLabels.blocked}
+                    <Lock className="h-3.5 w-3.5" />
+                  </button>
                 </div>
               </div>
-
-              <button
-                type="button"
-                aria-disabled="true"
-                tabIndex={-1}
-                onClick={(event) => event.stopPropagation()}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-gray-400 cursor-not-allowed"
-              >
-                {tutorLabels.blocked}
-                <Lock className="h-3.5 w-3.5" />
-              </button>
-            </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
       <div className="mt-5 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-50 transition-colors duration-300 group-hover/card:via-blue-500 sm:mt-6"></div>
