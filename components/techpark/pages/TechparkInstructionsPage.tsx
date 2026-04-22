@@ -3,7 +3,7 @@ import { ExternalLink, Lock } from 'lucide-react';
 import { getProgramAgenda } from '../agenda';
 import { programs } from '../data';
 import { ProgramCard } from '../instructions/ProgramCard';
-import { getProgramScheduleDaysLabel, getTrackScheduleFullLabel, getTrackScheduleTimeLabel } from '../programSchedule';
+import { getProgramScheduleDaysLabel, getTrackScheduleTimeLabel } from '../programSchedule';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
 import { FormStatusMessage } from '../shared/FormStatusMessage';
 import { SplitActionModal } from '../shared/SplitActionModal';
@@ -58,7 +58,6 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
   const selectedProgramEnrollment = selectedProgram.enrolled[selectedLevel];
   const selectedProgramScheduleDaysLabel = getProgramScheduleDaysLabel(selectedProgram, isBs);
   const selectedProgramScheduleTimeLabel = getTrackScheduleTimeLabel(selectedProgram.id, selectedLevel, isBs);
-  const selectedProgramScheduleLabel = getTrackScheduleFullLabel(selectedProgram, selectedLevel, isBs);
   const selectedProgramPrice = selectedLevel === 'beginner' ? '180 KM' : '300 KM';
   const selectedProgramOldPrice = selectedLevel === 'beginner' ? '200 KM' : undefined;
   const selectedProgramDiscount = selectedLevel === 'beginner'
@@ -108,7 +107,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     advanced: 'ADVANCED · 6M',
     selectedTrack: isBs ? 'IZABRANI PUT' : 'SELECTED TRACK',
     groupSize: isBs ? 'maks. po grupi' : 'max per group',
-    under18: 'just u18',
+    under18: 'u18',
     name: isBs ? 'Ime i prezime' : 'Full name',
     age: isBs ? 'Godine' : 'Age',
     guardian: isBs ? 'Roditelj / kontakt telefon' : 'Guardian / contact phone',
@@ -119,6 +118,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     enrolled: isBs ? 'upisano / limit' : 'enrolled / cap',
     schedule: isBs ? 'Raspored' : 'Schedule',
     scheduleDays: isBs ? 'Dani' : 'Days',
+    scheduleDaysSubtitle: isBs ? 'Unutar Techparka' : 'Inside Techpark',
     scheduleTime: isBs ? 'Satnica' : 'Time',
     programPriceLabel: isBs ? 'mjesečna cijena' : 'monthly price',
     crossSellBadge: isBs ? 'OPEN SPACE BONUS' : 'OPEN SPACE BONUS',
@@ -145,6 +145,8 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
 
   const beginnerLabel = isBs ? 'BEGINNER · 3 MJESECA' : 'BEGINNER · 3 MONTHS';
   const advancedLabel = isBs ? 'ADVANCED · 6 MJESECI' : 'ADVANCED · 6 MONTHS';
+  const beginnerShortLabel = 'BEGINNER';
+  const advancedShortLabel = 'ADVANCED';
   const selectedDuration = selectedLevel === 'beginner'
     ? (isBs ? '3 mjeseca' : '3 months')
     : (isBs ? '6 mjeseci' : '6 months');
@@ -273,7 +275,9 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
                   groupSizeLabel={labels.groupSize}
                   under18Label={labels.under18}
                   beginnerLabel={beginnerLabel}
+                  beginnerShortLabel={beginnerShortLabel}
                   advancedLabel={advancedLabel}
+                  advancedShortLabel={advancedShortLabel}
                   agendaButtonLabel={labels.agendaButton}
                   agendaButtonLabelMobile={labels.agendaButtonMobile}
                   applyButtonLabel={labels.applyButton}
@@ -303,8 +307,8 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
             </div>
             <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
               <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.enrolled}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramEnrollment}/{selectedProgram.seats}</div><div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{labels.under18}</div></div>
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.scheduleDays}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramScheduleDaysLabel}</div><div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{selectedDuration}</div></div>
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.scheduleTime}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramScheduleTimeLabel}</div><div className="mt-2 whitespace-nowrap text-[11px] text-gray-400 font-mono sm:text-xs">{selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}</div></div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.scheduleDays}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramScheduleDaysLabel}</div><div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{labels.scheduleDaysSubtitle}</div></div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.scheduleTime}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramScheduleTimeLabel}</div><div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{selectedDuration}</div></div>
               <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.programPriceLabel}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramPrice}</div>{selectedProgramOldPrice ? <div className="mt-2 text-[11px] text-gray-400 line-through font-mono sm:text-xs">{selectedProgramOldPrice}</div> : <div className="mt-2 whitespace-nowrap text-[11px] text-gray-400 font-mono sm:text-xs">{isBs ? 'Advanced put' : 'Advanced path'}</div>}</div>
             </div>
             <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
@@ -344,8 +348,8 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
               ))}
             </select>
             <div className="grid grid-cols-2 gap-3">
-              <button type="button" onClick={() => setSelectedLevel('beginner')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'beginner' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{beginnerLabel}</button>
-              <button type="button" onClick={() => setSelectedLevel('advanced')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'advanced' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}>{advancedLabel}</button>
+              <button type="button" onClick={() => setSelectedLevel('beginner')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'beginner' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}><span className="sm:hidden">{beginnerShortLabel}</span><span className="hidden sm:inline">{beginnerLabel}</span></button>
+              <button type="button" onClick={() => setSelectedLevel('advanced')} className={`px-3 py-3 rounded-2xl font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors ${selectedLevel === 'advanced' ? 'bg-blue-600 text-white' : 'border border-white/15 text-gray-300 hover:border-blue-500'}`}><span className="sm:hidden">{advancedShortLabel}</span><span className="hidden sm:inline">{advancedLabel}</span></button>
             </div>
             <input value={formData.fullName} onChange={(event) => setField('fullName', event.target.value)} placeholder={labels.name} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
             <div className="grid md:grid-cols-2 gap-4">
@@ -382,18 +386,26 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
               </div>
               <p className="mt-3 text-sm font-mono leading-relaxed text-blue-100/85 sm:text-[15px]">{agendaOverview}</p>
             </div>
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
               <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
                 <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.agendaStart}</div>
-                <div className="mt-2 text-lg font-black sm:text-xl">{countdownDate}</div>
+                <div className="mt-2 text-base font-black leading-tight tracking-tight sm:text-lg lg:text-[1.2rem]">{countdownDate}</div>
+                <div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{selectedAgenda.status === 'ready' ? labels.agendaReady : labels.agendaSoon}</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
-                <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.schedule}</div>
-                <div className="mt-2 text-lg font-black sm:text-xl">{selectedProgramScheduleLabel}</div>
+                <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.scheduleDays}</div>
+                <div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramScheduleDaysLabel}</div>
+                <div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{labels.scheduleDaysSubtitle}</div>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+                <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.scheduleTime}</div>
+                <div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramScheduleTimeLabel}</div>
+                <div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{selectedDuration}</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
                 <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.agendaDuration}</div>
-                <div className="mt-2 text-lg font-black sm:text-xl">{selectedDuration}</div>
+                <div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedDuration}</div>
+                <div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{agendaWeeks.length} {labels.weeksCount}</div>
               </div>
             </div>
             {hasTutorLink ? (

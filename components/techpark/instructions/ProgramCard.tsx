@@ -10,7 +10,9 @@ interface ProgramCardProps {
   groupSizeLabel: string;
   under18Label: string;
   beginnerLabel: string;
+  beginnerShortLabel: string;
   advancedLabel: string;
+  advancedShortLabel: string;
   agendaButtonLabel: string;
   agendaButtonLabelMobile: string;
   applyButtonLabel: string;
@@ -49,7 +51,9 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
   groupSizeLabel,
   under18Label,
   beginnerLabel,
+  beginnerShortLabel,
   advancedLabel,
+  advancedShortLabel,
   agendaButtonLabel,
   agendaButtonLabelMobile,
   applyButtonLabel,
@@ -72,6 +76,9 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
   const advancedTrackScheduleLabel = getTrackScheduleTimeLabel(program.id, 'advanced', isBs);
   const totalEnrollment = program.enrolled.beginner + program.enrolled.advanced;
   const totalSeats = program.seats * 2;
+  const programTitle = isBs ? program.titleBs : program.title;
+  const beginnerTrackHeading = `${programTitle} ${beginnerLabel}`;
+  const advancedTrackHeading = `${programTitle} ${advancedLabel}`;
 
   return (
     <div
@@ -103,7 +110,7 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-3 lg:min-w-[18rem]">
+          <div className="grid grid-cols-2 gap-3 lg:min-w-[18rem]">
             <button
               onClick={(event) => {
                 event.stopPropagation();
@@ -111,7 +118,8 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
               }}
               className="px-3 py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors"
             >
-              {beginnerLabel}
+              <span className="sm:hidden">{beginnerShortLabel}</span>
+              <span className="hidden sm:inline">{beginnerLabel}</span>
             </button>
             <button
               onClick={(event) => {
@@ -120,12 +128,11 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
               }}
               className="px-3 py-4 rounded-2xl border border-white/15 hover:border-blue-500 text-white font-bold font-mono text-[11px] sm:text-xs tracking-[0.1em] sm:tracking-[0.16em] uppercase whitespace-nowrap transition-colors"
             >
-              {advancedLabel}
+              <span className="sm:hidden">{advancedShortLabel}</span>
+              <span className="hidden sm:inline">{advancedLabel}</span>
             </button>
           </div>
         </div>
-
-        <p className="text-sm leading-relaxed text-gray-300 font-mono w-full">{isBs ? program.descriptionBs : program.description}</p>
 
         <div className="flex flex-wrap gap-2">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/40 text-xs font-mono tracking-[0.14em] uppercase text-blue-300">
@@ -144,6 +151,8 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
             {under18Label}
           </span>
         </div>
+
+        <p className="text-sm leading-relaxed text-gray-300 font-mono w-full">{isBs ? program.descriptionBs : program.description}</p>
 
         {hasTutorLink ? (
           <a
@@ -231,16 +240,16 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
             </span>
           </div>
           <div className="flex flex-1 flex-col rounded-2xl border border-white/10 bg-black/40 p-4 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10">
-            <div className="text-xs font-mono tracking-[0.16em] text-blue-400 uppercase">{beginnerLabel}</div>
+            <div className="text-xs font-mono tracking-[0.16em] text-blue-400 uppercase">{beginnerTrackHeading}</div>
             <p className="mt-2 text-sm text-gray-300 font-mono leading-relaxed">{isBs ? program.beginnerFocusBs : program.beginnerFocus}</p>
-            <div className="mt-auto flex flex-wrap justify-end gap-3 pt-4">
+            <div className="mt-auto grid grid-cols-2 gap-3 pt-4">
               <button
                 type="button"
                 onClick={(event) => {
                   event.stopPropagation();
                   onOpenAgenda(program.id, 'beginner');
                 }}
-                className="mr-auto inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:border-blue-500 hover:bg-blue-500/20"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-3 py-4 text-[11px] font-mono font-bold tracking-[0.1em] uppercase whitespace-nowrap text-white transition-colors hover:border-blue-500 hover:bg-blue-500/20 sm:text-xs sm:tracking-[0.16em]"
               >
                 <FileText className="h-3.5 w-3.5" />
                 <span className="sm:hidden">{agendaButtonLabelMobile}</span>
@@ -252,7 +261,7 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
                   event.stopPropagation();
                   onChooseTrack(program.id, 'beginner');
                 }}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:bg-blue-700"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-3 py-4 text-[11px] font-mono font-bold tracking-[0.1em] uppercase whitespace-nowrap text-white transition-colors hover:bg-blue-700 sm:text-xs sm:tracking-[0.16em]"
               >
                 <span className="sm:hidden">{applyButtonLabelMobile}</span>
                 <span className="hidden sm:inline">{applyButtonLabel}</span>
@@ -277,16 +286,16 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
             </span>
           </div>
           <div className="flex flex-1 flex-col rounded-2xl border border-white/10 bg-black/40 p-4 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10">
-            <div className="text-xs font-mono tracking-[0.16em] text-blue-400 uppercase">{advancedLabel}</div>
+            <div className="text-xs font-mono tracking-[0.16em] text-blue-400 uppercase">{advancedTrackHeading}</div>
             <p className="mt-2 text-sm text-gray-300 font-mono leading-relaxed">{isBs ? program.advancedFocusBs : program.advancedFocus}</p>
-            <div className="mt-auto flex flex-wrap justify-end gap-3 pt-4">
+            <div className="mt-auto grid grid-cols-2 gap-3 pt-4">
               <button
                 type="button"
                 onClick={(event) => {
                   event.stopPropagation();
                   onOpenAgenda(program.id, 'advanced');
                 }}
-                className="mr-auto inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:border-blue-500 hover:bg-blue-500/20"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-3 py-4 text-[11px] font-mono font-bold tracking-[0.1em] uppercase whitespace-nowrap text-white transition-colors hover:border-blue-500 hover:bg-blue-500/20 sm:text-xs sm:tracking-[0.16em]"
               >
                 <FileText className="h-3.5 w-3.5" />
                 <span className="sm:hidden">{agendaButtonLabelMobile}</span>
@@ -298,7 +307,7 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
                   event.stopPropagation();
                   onChooseTrack(program.id, 'advanced');
                 }}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors hover:bg-blue-700"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-3 py-4 text-[11px] font-mono font-bold tracking-[0.1em] uppercase whitespace-nowrap text-white transition-colors hover:bg-blue-700 sm:text-xs sm:tracking-[0.16em]"
               >
                 <span className="sm:hidden">{applyButtonLabelMobile}</span>
                 <span className="hidden sm:inline">{applyButtonLabel}</span>
