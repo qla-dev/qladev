@@ -47,7 +47,7 @@ export const Contact: React.FC<ContactProps> = ({ t }) => {
             <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10 h-[400px] lg:h-auto relative group">
                 {/* CSS Filter for Dark Mode Map Effect */}
                 <iframe 
-                    src="https://www.google.com/maps?q=Bra%C4%87e%20Muli%C4%87%2081%2C%2071000%20Sarajevo%2C%20Bosnia%20and%20Herzegovina&z=16&output=embed" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2878.1788082019953!2d18.3365875!3d43.831390299999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4758c913598ff523%3A0xc25f9a4094f108ef!2sqla.dev!5e0!3m2!1sen!2sba!4v1776896943998!5m2!1sen!2sba" 
                     width="100%" 
                     height="100%" 
                     style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }} 

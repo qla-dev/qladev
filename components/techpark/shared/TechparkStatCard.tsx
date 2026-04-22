@@ -30,7 +30,7 @@ export const TechparkStatCard: React.FC<TechparkStatCardProps> = ({
         badge ? 'pb-14 sm:pb-16' : ''
       } ${Icon ? 'pr-12 sm:pr-20' : ''}`}
     >
-      <div className="pt-6">
+      <div>
         <div className="text-[1.42rem] sm:text-[1.7rem] lg:text-[1.85rem] xl:text-[2rem] font-black tracking-tight leading-none whitespace-nowrap">
           {value}
         </div>

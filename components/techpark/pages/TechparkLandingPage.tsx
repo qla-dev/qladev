@@ -7,7 +7,6 @@ import {
   Clock3,
   MapPin,
   ShieldCheck,
-  Sparkles,
   SunMedium,
   Ticket,
   Users,
@@ -48,9 +47,9 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       ? 'Techpark je osmišljen kao strukturiran prostor za djecu i mlade: open-space dio dostupan je od 08:00 do 16:00 za produktivan rad u tech okruženju, učenje i boravak, dok od 17:00 počinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
       : 'Open space runs from 08:00 to 16:00, programs start from 17:00, and the entire space is built for children and youth who want to combine productive work, learning, and chill time.',
     heroStats: {
-      membership: isBs ? 'Open-space članstvo' : 'Open-space membership',
+      membership: isBs ? 'Open-space boravak' : 'Open-space stay',
       instructions: isBs ? 'Boot-camp programi' : 'Boot-camp programs',
-      seats: isBs ? 'Mjesta u prostoru i grupi' : 'Places in the room and group',
+      seats: isBs ? 'Kapacitet prostora' : 'Space capacity',
       under18: isBs ? 'Samo za djecu i mlade' : 'For children and youth',
     },
     amenitiesTitle: isBs ? 'AMBIJENT + SADRŽAJ' : 'AMBIENT + AMENITIES',
@@ -69,7 +68,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         text: isBs ? 'Dolazak, rad, chill i rezervacije po 2h.' : 'Arrival, work, chill, and reservations in 2h slots.',
       },
       {
-        value: '17:00 +',
+        value: isBs ? 'Poslije 17:00' : 'After 17:00',
         label: isBs ? 'Boot-camp programi' : 'Boot-camp programs',
         text: isBs ? 'Mentorski rad u manjim grupama do 15 ljudi.' : 'Mentor-led work in groups of up to 15 people.',
       },
@@ -159,7 +158,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
 
   const heroCards = [
     { value: '08:00 - 16:00', label: labels.heroStats.membership, icon: Clock3 },
-    { value: '17:00 +', label: labels.heroStats.instructions, icon: CalendarDays },
+    { value: isBs ? 'Poslije 17:00' : 'After 17:00', label: labels.heroStats.instructions, icon: CalendarDays },
     { value: techparkPeopleCount, label: labels.heroStats.seats, icon: Users },
     { value: 'U18', label: labels.heroStats.under18, icon: ShieldCheck },
   ];
@@ -290,6 +289,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         lang={lang}
         onNavigate={onNavigate}
         showSubnav
+        containerClassName="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-16 sm:pb-16 lg:pt-28 lg:pb-16"
         title={heroTitle}
         titleClassName="text-[2.7rem] font-black tracking-tight leading-none sm:text-5xl md:text-6xl"
         subtitle={labels.subtitle}
@@ -329,7 +329,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         }
       />
 
-      <section id="techpark-ambijent" className="py-24">
+      <section id="techpark-ambijent" className="py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.amenitiesTitle} subtitle={labels.amenitiesSubtitle} />
           <div id="techpark-sadrzaj" className="grid grid-cols-2 gap-5 xl:grid-cols-3">
@@ -358,7 +358,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         </div>
       </section>
 
-      <section id="techpark-lokacija" className="border-t border-white/5 py-24">
+      <section id="techpark-lokacija" className="border-t border-white/5 py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.spaceTitle} subtitle={labels.spaceSubtitle} />
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
@@ -409,31 +409,28 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#06080d] to-black p-4 sm:p-8">
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-mono tracking-[0.22em] uppercase text-blue-300">
-                <Sparkles className="h-4 w-4" />
-                {labels.flowEyebrow}
-              </div>
+            <div className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10 min-h-[420px] lg:min-h-full relative group">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2878.1788082019953!2d18.3365875!3d43.831390299999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4758c913598ff523%3A0xc25f9a4094f108ef!2sqla.dev!5e0!3m2!1sen!2sba!4v1776896943998!5m2!1sen!2sba"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="qla.dev location"
+                className="absolute inset-0 h-full w-full"
+              ></iframe>
 
-              <div className="mt-6 space-y-4">
-                {labels.flowCards.map((card) => (
-                  <div key={card.label} className="rounded-[1.7rem] border border-white/10 bg-white/5 p-4 sm:p-5">
-                    <div className="text-[1.75rem] font-black tracking-tight sm:text-3xl">{card.value}</div>
-                    <div className="mt-2 text-[11px] font-mono uppercase tracking-[0.15em] text-blue-300 sm:text-xs sm:tracking-[0.18em]">
-                      {card.label}
-                    </div>
-                    <p className="mt-3 text-xs font-mono leading-relaxed text-gray-400 sm:text-sm">
-                      {card.text}
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <div className="absolute inset-0 bg-blue-500/10 pointer-events-none mix-blend-overlay"></div>
+
+              <div className="absolute inset-0 border border-white/5 pointer-events-none group-hover:border-blue-500/50 transition-colors duration-500 rounded-2xl"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/5 py-24">
+      <section className="border-t border-white/5 py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.routesTitle} subtitle={labels.routesSubtitle} />
           <div className="grid gap-6 lg:grid-cols-2">
@@ -466,7 +463,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         </div>
       </section>
 
-      <section id="techpark-pricing" className="border-t border-white/5 py-24">
+      <section id="techpark-pricing" className="border-t border-white/5 py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.pricingTitle} subtitle={labels.pricingSubtitle} />
           <div className="grid gap-6 xl:grid-cols-3">
@@ -521,7 +518,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         </div>
       </section>
 
-      <section className="border-t border-white/5 py-24">
+      <section className="border-t border-white/5 py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.extrasTitle} subtitle={labels.extrasSubtitle} />
           <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/25 via-[#06080d] to-black p-7">
