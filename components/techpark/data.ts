@@ -149,7 +149,13 @@ export const programs: Program[] = [
     enrolled: { beginner: 6, advanced: 4 },
     seats: 15,
     icon: Code2,
-    tutor: genericTutor,
+    tutor: {
+      name: 'Nedim Kulašin',
+      title: 'Software Engineer',
+      titleBs: 'Software inžinjer',
+      image: '/generic-tutor-avatar-flat.svg',
+      link: 'https://ba.linkedin.com/in/nedim-kula%C5%A1in-64673911a',
+    },
   },
   {
     id: '3d-modeling',

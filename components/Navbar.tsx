@@ -177,7 +177,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <div className="hidden xl:flex items-center gap-4">
               {isTechparkRoute && (
-                <div className="inline-flex items-center gap-2 rounded-sm border border-white/10 bg-white/5 px-3 py-2 text-white">
+                <div className="inline-flex h-10 items-center gap-2 rounded border border-white/20 px-3 text-white">
                   <LiveDot />
                   <Users className="h-4 w-4 text-blue-300" />
                   <span className="font-mono text-sm font-bold tracking-[0.14em]">{techparkPeopleCount}</span>
@@ -185,7 +185,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
               <button
                 onClick={() => setLang(lang === 'en' ? 'bs' : 'en')}
-                className="text-gray-300 hover:text-white flex items-center gap-2 text-sm font-mono border border-white/20 px-3 py-1.5 rounded transition-colors"
+                className="inline-flex h-10 items-center gap-2 rounded border border-white/20 px-3 text-sm font-mono text-gray-300 transition-colors hover:text-white"
               >
                 <FlagIcon countryCode={lang === 'en' ? 'US' : 'BA'} />
                 <span className="leading-none">{lang.toUpperCase()}</span>
@@ -193,10 +193,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               {!isTechparkRoute && (
                 <button
                   onClick={() => {
-                    onNavigateRoute('/techpark');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-sm font-bold font-mono text-sm transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                  onNavigateRoute('/techpark');
+                  setIsMobileMenuOpen(false);
+                }}
+                  className="inline-flex h-10 items-center justify-center rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
                 >
                   {t.techpark}
                 </button>
@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onPrimaryAction();
                   setIsMobileMenuOpen(false);
                 }}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-sm font-bold font-mono text-sm transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                className="inline-flex h-10 items-center justify-center rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
               >
                 {primaryActionLabel}
               </button>
@@ -225,7 +225,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               )}
               {isTechparkRoute && (
-                <div className="inline-flex items-center gap-1.5 rounded-sm border border-white/10 bg-white/5 px-2.5 py-2 text-white">
+                <div className="inline-flex items-center gap-1.5 rounded border border-white/20 px-3 py-2 text-white">
                   <LiveDot />
                   <Users className="h-3.5 w-3.5 text-blue-300" />
                   <span className="font-mono text-[11px] font-bold tracking-[0.14em]">{techparkPeopleCount}</span>
