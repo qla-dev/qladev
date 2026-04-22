@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="bs" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>qla.dev Techpark - Prijava clanova</title>
+    <meta name="title" content="qla.dev Techpark - Prijava clanova">
+    <meta name="description" content="Visekorak prijava za Techpark clanove, rezervacije, programe i buduci attendance check-in.">
+    <meta name="keywords" content="software development, hardware solutions, in-house software, AI, IoT, cloud computing, web development, mobile apps, qla.dev, Sarajevo, Bosnia, tech innovation">
+    <meta name="author" content="qla.dev">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qla.dev/techpark/sign-in">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qla.dev/techpark/sign-in">
+    <meta property="og:title" content="qla.dev Techpark - Prijava clanova">
+    <meta property="og:description" content="Visekorak prijava za Techpark clanove, rezervacije, programe i buduci attendance check-in.">
+    <meta property="og:image" content="https://qla.dev/logo-techpark.png">
+    <meta property="og:site_name" content="qla.dev">
+    <meta property="og:locale" content="bs_BA">
+    <meta property="og:locale:alternate" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://qla.dev/techpark/sign-in">
+    <meta property="twitter:title" content="qla.dev Techpark - Prijava clanova">
+    <meta property="twitter:description" content="Visekorak prijava za Techpark clanove, rezervacije, programe i buduci attendance check-in.">
+    <meta property="twitter:image" content="https://qla.dev/logo-techpark.png">
+
+    <script>
+      (function () {
+        var trimTrailingSlash = function (value) {
+          return value.length > 1 && value.endsWith('/') ? value.slice(0, -1) : value;
+        };
+
+        var routes = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/line-follower-hackathone', '/techpark/sign-in'];
+        var legacyRouteRedirects = {
+          '/technopark': '/techpark',
+          '/technopark/instructions': '/techpark/boot-camp',
+          '/technopark/boot-camp': '/techpark/boot-camp',
+          '/technopark/membership': '/techpark/membership',
+          '/technopark/sign-in': '/techpark/sign-in',
+          '/techpark/instructions': '/techpark/boot-camp',
+          '/techpark/line-follower-hackathon': '/techpark/line-follower-hackathone'
+        };
+        var cleanPath = trimTrailingSlash(window.location.pathname);
+        var currentRoute = '/';
+
+        if (legacyRouteRedirects[cleanPath]) {
+          currentRoute = legacyRouteRedirects[cleanPath];
+        }
+
+        if (currentRoute === '/') {
+          for (var i = 1; i < routes.length; i += 1) {
+            if (cleanPath === routes[i] || cleanPath.endsWith(routes[i])) {
+              currentRoute = routes[i];
+              break;
+            }
+          }
+        }
+
+        var lang = currentRoute.startsWith('/techpark') ? 'bs' : 'en';
+        var metaMap = {
+          en: {
+            '/': {
+              title: 'qla.dev - Developing the Next Generation of Tech',
+              description: 'Building powerful and tailored software and hardware for in-house teams and businesses of all sizes.'
+            },
+            '/techpark': {
+              title: 'qla.dev Techpark - Creative Tech Space for Under 18',
+              description: 'Techpark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.'
+            },
+            '/techpark/boot-camp': {
+              title: 'qla.dev Techpark - Boot-camp Programs',
+              description: 'Explore Techpark boot-camp programs across web, app, AI, 3D, game development, Roblox, design, and video editing.'
+            },
+            '/techpark/membership': {
+              title: 'qla.dev Techpark - Membership Reservations',
+              description: 'Reserve Techpark open-space slots from 08:00 to 16:00 with a 15-person limit and a 4-hour daily maximum.'
+            },
+            '/techpark/line-follower-hackathone': {
+              title: 'qla.dev Techpark - Line-Follower Hackathon',
+              description: '48-hour kit-based robotics sprint with Beginner and Advanced tracks. Build a line follower and race on maps revealed at kickoff.'
+            },
+            '/techpark/sign-in': {
+              title: 'qla.dev Techpark - Member Sign In',
+              description: 'Multi-step member sign-in for Techpark reservations, programs, and future attendance check-in.'
+            }
+          },
+          bs: {
+            '/': {
+              title: 'qla.dev - Razvijamo novu generaciju tehnologije',
+              description: 'Gradimo mocna i prilagodjena softverska i hardverska rjesenja za interne timove i biznise svih velicina.'
+            },
+            '/techpark': {
+              title: 'qla.dev Techpark - Kreativni tech prostor za djecu i mlade u Sarajevu',
+              description: 'Techpark je kreativni tech prostor za djecu i mlade, sa open-space članstvom, programima, gaming sadrzajem i maker opremom.'
+            },
+            '/techpark/boot-camp': {
+              title: 'qla.dev Techpark - Boot-camp programi',
+              description: 'Pregledaj Techpark boot-camp programe za web, app, AI, 3D, game development, Roblox, dizajn i video editing.'
+            },
+            '/techpark/membership': {
+              title: 'qla.dev Techpark - Membership rezervacije',
+              description: 'Rezervisi Techpark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.'
+            },
+            '/techpark/line-follower-hackathone': {
+              title: 'qla.dev Techpark - Line-Follower Hackathon',
+              description: '48h roboticki sprint sa istim kitom za sve timove, Beginner i Advanced trackovima, i mapama koje se otkrivaju na startu.'
+            },
+            '/techpark/sign-in': {
+              title: 'qla.dev Techpark - Prijava clanova',
+              description: 'Visekorak prijava za Techpark clanove, rezervacije, programe i buduci attendance check-in.'
+            }
+          }
+        };
+
+        var meta = metaMap[lang][currentRoute];
+        var setMetaContent = function (selector, content) {
+          var element = document.head.querySelector(selector);
+          if (element) {
+            element.setAttribute('content', content);
+          }
+        };
+
+        document.documentElement.lang = lang;
+        document.title = meta.title;
+        setMetaContent('meta[name="title"]', meta.title);
+        setMetaContent('meta[name="description"]', meta.description);
+        setMetaContent('meta[property="og:title"]', meta.title);
+        setMetaContent('meta[property="og:description"]', meta.description);
+        setMetaContent('meta[property="og:url"]', window.location.href);
+        setMetaContent('meta[property="og:locale"]', lang === 'bs' ? 'bs_BA' : 'en_US');
+        setMetaContent('meta[property="twitter:title"]', meta.title);
+        setMetaContent('meta[property="twitter:description"]', meta.description);
+        setMetaContent('meta[property="twitter:url"]', window.location.href);
+
+        var canonical = document.head.querySelector('link[rel="canonical"]');
+        if (canonical) {
+          canonical.setAttribute('href', window.location.href);
+        }
+      })();
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/favicon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              qla: {
+                blue: '#007bff', 
+                cyan: '#06b6d4',
+                dark: '#050505',
+                card: '#0a0a0a',
+                border: '#1f1f1f'
+              }
+            },
+            backgroundImage: {
+              'grid-pattern': "linear-gradient(to right, #1f1f1f 1px, transparent 1px), linear-gradient(to bottom, #1f1f1f 1px, transparent 1px)",
+              'cyber-grid': "radial-gradient(circle at 50% 50%, rgba(0, 123, 255, 0.1) 0%, transparent 50%)",
+            },
+            animation: {
+              'grid-move': 'gridMove 20s linear infinite',
+              'pulse-fast': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'type': 'type 3s steps(40, end)',
+              'blink': 'blink 1s step-end infinite',
+              'float': 'float 8s ease-in-out infinite',
+              'shimmer': 'shimmer 4s linear infinite',
+              'shimmer-slow': 'shimmer 10s linear infinite',
+              'spin-slow': 'spin 20s linear infinite',
+            },
+            keyframes: {
+              gridMove: {
+                '0%': { transform: 'translateY(0)' },
+                '100%': { transform: 'translateY(40px)' },
+              },
+              type: {
+                '0%': { width: '0' },
+                '100%': { width: '100%' },
+              },
+              blink: {
+                '0%, 100%': { opacity: '1' },
+                '50%': { opacity: '0' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translate(0, 0)' },
+                '50%': { transform: 'translate(10px, -20px)' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '200% 0' },
+                '100%': { backgroundPosition: '-200% 0' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #007bff; 
+      }
+      body {
+        background-color: #000;
+        color: #fff;
+      }
+      
+      .scanline {
+        background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+        background-size: 100% 4px;
+        pointer-events: none;
+      }
+      
+      .glass-card {
+        background: rgba(10, 10, 10, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .text-glow {
+        text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+      }
+    </style>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/assets/index-DU2s-iih.js"></script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

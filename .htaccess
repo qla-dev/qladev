@@ -7,6 +7,7 @@ RewriteRule ^technopark/membership/?$ /techpark/membership [R=301,L]
 RewriteRule ^technopark/sign-in/?$ /techpark/sign-in [R=301,L]
 RewriteRule ^technopark/?$ /techpark [R=301,L]
 RewriteRule ^techpark/instructions/?$ /techpark/boot-camp [R=301,L]
+RewriteRule ^techpark/line-follower-hackathon/?$ /techpark/line-follower-hackathone [R=301,L]
 
 # Prevent rewrite loops once the request is already inside /dist.
 RewriteRule ^dist/ - [L]
@@ -16,6 +17,10 @@ RewriteRule ^index\.html$ dist/index.html [L]
 
 # Root domain should open the built app.
 RewriteRule ^$ dist/index.html [L]
+
+# Serve prerendered Techpark route entry files so crawlers get route-specific metadata.
+RewriteRule ^techpark/?$ dist/techpark/index.html [L]
+RewriteRule ^techpark/(boot-camp|membership|line-follower-hackathone|sign-in)/?$ dist/techpark/$1/index.html [L]
 
 # If the requested path exists inside /dist, serve that built file or directory.
 RewriteCond %{DOCUMENT_ROOT}/dist/$1 -f [OR]
