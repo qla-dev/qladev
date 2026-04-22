@@ -85,7 +85,7 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
     },
     '/techpark': {
       title: 'qla.dev Techpark - Kreativni tech prostor za djecu i mlade u Sarajevu',
-      description: 'Techpark je kreativni tech prostor za djecu i mlade, sa boot-camp programima, open-space članstvom , gaming sadržajem i 3 D print opremom.',
+      description: 'Techpark je kreativni tech prostor za djecu i mlade, sa boot-camp programima, open-space članstvom, gaming sadržajem i 3D print opremom.',
     },
     '/techpark/boot-camp': {
       title: 'qla.dev Techpark - Boot-camp programi',

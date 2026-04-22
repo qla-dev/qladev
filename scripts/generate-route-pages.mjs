@@ -15,7 +15,7 @@ const pages = [
     locale: 'bs_BA',
     alternateLocale: 'en_US',
     title: 'qla.dev Techpark - Kreativni tech prostor za djecu i mlade u Sarajevu',
-    description: 'Techpark je kreativni tech prostor za djecu i mlade, sa open-space članstvom, programima, gaming sadržajem i maker opremom.',
+    description: 'Techpark je kreativni tech prostor za djecu i mlade, sa boot-camp programima, open-space članstvom, gaming sadržajem i 3D print opremom.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
