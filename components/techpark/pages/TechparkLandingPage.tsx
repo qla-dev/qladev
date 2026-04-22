@@ -59,7 +59,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       : 'A 15-place coding + chill lounge, PS5, VR, 3D printer, rooftop location, and everything else that makes Techpark a space you enter to build something meaningful.',
     spaceTitle: isBs ? 'PROSTOR + LOKACIJA' : 'SPACE + LOCATION',
     spaceSubtitle: isBs
-      ? 'Tri pogleda na isti prostor: gdje smo, kako je slozen i zasto dnevni ritam ostaje siguran i jasan za djecu, mlade i roditelje.'
+      ? 'Tri pogleda na isti prostor: gdje smo, kako je složen i zašto dnevni ritam ostaje siguran i jasan za djecu, mlade i roditelje.'
       : 'Three ways to read the same space: where it is, how it is laid out, and why the daytime rhythm stays safe and clear for kids, youth, and parents.',
     flowEyebrow: isBs ? 'DNEVNI FLOW' : 'DAILY FLOW',
     flowCards: [
@@ -76,17 +76,17 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       {
         value: '15',
         label: isBs ? 'Maksimalan kapacitet' : 'Maximum capacity',
-        text: isBs ? 'Isti limit vazi i za open space i za svaki kurs.' : 'The same limit applies to open space and every course.',
+        text: isBs ? 'Isti limit važi i za open space i za svaki kurs.' : 'The same limit applies to open space and every course.',
       },
       {
         value: 'U18',
         label: isBs ? 'Djeca i mladi' : 'Children and youth',
-        text: isBs ? 'Dnevni ritam je slozen za sigurnije i fokusiranije koristenje prostora.' : 'The daytime rhythm is built for a safer, more focused use of the space.',
+        text: isBs ? 'Dnevni ritam je složen za sigurnije i fokusiranije korištenje prostora.' : 'The daytime rhythm is built for a safer, more focused use of the space.',
       },
     ],
     routesTitle: isBs ? 'ODABERI SVOJ ULAZ' : 'CHOOSE YOUR WAY IN',
     routesSubtitle: isBs
-      ? 'Techpark ima dva jasna ulaza: dnevni open space membership i vecernji boot-camp od 17:00.'
+      ? 'Techpark ima dva jasna ulaza: dnevni open space membership i večernji boot-camp od 17:00.'
       : 'Techpark has two clear entry points: daytime open-space membership and the evening boot-camp from 17:00 onward.',
     pricingTitle: isBs ? 'CJENOVNIK' : 'PRICING',
     pricingSubtitle: isBs
@@ -94,7 +94,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       : 'All prices are per month. Early-bird prices stay active until May 1, and membership and boot-camp programs can be combined through extra bundle benefits.',
     extrasTitle: isBs ? 'DODATNE POGODNOSTI' : 'EXTRA BENEFITS',
     extrasSubtitle: isBs
-      ? 'Ovo nije dio cjenovnika nego vrijednost samog prostora: limit, rooftop osjecaj, parking i dodatni membership + program bundle.'
+      ? 'Ovo nije dio cjenovnika nego vrijednost samog prostora: limit, rooftop osjećaj, parking i dodatni membership + program bundle.'
       : 'This is not part of pricing, but part of the space itself: the cap, rooftop feel, parking, and the extra membership + program bundle.',
     membershipCard: {
       eyebrow: isBs ? 'MJESECNI MEMBERSHIP' : 'MONTHLY MEMBERSHIP',
@@ -150,9 +150,9 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       },
     },
     bundleBadge: isBs ? 'BUNDLE BONUS' : 'BUNDLE BONUS',
-    bundleTitle: isBs ? 'Membership i boot-camp mogu ici zajedno.' : 'Membership and boot-camp can work together.',
+    bundleTitle: isBs ? 'Membership i boot-camp mogu ići zajedno.' : 'Membership and boot-camp can work together.',
     bundleText: isBs
-      ? 'Ako neko uzme open space, otvara se 40% popusta na boot-camp programe. Ako krene boot-camp, open space moze ici uz 50% bundle pogodnost.'
+      ? 'Ako neko uzme open space, otvara se 40% popusta na boot-camp programe. Ako krene boot-camp, open space može ići uz 50% bundle pogodnost.'
       : 'If someone takes open space, they unlock 40% off boot-camp programs. If they start boot-camp, open space can be added with a 50% bundle benefit.',
     bundleButton: isBs ? 'OTVORI ČLANSTVO' : 'OPEN MEMBERSHIP',
   };
@@ -190,16 +190,16 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       mobileLabel: 'BM 81',
       icon: MapPin,
       description: isBs
-        ? 'Techpark je na adresi Bra\u0107e Muli\u0107 81, na vrhu zgrade, sa otvorenim pogledom, prirodnim svjetlom i suncem koje prostor drzi zivim kroz citav dan.'
+        ? 'Techpark je na adresi Bra\u0107e Muli\u0107 81, na vrhu zgrade, sa otvorenim pogledom, prirodnim svjetlom i suncem koje prostor drži živim kroz čitav dan.'
         : 'Techpark is located at Bra\u0107e Muli\u0107 81, at the top of the building, with an open view, natural light, and steady sunlight that keeps the space alive through the day.',
       cards: isBs
         ? [
-            { title: 'Rooftop lokacija', text: 'Vrh zgrade daje vise mira, bolji pogled i cistiji dnevni osjecaj prostora.' },
-            { title: 'Prirodno svjetlo', text: 'Sunce i otvorenost prostora cine boravak ugodnijim i manje napornim.' },
-            { title: 'Stalan parking', text: 'Parking je dostupan za vise vozila, pa dolazak i preuzimanje ostaju jednostavni.' },
+            { title: 'Rooftop lokacija', text: 'Vrh zgrade daje više mira, bolji pogled i čišći dnevni osjećaj prostora.' },
+            { title: 'Prirodno svjetlo', text: 'Sunce i otvorenost prostora čine boravak ugodnijim i manje napornim.' },
+            { title: 'Stalan parking', text: 'Parking je dostupan za više vozila, pa dolazak i preuzimanje ostaju jednostavni.' },
             { title: 'Laka orijentacija', text: 'Adresa je jasna, pristup jednostavan, a roditelji lako znaju gdje djeca dolaze.' },
-            { title: 'Mirniji kontekst', text: 'Nije haotican prolazni prostor, nego mjesto koje vec na ulazu djeluje fokusirano.' },
-            { title: 'Sarajevska tacka', text: 'Lokacija je gradska, ali i dalje dovoljno mirna za dnevni ritam rada i programa.' },
+            { title: 'Mirniji kontekst', text: 'Nije haotičan prolazni prostor, nego mjesto koje već na ulazu djeluje fokusirano.' },
+            { title: 'Sarajevska tačka', text: 'Lokacija je gradska, ali i dalje dovoljno mirna za dnevni ritam rada i programa.' },
           ]
         : [
             { title: 'Rooftop location', text: 'The top-floor position gives the room more calm, a better view, and a cleaner daytime feel.' },
@@ -220,10 +220,10 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         : 'Across 140m2, Techpark combines 15 AI coding places, a chill lounge, gaming corners, maker equipment, and enough breathing room for both work and breaks to make sense.',
       cards: isBs
         ? [
-            { title: '15 AI mjesta', text: 'Svaka stanica je pripremljena za ucenje, testiranje ideja i brzi rad uz AI alate.' },
-            { title: 'Coding + chill lounge', text: 'Radni dio i lounge dio zive zajedno, bez osjecaja sterilne ucionice.' },
-            { title: 'Zona za school projekte', text: 'Prostor je dovoljno fleksibilan za skolske zadatke, prototipe i showcase rad.' },
-            { title: 'Gaming i reset', text: 'PS5, VR i chill corner ostaju tu za pauzu, reset i drustveni dio prostora.' },
+            { title: '15 AI mjesta', text: 'Svaka stanica je pripremljena za učenje, testiranje ideja i brzi rad uz AI alate.' },
+            { title: 'Coding + chill lounge', text: 'Radni dio i lounge dio žive zajedno, bez osjećaja sterilne učionice.' },
+            { title: 'Zona za school projekte', text: 'Prostor je dovoljno fleksibilan za školske zadatke, prototipe i showcase rad.' },
+            { title: 'Gaming i reset', text: 'PS5, VR i chill corner ostaju tu za pauzu, reset i društveni dio prostora.' },
             { title: 'Maker energija', text: '3D printer i filament daju prostoriji stvaran maker karakter, ne samo screens-only vibe.' },
             { title: 'Otvoren raspored', text: '15 ljudi je gornji limit upravo da prostor ostane prohodan, pregledan i komforan.' },
           ]
@@ -242,16 +242,16 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       mobileLabel: isBs ? 'RITAM' : 'RHYTHM',
       icon: ShieldCheck,
       description: isBs
-        ? 'Dio dana do 17:00 je slozen kao membership ritam za produktivan boravak, a nakon toga prostor prelazi u mentorski program. Fokus je da se svaki dolazak iskoristi za nesto korisno, ali gaming i dalje ostaje slobodan dio iskustva.'
+        ? 'Dio dana do 17:00 je složen kao membership ritam za produktivan boravak, a nakon toga prostor prelazi u mentorski program. Fokus je da se svaki dolazak iskoristi za nešto korisno, ali gaming i dalje ostaje slobodan dio iskustva.'
         : 'The part of the day before 17:00 is structured as a membership rhythm for productive time in the space, and after that the room shifts into mentor-led programs. The focus is that every visit should be used for something useful, while gaming still remains a free part of the experience.',
       cards: isBs
         ? [
-            { title: 'Produktivan ulaz', text: 'Ideja prostora je da se u njega ulazi da se napravi nesto korisno, samostalno ili uz pomoc.' },
+            { title: 'Produktivan ulaz', text: 'Ideja prostora je da se u njega ulazi da se napravi nešto korisno, samostalno ili uz pomoć.' },
             { title: 'Gaming ostaje slobodan', text: 'Igranje nije zabranjeno; samo nije jedini razlog dolaska i dio je balansa prostora.' },
-            { title: '2 x 2h dnevno', text: 'Open space radi kroz dva 2h termina dnevno po clanu, odnosno maksimalno 4h.' },
-            { title: 'Limit 15 ljudi', text: 'Isti broj vazi i za membership termin i za svaki kurs, zbog sigurnosti i kontrole.' },
-            { title: 'Samo za djecu i mlade', text: 'Cijeli koncept, raspored i ton prostora su slozeni za u18 clanove i njihove roditelje.' },
-            { title: 'Od 17:00 programi', text: 'Kad krene vece, prostor prelazi u grupni mentorski rad i jasan programski rezim.' },
+            { title: '2 x 2h dnevno', text: 'Open space radi kroz dva 2h termina dnevno po članu, odnosno maksimalno 4h.' },
+            { title: 'Limit 15 ljudi', text: 'Isti broj važi i za membership termin i za svaki kurs, zbog sigurnosti i kontrole.' },
+            { title: 'Samo za djecu i mlade', text: 'Cijeli koncept, raspored i ton prostora su složeni za u18 članove i njihove roditelje.' },
+            { title: 'Od 17:00 programi', text: 'Kad krene veče, prostor prelazi u grupni mentorski rad i jasan programski režim.' },
           ]
         : [
             { title: 'Productive entry', text: 'The point of the space is that people enter it to make something useful, alone or with help.' },
@@ -533,7 +533,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
                 <div className="mt-3 text-4xl font-black">15</div>
                 <p className="mt-3 text-sm font-mono leading-relaxed text-gray-400">
                   {isBs
-                    ? 'Isti limit vazi za svaki dnevni termin i za svaku programsku grupu.'
+                    ? 'Isti limit važi za svaki dnevni termin i za svaku programsku grupu.'
                     : 'The same cap applies to every daily slot and every program group.'}
                 </p>
               </div>
@@ -544,7 +544,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
                 <div className="mt-3 text-4xl font-black">{isBs ? 'Sunce +' : 'Sun +'}</div>
                 <p className="mt-3 text-sm font-mono leading-relaxed text-gray-400">
                   {isBs
-                    ? 'Vrh zgrade, pogled i dnevno svjetlo daju prostoru energiju koja nije zatvorena i teska.'
+                    ? 'Vrh zgrade, pogled i dnevno svjetlo daju prostoru energiju koja nije zatvorena i teška.'
                     : 'The top floor, view, and daylight give the space an energy that does not feel closed or heavy.'}
                 </p>
               </div>
@@ -557,9 +557,9 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
                     <CarFront className="h-5 w-5" />
                   </div>
                   <div>
-                    <div className="text-lg font-bold">{isBs ? 'Stalan parking za vise vozila' : 'Permanent parking for multiple vehicles'}</div>
+                    <div className="text-lg font-bold">{isBs ? 'Stalan parking za više vozila' : 'Permanent parking for multiple vehicles'}</div>
                     <div className="text-sm font-mono text-gray-400">
-                      {isBs ? 'Laksi dolazak, cekanje i preuzimanje.' : 'Easier arrival, waiting, and pickup.'}
+                      {isBs ? 'Lakši dolazak, čekanje i preuzimanje.' : 'Easier arrival, waiting, and pickup.'}
                     </div>
                   </div>
                 </div>

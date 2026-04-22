@@ -70,13 +70,13 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
   const refinedReservationFlowText: React.ReactNode = isBs ? (
     <div className="space-y-4">
       <p>
-        Izaberi dan, klikni slobodan termin i potvrdi rezervaciju. Tokom svog rezervisanog termina imas pristup punom
+        Izaberi dan, klikni slobodan termin i potvrdi rezervaciju. Tokom svog rezervisanog termina imaš pristup punom
         Techpark open-space setupu.
       </p>
       <p>
         Membership ti otvara pristup AI coding mjestima, chill loungeu, gaming zoni, snack zoni, VR-u, Arduino
-        opremi, 3D printeru, materijalima i ostalim sadrzajima prostora, tako da svaki dolazak u Techpark bude prilika
-        za istrazivanje tehnologije, ucenje i kvalitetno provedeno vrijeme u produktivnom i sigurnom okruzenju.
+        opremi, 3D printeru, materijalima i ostalim sadržajima prostora, tako da svaki dolazak u Techpark bude prilika
+        za istraživanje tehnologije, učenje i kvalitetno provedeno vrijeme u produktivnom i sigurnom okruženju.
       </p>
     </div>
   ) : (
@@ -100,11 +100,11 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
     reserveSubtitle: refinedReservationFlowText,
     summaryTitle: isBs ? 'TVOJ DAN' : 'YOUR DAY',
     formTitle: isBs ? 'POTVRDI REZERVACIJU' : 'CONFIRM RESERVATION',
-    formButton: isBs ? 'REZERVISI TERMINE' : 'RESERVE SLOTS',
+    formButton: isBs ? 'REZERVIŠI TERMINE' : 'RESERVE SLOTS',
     selectedEmpty: isBs ? 'Izaberi do 2 termina' : 'Choose up to 2 slots',
     spotsLeft: isBs ? 'mjesta slobodno' : 'spots left',
     closed: isBs ? 'ZATVORENO' : 'CLOSED',
-    monthlyPass: isBs ? 'Mjesecni pass' : 'Monthly pass',
+    monthlyPass: isBs ? 'Mjesečni pass' : 'Monthly pass',
     maxDaily: isBs ? 'Maks. 4h dnevno' : '4h max per day',
     maxCapacity: isBs ? '15 osoba po terminu' : '15 people per slot',
     under18: isBs ? 'Samo za ispod 18 godina' : 'Under 18 only',
@@ -113,11 +113,11 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
     guardian: isBs ? 'Roditelj / kontakt telefon' : 'Guardian / contact phone',
     notes: isBs ? 'Napomena' : 'Notes',
     modalTitle: isBs ? 'EARLY BIRD MEMBERSHIP' : 'EARLY BIRD MEMBERSHIP',
-    modalSubtitle: isBs ? 'Prijava je otvorena za u18 clanove. Zakljucaj 60 KM cijenu prije 1. maja.' : 'Enrollment is open for under-18 members. Lock the 60 KM offer before May 1.',
-    promoText: isBs ? 'Mjesecni pass ukljucuje open space, gaming zonu, snack zonu i dnevni limit od 4h.' : 'The monthly pass includes open space, gaming zone, snack zone, and a 4-hour daily limit.',
+    modalSubtitle: isBs ? 'Prijava je otvorena za u18 članove. Zaključaj 60 KM cijenu prije 1. maja.' : 'Enrollment is open for under-18 members. Lock the 60 KM offer before May 1.',
+    promoText: isBs ? 'Mjesečni pass uključuje open space, gaming zonu, snack zonu i dnevni limit od 4h.' : 'The monthly pass includes open space, gaming zone, snack zone, and a 4-hour daily limit.',
     guardianNoteTitle: isBs ? 'NAPOMENA ZA RODITELJA / STARATELJA' : 'PARENT / GUARDIAN NOTE',
     guardianNoteText: isBs
-      ? 'Zbog toga sto je ovaj membership namijenjen u18 clanovima, prijavu i potvrdu rezervacije treba da preuzme roditelj ili staratelj.'
+      ? 'Zbog toga što je ovaj membership namijenjen u18 članovima, prijavu i potvrdu rezervacije treba da preuzme roditelj ili staratelj.'
       : 'Because this membership is intended for under-18 members, the reservation and confirmation step should be completed by a parent or guardian.',
     discount: isBs ? '40% POPUST DO 1. MAJA' : '40% OFF BEFORE MAY 1',
     oldPrice: '100 KM',
@@ -125,7 +125,7 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
     focusedSlot: isBs ? 'Fokus termin' : 'Focused slot',
     crossSellBadge: 'BOOT-CAMP BONUS',
     crossSellTitle: isBs ? 'Uz open space dobijas 40% popusta na svaki boot-camp program.' : 'Get 40% off every boot-camp program with open space.',
-    crossSellText: isBs ? 'Ako zelis i boot-camp od 17:00, membership ti otvara povoljniji ulaz u svaki Techpark boot-camp program.' : 'If you also want the 17:00 boot-camp, membership unlocks a better entry price for every Techpark boot-camp program.',
+    crossSellText: isBs ? 'Ako želiš i boot-camp od 17:00, membership ti otvara povoljniji ulaz u svaki Techpark boot-camp program.' : 'If you also want the 17:00 boot-camp, membership unlocks a better entry price for every Techpark boot-camp program.',
     crossSellButton: isBs ? 'POGLEDAJ BOOT-CAMP' : 'VIEW BOOT-CAMP',
   };
 
@@ -183,7 +183,7 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
       if (current.length >= 2) {
         setStatus({
           type: 'error',
-          message: isBs ? 'Maksimalno mozes izabrati 2 termina dnevno.' : 'You can select a maximum of 2 slots per day.',
+          message: isBs ? 'Maksimalno možeš izabrati 2 termina dnevno.' : 'You can select a maximum of 2 slots per day.',
         });
         return current;
       }
@@ -245,7 +245,7 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
     if (selectedSlots.some((slot) => availability[selectedDay][slot] === 0)) {
       setStatus({
         type: 'error',
-        message: isBs ? 'Jedan od izabranih termina vise nije slobodan.' : 'One of the selected slots is no longer available.',
+        message: isBs ? 'Jedan od izabranih termina više nije slobodan.' : 'One of the selected slots is no longer available.',
       });
       return;
     }
@@ -266,7 +266,7 @@ export const TechparkMembershipPage: React.FC<TechparkPageProps> = ({ lang, onNa
     setStatus({
       type: 'success',
       message: isBs
-        ? `Rezervacija potvrdena za ${selectedDayConfig.labelBs}: ${selectedSlotLabels.join(', ')}.`
+        ? `Rezervacija potvrđena za ${selectedDayConfig.labelBs}: ${selectedSlotLabels.join(', ')}.`
         : `Reservation confirmed for ${selectedDayConfig.label}: ${selectedSlotLabels.join(', ')}.`,
     });
     setSelectedSlots([]);

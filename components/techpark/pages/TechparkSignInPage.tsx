@@ -18,26 +18,26 @@ export const TechparkSignInPage: React.FC<TechparkPageProps> = ({ lang }) => {
 
   const copy = {
     badge: isBs ? 'techpark prijava' : 'techpark sign in',
-    title: isBs ? 'PRIJAVA CLANA' : 'MEMBER SIGN IN',
-    subtitle: isBs ? 'Prvo korisnicko ime, zatim PIN preko ekrana.' : 'First the username, then the PIN on screen.',
+    title: isBs ? 'PRIJAVA ČLANA' : 'MEMBER SIGN IN',
+    subtitle: isBs ? 'Prvo korisničko ime, zatim PIN preko ekrana.' : 'First the username, then the PIN on screen.',
     memberStep: isBs ? 'KORAK 1' : 'STEP 1',
     pinStep: isBs ? 'KORAK 2' : 'STEP 2',
     memberTitle: isBs ? 'Ko se prijavljuje?' : 'Who is signing in?',
     memberSubtitle: isBs ? 'Unesi Member ID ili email za nastavak.' : 'Enter the Member ID or email to continue.',
     memberPlaceholder: isBs ? 'Member ID ili email' : 'Member ID or email',
     continue: isBs ? 'NASTAVI' : 'CONTINUE',
-    memberError: isBs ? 'Unesi korisnicko ime prije nastavka.' : 'Enter the username before continuing.',
+    memberError: isBs ? 'Unesi korisničko ime prije nastavka.' : 'Enter the username before continuing.',
     pinTitle: isBs ? 'Unesi PIN kod' : 'Enter the PIN code',
     pinSubtitle: isBs ? 'PIN se unosi direktno preko ekrana.' : 'The PIN is entered directly on screen.',
-    activeMember: isBs ? 'AKTIVNI CLAN' : 'ACTIVE MEMBER',
+    activeMember: isBs ? 'AKTIVNI ČLAN' : 'ACTIVE MEMBER',
     change: isBs ? 'PROMIJENI' : 'CHANGE',
-    delete: isBs ? 'OBRISI' : 'DELETE',
+    delete: isBs ? 'OBRIŠI' : 'DELETE',
     clear: isBs ? 'CLEAR' : 'CLEAR',
     signIn: isBs ? 'PRIJAVA' : 'SIGN IN',
     back: isBs ? 'NAZAD' : 'BACK',
     pinError: isBs ? 'Unesi PIN od 4 cifre za prijavu.' : 'Enter a 4-digit PIN to sign in.',
     success: isBs
-      ? 'Prijava je uspjesno otvorena. Sljedeci korak moze biti attendance check-in.'
+      ? 'Prijava je uspješno otvorena. Sljedeći korak može biti attendance check-in.'
       : 'Sign-in is active. The next step can be attendance check-in.',
   };
 

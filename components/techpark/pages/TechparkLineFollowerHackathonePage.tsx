@@ -163,7 +163,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
 
   const countdownLabels = {
     eyebrow: isBs ? 'START HACKATHONA' : 'HACKATHON START',
-    note: isBs ? 'Mapa se otkriva na startu, a 48h sprint pocinje odmah.' : 'Maps are revealed at kickoff, and the 48h sprint starts instantly.',
+    note: isBs ? 'Mapa se otkriva na startu, a 48h sprint počinje odmah.' : 'Maps are revealed at kickoff, and the 48h sprint starts instantly.',
   };
   const countdownDate = isBs ? '4. JULI 2026. godine' : 'JULY 4, 2026';
   const countdownUnits = useMemo(
@@ -222,10 +222,10 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
         eyebrow: isBs ? 'VOZNJA' : 'RUN',
         title: isBs ? 'Performanse na mapi' : 'Map performance',
         text: isBs
-          ? 'Vrijeme, zavrsavanje mape i kazne. Pobjedjuje robot koji najbrze i najcistije prolazi stazu.'
+          ? 'Vrijeme, završavanje mape i kazne. Pobjeđuje robot koji najbrže i najčistije prolazi stazu.'
           : 'Time, completion, and penalties. The winner is the robot that runs fastest and cleanest.',
         bullets: [
-          isBs ? 'Cisto pracenje bez “wobble-a”.' : 'Clean tracking without wobble.',
+          isBs ? 'Čisto praćenje bez “wobble-a”.' : 'Clean tracking without wobble.',
           isBs ? 'Brzina u krivinama bez gubitka linije.' : 'Corner speed without losing the line.',
           isBs ? 'Recovery kad se izgubi linija.' : 'Recovery when the line is lost.',
           isBs ? 'Minimalne intervencije.' : 'Minimal interventions.',
@@ -236,7 +236,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
         eyebrow: isBs ? 'STABILNOST' : 'STABILITY',
         title: isBs ? 'Konzistentnost' : 'Consistency',
         text: isBs
-          ? 'Trazi se robot koji ponavlja rezultat kroz vise runova, bez “random” failova.'
+          ? 'Traži se robot koji ponavlja rezultat kroz više runova, bez “random” failova.'
           : 'We reward robots that repeat results across runs without random failures.',
         bullets: [
           isBs ? 'Mala varijacija vremena.' : 'Low time variance.',
@@ -264,26 +264,26 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
         eyebrow: isBs ? 'PROCES' : 'PROCESS',
         title: isBs ? 'Tuning metoda' : 'Tuning method',
         text: isBs
-          ? 'Kako dolazite do parametara: kalibracija, biljeske, test matrix, iteracije.'
+          ? 'Kako dolazite do parametara: kalibracija, bilješke, test matrix, iteracije.'
           : 'How you reach parameters: calibration, notes, test matrix, iterations.',
         bullets: [
           isBs ? 'Baseline -> iterate, ne “random”.' : 'Baseline → iterate, not random.',
           isBs ? 'Biljeske o promjenama.' : 'Notes of changes.',
-          isBs ? 'Test plan i merenje.' : 'Test plan and measurement.',
+          isBs ? 'Test plan i mjerenje.' : 'Test plan and measurement.',
           isBs ? 'Time management (48h).' : 'Time management (48h).',
         ],
       },
       {
         weight: 5,
         eyebrow: isBs ? 'PIT' : 'PIT',
-        title: isBs ? 'Objasnjenje rjesenja' : 'Explanation',
+        title: isBs ? 'Objašnjenje rješenja' : 'Explanation',
         text: isBs
-          ? 'Kratko i jasno: kako radi robot i zasto ste birali taj pristup.'
+          ? 'Kratko i jasno: kako radi robot i zašto ste birali taj pristup.'
           : 'Short and clear: how it works and why you chose your approach.',
         bullets: [
           isBs ? 'Arhitektura: senzori -> kontrola -> motori.' : 'Architecture: sensors → control → motors.',
-          isBs ? 'Sta ste optimizovali i zasto.' : 'What you optimized and why.',
-          isBs ? 'Koji je “next step” da imate jos 12h.' : 'Next step if you had 12 more hours.',
+          isBs ? 'Šta ste optimizovali i zašto.' : 'What you optimized and why.',
+          isBs ? 'Koji je “next step” da imate još 12h.' : 'Next step if you had 12 more hours.',
           isBs ? 'Lekcije i refleksija.' : 'Lessons and reflection.',
         ],
       },
@@ -463,7 +463,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 <p className="mt-4 text-sm font-mono leading-relaxed text-gray-300">
                   {selectedTrack === 'beginner'
                     ? isBs
-                      ? 'Beginner nagradjuje cisto pracenje linije, dobru kalibraciju i stabilan rezultat kroz vise voznji.'
+                      ? 'Beginner nagrađuje čisto praćenje linije, dobru kalibraciju i stabilan rezultat kroz više vožnji.'
                       : 'Beginner rewards clean tracking, good calibration, and stable results across multiple runs.'
                     : isBs
                       ? 'Advanced testira recover, stabilnost i tuning pod pritiskom na kompleksnijoj mapi.'
@@ -506,7 +506,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 </div>
                 <div className="mt-5 rounded-2xl border border-white/10 bg-black/35 p-5 text-sm font-mono leading-relaxed text-gray-200">
                   {isBs
-                    ? 'Finalne mape se otkrivaju na startu. Preview je samo osjecaj razlike izmedju Beginner i Advanced tezine.'
+                    ? 'Finalne mape se otkrivaju na startu. Preview je samo osjećaj razlike između Beginner i Advanced težine.'
                     : 'Final maps are revealed at kickoff. This preview only conveys the difference between Beginner and Advanced difficulty.'}
                 </div>
               </div>
@@ -548,7 +548,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 </p>
                 <p>
                   {isBs
-                    ? 'Najbolji timovi ne pobijede jer imaju “trik”, nego jer imaju proces: kalibracija, test matrix, biljeske i iteracije koje se mogu ponoviti.'
+                    ? 'Najbolji timovi ne pobijede jer imaju “trik”, nego jer imaju proces: kalibracija, test matrix, bilješke i iteracije koje se mogu ponoviti.'
                     : 'The best teams don’t win because of one trick. They win with process: calibration, a test matrix, notes, and repeatable iterations.'}
                 </p>
               </div>
@@ -573,7 +573,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                     icon: Wrench,
                     title: isBs ? 'Mehanika' : 'Mechanics',
                     text: isBs
-                      ? 'Trenje, tezina, sensor height i montaza bez lufta.'
+                      ? 'Trenje, težina, sensor height i montaža bez lufta.'
                       : 'Friction, weight, sensor height, rigid mounting.',
                   },
                   {
@@ -609,7 +609,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                   era: isBs ? 'RANI DANI' : 'EARLY DAYS',
                   title: isBs ? 'Svjetlo + refleksija' : 'Light + reflectance',
                   text: isBs
-                    ? 'Prve verzije su se oslanjale na razliku izmedju bijelog i crnog. Stabilno osvjetljenje je bilo pola pobjede.'
+                    ? 'Prve verzije su se oslanjale na razliku između bijelog i crnog. Stabilno osvjetljenje je bilo pola pobjede.'
                     : 'Early designs relied on white vs. black reflectance. Stable lighting was half the win.',
                 },
                 {
@@ -621,7 +621,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 },
                 {
                   era: isBs ? 'SENZORSKI NIZOVI' : 'SENSOR ARRAYS',
-                  title: isBs ? 'Vise senzora, vise informacije' : 'More sensors, more information',
+                  title: isBs ? 'Više senzora, više informacije' : 'More sensors, more information',
                   text: isBs
                     ? 'Array senzori daju poziciju linije, ne samo “ima/nema”. To otvara brzu i precizniju voznju.'
                     : 'Arrays give line position, not just “yes/no”. That unlocks faster and more precise motion.',
@@ -672,7 +672,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 icon: Timer,
                 title: isBs ? '48h sat' : '48h clock',
                 text: isBs
-                  ? 'Vrijeme pocinje nakon otkrivanja mape. Po isteku ide lock-in i nema vise izmjena.'
+                  ? 'Vrijeme počinje nakon otkrivanja mape. Po isteku ide lock-in i nema više izmjena.'
                   : 'Time starts after the map reveal. When it ends, lock-in happens and changes stop.',
               },
               {
@@ -725,7 +725,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
             {[
               {
                 eyebrow: isBs ? 'KIT + MODS' : 'KIT + MODS',
-                title: isBs ? 'Sta smijete mijenjati (i zasto)' : 'What you can modify (and why)',
+                title: isBs ? 'Šta smijete mijenjati (i zašto)' : 'What you can modify (and why)',
                 body: isBs ? (
                   <div className="space-y-4">
                     <p>
@@ -737,7 +737,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                         'Mehanika: sensor height, raspored tezine, montaza, tocak/trenje.',
                         'Softver: PID, filtracija, recovery, speed profile, reset procedura.',
                         'Kabliranje: uredno, sigurno, bez labavih konektora.',
-                        'Tuning proces: biljeske, test matrix, “baseline -> iterate” rutina.',
+                        'Tuning proces: bilješke, test matrix, “baseline -> iterate” rutina.',
                       ].map((line) => (
                         <div key={line} className="rounded-2xl border border-white/10 bg-black/30 p-4 text-sm font-mono text-gray-200">
                           <div className="flex items-start gap-3">
@@ -748,7 +748,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                       ))}
                     </div>
                     <p className="text-gray-300">
-                      Bitno: ako nesto nije jasno, bolje je pitati prije ugradnje nego kasnije riskirati kaznu.
+                      Bitno: ako nešto nije jasno, bolje je pitati prije ugradnje nego kasnije riskirati kaznu.
                     </p>
                   </div>
                 ) : (
@@ -778,12 +778,12 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
               },
               {
                 eyebrow: isBs ? 'FAIRNESS' : 'FAIRNESS',
-                title: isBs ? 'Sta nije dozvoljeno' : 'What is not allowed',
+                title: isBs ? 'Šta nije dozvoljeno' : 'What is not allowed',
                 body: isBs ? (
                   <div className="space-y-4">
                     <p>
                       Da bi svi imali isti start, nije dozvoljeno ubacivati dodatne senzore ili dijelove koji daju
-                      hardversku prednost. Takodje, voznja je 100% autonomna.
+                      hardversku prednost. Takođe, vožnja je 100% autonomna.
                     </p>
                     <div className="grid gap-3 sm:grid-cols-2">
                       {[
@@ -837,8 +837,8 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 body: isBs ? (
                   <div className="space-y-4">
                     <p>
-                      Sat pocinje odmah nakon otkrivanja mape. To je trenutak kad svi dobiju istu informaciju i od tog
-                      momenta se racuna 48 sati. Po isteku, robot ide u lock-in i vise se ne mijenja.
+                      Sat počinje odmah nakon otkrivanja mape. To je trenutak kad svi dobiju istu informaciju i od tog
+                      momenta se računa 48 sati. Po isteku, robot ide u lock-in i više se ne mijenja.
                     </p>
                     <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
                       <div className="flex items-start gap-3">
@@ -888,14 +888,14 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 body: isBs ? (
                   <div className="space-y-4">
                     <p>
-                      Run pocinje na start markeru. Tim ima kratko vrijeme za “ready” stanje, a onda robot krece. Ako
+                      Run počinje na start markeru. Tim ima kratko vrijeme za “ready” stanje, a onda robot kreće. Ako
                       robot izgubi liniju, treba se vratiti autonomno. Manual intervencija znaci kaznu.
                     </p>
                     <div className="grid gap-3 sm:grid-cols-2">
                       {[
                         'Start: robot se postavi, resetuje i krece na signal.',
-                        'Off-track: recovery autonomno; ako ne moze, intervencija uz kaznu.',
-                        'Ponovljivost: vise runova, nije samo jedan “lucky”.',
+                        'Off-track: recovery autonomno; ako ne može, intervencija uz kaznu.',
+                        'Ponovljivost: više runova, nije samo jedan “lucky”.',
                         'Postovanje staze: nema “skracivanja” ni presjecanja.',
                       ].map((line) => (
                         <div key={line} className="rounded-2xl border border-white/10 bg-black/30 p-4 text-sm font-mono text-gray-200">
@@ -1031,12 +1031,12 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
               <div className="mt-5 space-y-4 text-sm font-mono leading-relaxed text-gray-200">
                 <p>
                   {isBs
-                    ? 'Najvaznije je kako robot vozi na mapi: vrijeme, zavrsavanje i kazne. Ali bodovanje namjerno nagradjuje i konzistentnost, jer jedan “lucky” run nije najbolji robot.'
+                    ? 'Najvažnije je kako robot vozi na mapi: vrijeme, završavanje i kazne. Ali bodovanje namjerno nagrađuje i konzistentnost, jer jedan “lucky” run nije najbolji robot.'
                     : 'The core is how your robot runs the map: time, completion, and penalties. But scoring also rewards consistency, because one lucky run doesn’t prove the best robot.'}
                 </p>
                 <p>
                   {isBs
-                    ? 'Takodje gledamo kvalitet izrade i tuning metodu. U 48 sati, uredan robot i dobar proces donose vise brzine nego “random” promjene.'
+                    ? 'Takođe gledamo kvalitet izrade i tuning metodu. U 48 sati, uredan robot i dobar proces donose više brzine nego “random” promjene.'
                     : 'We also consider build quality and tuning method. In 48 hours, a clean build and good process produce more speed than random changes.'}
                 </p>
               </div>
@@ -1216,7 +1216,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                     icon: Trophy,
                     title: isBs ? '4) Lock-in + trka' : '4) Lock-in + race',
                     text: isBs
-                      ? 'Po isteku robot ide u lock-in. Trka se vozi kroz vise runova za konzistentnost i finale.'
+                      ? 'Po isteku robot ide u lock-in. Trka se vozi kroz više runova za konzistentnost i finale.'
                       : 'After time ends the robot goes to lock-in. Racing happens over multiple runs for consistency and finals.',
                   },
                 ].map((step) => {
@@ -1259,7 +1259,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                       icon: Activity,
                       title: isBs ? 'Recovery zone' : 'Recovery',
                       text: isBs
-                        ? 'Sekcije gdje robot mora brzo naci liniju bez manualne pomoci.'
+                        ? 'Sekcije gdje robot mora brzo naći liniju bez manualne pomoći.'
                         : 'Sections where the robot must find the line quickly without manual help.',
                     },
                     {
@@ -1389,7 +1389,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                     {isBs ? 'PREPORUKA' : 'RECOMMENDATION'}
                   </div>
                   <div className="mt-3 text-2xl font-black tracking-tight text-white">
-                    {isBs ? 'Tim od 3 clana, jasne uloge' : 'Team of 3, clear roles'}
+                    {isBs ? 'Tim od 3 člana, jasne uloge' : 'Team of 3, clear roles'}
                   </div>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-black/40 p-2">
@@ -1405,7 +1405,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 </p>
                 <p>
                   {isBs
-                    ? 'Ako se uloge preklapaju, uradite to svjesno: jedan vodi mehaniku, jedan firmware, jedan test/tuning, ali svi dijele biljeske i odluke.'
+                    ? 'Ako se uloge preklapaju, uradite to svjesno: jedan vodi mehaniku, jedan firmware, jedan test/tuning, ali svi dijele bilješke i odluke.'
                     : 'If roles overlap, do it intentionally: one leads mechanics, one firmware, one test/tuning, but all share notes and decisions.'}
                 </p>
               </div>
@@ -1430,14 +1430,14 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                     icon: Gauge,
                     title: isBs ? 'Test + tuning' : 'Test + tuning',
                     text: isBs
-                      ? 'Test matrix, biljeske, iteracije, dizanje brzine, konzistentnost.'
+                      ? 'Test matrix, bilješke, iteracije, dizanje brzine, konzistentnost.'
                       : 'Test matrix, notes, iterations, raising speed, consistency.',
                   },
                   {
                     icon: Trophy,
                     title: isBs ? 'Strategija + pit' : 'Strategy + pit',
                     text: isBs
-                      ? 'Plan rada, checkpointi, quick fixes, kratko objasnjenje rjesenja.'
+                      ? 'Plan rada, checkpointi, quick fixes, kratko objašnjenje rješenja.'
                       : 'Work plan, checkpoints, quick fixes, short solution explanation.',
                   },
                 ].map((card) => {
@@ -1546,7 +1546,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                     <div className="text-base font-black text-white">{isBs ? 'Pit disciplina' : 'Pit discipline'}</div>
                     <p className="text-sm font-mono leading-relaxed text-gray-300">
                       {isBs
-                        ? 'Sve promjene zapisati. Jedna promjena po run-u. Ako nesto pokvarite, vratite se na baseline i krenite ponovo.'
+                        ? 'Sve promjene zapisati. Jedna promjena po run-u. Ako nešto pokvarite, vratite se na baseline i krenite ponovo.'
                         : 'Write down every change. One change per run. If something breaks, return to baseline and rebuild forward.'}
                     </p>
                   </div>
@@ -1634,7 +1634,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                   icon: BatteryCharging,
                   title: isBs ? 'Napajanje' : 'Power',
                   items: isBs
-                    ? ['Baterijski pack', 'Sigurno montiranje baterije', 'Napomene za punjenje i koristenje']
+                    ? ['Baterijski pack', 'Sigurno montiranje baterije', 'Napomene za punjenje i korištenje']
                     : ['Battery pack', 'Safe battery mounting', 'Charging and usage notes'],
                 },
                 {
@@ -1724,7 +1724,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
           <SectionHeader
             title={isBs ? 'AGENDA' : 'AGENDA'}
             subtitle={isBs
-              ? 'Kickoff, 48h sprint i dan trke. Sat pocinje na reveal-u, a zavrsava lock-inom.'
+              ? 'Kickoff, 48h sprint i dan trke. Sat počinje na reveal-u, a završava lock-inom.'
               : 'Kickoff, a 48h sprint, and race day. The clock starts at reveal and ends at lock-in.'}
           />
 
@@ -1774,7 +1774,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                     isBs ? 'Registracija timova + podjela kitova.' : 'Team check-in + kit handout.',
                     isBs ? 'Reveal mape: legenda, Q&A, pa start sata.' : 'Map reveal: legend, Q&A, then clock start.',
                     isBs ? 'Baseline: sklapanje + kalibracija + prvi spori krug.' : 'Baseline: assembly + calibration + first slow lap.',
-                    isBs ? 'Prvi tuning: stabilno pracenje i recovery.' : 'First tuning: stable tracking and recovery.',
+                    isBs ? 'Prvi tuning: stabilno praćenje i recovery.' : 'First tuning: stable tracking and recovery.',
                   ],
                 },
                 {
@@ -1784,7 +1784,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                   items: [
                     isBs ? 'Test matrix: krivine, brzine, reset, varijacija.' : 'Test matrix: corners, speeds, reset, variance.',
                     isBs ? 'Stabilizacija napajanja + kabeling.' : 'Power stability + wiring cleanup.',
-                    isBs ? 'Optimizacija mehanike: visina senzora, trenje, tezina.' : 'Mechanical tweaks: sensor height, friction, weight.',
+                    isBs ? 'Optimizacija mehanike: visina senzora, trenje, težina.' : 'Mechanical tweaks: sensor height, friction, weight.',
                     isBs ? 'Dizanje brzine u fazama, bez gubitka stabilnosti.' : 'Raise speed in phases without losing stability.',
                   ],
                 },
@@ -1842,7 +1842,7 @@ export const TechparkLineFollowerHackathonePage: React.FC<TechparkPageProps> = (
                 </div>
                 <p className="mt-4 text-sm font-mono leading-relaxed text-gray-300">
                   {isBs
-                    ? 'Tokom sprinta planiramo kratke checkpoint-e gdje tim moze dobiti feedback: kalibracija, PID, recovery, mehanika i sigurnost.'
+                    ? 'Tokom sprinta planiramo kratke checkpoint-e gdje tim može dobiti feedback: kalibracija, PID, recovery, mehanika i sigurnost.'
                     : 'During the sprint we run short checkpoints where teams can get feedback: calibration, PID, recovery, mechanics, and safety.'}
                 </p>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2 text-sm font-mono text-gray-200">

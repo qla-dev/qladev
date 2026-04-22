@@ -15,7 +15,7 @@ const pages = [
     locale: 'bs_BA',
     alternateLocale: 'en_US',
     title: 'qla.dev Techpark - Kreativni tech prostor za djecu i mlade u Sarajevu',
-    description: 'Techpark je kreativni tech prostor za djecu i mlade, sa open-space clanstvom, programima, gaming sadrzajem i maker opremom.',
+    description: 'Techpark je kreativni tech prostor za djecu i mlade, sa open-space članstvom, programima, gaming sadržajem i maker opremom.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
@@ -24,7 +24,7 @@ const pages = [
     locale: 'bs_BA',
     alternateLocale: 'en_US',
     title: 'qla.dev Techpark - Boot-camp programi',
-    description: 'Pregledaj Techpark boot-camp programe za web, app, AI, 3D, game development, Roblox, dizajn i video editing.',
+    description: 'Prijavi se na jedan od boot-camp programa unutar qla.dev Techparka. Izaberi između Web Deva, App Deva, AI-a, 3D-a, UI/UX-a, Robotike, Game Deva, Robloxa i Video Editinga.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
@@ -33,7 +33,7 @@ const pages = [
     locale: 'bs_BA',
     alternateLocale: 'en_US',
     title: 'qla.dev Techpark - Membership rezervacije',
-    description: 'Rezervisi Techpark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.',
+    description: 'Rezerviši Techpark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
@@ -42,7 +42,7 @@ const pages = [
     locale: 'bs_BA',
     alternateLocale: 'en_US',
     title: 'qla.dev Techpark - Line-Follower Hackathon',
-    description: '48h roboticki sprint sa istim kitom za sve timove, Beginner i Advanced trackovima, i mapama koje se otkrivaju na startu.',
+    description: '48h robotički sprint sa istim kitom za sve timove, Beginner i Advanced trackovima, i mapama koje se otkrivaju na startu.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
@@ -50,8 +50,8 @@ const pages = [
     lang: 'bs',
     locale: 'bs_BA',
     alternateLocale: 'en_US',
-    title: 'qla.dev Techpark - Prijava clanova',
-    description: 'Visekorak prijava za Techpark clanove, rezervacije, programe i buduci attendance check-in.',
+    title: 'qla.dev Techpark - Prijava članova',
+    description: 'Višekorak prijava za Techpark članove, rezervacije, programe i budući attendance check-in.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
 ];
