@@ -3,6 +3,7 @@ import { ExternalLink, Lock } from 'lucide-react';
 import { getProgramAgenda } from '../agenda';
 import { programs } from '../data';
 import { ProgramCard } from '../instructions/ProgramCard';
+import { getProgramScheduleDaysLabel, getTrackScheduleFullLabel, getTrackScheduleTimeLabel } from '../programSchedule';
 import { CrossSellPanel } from '../shared/CrossSellPanel';
 import { FormStatusMessage } from '../shared/FormStatusMessage';
 import { SplitActionModal } from '../shared/SplitActionModal';
@@ -54,6 +55,10 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
 
   const selectedProgram = programs.find((program) => program.id === selectedProgramId) ?? programs[0];
   const selectedAgenda = getProgramAgenda(selectedProgramId, selectedLevel);
+  const selectedProgramEnrollment = selectedProgram.enrolled[selectedLevel];
+  const selectedProgramScheduleDaysLabel = getProgramScheduleDaysLabel(selectedProgram, isBs);
+  const selectedProgramScheduleTimeLabel = getTrackScheduleTimeLabel(selectedProgram.id, selectedLevel, isBs);
+  const selectedProgramScheduleLabel = getTrackScheduleFullLabel(selectedProgram, selectedLevel, isBs);
   const selectedProgramPrice = selectedLevel === 'beginner' ? '180 KM' : '300 KM';
   const selectedProgramOldPrice = selectedLevel === 'beginner' ? '200 KM' : undefined;
   const selectedProgramDiscount = selectedLevel === 'beginner'
@@ -103,7 +108,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     advanced: 'ADVANCED · 6M',
     selectedTrack: isBs ? 'IZABRANI PUT' : 'SELECTED TRACK',
     groupSize: isBs ? 'maks. po grupi' : 'max per group',
-    under18: isBs ? 'samo za u18' : 'under 18 only',
+    under18: 'just u18',
     name: isBs ? 'Ime i prezime' : 'Full name',
     age: isBs ? 'Godine' : 'Age',
     guardian: isBs ? 'Roditelj / kontakt telefon' : 'Guardian / contact phone',
@@ -113,7 +118,9 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     programDescription: isBs ? 'Opis programa' : 'Program description',
     enrolled: isBs ? 'upisano / limit' : 'enrolled / cap',
     schedule: isBs ? 'Raspored' : 'Schedule',
-    programPriceLabel: isBs ? 'mjesečna cijena kursa' : 'monthly course price',
+    scheduleDays: isBs ? 'Dani' : 'Days',
+    scheduleTime: isBs ? 'Satnica' : 'Time',
+    programPriceLabel: isBs ? 'mjesečna cijena' : 'monthly price',
     crossSellBadge: isBs ? 'OPEN SPACE BONUS' : 'OPEN SPACE BONUS',
     crossSellTitle: isBs ? 'Dodaj open space uz 50% popusta.' : 'Add open space with 50% off.',
     crossSellText: isBs ? 'Ako uz program želiš i dnevni boravak za rad, druženje ili gaming, open space membership dobijaš uz dodatni bundle popust.' : 'If you also want daytime space for building, hanging out, or gaming, you can add open-space membership with an extra bundle discount.',
@@ -289,13 +296,16 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
         description=""
         promoPanel={
           <div className="space-y-4">
-            <div className="inline-flex px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 text-[11px] font-mono tracking-[0.16em] uppercase">{labels.selectedProgram}</div>
             <div className="text-3xl font-black tracking-tight sm:text-[2.35rem]">{isBs ? selectedProgram.titleBs : selectedProgram.title}</div>
-            <div className="text-base text-gray-300 font-mono sm:text-lg">{selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}</div>
-            <div className="grid gap-3 md:grid-cols-3">
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.enrolled}</div><div className="mt-2 text-xl font-black sm:text-2xl">0/{selectedProgram.seats}</div><div className="mt-2 text-xs text-gray-400 font-mono sm:text-sm">{labels.under18}</div></div>
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.schedule}</div><div className="mt-2 text-xl font-black sm:text-2xl">{isBs ? selectedProgram.scheduleBs : selectedProgram.schedule}</div><div className="mt-2 text-xs text-gray-400 font-mono sm:text-sm">{selectedDuration}</div></div>
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.programPriceLabel}</div><div className="mt-2 text-xl font-black sm:text-2xl">{selectedProgramPrice}</div>{selectedProgramOldPrice ? <div className="mt-2 text-xs text-gray-400 line-through font-mono sm:text-sm">{selectedProgramOldPrice}</div> : <div className="mt-2 text-xs text-gray-400 font-mono sm:text-sm">{isBs ? 'Advanced put' : 'Advanced path'}</div>}</div>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 text-[11px] font-mono tracking-[0.16em] uppercase">{labels.selectedProgram}</div>
+              <div className="text-base text-gray-300 font-mono sm:text-lg">{selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}</div>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.enrolled}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramEnrollment}/{selectedProgram.seats}</div><div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{labels.under18}</div></div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.scheduleDays}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramScheduleDaysLabel}</div><div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{selectedDuration}</div></div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.scheduleTime}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramScheduleTimeLabel}</div><div className="mt-2 whitespace-nowrap text-[11px] text-gray-400 font-mono sm:text-xs">{selectedLevel === 'beginner' ? beginnerLabel : advancedLabel}</div></div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-4"><div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.programPriceLabel}</div><div className="mt-2 whitespace-nowrap text-lg font-black tracking-tight sm:text-xl lg:text-[1.4rem]">{selectedProgramPrice}</div>{selectedProgramOldPrice ? <div className="mt-2 text-[11px] text-gray-400 line-through font-mono sm:text-xs">{selectedProgramOldPrice}</div> : <div className="mt-2 whitespace-nowrap text-[11px] text-gray-400 font-mono sm:text-xs">{isBs ? 'Advanced put' : 'Advanced path'}</div>}</div>
             </div>
             <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
               <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.programDescription}</div>
@@ -379,7 +389,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
               </div>
               <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
                 <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.schedule}</div>
-                <div className="mt-2 text-lg font-black sm:text-xl">{isBs ? selectedProgram.scheduleBs : selectedProgram.schedule}</div>
+                <div className="mt-2 text-lg font-black sm:text-xl">{selectedProgramScheduleLabel}</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
                 <div className="text-[11px] font-mono tracking-[0.16em] text-blue-300 uppercase">{labels.agendaDuration}</div>

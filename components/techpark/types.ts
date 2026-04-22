@@ -45,6 +45,10 @@ export interface Program {
   beginnerFocusBs: string;
   advancedFocus: string;
   advancedFocusBs: string;
+  enrolled: {
+    beginner: number;
+    advanced: number;
+  };
   seats: number;
   icon: LucideIcon;
   tutor: {
