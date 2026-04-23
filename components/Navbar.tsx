@@ -333,8 +333,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {showMobileFloatingTechparkSwitcher && (
         <div className="fixed bottom-0 left-0 right-0 z-40 w-full xl:hidden">
-          <div className="w-full border border-white/10 bg-black/80 p-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-md">
-            <div className="grid grid-cols-2 gap-2.5">
+          <div className="relative overflow-hidden border-t border-white/10 bg-[#050912] shadow-[0_-10px_40px_rgba(0,0,0,0.6)]">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(37,99,235,0.24),transparent_48%),radial-gradient(circle_at_right,rgba(59,130,246,0.14),transparent_42%)] opacity-90" />
+            <div className="relative grid grid-cols-2 gap-2 p-2 pb-[max(1rem,env(safe-area-inset-bottom))]">
               {techparkFloatingActions.map((action) => {
                 const isActive = route === action.path;
                 const Icon = action.icon;
@@ -346,14 +347,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                       onNavigateRoute(action.path);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`inline-flex min-w-0 items-center justify-center gap-2 whitespace-nowrap rounded-sm border px-4 py-3.5 text-[11px] font-bold font-mono uppercase tracking-[0.14em] leading-none transition-all shadow-[0_8px_24px_rgba(0,0,0,0.28)] ${
+                    className={`inline-flex min-w-0 items-center justify-center gap-2 whitespace-nowrap rounded-sm border px-4 py-3.5 text-[11px] font-bold font-mono uppercase tracking-[0.14em] leading-none transition-colors ${
                       action.variant === 'primary'
                         ? isActive
                           ? 'border-blue-500 bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.45)]'
-                          : 'border-blue-600 bg-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 hover:shadow-[0_0_18px_rgba(37,99,235,0.45)]'
+                          : 'border-blue-600 bg-blue-600 text-white hover:border-blue-700 hover:bg-blue-700'
                         : isActive
                           ? 'border-blue-500/50 bg-blue-500/10 text-white shadow-[0_0_16px_rgba(37,99,235,0.2)]'
-                          : 'border-white/15 bg-[#0a101a]/96 text-gray-200 hover:border-blue-500 hover:bg-blue-500/10 hover:text-white'
+                          : 'border-white/15 bg-[#0b1220] text-gray-200 hover:border-blue-500 hover:bg-blue-500/10 hover:text-white'
                     }`}
                   >
                     <Icon className={`h-4 w-4 shrink-0 ${action.variant === 'secondary' && !isActive ? 'text-blue-300' : ''}`} />
