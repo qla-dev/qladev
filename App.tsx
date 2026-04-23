@@ -11,6 +11,7 @@ import { News } from './components/News';
 import { Portfolio } from './components/Portfolio';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { ScrollRootProvider } from './components/ScrollRootContext';
 import {
   TechparkInstructionsPage,
   TechparkLandingPage,
@@ -162,12 +163,12 @@ const App: React.FC = () => {
     phase: RouteTransitionPhase;
     direction: TransitionDirection;
   }>({ phase: 'steady', direction: 'forward' });
-  const techparkScrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [activeHomeSection, setActiveHomeSection] = useState<string | null>(null);
+  const appScrollContainerRef = useRef<HTMLDivElement | null>(null);
   const lang = displayRoute.startsWith('/techpark') ? techparkLang : siteLang;
   const t = TEXT_CONTENT[lang];
 
-  const getScrollContainer = (targetRoute: AppRoute) =>
-    targetRoute.startsWith('/techpark') ? techparkScrollContainerRef.current : null;
+  const getScrollContainer = (_targetRoute: AppRoute) => appScrollContainerRef.current;
 
   const getScrollTop = (targetRoute: AppRoute) => {
     const scrollContainer = getScrollContainer(targetRoute);
@@ -433,25 +434,29 @@ const App: React.FC = () => {
     }
 
     setStartQuoteMode(true);
-    document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
+    const hero = document.getElementById('hero');
+    if (hero) {
+      scrollElementIntoViewport('/', hero, 'smooth');
+    }
   };
 
   const primaryActionLabel = displayRoute.startsWith('/techpark')
     ? (lang === 'bs' ? 'PRIJAVA' : 'SIGN IN')
     : t.nav.cta;
   const isTechparkRoute = displayRoute.startsWith('/techpark');
+  const usesInternalScrollShell = displayRoute === '/' || isTechparkRoute;
 
   useEffect(() => {
     const root = document.documentElement;
-    root.classList.toggle('techpark-ios-fix-active', isTechparkRoute);
+    root.classList.toggle('techpark-ios-fix-active', usesInternalScrollShell);
 
     return () => {
       root.classList.remove('techpark-ios-fix-active');
     };
-  }, [isTechparkRoute]);
+  }, [usesInternalScrollShell]);
 
   useEffect(() => {
-    if (!isTechparkRoute) {
+    if (!usesInternalScrollShell) {
       return;
     }
 
@@ -466,10 +471,10 @@ const App: React.FC = () => {
       window.cancelAnimationFrame(rafId);
       root.classList.remove('ios26-tint-refresh');
     };
-  }, [displayRoute, isTechparkRoute]);
+  }, [displayRoute, usesInternalScrollShell]);
 
   useEffect(() => {
-    if (!isTechparkRoute) {
+    if (!usesInternalScrollShell) {
       return;
     }
 
@@ -483,7 +488,45 @@ const App: React.FC = () => {
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
     };
-  }, [isTechparkRoute]);
+  }, [usesInternalScrollShell]);
+
+  useEffect(() => {
+    if (displayRoute !== '/') {
+      setActiveHomeSection(null);
+      return;
+    }
+
+    const scrollContainer = appScrollContainerRef.current;
+    if (!scrollContainer) {
+      return;
+    }
+
+    const trackedSections = ['products', 'services', 'contact'] as const;
+
+    const updateActiveHomeSection = () => {
+      const probeY = window.innerHeight * 0.42;
+      const matchedSection = trackedSections.find((sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (!element) {
+          return false;
+        }
+
+        const rect = element.getBoundingClientRect();
+        return rect.top <= probeY && rect.bottom >= probeY;
+      });
+
+      setActiveHomeSection(matchedSection ?? null);
+    };
+
+    updateActiveHomeSection();
+    scrollContainer.addEventListener('scroll', updateActiveHomeSection, { passive: true });
+    window.addEventListener('resize', updateActiveHomeSection);
+
+    return () => {
+      scrollContainer.removeEventListener('scroll', updateActiveHomeSection);
+      window.removeEventListener('resize', updateActiveHomeSection);
+    };
+  }, [displayRoute]);
 
   const handleSetLang = (nextLang: Language) => {
     if (isTechparkRoute) {
@@ -568,7 +611,8 @@ const App: React.FC = () => {
         lang={lang}
         setLang={handleSetLang}
         route={displayRoute}
-        scrollContainerRef={techparkScrollContainerRef}
+        scrollContainerRef={appScrollContainerRef}
+        activeHomeSection={activeHomeSection}
         t={t.nav}
         primaryActionLabel={primaryActionLabel}
         onNavigateHomeSection={navigateToHomeSection}
@@ -578,25 +622,27 @@ const App: React.FC = () => {
         onPrimaryAction={handlePrimaryAction}
       />
 
-      {isTechparkRoute ? (
-        <div
-          ref={techparkScrollContainerRef}
-          className="fixed inset-0 overflow-y-auto overscroll-y-contain bg-black"
-          style={{ WebkitOverflowScrolling: 'touch' }}
-        >
-          <div className={`min-h-full transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
-            {routeContent}
+      <ScrollRootProvider value={appScrollContainerRef}>
+        {usesInternalScrollShell ? (
+          <div
+            ref={appScrollContainerRef}
+            className="fixed inset-0 overflow-y-auto overscroll-y-contain bg-black"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
+            <div className={`min-h-full transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
+              {routeContent}
+              <Footer route={displayRoute} />
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className={`transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
+              {routeContent}
+            </div>
             <Footer route={displayRoute} />
-          </div>
-        </div>
-      ) : (
-        <>
-          <div className={`transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
-            {routeContent}
-          </div>
-          <Footer route={displayRoute} />
-        </>
-      )}
+          </>
+        )}
+      </ScrollRootProvider>
     </div>
   );
 };

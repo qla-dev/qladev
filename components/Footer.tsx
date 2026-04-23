@@ -6,14 +6,16 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ route }) => {
+  const isHomeRoute = route === '/';
   const isTechparkRoute = route.startsWith('/techpark');
+  const hasMobileBottomNav = isHomeRoute || isTechparkRoute;
   const logoSrc = isTechparkRoute ? '/logo-techpark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
   const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
 
   return (
     <footer
       className={`bg-black text-white border-t border-gray-900 ${
-        isTechparkRoute ? 'pt-12 pb-20 md:py-12' : 'py-12'
+        hasMobileBottomNav ? 'pt-12 pb-20 md:py-12' : 'py-12'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">

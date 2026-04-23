@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CalendarDays, LayoutGrid, Menu, Ticket, User, Users, X } from 'lucide-react';
+import { Boxes, BriefcaseBusiness, CalendarDays, LayoutGrid, Menu, Phone, Ticket, User, Users, X } from 'lucide-react';
 import { Language, Translations } from '../types';
 import type { TechparkRoute } from './techpark/types';
 
@@ -8,6 +8,7 @@ interface NavbarProps {
   setLang: (lang: Language) => void;
   route: string;
   scrollContainerRef?: React.RefObject<HTMLDivElement | null>;
+  activeHomeSection?: string | null;
   t: Translations['nav'];
   primaryActionLabel: string;
   onNavigateHomeSection: (id: string) => void;
@@ -22,6 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   setLang,
   route,
   scrollContainerRef,
+  activeHomeSection,
   t,
   primaryActionLabel,
   onNavigateHomeSection,
@@ -32,8 +34,11 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isHomeRoute = route === '/';
   const isTechparkRoute = route.startsWith('/techpark');
+  const usesInternalScroll = isHomeRoute || isTechparkRoute;
   const techparkPeopleCount = '0/15';
+  const showMobileMainBottomNav = isHomeRoute;
   const showMobileTechparkBottomNav = isTechparkRoute;
   const logoSrc = isTechparkRoute ? '/logo-techpark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
   const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
@@ -43,14 +48,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = isTechparkRoute
+      const scrollY = usesInternalScroll
         ? (scrollContainerRef?.current?.scrollTop ?? 0)
         : (window.scrollY || window.pageYOffset || 0);
       setIsScrolled(scrollY > 50);
     };
 
     handleScroll();
-    if (isTechparkRoute) {
+    if (usesInternalScroll) {
       const scrollContainer = scrollContainerRef?.current;
       scrollContainer?.addEventListener('scroll', handleScroll, { passive: true });
 
@@ -59,14 +64,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isTechparkRoute, scrollContainerRef]);
+  }, [scrollContainerRef, usesInternalScroll]);
 
   useEffect(() => {
-    const scrollY = isTechparkRoute
+    const scrollY = usesInternalScroll
       ? (scrollContainerRef?.current?.scrollTop ?? 0)
       : (window.scrollY || window.pageYOffset || 0);
     setIsScrolled(scrollY > 50);
-  }, [isTechparkRoute, route, scrollContainerRef]);
+  }, [route, scrollContainerRef, usesInternalScroll]);
 
   const navLinks = [
     { kind: 'anchor' as const, id: 'hero', label: t.home },
@@ -116,8 +121,39 @@ export const Navbar: React.FC<NavbarProps> = ({
     },
     {
       path: '/techpark/sign-in' as const,
-      label: lang === 'bs' ? 'PROFIL' : 'PROFILE',
+      label: lang === 'bs' ? 'MOJ PROFIL' : 'MY PROFILE',
       icon: User,
+    },
+  ];
+
+  const mainBottomNavItems = [
+    {
+      id: 'products',
+      label: t.products,
+      icon: Boxes,
+      onClick: () => onNavigateHomeSection('products'),
+      isActive: activeHomeSection === 'products',
+    },
+    {
+      id: 'services',
+      label: t.services,
+      icon: BriefcaseBusiness,
+      onClick: () => onNavigateHomeSection('services'),
+      isActive: activeHomeSection === 'services',
+    },
+    {
+      id: 'contact',
+      label: t.contact,
+      icon: Phone,
+      onClick: () => onNavigateHomeSection('contact'),
+      isActive: activeHomeSection === 'contact',
+    },
+    {
+      id: 'techpark',
+      label: 'TECHPARK',
+      icon: LayoutGrid,
+      onClick: () => onNavigateRoute('/techpark'),
+      isActive: false,
     },
   ];
 
@@ -347,6 +383,32 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         )}
       </nav>
+
+      {showMobileMainBottomNav && (
+        <nav className="techpark-bottom-nav fixed bottom-0 left-0 right-0 z-[5000] grid h-16 grid-cols-4 items-center border-t border-white/10 bg-black/80 px-2 py-1.5 backdrop-blur-md shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
+          {mainBottomNavItems.map((action) => {
+            const Icon = action.icon;
+
+            return (
+              <button
+                key={action.id}
+                onClick={() => {
+                  action.onClick();
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`flex w-full flex-col items-center justify-center gap-1 transition-colors ${
+                  action.isActive ? 'text-blue-400' : 'text-slate-500'
+                }`}
+              >
+                <Icon size={18} />
+                <span className="w-full truncate px-1 text-center text-[9px] font-bold uppercase tracking-widest">
+                  {action.label}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+      )}
 
       {showMobileTechparkBottomNav && (
         <nav className="techpark-bottom-nav fixed bottom-0 left-0 right-0 z-[5000] grid h-16 grid-cols-4 items-center border-t border-white/10 bg-black/80 px-2 py-1.5 backdrop-blur-md shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">

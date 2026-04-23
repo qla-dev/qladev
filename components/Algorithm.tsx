@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Translations } from '../types';
+import { useScrollRoot } from './ScrollRootContext';
 
 interface AlgorithmProps {
   t: Translations['algorithm'];
@@ -8,6 +9,7 @@ interface AlgorithmProps {
 export const Algorithm: React.FC<AlgorithmProps> = ({ t }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const barsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollRootRef = useScrollRoot();
   
   // Generate static random data for the "fingerprint" of the algorithm
   const [baseValues] = useState(() => Array.from({ length: 40 }, () => Math.random() * 0.5 + 0.2)); // 0.2 to 0.7 scale
@@ -17,7 +19,7 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ t }) => {
 
     const render = () => {
       // Get global scroll position
-      const scrollY = window.scrollY;
+      const scrollY = scrollRootRef?.current?.scrollTop ?? window.scrollY;
       
       // Calculate a "time" variable based on scroll. 
       // Dividing by larger number slows down the wave frequency relative to pixels scrolled
@@ -63,7 +65,7 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ t }) => {
     render();
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [baseValues]);
+  }, [baseValues, scrollRootRef]);
 
   return (
     <section ref={containerRef} className="py-32 bg-gray-900 relative border-t border-white/5 overflow-hidden">

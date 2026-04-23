@@ -334,20 +334,20 @@ export const Hero: React.FC<HeroProps> = ({ t, lang, startQuoteMode, setStartQuo
                       {t.subtitle}
                     </p>
 
-                    <div className="mt-10 flex flex-wrap gap-4">
+                    <div className="mt-10 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
                       <button 
                         onClick={handleGetQuote}
-                        className="relative px-8 py-4 bg-blue-600 text-white font-bold font-mono tracking-wider overflow-hidden rounded-sm group cursor-pointer z-20"
+                        className="relative flex min-w-0 items-center justify-center overflow-hidden rounded-sm bg-blue-600 px-4 py-4 text-[11px] font-bold font-mono tracking-[0.12em] text-white group cursor-pointer z-20 sm:w-auto sm:px-8 sm:text-base sm:tracking-wider"
                       >
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <span className="relative flex items-center gap-2">
+                        <span className="relative flex items-center justify-center gap-2 whitespace-nowrap">
                           {t.quote} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
                       </button>
                       
-                      <button className="px-8 py-4 bg-transparent border border-gray-700 text-white font-bold font-mono tracking-wider rounded-sm hover:border-blue-500 hover:text-blue-400 transition-all flex items-center gap-2 group z-20">
+                      <button className="flex min-w-0 items-center justify-center gap-2 rounded-sm border border-gray-700 bg-transparent px-4 py-4 text-[11px] font-bold font-mono tracking-[0.12em] text-white transition-all group z-20 hover:border-blue-500 hover:text-blue-400 sm:w-auto sm:px-8 sm:text-base sm:tracking-wider">
                         <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                        {t.call}
+                        <span className="whitespace-nowrap">{t.call}</span>
                       </button>
                     </div>
                     

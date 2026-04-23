@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Translations } from '../types';
+import { useScrollRoot } from './ScrollRootContext';
 
 interface MissionProps {
   tMission: Translations['mission'];
@@ -9,6 +10,7 @@ interface MissionProps {
 export const Mission: React.FC<MissionProps> = ({ tMission, tAlgo }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const scrollRootRef = useScrollRoot();
 
   const codeString = `
 class QlaDev extends Future {
@@ -53,10 +55,12 @@ class QlaDev extends Future {
       setProgress(p);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const scrollTarget = scrollRootRef?.current ?? window;
+
+    scrollTarget.addEventListener('scroll', handleScroll);
     handleScroll(); // Initial calculation
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => scrollTarget.removeEventListener('scroll', handleScroll);
+  }, [scrollRootRef]);
 
   const charsToShow = Math.floor(progress * codeString.length);
   const visibleCode = codeString.substring(0, charsToShow);

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Translations } from '../types';
 import { Database, Code2, Globe, HeartHandshake } from 'lucide-react';
+import { useScrollRoot } from './ScrollRootContext';
 
 interface AboutProps {
   t: Translations['about'];
@@ -10,6 +11,7 @@ export const About: React.FC<AboutProps> = ({ t }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollRootRef = useScrollRoot();
 
   useEffect(() => {
     let animationFrame: number;
@@ -92,15 +94,17 @@ export const About: React.FC<AboutProps> = ({ t }) => {
     // Initial call
     handleScroll();
     
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const scrollTarget = scrollRootRef?.current ?? window;
+
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
     
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      scrollTarget.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
       cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [scrollRootRef]);
 
   // Updated colors to be consistent (Blue)
   const bullets = [
