@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Stats } from './components/Stats';
@@ -162,8 +162,48 @@ const App: React.FC = () => {
     phase: RouteTransitionPhase;
     direction: TransitionDirection;
   }>({ phase: 'steady', direction: 'forward' });
+  const techparkScrollContainerRef = useRef<HTMLDivElement | null>(null);
   const lang = displayRoute.startsWith('/techpark') ? techparkLang : siteLang;
   const t = TEXT_CONTENT[lang];
+
+  const getScrollContainer = (targetRoute: AppRoute) =>
+    targetRoute.startsWith('/techpark') ? techparkScrollContainerRef.current : null;
+
+  const getScrollTop = (targetRoute: AppRoute) => {
+    const scrollContainer = getScrollContainer(targetRoute);
+    return scrollContainer ? scrollContainer.scrollTop : (window.scrollY || window.pageYOffset || 0);
+  };
+
+  const scrollViewportTo = (targetRoute: AppRoute, top: number, behavior: ScrollBehavior) => {
+    const scrollContainer = getScrollContainer(targetRoute);
+
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top, behavior });
+      return;
+    }
+
+    window.scrollTo({ top, left: 0, behavior });
+  };
+
+  const scrollElementIntoViewport = (targetRoute: AppRoute, element: HTMLElement, behavior: ScrollBehavior) => {
+    const navOffset = getAnchorNavOffset();
+    const scrollContainer = getScrollContainer(targetRoute);
+
+    if (scrollContainer) {
+      const top = Math.max(
+        0,
+        scrollContainer.scrollTop
+          + element.getBoundingClientRect().top
+          - scrollContainer.getBoundingClientRect().top
+          - navOffset
+      );
+      scrollContainer.scrollTo({ top, behavior });
+      return;
+    }
+
+    const top = Math.max(0, getScrollTop(targetRoute) + element.getBoundingClientRect().top - navOffset);
+    window.scrollTo({ top, left: 0, behavior });
+  };
 
   useEffect(() => {
     if (!('scrollRestoration' in window.history)) {
@@ -213,7 +253,9 @@ const App: React.FC = () => {
 
     const switchTimer = window.setTimeout(() => {
       setDisplayRoute(route);
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      window.requestAnimationFrame(() => {
+        scrollViewportTo(route, 0, 'auto');
+      });
       setRouteTransition({ phase: 'enter', direction });
     }, 360);
 
@@ -274,10 +316,7 @@ const App: React.FC = () => {
         return;
       }
 
-      const navOffset = getAnchorNavOffset();
-      const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - navOffset);
-
-      window.scrollTo({ top, left: 0, behavior: 'smooth' });
+      scrollElementIntoViewport(pendingRouteSection.route, target, 'smooth');
       setPendingRouteSection(null);
     };
 
@@ -351,10 +390,7 @@ const App: React.FC = () => {
         return false;
       }
 
-      const navOffset = getAnchorNavOffset();
-      const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - navOffset);
-
-      window.scrollTo({ top, left: 0, behavior: 'smooth' });
+      scrollElementIntoViewport(targetRoute, target, 'smooth');
       return true;
     };
 
@@ -380,7 +416,7 @@ const App: React.FC = () => {
       return;
     }
 
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    scrollViewportTo('/', 0, 'auto');
   };
 
   const handlePrimaryAction = () => {
@@ -431,6 +467,23 @@ const App: React.FC = () => {
       root.classList.remove('ios26-tint-refresh');
     };
   }, [displayRoute, isTechparkRoute]);
+
+  useEffect(() => {
+    if (!isTechparkRoute) {
+      return;
+    }
+
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+    };
+  }, [isTechparkRoute]);
 
   const handleSetLang = (nextLang: Language) => {
     if (isTechparkRoute) {
@@ -506,6 +559,7 @@ const App: React.FC = () => {
           : routeTransition.direction === 'forward'
             ? 'opacity-0 translate-x-12 blur-sm scale-95 pointer-events-none select-none'
             : 'opacity-0 -translate-x-12 blur-sm scale-95 pointer-events-none select-none';
+  const routeContent = renderMainContent();
 
   return (
     <div className="font-sans antialiased text-white selection:bg-blue-500 selection:text-white">
@@ -514,6 +568,7 @@ const App: React.FC = () => {
         lang={lang}
         setLang={handleSetLang}
         route={displayRoute}
+        scrollContainerRef={techparkScrollContainerRef}
         t={t.nav}
         primaryActionLabel={primaryActionLabel}
         onNavigateHomeSection={navigateToHomeSection}
@@ -523,11 +578,25 @@ const App: React.FC = () => {
         onPrimaryAction={handlePrimaryAction}
       />
 
-      <div className={`transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
-        {renderMainContent()}
-      </div>
-
-      <Footer route={displayRoute} />
+      {isTechparkRoute ? (
+        <div
+          ref={techparkScrollContainerRef}
+          className="fixed inset-0 overflow-y-auto overscroll-y-contain bg-black"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
+          <div className={`min-h-full transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
+            {routeContent}
+            <Footer route={displayRoute} />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className={`transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
+            {routeContent}
+          </div>
+          <Footer route={displayRoute} />
+        </>
+      )}
     </div>
   );
 };

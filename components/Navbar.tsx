@@ -7,6 +7,7 @@ interface NavbarProps {
   lang: Language;
   setLang: (lang: Language) => void;
   route: string;
+  scrollContainerRef?: React.RefObject<HTMLDivElement | null>;
   t: Translations['nav'];
   primaryActionLabel: string;
   onNavigateHomeSection: (id: string) => void;
@@ -20,6 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   lang,
   setLang,
   route,
+  scrollContainerRef,
   t,
   primaryActionLabel,
   onNavigateHomeSection,
@@ -41,19 +43,30 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const scrollY = isTechparkRoute
+        ? (scrollContainerRef?.current?.scrollTop ?? 0)
+        : (window.scrollY || window.pageYOffset || 0);
       setIsScrolled(scrollY > 50);
     };
 
     handleScroll();
+    if (isTechparkRoute) {
+      const scrollContainer = scrollContainerRef?.current;
+      scrollContainer?.addEventListener('scroll', handleScroll, { passive: true });
+
+      return () => scrollContainer?.removeEventListener('scroll', handleScroll);
+    }
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isTechparkRoute, scrollContainerRef]);
 
   useEffect(() => {
-    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const scrollY = isTechparkRoute
+      ? (scrollContainerRef?.current?.scrollTop ?? 0)
+      : (window.scrollY || window.pageYOffset || 0);
     setIsScrolled(scrollY > 50);
-  }, [route]);
+  }, [isTechparkRoute, route, scrollContainerRef]);
 
   const navLinks = [
     { kind: 'anchor' as const, id: 'hero', label: t.home },
@@ -249,21 +262,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <Users className="h-3.5 w-3.5 text-blue-300" />
                   <span className="font-mono text-[11px] font-bold tracking-[0.14em]">{techparkPeopleCount}</span>
                 </div>
-              )}
-              {isTechparkRoute && (
-                <button
-                  onClick={() => {
-                    onPrimaryAction();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`px-3 py-2 rounded-sm font-bold font-mono text-[11px] tracking-[0.14em] uppercase transition-all ${
-                    route === '/techpark/sign-in'
-                      ? 'border border-blue-500/40 bg-blue-500/15 text-blue-200'
-                      : 'bg-blue-600 hover:bg-blue-700 text-white'
-                  }`}
-                >
-                  {primaryActionLabel}
-                </button>
               )}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
