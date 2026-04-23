@@ -11,7 +11,11 @@ export const Footer: React.FC<FooterProps> = ({ route }) => {
   const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
 
   return (
-    <footer className="bg-black text-white py-12 border-t border-gray-900">
+    <footer
+      className={`bg-black text-white border-t border-gray-900 ${
+        isTechparkRoute ? 'pt-12 pb-[calc(env(safe-area-inset-bottom)+5.5rem)] md:py-12' : 'py-12'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
         
         <div className="mb-6 md:mb-0 text-center md:text-left">

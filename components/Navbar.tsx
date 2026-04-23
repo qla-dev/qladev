@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, CalendarDays, Menu, Ticket, Users, X } from 'lucide-react';
+import { CalendarDays, LayoutGrid, Menu, Ticket, User, Users, X } from 'lucide-react';
 import { Language, Translations } from '../types';
 import type { TechparkRoute } from './techpark/types';
 
@@ -30,10 +30,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mobileFloatingBottomOffset, setMobileFloatingBottomOffset] = useState(0);
   const isTechparkRoute = route.startsWith('/techpark');
   const techparkPeopleCount = '0/15';
-  const showMobileFloatingTechparkSwitcher = isTechparkRoute && route !== '/techpark/sign-in';
+  const showMobileTechparkBottomNav = isTechparkRoute;
   const logoSrc = isTechparkRoute ? '/logo-techpark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
   const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
   const logoClassName = isTechparkRoute
@@ -55,40 +54,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     const scrollY = window.scrollY || window.pageYOffset || 0;
     setIsScrolled(scrollY > 50);
   }, [route]);
-
-  useEffect(() => {
-    if (!showMobileFloatingTechparkSwitcher) {
-      setMobileFloatingBottomOffset(0);
-      return;
-    }
-
-    const updateFloatingBottomOffset = () => {
-      const viewport = window.visualViewport;
-
-      if (!viewport) {
-        setMobileFloatingBottomOffset(0);
-        return;
-      }
-
-      const nextOffset = Math.max(0, Math.round(window.innerHeight - (viewport.height + viewport.offsetTop)));
-      setMobileFloatingBottomOffset(nextOffset);
-    };
-
-    updateFloatingBottomOffset();
-
-    const viewport = window.visualViewport;
-    window.addEventListener('resize', updateFloatingBottomOffset);
-    window.addEventListener('orientationchange', updateFloatingBottomOffset);
-    viewport?.addEventListener('resize', updateFloatingBottomOffset);
-    viewport?.addEventListener('scroll', updateFloatingBottomOffset);
-
-    return () => {
-      window.removeEventListener('resize', updateFloatingBottomOffset);
-      window.removeEventListener('orientationchange', updateFloatingBottomOffset);
-      viewport?.removeEventListener('resize', updateFloatingBottomOffset);
-      viewport?.removeEventListener('scroll', updateFloatingBottomOffset);
-    };
-  }, [showMobileFloatingTechparkSwitcher]);
 
   const navLinks = [
     { kind: 'anchor' as const, id: 'hero', label: t.home },
@@ -117,6 +82,29 @@ export const Navbar: React.FC<NavbarProps> = ({
       label: lang === 'bs' ? 'ČLANSTVO' : 'MEMBERSHIP',
       icon: Ticket,
       variant: 'secondary' as const,
+    },
+  ];
+
+  const techparkBottomNavItems = [
+    {
+      path: '/techpark' as const,
+      label: 'TECHPARK',
+      icon: LayoutGrid,
+    },
+    {
+      path: '/techpark/boot-camp' as const,
+      label: 'BOOT-CAMP',
+      icon: CalendarDays,
+    },
+    {
+      path: '/techpark/membership' as const,
+      label: lang === 'bs' ? 'ČLANSTVO' : 'MEMBERSHIP',
+      icon: Ticket,
+    },
+    {
+      path: '/techpark/sign-in' as const,
+      label: lang === 'bs' ? 'PROFIL' : 'PROFILE',
+      icon: User,
     },
   ];
 
@@ -362,12 +350,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         )}
       </nav>
 
-      {showMobileFloatingTechparkSwitcher && (
-        <nav
-          className="fixed bottom-0 left-0 right-0 z-[5000] grid grid-cols-2 items-center border-t border-white/10 bg-[#050912] p-2 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden"
-          style={mobileFloatingBottomOffset > 0 ? { bottom: `${mobileFloatingBottomOffset}px` } : undefined}
-        >
-          {techparkFloatingActions.map((action) => {
+      {showMobileTechparkBottomNav && (
+        <nav className="fixed bottom-0 left-0 right-0 z-[5000] grid grid-cols-4 items-center border-t border-slate-800 bg-slate-900 p-2 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
+          {techparkBottomNavItems.map((action) => {
             const isActive = route === action.path;
             const Icon = action.icon;
 
@@ -378,19 +363,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onNavigateRoute(action.path);
                   setIsMobileMenuOpen(false);
                 }}
-                className={`inline-flex min-w-0 w-full items-center justify-center gap-2 rounded-sm border px-4 py-3.5 text-[11px] font-bold font-mono uppercase tracking-[0.14em] leading-none transition-colors ${
-                  action.variant === 'primary'
-                    ? isActive
-                      ? 'border-blue-500 bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.45)]'
-                      : 'border-blue-600 bg-blue-600 text-white hover:border-blue-700 hover:bg-blue-700'
-                    : isActive
-                      ? 'border-blue-500/50 bg-blue-500/10 text-white shadow-[0_0_16px_rgba(37,99,235,0.2)]'
-                      : 'border-white/15 bg-[#0b1220] text-gray-200 hover:border-blue-500 hover:bg-blue-500/10 hover:text-white'
+                className={`flex w-full flex-col items-center justify-center gap-1 transition-colors ${
+                  isActive ? 'text-blue-500' : 'text-slate-500'
                 }`}
               >
-                <Icon className={`h-4 w-4 shrink-0 ${action.variant === 'secondary' && !isActive ? 'text-blue-300' : ''}`} />
-                <span className="truncate leading-tight">{action.label}</span>
-                <ArrowRight className="h-4 w-4 shrink-0" />
+                <Icon size={20} />
+                <span className="w-full truncate px-1 text-center text-[10px] font-bold uppercase tracking-widest">
+                  {action.label}
+                </span>
               </button>
             );
           })}
