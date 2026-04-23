@@ -242,6 +242,24 @@
         min-height: 100vh;
         background-color: #000;
       }
+      .safari-tint-sentinel {
+        display: none;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 4px;
+        background: #0f172a;
+        pointer-events: none;
+        z-index: 999999;
+      }
+      .techpark-ios-fix-active .safari-tint-sentinel {
+        display: block;
+        visibility: hidden;
+      }
+      .ios26-tint-refresh .techpark-bottom-nav {
+        transform: translateZ(0);
+      }
       
       .scanline {
         background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
@@ -272,7 +290,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/assets/index-vkRpOhs2.js"></script>
+  <script type="module" crossorigin src="/assets/index-DKma2sDm.js"></script>
 </head>
   <body>
     <div id="root"></div>

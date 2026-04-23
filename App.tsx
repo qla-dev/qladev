@@ -403,9 +403,37 @@ const App: React.FC = () => {
   const primaryActionLabel = displayRoute.startsWith('/techpark')
     ? (lang === 'bs' ? 'PRIJAVA' : 'SIGN IN')
     : t.nav.cta;
+  const isTechparkRoute = displayRoute.startsWith('/techpark');
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle('techpark-ios-fix-active', isTechparkRoute);
+
+    return () => {
+      root.classList.remove('techpark-ios-fix-active');
+    };
+  }, [isTechparkRoute]);
+
+  useEffect(() => {
+    if (!isTechparkRoute) {
+      return;
+    }
+
+    const root = document.documentElement;
+    root.classList.add('ios26-tint-refresh');
+
+    const rafId = window.requestAnimationFrame(() => {
+      root.classList.remove('ios26-tint-refresh');
+    });
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      root.classList.remove('ios26-tint-refresh');
+    };
+  }, [displayRoute, isTechparkRoute]);
 
   const handleSetLang = (nextLang: Language) => {
-    if (displayRoute.startsWith('/techpark')) {
+    if (isTechparkRoute) {
       setTechparkLang(nextLang);
       return;
     }
@@ -481,6 +509,7 @@ const App: React.FC = () => {
 
   return (
     <div className="font-sans antialiased text-white selection:bg-blue-500 selection:text-white">
+      <div className="safari-tint-sentinel" aria-hidden="true"></div>
       <Navbar
         lang={lang}
         setLang={handleSetLang}
