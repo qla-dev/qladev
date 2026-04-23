@@ -351,7 +351,12 @@ export const Navbar: React.FC<NavbarProps> = ({
       </nav>
 
       {showMobileTechparkBottomNav && (
-        <nav className="fixed bottom-0 left-0 right-0 z-[5000] grid h-[5.25rem] grid-cols-4 items-center border-t border-slate-800 bg-slate-900 px-2 pt-2 pb-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
+        <>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none invisible fixed bottom-0 left-[4vw] right-[4vw] z-[4999] h-1 bg-slate-900 xl:hidden"
+          />
+          <nav className="fixed bottom-0 left-0 right-0 z-[5000] grid h-[5.25rem] grid-cols-4 items-center border-t border-slate-800 bg-slate-900 px-2 pt-2 pb-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
           {techparkBottomNavItems.map((action) => {
             const isActive = route === action.path;
             const Icon = action.icon;
@@ -374,7 +379,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             );
           })}
-        </nav>
+          </nav>
+        </>
       )}
     </>
   );
