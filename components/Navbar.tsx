@@ -332,10 +332,9 @@ export const Navbar: React.FC<NavbarProps> = ({
       </nav>
 
       {showMobileFloatingTechparkSwitcher && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 w-full xl:hidden">
-          <div className="relative overflow-hidden border-t border-white/10 bg-[#050912] shadow-[0_-10px_40px_rgba(0,0,0,0.6)]">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(37,99,235,0.24),transparent_48%),radial-gradient(circle_at_right,rgba(59,130,246,0.14),transparent_42%)] opacity-90" />
-            <div className="relative grid grid-cols-2 gap-2 p-2 pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <div className="fixed bottom-0 left-0 right-0 z-[5000] w-full border-t border-white/10 bg-[#050912] px-2 pt-2 pb-[max(0.9rem,env(safe-area-inset-bottom))] shadow-[0_-10px_40px_rgba(0,0,0,0.6)] xl:hidden">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(37,99,235,0.24),transparent_48%),radial-gradient(circle_at_right,rgba(59,130,246,0.14),transparent_42%)] opacity-90" />
+          <div className="relative grid grid-cols-2 gap-2">
               {techparkFloatingActions.map((action) => {
                 const isActive = route === action.path;
                 const Icon = action.icon;
@@ -363,7 +362,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </button>
                 );
               })}
-            </div>
           </div>
         </div>
       )}

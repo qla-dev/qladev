@@ -58,7 +58,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
   const selectedProgramEnrollment = selectedProgram.enrolled[selectedLevel];
   const selectedProgramScheduleDaysLabel = getProgramScheduleDaysLabel(selectedProgram, isBs);
   const selectedProgramScheduleTimeLabel = getTrackScheduleTimeLabel(selectedProgram.id, selectedLevel, isBs);
-  const selectedProgramPrice = selectedLevel === 'beginner' ? '180 KM' : '300 KM';
+  const selectedProgramPrice = '180 KM';
   const selectedProgramOldPrice = selectedLevel === 'beginner' ? '200 KM' : undefined;
   const selectedProgramDiscount = selectedLevel === 'beginner'
     ? (isBs ? '10% POPUST DO 1. MAJA' : '10% OFF BEFORE MAY 1')

@@ -1,11 +1,16 @@
 import React from 'react';
 import {
   ArrowRight,
+  Blocks,
   Building2,
   CalendarDays,
   CarFront,
   Clock3,
+  Gamepad2,
+  GraduationCap,
+  LayoutGrid,
   MapPin,
+  Monitor,
   ShieldCheck,
   SunMedium,
   Ticket,
@@ -13,7 +18,6 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { amenities, programs } from '../data';
-import { CrossSellPanel } from '../shared/CrossSellPanel';
 import { SectionHeader } from '../shared/SectionHeader';
 import { TechparkHeroSection } from '../shared/TechparkHeroSection';
 import { TechparkPageShell } from '../shared/TechparkPageShell';
@@ -139,12 +143,12 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       advancedPrograms: {
         eyebrow: isBs ? 'ADVANCED PATH' : 'ADVANCED PATH',
         title: isBs ? 'Advanced program' : 'Advanced program',
-        price: '300 KM',
+        price: '180 KM',
         oldPrice: undefined,
         badge: isBs ? 'CIJENA PO MJESECU' : 'PRICE PER MONTH',
         items: isBs
-          ? ['300 KM po mjesecu', 'Trajanje: 6 mjeseci', `${programs.length} programa u ponudi`, 'Maksimalno 15 polaznika po grupi']
-          : ['300 KM per month', 'Duration: 6 months', `${programs.length} programs available`, 'Maximum 15 students per group'],
+          ? ['180 KM po mjesecu', 'Trajanje: 6 mjeseci', `${programs.length} programa u ponudi`, 'Maksimalno 15 polaznika po grupi']
+          : ['180 KM per month', 'Duration: 6 months', `${programs.length} programs available`, 'Maximum 15 students per group'],
         button: isBs ? 'OTVORI ADVANCED' : 'OPEN ADVANCED',
       },
     },
@@ -161,25 +165,6 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     { value: isBs ? 'Poslije 17:00' : 'After 17:00', label: labels.heroStats.instructions, icon: CalendarDays },
     { value: techparkPeopleCount, label: labels.heroStats.seats, icon: Users },
     { value: 'U18', label: labels.heroStats.under18, icon: ShieldCheck },
-  ];
-
-  const routeCards = [
-    {
-      eyebrow: labels.membershipCard.eyebrow,
-      title: labels.membershipCard.title,
-      text: labels.membershipCard.text,
-      cta: labels.membershipCard.cta,
-      route: '/techpark/membership' as const,
-      highlight: labels.pricingCards.membership.badge,
-    },
-    {
-      eyebrow: labels.programsCard.eyebrow,
-      title: labels.programsCard.title,
-      text: labels.programsCard.text,
-      cta: labels.programsCard.cta,
-      route: '/techpark/boot-camp' as const,
-      highlight: isBs ? 'OD 180 KM / MJ.' : 'FROM 180 KM / MO.',
-    },
   ];
 
   const spaceTabs: SpaceTab[] = [
@@ -262,6 +247,11 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
           ],
     },
   ];
+  const spaceCardIcons: Record<SpaceTabId, LucideIcon[]> = {
+    location: [Building2, SunMedium, CarFront, MapPin, ShieldCheck, MapPin],
+    layout: [Monitor, LayoutGrid, GraduationCap, Gamepad2, Blocks, LayoutGrid],
+    rhythm: [Monitor, Gamepad2, Clock3, Users, ShieldCheck, CalendarDays],
+  };
 
   const activeSpaceSection = spaceTabs.find((tab) => tab.id === activeSpaceTab) ?? spaceTabs[0];
   const heroTitle = isBs ? (
@@ -395,16 +385,27 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
                 </p>
 
                 <div className="mt-8 grid gap-4 md:grid-cols-2">
-                  {activeSpaceSection.cards.map((card) => (
-                    <div key={card.title} className="rounded-[1.7rem] border border-white/10 bg-black/55 p-5 sm:p-6">
-                      <div className="text-base font-mono leading-relaxed text-gray-100 sm:text-[1.05rem]">
-                        {card.title}
+                  {activeSpaceSection.cards.map((card, index) => {
+                    const Icon = spaceCardIcons[activeSpaceSection.id][index] ?? activeSpaceSection.icon;
+
+                    return (
+                      <div key={card.title} className="rounded-[1.7rem] border border-white/10 bg-black/55 p-5 sm:p-6">
+                        <div className="flex items-start gap-3">
+                          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-500/10 text-blue-300">
+                            <Icon className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <div className="text-base font-mono leading-relaxed text-gray-100 sm:text-[1.05rem]">
+                              {card.title}
+                            </div>
+                            <p className="mt-3 text-xs font-mono leading-relaxed text-gray-400 sm:text-sm">
+                              {card.text}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <p className="mt-3 text-xs font-mono leading-relaxed text-gray-400 sm:text-sm">
-                        {card.text}
-                      </p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -426,39 +427,6 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
 
               <div className="absolute inset-0 border border-white/5 pointer-events-none group-hover:border-blue-500/50 transition-colors duration-500 rounded-2xl"></div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-white/5 py-16 sm:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader title={labels.routesTitle} subtitle={labels.routesSubtitle} />
-          <div className="grid gap-6 lg:grid-cols-2">
-            {routeCards.map((card) => (
-              <div
-                key={card.route}
-                className="flex h-full flex-col rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#06080d] to-black p-8"
-              >
-                <div className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-mono tracking-[0.16em] uppercase text-gray-300">
-                  {card.eyebrow}
-                </div>
-                <div className="mt-4 text-4xl font-black leading-tight">{card.title}</div>
-                <p className="mt-4 flex-1 text-base font-mono leading-relaxed text-gray-300">{card.text}</p>
-                <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                  <div className="inline-flex whitespace-nowrap rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-mono tracking-[0.16em] uppercase text-emerald-300">
-                    {card.highlight}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => onNavigate(card.route)}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-sm bg-blue-600 px-5 py-4 text-sm font-bold font-mono uppercase tracking-[0.18em] transition-all hover:bg-blue-700 hover:shadow-[0_0_18px_rgba(37,99,235,0.55)] lg:w-auto lg:min-w-[18rem]"
-                  >
-                    {card.cta}
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -518,79 +486,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         </div>
       </section>
 
-      <section className="border-t border-white/5 py-16 sm:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader title={labels.extrasTitle} subtitle={labels.extrasSubtitle} />
-          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/25 via-[#06080d] to-black p-7">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[1.7rem] border border-white/10 bg-white/5 p-5">
-                <div className="text-xs font-mono uppercase tracking-[0.16em] text-blue-300">
-                  {isBs ? '15 MJESTA / LIMIT' : '15 PLACES / CAP'}
-                </div>
-                <div className="mt-3 text-4xl font-black">15</div>
-                <p className="mt-3 text-sm font-mono leading-relaxed text-gray-400">
-                  {isBs
-                    ? 'Isti limit važi za svaki dnevni termin i za svaku programsku grupu.'
-                    : 'The same cap applies to every daily slot and every program group.'}
-                </p>
-              </div>
-              <div className="rounded-[1.7rem] border border-white/10 bg-white/5 p-5">
-                <div className="text-xs font-mono uppercase tracking-[0.16em] text-blue-300">
-                  {isBs ? 'ROOFTOP FEEL' : 'ROOFTOP FEEL'}
-                </div>
-                <div className="mt-3 text-4xl font-black">{isBs ? 'Sunce +' : 'Sun +'}</div>
-                <p className="mt-3 text-sm font-mono leading-relaxed text-gray-400">
-                  {isBs
-                    ? 'Vrh zgrade, pogled i dnevno svjetlo daju prostoru energiju koja nije zatvorena i teška.'
-                    : 'The top floor, view, and daylight give the space an energy that does not feel closed or heavy.'}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 space-y-4">
-              <div className="rounded-[1.7rem] border border-white/10 bg-white/5 p-5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-500/10 text-blue-300">
-                    <CarFront className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <div className="text-lg font-bold">{isBs ? 'Stalan parking za više vozila' : 'Permanent parking for multiple vehicles'}</div>
-                    <div className="text-sm font-mono text-gray-400">
-                      {isBs ? 'Lakši dolazak, čekanje i preuzimanje.' : 'Easier arrival, waiting, and pickup.'}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-[1.7rem] border border-white/10 bg-white/5 p-5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-500/10 text-blue-300">
-                    <SunMedium className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <div className="text-lg font-bold">{isBs ? 'Lokacija na vrhu zgrade' : 'Top-floor location'}</div>
-                    <div className="text-sm font-mono text-gray-400">
-                      {isBs
-                        ? 'Prelijep pogled, puno prirodnog svjetla i konstantno sunce kroz dan.'
-                        : 'Beautiful views, plenty of natural light, and steady sunshine throughout the day.'}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <CrossSellPanel
-                badge={labels.bundleBadge}
-                title={labels.bundleTitle}
-                text={labels.bundleText}
-                buttonLabel={labels.bundleButton}
-                onClick={() => onNavigate('/techpark/membership')}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
     </TechparkPageShell>
   );
 };
+
