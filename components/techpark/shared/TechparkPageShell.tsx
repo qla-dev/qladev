@@ -7,7 +7,7 @@ interface TechparkPageShellProps {
 }
 
 export const TechparkPageShell: React.FC<TechparkPageShellProps> = ({ children, showBackdrop = false }) => (
-  <div className="relative overflow-hidden bg-qla-dark pb-24 text-white md:pb-0">
+  <div className="relative overflow-hidden bg-black pb-20 text-white md:bg-qla-dark md:pb-0">
     {showBackdrop ? (
       <div className="pointer-events-none absolute inset-0 opacity-90">
         <TechHeroBackdrop />

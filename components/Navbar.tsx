@@ -349,7 +349,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </nav>
 
       {showMobileTechparkBottomNav && (
-        <nav className="techpark-bottom-nav fixed bottom-0 left-0 right-0 z-[5000] grid h-[4.5rem] grid-cols-4 items-center border-t border-slate-800 bg-slate-900 px-2 py-2 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
+        <nav className="techpark-bottom-nav fixed bottom-0 left-0 right-0 z-[5000] grid h-16 grid-cols-4 items-center border-t border-white/10 bg-black/80 px-2 py-1.5 backdrop-blur-md shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
           {techparkBottomNavItems.map((action) => {
             const isActive = route === action.path;
             const Icon = action.icon;
@@ -362,11 +362,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setIsMobileMenuOpen(false);
                 }}
                 className={`flex w-full flex-col items-center justify-center gap-1 transition-colors ${
-                  isActive ? 'text-blue-500' : 'text-slate-500'
+                  isActive ? 'text-blue-400' : 'text-slate-500'
                 }`}
               >
-                <Icon size={20} />
-                <span className="w-full truncate px-1 text-center text-[10px] font-bold uppercase tracking-widest">
+                <Icon size={18} />
+                <span className="w-full truncate px-1 text-center text-[9px] font-bold uppercase tracking-widest">
                   {action.label}
                 </span>
               </button>
