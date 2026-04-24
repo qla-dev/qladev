@@ -66,7 +66,7 @@ class QlaDev extends Future {
   const visibleCode = codeString.substring(0, charsToShow);
 
   return (
-    <section ref={containerRef} className="py-24 bg-transparent relative z-10">
+    <section ref={containerRef} className="pb-16 lg:pb-24 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* UNIFIED TITLE */}

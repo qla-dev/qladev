@@ -322,28 +322,33 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       <section id="techpark-ambijent" className="py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.amenitiesTitle} subtitle={labels.amenitiesSubtitle} />
-          <div id="techpark-sadrzaj" className="grid grid-cols-2 gap-5 xl:grid-cols-3">
-            {amenities.map((amenity) => {
-              const Icon = amenity.icon;
-              return (
-                <article
-                  key={isBs ? amenity.titleBs : amenity.title}
-                  className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#05070c] to-black p-5 sm:p-8"
-                >
-                  <div className="flex h-14 w-14 sm:h-20 sm:w-20">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-[1rem] bg-blue-600 text-white shadow-[0_0_30px_rgba(37,99,235,0.35)] sm:h-20 sm:w-20 sm:rounded-[1.35rem]">
-                      <Icon className="h-6 w-6 sm:h-8 sm:w-8" />
+          <div className="-mx-4 sm:mx-0">
+            <div
+              id="techpark-sadrzaj"
+              className="grid grid-flow-col auto-cols-[86%] gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 px-4 pb-2 touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:snap-none sm:px-0 xl:grid-cols-3"
+            >
+              {amenities.map((amenity) => {
+                const Icon = amenity.icon;
+                return (
+                  <article
+                    key={isBs ? amenity.titleBs : amenity.title}
+                    className="snap-start rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#05070c] to-black p-5 sm:p-8"
+                  >
+                    <div className="flex h-14 w-14 sm:h-20 sm:w-20">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-[1rem] bg-blue-600 text-white shadow-[0_0_30px_rgba(37,99,235,0.35)] sm:h-20 sm:w-20 sm:rounded-[1.35rem]">
+                        <Icon className="h-6 w-6 sm:h-8 sm:w-8" />
+                      </div>
                     </div>
-                  </div>
-                  <h3 className="mt-5 text-xl font-black leading-tight sm:mt-8 sm:text-3xl">
-                    {isBs ? amenity.titleBs : amenity.title}
-                  </h3>
-                  <p className="mt-4 text-sm text-gray-300 font-mono leading-relaxed sm:mt-5 sm:text-lg">
-                    {isBs ? amenity.descriptionBs : amenity.description}
-                  </p>
-                </article>
-              );
-            })}
+                    <h3 className="mt-5 text-xl font-black leading-tight sm:mt-8 sm:text-3xl">
+                      {isBs ? amenity.titleBs : amenity.title}
+                    </h3>
+                    <p className="mt-4 text-sm text-gray-300 font-mono leading-relaxed sm:mt-5 sm:text-lg">
+                      {isBs ? amenity.descriptionBs : amenity.description}
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -352,7 +357,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.spaceTitle} subtitle={labels.spaceSubtitle} />
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/5 via-[#070b12] to-black p-4 sm:p-8">
+            <div className="px-0 py-0">
               <div className="w-full overflow-x-auto pb-1 touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 <div className="inline-flex min-w-max snap-x snap-mandatory flex-nowrap gap-2 sm:gap-3">
                   {spaceTabs.map((tab) => {
@@ -390,7 +395,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
 
                     return (
                       <div key={card.title} className="rounded-[1.7rem] border border-white/10 bg-black/55 p-5 sm:p-6">
-                        <div className="flex items-start gap-3">
+                        <div className="flex items-center gap-3">
                           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-500/10 text-blue-300">
                             <Icon className="h-5 w-5" />
                           </div>

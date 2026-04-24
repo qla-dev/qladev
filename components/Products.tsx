@@ -10,7 +10,7 @@ interface ProductsProps {
 
 export const Products: React.FC<ProductsProps> = ({ t, lang }) => {
   return (
-    <section id="products" className="py-32 bg-transparent relative z-10">
+    <section id="products" className="py-16 lg:py-24 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex items-center gap-4 mb-8">
              <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>

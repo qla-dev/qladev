@@ -9,7 +9,7 @@ interface NewsProps {
 
 export const News: React.FC<NewsProps> = ({ t }) => {
   return (
-    <section id="news" className="py-24 bg-qla-dark border-t border-white/5">
+    <section id="news" className="py-16 lg:py-24 bg-qla-dark border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* LEFT ALIGNED TITLE STYLE */}

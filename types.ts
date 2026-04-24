@@ -29,12 +29,6 @@ export interface NewsItem {
   excerpt: string;
 }
 
-export interface PortfolioItem {
-  title: string;
-  category: string;
-  image: string;
-}
-
 export interface StatItem {
   value: number;
   suffix: string;

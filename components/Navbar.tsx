@@ -78,6 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { kind: 'anchor' as const, id: 'about', label: t.about },
     { kind: 'anchor' as const, id: 'products', label: t.products },
     { kind: 'anchor' as const, id: 'services', label: t.services },
+    { kind: 'anchor' as const, id: 'portfolio', label: t.portfolio },
     { kind: 'anchor' as const, id: 'news', label: t.news },
     { kind: 'anchor' as const, id: 'contact', label: t.contact },
   ];

@@ -1,5 +1,5 @@
 
-import { Translations, Product, Service, NewsItem, PortfolioItem, StatItem } from './types';
+import { Translations, Product, Service, NewsItem, StatItem } from './types';
 import { Monitor, Smartphone, Server, Scan, Bot, Cloud } from 'lucide-react';
 
 // Environment variable for resources, defaulting to the production domain
@@ -14,7 +14,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       products: 'PRODUCTS',
       services: 'SERVICES',
       news: 'NEWS',
-      portfolio: 'PORTFOLIO',
+      portfolio: 'PARTNERS',
       contact: 'CONTACT',
       cta: 'START A PROJECT',
     },
@@ -101,8 +101,8 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       codeComment: '// Executing core business logic...'
     },
     portfolio: {
-      title: 'RECENT WORKS',
-      subtitle: 'A selection of projects where we helped businesses scale.'
+      title: 'OUR PARTNERS',
+      subtitle: 'A growing network of brands, operators, and institutions that trust qla.dev to design, integrate, and evolve the digital systems behind their business.'
     },
     news: {
       title: 'LATEST NEWS',
@@ -123,7 +123,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       products: 'PROIZVODI',
       services: 'USLUGE',
       news: 'VIJESTI',
-      portfolio: 'PORTFOLIO',
+      portfolio: 'PARTNERI',
       contact: 'KONTAKT',
       cta: 'ZAPOČNI PROJEKAT',
     },
@@ -210,8 +210,8 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       codeComment: '// Izvršavanje poslovne logike...'
     },
     portfolio: {
-      title: 'NEDAVNI RADOVI',
-      subtitle: 'Izbor projekata gdje smo pomogli preduzećima da rastu.'
+      title: 'NASI PARTNERI',
+      subtitle: 'Rastuca mreza brendova, operatera i institucija koji vjeruju qla.dev timu za dizajn, integraciju i razvoj digitalnih sistema iza svog poslovanja.'
     },
     news: {
       title: 'NAJNOVIJE VIJESTI',
@@ -264,12 +264,16 @@ export const SERVICES_DATA: Service[] = [
   { title: 'Cloud Development', description: 'Scalable infrastructure and storage.', iconName: 'Cloud' },
 ];
 
-export const PORTFOLIO_DATA: PortfolioItem[] = [
-  { title: 'FinTech Dashboard', category: 'Web App', image: 'https://picsum.photos/400/300?random=10' },
-  { title: 'Smart Home Hub', category: 'IoT', image: 'https://picsum.photos/400/300?random=11' },
-  { title: 'E-Commerce Giant', category: 'Mobile App', image: 'https://picsum.photos/400/300?random=12' },
-  { title: 'Logistics Tracker', category: 'Hardware/Software', image: 'https://picsum.photos/400/300?random=13' },
-];
+export const CLIENTS_DATA = [
+  { name: 'AETHER LOGISTICS', sector: 'Logistics', mark: 'AL', summary: 'Routing, warehouse visibility, and fleet operations.' },
+  { name: 'NOVA RETAIL', sector: 'Retail', mark: 'NR', summary: 'Store systems, loyalty flows, and checkout automation.' },
+  { name: 'HELIX HEALTH', sector: 'Healthcare', mark: 'HH', summary: 'Patient workflows, booking layers, and data dashboards.' },
+  { name: 'VERTEX SYSTEMS', sector: 'Infrastructure', mark: 'VS', summary: 'Monitoring, control rooms, and field-service integration.' },
+  { name: 'LUMEN HOSPITALITY', sector: 'Hospitality', mark: 'LH', summary: 'Reservations, property tooling, and guest-facing software.' },
+  { name: 'ORBIT PAY', sector: 'Fintech', mark: 'OP', summary: 'Transaction flows, admin surfaces, and internal tooling.' },
+  { name: 'ATLAS INDUSTRIES', sector: 'Manufacturing', mark: 'AI', summary: 'Operations planning, traceability, and machine data sync.' },
+  { name: 'FLUX MEDIA', sector: 'Media', mark: 'FM', summary: 'Content ops, campaign tooling, and publishing workflows.' },
+] as const;
 
 export const NEWS_DATA: NewsItem[] = [
   { date: 'OCT 24, 2024', title: 'qla.dev Expands AI Capabilities', excerpt: 'We have integrated new generative models into our Deklarant platform.' },

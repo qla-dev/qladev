@@ -287,11 +287,11 @@ export const Hero: React.FC<HeroProps> = ({ t, lang, startQuoteMode, setStartQuo
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-qla-dark pt-20">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-qla-dark pt-20 pb-0 lg:pb-14">
       <TechHeroBackdrop />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-full">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-12 items-center h-full">
           
           {/* Text Content Column */}
           <div className="text-left relative z-20 py-10 lg:py-0">
@@ -411,7 +411,7 @@ export const Hero: React.FC<HeroProps> = ({ t, lang, startQuoteMode, setStartQuo
                  Desktop: Absolute positioned to screen right edge using massive width or positioning.
                  We use width: 140% and negative margin to push it off-screen on the right.
              */}
-             <div className="w-[120%] -mr-[20%] lg:w-[150vw] lg:-mr-[80vw] lg:ml-0 h-full">
+             <div className="w-[calc(100%+2rem)] -mx-4 lg:mx-0 lg:w-[150vw] lg:-mr-[80vw] lg:ml-0 h-full">
                 <InteractiveTerminal 
                   key={`${startQuoteMode ? 'mode-quote' : 'mode-terminal'}-${lang}`}
                   t={t.terminal} 

@@ -55,7 +55,7 @@ export const Stats: React.FC<StatsProps> = ({ t }) => {
   const labels = [t.years, t.projects, t.clients, t.services];
 
   return (
-    <section ref={ref} className="bg-black py-16 border-b border-white/10">
+    <section ref={ref} className="bg-black py-16 lg:py-24 border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {STATS_DATA.map((stat, idx) => (

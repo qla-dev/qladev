@@ -68,7 +68,7 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ t }) => {
   }, [baseValues, scrollRootRef]);
 
   return (
-    <section ref={containerRef} className="py-32 bg-gray-900 relative border-t border-white/5 overflow-hidden">
+    <section ref={containerRef} className="py-16 lg:py-24 bg-gray-900 relative border-t border-white/5 overflow-hidden">
       <div className="absolute inset-0 bg-cyber-grid bg-[size:40px_40px] opacity-10"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -82,8 +82,8 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ t }) => {
             <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
         </div>
 
-        <div className="text-center mb-16">
-            <p className="text-xl text-blue-200 font-light max-w-2xl mx-auto">
+        <div className="text-center mb-16 max-w-3xl mx-auto px-4">
+            <p className="text-blue-100 text-lg font-mono">
               {t.subtitle}
             </p>
         </div>

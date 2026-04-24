@@ -117,7 +117,7 @@ export const About: React.FC<AboutProps> = ({ t }) => {
     <section 
       id="about" 
       ref={containerRef}
-      className="py-32 bg-transparent text-white relative z-10"
+      className="py-16 lg:py-24 bg-transparent text-white relative z-10"
     >
       {/* Decorative Background Elements Local to this section */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/10 to-transparent pointer-events-none"></div>

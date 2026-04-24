@@ -9,7 +9,7 @@ interface ServicesProps {
 
 export const Services: React.FC<ServicesProps> = ({ t }) => {
   return (
-    <section id="services" className="py-32 bg-transparent relative z-10">
+    <section id="services" className="pb-16 lg:pb-24 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* LEFT ALIGNED TITLE STYLE */}
