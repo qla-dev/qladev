@@ -571,7 +571,7 @@ const App: React.FC = () => {
         <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
           <About t={t.about} />
-          <Mission tMission={t.mission} tAlgo={t.algorithm} />
+          <Mission lang={lang} tMission={t.mission} tAlgo={t.algorithm} />
         </div>
 
         <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">

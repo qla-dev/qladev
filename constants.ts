@@ -110,7 +110,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
     },
     contact: {
       title: 'START A PROJECT WITH US',
-      visit: 'VISIT US',
+      visit: 'VISIT US AT qla.dev Techpark',
       email: 'SEND US EMAIL',
       call: 'GIVE US A CALL',
     }
@@ -219,7 +219,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
     },
     contact: {
       title: 'ZAPOČNITE PROJEKAT SA NAMA',
-      visit: 'POSJETITE NAS',
+      visit: 'POSJETITE qla.dev Techpark',
       email: 'POŠALJITE NAM EMAIL',
       call: 'NAZOVITE NAS',
     }

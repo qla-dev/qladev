@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Translations } from '../types';
-import { Database, Code2, Globe, HeartHandshake } from 'lucide-react';
+import { Bot, Database, Code2, Globe, HeartHandshake, Server } from 'lucide-react';
 import { useScrollRoot } from './ScrollRootContext';
 
 interface AboutProps {
@@ -10,6 +10,7 @@ interface AboutProps {
 export const About: React.FC<AboutProps> = ({ t }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const badgeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollRootRef = useScrollRoot();
 
@@ -26,25 +27,49 @@ export const About: React.FC<AboutProps> = ({ t }) => {
         const rect = imageRef.current.getBoundingClientRect();
         const centerOffset = (rect.top + rect.height / 2) - (windowHeight / 2);
         const percentFromCenter = centerOffset / windowHeight; // -0.5 to 0.5 roughly when visible
+        const incomingProgress = Math.max(0, percentFromCenter);
 
         // 3D Rotation based on scroll
-        const rotateX = percentFromCenter * 20; // Tilt up/down
-        const rotateY = percentFromCenter * -15; // slight turn
-        const scale = 1 - Math.abs(percentFromCenter) * 0.15; // Scale down at edges, full size at center
-        const translateY = percentFromCenter * -80; // Parallax movement against scroll
+        const rotateX = incomingProgress * 20; // Tilt only while the image is entering focus
+        const rotateY = incomingProgress * -15;
+        const scale = 1 - incomingProgress * 0.15;
+        const translateY = incomingProgress * -80;
 
         imageRef.current.style.transform = `
           perspective(1000px) 
           rotateX(${rotateX}deg) 
           rotateY(${rotateY}deg)
-          translateY(${translateY}px) 
+          translateY(${translateY}px)
           scale(${Math.max(0.85, scale)})
         `;
         
         // Opacity fade at edges
-        const opacity = 1 - Math.abs(percentFromCenter * 1.5);
+        const opacity = percentFromCenter <= 0 ? 1 : 1 - incomingProgress * 1.5;
         imageRef.current.style.opacity = Math.max(0, opacity).toString();
       }
+
+      // --- Tech Badge Scroll Pop ---
+      badgeRefs.current.forEach((el, index) => {
+        if (!el) return;
+
+        const rect = el.getBoundingClientRect();
+        const startPoint = windowHeight * 0.96;
+        const endPoint = windowHeight * 0.58;
+
+        let progress = (startPoint - rect.top) / (startPoint - endPoint);
+        progress = Math.max(0, Math.min(1, progress));
+
+        // Stagger cards left-to-right.
+        const staggerStart = index * 0.1;
+        const staggeredProgress = Math.max(0, Math.min(1, (progress - staggerStart) / (1 - staggerStart)));
+        const scale = 0.78 + staggeredProgress * 0.22;
+        const translateY = (1 - staggeredProgress) * 34;
+        const rotateX = (1 - staggeredProgress) * 18;
+
+        el.style.opacity = staggeredProgress.toString();
+        el.style.transform = `perspective(900px) translateY(${translateY}px) scale(${scale}) rotateX(${rotateX}deg)`;
+        el.style.boxShadow = `0 ${8 + staggeredProgress * 18}px ${18 + staggeredProgress * 30}px rgba(0,0,0,${0.18 + staggeredProgress * 0.18})`;
+      });
 
       // --- Text Bullets Scrub Animation ---
       textRefs.current.forEach((el, index) => {
@@ -112,6 +137,13 @@ export const About: React.FC<AboutProps> = ({ t }) => {
     { text: t.p2, color: 'bg-blue-600', icon: <Code2 className="w-4 h-4 text-white" /> },
     { text: t.p3, color: 'bg-blue-600', icon: <HeartHandshake className="w-4 h-4 text-white" /> },
   ];
+  const techBadges = [
+    { label: 'BACKEND', icon: <Server className="h-5 w-5 text-blue-500" /> },
+    { label: 'NATIVE', icon: <Code2 className="h-5 w-5 text-cyan-500" /> },
+    { label: 'WEB', icon: <Globe className="h-5 w-5 text-orange-400" /> },
+    { label: 'DB', icon: <Database className="h-5 w-5 text-emerald-400" /> },
+    { label: 'AI', icon: <Bot className="h-5 w-5 text-fuchsia-400" /> },
+  ];
 
   return (
     <section 
@@ -120,7 +152,7 @@ export const About: React.FC<AboutProps> = ({ t }) => {
       className="py-16 lg:py-24 bg-transparent text-white relative z-10"
     >
       {/* Decorative Background Elements Local to this section */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/10 to-transparent pointer-events-none"></div>
+      <div className="absolute top-0 right-0 h-full w-[42%] bg-[linear-gradient(to_bottom_left,rgba(59,130,246,0.16)_0%,rgba(59,130,246,0.08)_18%,rgba(10,15,28,0)_58%)] pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         
@@ -135,66 +167,58 @@ export const About: React.FC<AboutProps> = ({ t }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           
           {/* IMAGE COLUMN */}
-          <div className="order-2 lg:order-1 relative perspective-container">
+          <div className="order-2 lg:order-2 relative perspective-container">
              <div 
                 ref={imageRef} 
-                className="relative bg-gray-900/80 backdrop-blur rounded-xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,123,255,0.15)] transition-transform duration-75 ease-linear will-change-transform"
+                className="relative overflow-hidden transition-transform duration-75 ease-linear will-change-transform lg:mr-[calc(50%-50vw)] lg:w-[calc(50vw+50%)] lg:max-w-none"
                 style={{ transformStyle: 'preserve-3d', opacity: 0 }}
              >
-                {/* Image Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent mix-blend-overlay z-10 pointer-events-none"></div>
-                
-                {/* Tech Scanline */}
-                <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,rgba(59,130,246,0.2)_50%,transparent_100%)] bg-[length:100%_200%] animate-scan z-20 pointer-events-none opacity-50"></div>
-
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-500 z-30"></div>
-                
                 <img 
-                    src="https://picsum.photos/800/600?random=tech" 
+                    src="https://deklarant.ai/build/images/homepage/img/korak-2.png" 
                     alt="In house solution" 
-                    className="w-full h-auto object-cover grayscale opacity-80"
+                    className="w-full h-auto object-cover"
                 />
-                
-                {/* Floating Info Cards (3D Element) */}
-                <div className="absolute bottom-6 left-6 right-6 grid grid-cols-3 gap-4 z-30" style={{ transform: 'translateZ(40px)' }}>
-                    <div className="bg-black/80 backdrop-blur p-3 rounded border border-white/10 text-center shadow-lg">
-                        <Database className="w-5 h-5 text-blue-500 mx-auto mb-1" />
-                        <div className="text-[10px] text-gray-300 font-mono tracking-wider">BACKEND</div>
-                    </div>
-                    <div className="bg-black/80 backdrop-blur p-3 rounded border border-white/10 text-center shadow-lg">
-                        <Code2 className="w-5 h-5 text-cyan-500 mx-auto mb-1" />
-                        <div className="text-[10px] text-gray-300 font-mono tracking-wider">NATIVE</div>
-                    </div>
-                     <div className="bg-black/80 backdrop-blur p-3 rounded border border-white/10 text-center shadow-lg">
-                        <Globe className="w-5 h-5 text-purple-500 mx-auto mb-1" />
-                        <div className="text-[10px] text-gray-300 font-mono tracking-wider">WEB</div>
-                    </div>
-                </div>
+             </div>
+
+             <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5 sm:gap-4">
+                {techBadges.map((badge, idx) => (
+                  <div
+                    key={badge.label}
+                    ref={(el) => {
+                      badgeRefs.current[idx] = el;
+                    }}
+                    className="rounded-xl border border-white/10 bg-black/55 p-3 text-center shadow-lg backdrop-blur-sm will-change-[opacity,transform]"
+                    style={{ opacity: 0, transform: 'perspective(900px) translateY(34px) scale(0.78) rotateX(18deg)' }}
+                  >
+                    <div className="mb-1 flex justify-center">{badge.icon}</div>
+                    <div className="text-[10px] text-gray-300 font-mono tracking-wider sm:text-[11px]">{badge.label}</div>
+                  </div>
+                ))}
              </div>
           </div>
 
           {/* TEXT COLUMN */}
-          <div className="order-1 lg:order-2">
+          <div className="order-1 lg:order-1">
             <div className="space-y-16">
                 {bullets.map((bullet, idx) => (
                     <div 
                         key={idx} 
                         ref={el => { textRefs.current[idx] = el }}
-                        className="relative pl-12 will-change-[opacity,transform]"
+                        className="relative pl-12 will-change-[opacity,transform] lg:pl-0 lg:pr-14 lg:text-right"
                         style={{ opacity: 0 }} // Start hidden
                     >
                         {/* Bullet Circle & Icon */}
-                        <div className={`bullet-point absolute left-0 top-1 w-10 h-10 ${bullet.color} rounded-full flex items-center justify-center shadow-lg z-20 origin-center`}>
+                        <div className={`bullet-point absolute left-0 top-1 w-10 h-10 ${bullet.color} rounded-full flex items-center justify-center shadow-lg z-20 origin-center lg:left-auto lg:right-0`}>
                             {bullet.icon}
                         </div>
                         
                         {/* Connecting Line */}
                         {idx !== bullets.length - 1 && (
-                            <div className="bullet-line absolute left-5 top-10 w-0.5 bg-gradient-to-b from-blue-500 to-blue-900/10 -ml-px h-0 origin-top z-10"></div>
+                            <div className="bullet-line absolute left-5 top-10 h-0 w-0.5 -ml-px origin-top bg-gradient-to-b from-blue-500 to-blue-900/10 z-10 lg:left-auto lg:right-5 lg:ml-0"></div>
                         )}
 
-                        <p className="text-blue-100 text-lg leading-relaxed font-light">
-                            <strong className="text-white block mb-2 font-bold tracking-wide uppercase text-sm text-blue-400">
+                        <p className="text-blue-100 text-lg leading-relaxed font-light lg:text-right">
+                            <strong className="mb-3 block font-mono text-base font-black uppercase tracking-[0.14em] text-white md:text-lg">
                                 {idx === 0 ? 'Proprietary Tech' : idx === 1 ? 'B2B Solutions' : 'Partnership'}
                             </strong>
                             {idx === 0 ? (

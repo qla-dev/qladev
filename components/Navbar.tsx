@@ -79,7 +79,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     { kind: 'anchor' as const, id: 'products', label: t.products },
     { kind: 'anchor' as const, id: 'services', label: t.services },
     { kind: 'anchor' as const, id: 'portfolio', label: t.portfolio },
-    { kind: 'anchor' as const, id: 'news', label: t.news },
     { kind: 'anchor' as const, id: 'contact', label: t.contact },
   ];
   const techparkNavLinks = [
@@ -265,7 +264,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onNavigateRoute('/techpark');
                   setIsMobileMenuOpen(false);
                 }}
-                  className="inline-flex h-10 items-center justify-center rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                  className="inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono leading-none text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
                 >
                   {t.techpark}
                 </button>
@@ -275,7 +274,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onPrimaryAction();
                   setIsMobileMenuOpen(false);
                 }}
-                className="inline-flex h-10 items-center justify-center rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                className="inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono leading-none text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
               >
                 {primaryActionLabel}
               </button>
@@ -365,7 +364,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       onNavigateRoute('/techpark');
                       setIsMobileMenuOpen(false);
                     }}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-sm font-bold font-mono text-sm transition-all"
+                    className="rounded-sm bg-blue-600 px-5 py-3 font-bold font-mono text-sm leading-none text-white whitespace-nowrap transition-all hover:bg-blue-700"
                   >
                     {t.techpark}
                   </button>
@@ -375,7 +374,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onPrimaryAction();
                     setIsMobileMenuOpen(false);
                   }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-sm font-bold font-mono text-sm"
+                  className="rounded-sm bg-blue-600 px-5 py-3 font-bold font-mono text-sm leading-none text-white whitespace-nowrap hover:bg-blue-700"
                 >
                   {primaryActionLabel}
                 </button>

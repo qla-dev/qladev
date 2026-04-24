@@ -24,11 +24,18 @@ export const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
         }
 
         .clients-marquee-left {
-          animation: clients-marquee-left 26s linear infinite;
+          animation: clients-marquee-left 42s linear infinite;
+          will-change: transform;
         }
 
         .clients-marquee-right {
-          animation: clients-marquee-right 30s linear infinite;
+          animation: clients-marquee-right 46s linear infinite;
+          will-change: transform;
+        }
+
+        .clients-marquee-left:hover,
+        .clients-marquee-right:hover {
+          animation-play-state: paused;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -120,9 +127,7 @@ interface DummyPartnerLogoProps {
 
 const DummyPartnerLogo: React.FC<DummyPartnerLogoProps> = ({ name, mark }) => (
   <div className="flex min-w-0 items-center gap-3">
-    <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-blue-400/30 bg-blue-600/20 md:h-14 md:w-14">
-      <div className="absolute inset-x-2 top-2 h-px bg-blue-200/40"></div>
-      <div className="absolute inset-x-2 bottom-2 h-px bg-blue-500/30"></div>
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-blue-400/30 bg-blue-600/20 md:h-14 md:w-14">
       <span className="relative text-lg font-black tracking-[0.2em] text-blue-300 md:text-xl">{mark}</span>
     </div>
 

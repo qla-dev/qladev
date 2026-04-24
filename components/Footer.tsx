@@ -5,6 +5,24 @@ interface FooterProps {
   route: string;
 }
 
+const SOCIAL_LINKS = [
+  {
+    href: 'https://ba.linkedin.com/company/qla-dev',
+    label: 'LinkedIn',
+    icon: Linkedin,
+  },
+  {
+    href: 'https://www.facebook.com/people/qladev/61571638778749/',
+    label: 'Facebook',
+    icon: Facebook,
+  },
+  {
+    href: 'https://www.instagram.com/qla.dev/',
+    label: 'Instagram',
+    icon: Instagram,
+  },
+] as const;
+
 export const Footer: React.FC<FooterProps> = ({ route }) => {
   const isHomeRoute = route === '/';
   const isTechparkRoute = route.startsWith('/techpark');
@@ -32,9 +50,22 @@ export const Footer: React.FC<FooterProps> = ({ route }) => {
         </div>
 
         <div className="flex gap-6 mb-6 md:mb-0">
-            <a href="#" className="p-2 bg-gray-900 rounded-full hover:bg-blue-600 transition-colors"><Linkedin size={20} /></a>
-            <a href="#" className="p-2 bg-gray-900 rounded-full hover:bg-blue-600 transition-colors"><Facebook size={20} /></a>
-            <a href="#" className="p-2 bg-gray-900 rounded-full hover:bg-blue-600 transition-colors"><Instagram size={20} /></a>
+            {SOCIAL_LINKS.map((social) => {
+              const Icon = social.icon;
+
+              return (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.label}
+                  className="p-2 bg-gray-900 rounded-full hover:bg-blue-600 transition-colors"
+                >
+                  <Icon size={20} />
+                </a>
+              );
+            })}
         </div>
 
         <div className="text-gray-600 text-sm font-mono">
