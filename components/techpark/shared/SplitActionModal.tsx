@@ -31,6 +31,8 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
     }
 
     const previousOverflow = document.body.style.overflow;
+    const previousPosition = document.body.style.position;
+    const previousWidth = document.body.style.width;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
@@ -38,10 +40,14 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
     };
 
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.body.style.position = previousPosition;
+      document.body.style.width = previousWidth;
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose, open]);
@@ -52,8 +58,8 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
 
   const promoPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-1' : 'order-2';
   const contentPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-2' : 'order-1';
-  const mobileBottomNavOffset = 'calc(env(safe-area-inset-bottom) + 3rem)';
-  const mobileFooterScrollPadding = 'calc(env(safe-area-inset-bottom) + 9rem)';
+  const mobileBottomNavOffset = 'calc(env(safe-area-inset-bottom) + 3.6rem)';
+  const mobileFooterScrollPadding = 'calc(env(safe-area-inset-bottom) + 10rem)';
 
   return createPortal(
     <div className="fixed inset-0 z-[80] bg-black/88 backdrop-blur-md">

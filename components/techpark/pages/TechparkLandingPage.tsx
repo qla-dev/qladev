@@ -438,8 +438,8 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
                     }}
                     className="snap-start rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#05070c] to-black p-5 sm:p-8 will-change-[opacity,transform]"
                     style={{
-                      opacity: 0,
-                      transform: 'perspective(900px) translateY(34px) scale(0.78) rotateX(18deg)',
+                      opacity: 1,
+                      transform: 'perspective(900px) translateY(0px) scale(1) rotateX(0deg)',
                     }}
                   >
                     <div className="flex h-14 w-14 sm:h-20 sm:w-20">
