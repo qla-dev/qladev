@@ -152,7 +152,6 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     : (isBs ? '6 mjeseci' : '6 months');
   const countdownLabels = {
     eyebrow: isBs ? 'POČETAK PROGRAMA' : 'PROGRAM START',
-    note: isBs ? 'Svi boot-camp programi počinju istog datuma.' : 'All boot-camp programs start on the same date.',
   };
   const countdownDate = isBs ? '1. JUNI 2026. godine' : 'JUNE 1, 2026';
   const countdownUnits = [
@@ -179,7 +178,6 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
         <div className="min-w-0">
           <div className="text-[11px] font-mono tracking-[0.2em] text-blue-300 uppercase">{countdownLabels.eyebrow}</div>
           <div className="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">{countdownDate}</div>
-          <p className="mt-2 text-sm font-mono text-gray-400">{countdownLabels.note}</p>
         </div>
 
         <div className="grid grid-cols-4 gap-2 sm:gap-3">
