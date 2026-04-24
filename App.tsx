@@ -59,8 +59,8 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
       description: 'Building powerful and tailored software and hardware for in-house teams and businesses of all sizes.',
     },
     '/techpark': {
-      title: 'qla.dev Techpark - Creative Tech Space for Under 18',
-      description: 'Techpark is a creative tech space for children and youth, with open-space membership, programs, gaming, and maker amenities.',
+      title: 'qla.dev Techpark - Creative Tech Space for Under 18 in Sarajevo',
+      description: 'Techpark in Sarajevo is a creative tech space for children and youth, with open-space membership, boot-camp programs, gaming, and maker amenities.',
     },
     '/techpark/boot-camp': {
       title: 'qla.dev Techpark - Boot-camp Programs',
@@ -86,7 +86,7 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
     },
     '/techpark': {
       title: 'qla.dev Techpark - Kreativni tech prostor za djecu i mlade u Sarajevu',
-      description: 'Techpark je kreativni tech prostor za djecu i mlade, sa boot-camp programima, open-space članstvom, gaming sadržajem i 3D print opremom.',
+      description: 'Techpark u Sarajevu je kreativni tech prostor za djecu i mlade, sa boot-camp programima, open-space članstvom, gaming sadržajem i 3D print opremom.',
     },
     '/techpark/boot-camp': {
       title: 'qla.dev Techpark - Boot-camp programi',

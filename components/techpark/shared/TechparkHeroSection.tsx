@@ -38,7 +38,7 @@ export const TechparkHeroSection: React.FC<TechparkHeroSectionProps> = ({
   titleClassName = 'mt-6 text-5xl md:text-6xl font-black tracking-tight leading-none',
   subtitleClassName = 'mt-6 max-w-3xl text-lg text-gray-300 font-mono leading-relaxed border-l-2 border-blue-500 pl-6',
 }) => (
-  <section className="relative overflow-hidden border-b border-white/5 bg-qla-dark">
+  <section className="relative overflow-hidden border-b border-white/10 bg-qla-dark">
     <TechHeroBackdrop />
     <div className={containerClassName}>
       {showSubnav ? (

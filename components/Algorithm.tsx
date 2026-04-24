@@ -24,12 +24,18 @@ interface PipelineStage {
   icon: LucideIcon;
 }
 
+interface EqualizerBar {
+  stageIndex: number;
+  seed: number;
+}
+
 const clamp = (value: number, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 
 export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
   const containerRef = useRef<HTMLElement>(null);
   const scrollRootRef = useScrollRoot();
   const [progress, setProgress] = useState(0);
+  const [scrollSignal, setScrollSignal] = useState(0);
 
   const isBs = lang === 'bs';
   const pipeline = useMemo<PipelineStage[]>(
@@ -122,19 +128,36 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
     [isBs]
   );
 
+  const equalizerBars = useMemo<EqualizerBar[]>(
+    () =>
+      pipeline.flatMap((stage, stageIndex) =>
+        stage.bars.flatMap((seed, localIndex) => {
+          const widenedSeed = clamp(seed + (localIndex % 2 === 0 ? -0.06 : 0.08), 0.18, 0.92);
+
+          return [
+            { stageIndex, seed: clamp(widenedSeed - 0.08, 0.16, 0.92) },
+            { stageIndex, seed: widenedSeed },
+          ];
+        })
+      ),
+    [pipeline]
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
 
+      const scrollTop = scrollRootRef?.current?.scrollTop ?? window.scrollY;
       const { top, height } = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       const start = windowHeight * 0.78;
-      const end = -height * 0.28;
+      const end = -height * 0.22;
 
       let nextProgress = (start - top) / (start - end);
       nextProgress = clamp(nextProgress);
 
       setProgress(nextProgress);
+      setScrollSignal(scrollTop);
     };
 
     const scrollTarget = scrollRootRef?.current ?? window;
@@ -149,10 +172,10 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
     };
   }, [scrollRootRef]);
 
-  const stageSpan = pipeline.length;
-  const progressAcrossStages = progress * stageSpan;
+  const progressAcrossStages = progress * pipeline.length;
   const currentStageIndex = Math.min(pipeline.length - 1, Math.floor(progressAcrossStages));
   const activeStage = pipeline[currentStageIndex];
+  const ActiveStageIcon = activeStage.icon;
 
   return (
     <section
@@ -174,160 +197,195 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
           <p className="text-blue-100 text-lg font-mono">{t.subtitle}</p>
         </div>
 
-        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/5 via-blue-950/10 to-black/40 p-5 md:p-8 shadow-[0_18px_70px_rgba(0,0,0,0.28)]">
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_1fr] lg:items-start">
-            <div className="rounded-[1.5rem] border border-white/10 bg-black/25 p-5 md:p-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-[11px] font-mono uppercase tracking-[0.22em] text-blue-300">
-                <Workflow className="h-4 w-4" />
-                {t.codeComment}
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_1fr] lg:items-start">
+          <div className="rounded-[1.6rem] border border-white/10 bg-black/25 p-5 md:p-6 shadow-[0_18px_48px_rgba(0,0,0,0.28)]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-[11px] font-mono uppercase tracking-[0.22em] text-blue-300">
+              <Workflow className="h-4 w-4" />
+              {t.codeComment}
+            </div>
+
+            <div className="mt-6 flex items-start gap-4">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-blue-400/30 bg-blue-600/15 text-blue-300 shadow-[0_0_24px_rgba(37,99,235,0.18)]">
+                <ActiveStageIcon className="h-6 w-6" strokeWidth={1.8} />
               </div>
-
-              <div className="mt-5 flex items-start gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-blue-400/30 bg-blue-600/15 text-blue-300 shadow-[0_0_24px_rgba(37,99,235,0.18)]">
-                  <activeStage.icon className="h-6 w-6" strokeWidth={1.8} />
-                </div>
-                <div className="min-w-0">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-blue-300">
-                    {activeStage.eyebrow}
-                  </p>
-                  <h3 className="mt-2 text-2xl font-black tracking-tight text-white">
-                    {activeStage.title}
-                  </h3>
-                </div>
-              </div>
-
-              <p className="mt-5 font-mono text-sm leading-relaxed text-blue-100/80">
-                {activeStage.description}
-              </p>
-
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-gray-300">
-                  {isBs ? 'Aktivna faza' : 'Current stage'} {currentStageIndex + 1}/{pipeline.length}
-                </span>
-                <span className="rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-blue-300">
-                  {isBs ? 'Izlaz' : 'Output'}: {activeStage.output}
-                </span>
+              <div className="min-w-0">
+                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-blue-300">
+                  {activeStage.eyebrow}
+                </p>
+                <h3 className="mt-2 text-2xl font-black tracking-tight text-white">
+                  {activeStage.title}
+                </h3>
               </div>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
-              {pipeline.map((stage, index) => {
-                const stageProgress = progressAcrossStages - index;
-                const stageState =
-                  stageProgress >= 1 ? 'done' : stageProgress >= 0 ? 'active' : 'queued';
+            <p className="mt-5 font-mono text-sm leading-relaxed text-blue-100/80">
+              {activeStage.description}
+            </p>
 
-                return (
-                  <div
-                    key={stage.title}
-                    className={`rounded-[1.25rem] border p-4 transition-all duration-500 ${
-                      stageState === 'done'
-                        ? 'border-blue-500/30 bg-blue-500/10'
-                        : stageState === 'active'
-                          ? 'border-white/15 bg-white/10 shadow-[0_0_30px_rgba(255,255,255,0.06)]'
-                          : 'border-white/10 bg-black/20'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-blue-300">
-                        {stage.eyebrow}
-                      </span>
-                      <span
-                        className={`h-2.5 w-2.5 rounded-full ${
-                          stageState === 'done'
-                            ? 'bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]'
-                            : stageState === 'active'
-                              ? 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]'
-                              : 'bg-white/10'
-                        }`}
-                      />
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-gray-300">
+                {isBs ? 'Aktivna faza' : 'Current stage'} {currentStageIndex + 1}/{pipeline.length}
+              </span>
+              <span className="rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-blue-300">
+                {isBs ? 'Izlaz' : 'Output'}: {activeStage.output}
+              </span>
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+            {pipeline.map((stage, index) => {
+              const stageDelta = progressAcrossStages - index;
+              const stageState =
+                stageDelta >= 1 ? 'done' : stageDelta >= 0 ? 'active' : 'queued';
+              const StageIcon = stage.icon;
+
+              return (
+                <article
+                  key={stage.title}
+                  className={`rounded-[1.25rem] border p-4 transition-all duration-500 ${
+                    stageState === 'done'
+                      ? 'border-blue-500/30 bg-blue-500/10'
+                      : stageState === 'active'
+                        ? 'border-white/15 bg-white/10 shadow-[0_0_30px_rgba(255,255,255,0.06)]'
+                        : 'border-white/10 bg-black/20'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-blue-300">
+                      {stage.eyebrow}
+                    </span>
+                    <span
+                      className={`h-2.5 w-2.5 rounded-full ${
+                        stageState === 'done'
+                          ? 'bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]'
+                          : stageState === 'active'
+                            ? 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]'
+                            : 'bg-white/10'
+                      }`}
+                    />
+                  </div>
+
+                  <div className="mt-4 flex items-start gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-600/10 text-blue-300">
+                      <StageIcon className="h-4.5 w-4.5" strokeWidth={1.8} />
                     </div>
-                    <div className="mt-3 text-sm font-black text-white">{stage.title}</div>
-                    <div className="mt-2 font-mono text-xs leading-relaxed text-gray-400">
-                      {stage.output}
+                    <div className="min-w-0">
+                      <div className="text-sm font-black leading-tight text-white">{stage.title}</div>
+                      <div className="mt-2 font-mono text-xs leading-relaxed text-gray-400">
+                        {stage.output}
+                      </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="relative mt-10 h-[22rem] md:h-[29rem]">
+          <div className="absolute inset-x-0 top-0 bottom-16 grid grid-cols-5 gap-4">
+            {pipeline.map((stage, index) => {
+              const stageDelta = progressAcrossStages - index;
+              const laneClass =
+                stageDelta >= 1
+                  ? 'border-blue-500/20 bg-gradient-to-b from-blue-600/8 to-transparent'
+                  : stageDelta >= 0
+                    ? 'border-white/10 bg-gradient-to-b from-white/5 to-transparent'
+                    : 'border-white/5 bg-gradient-to-b from-blue-950/10 to-transparent';
+
+              return (
+                <div
+                  key={`${stage.title}-lane`}
+                  className={`rounded-[1.75rem] border ${laneClass}`}
+                />
+              );
+            })}
           </div>
 
-          <div className="mt-8 overflow-x-auto pb-2">
-            <div className="relative h-72 min-w-[760px]">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
-              <div className="absolute inset-x-0 bottom-10 h-px bg-blue-500/30" />
+          <div className="absolute inset-x-0 top-4 bottom-16 flex items-end gap-1.5">
+            {equalizerBars.map((bar, index) => {
+              const stageDelta = progressAcrossStages - bar.stageIndex;
+              const stageActivation = clamp(stageDelta + 0.18);
+              const isCompletedStage = stageDelta >= 1;
+              const isActiveStage = bar.stageIndex === currentStageIndex;
+              const baseHeight = 8 + bar.seed * 18;
+              const wave = Math.sin(scrollSignal * 0.022 + index * 0.55) * (4 + stageActivation * 12);
+              const liveHeight = 22 + bar.seed * 62 + wave;
+              const finalHeight = Math.max(
+                6,
+                baseHeight + (liveHeight - baseHeight) * stageActivation
+              );
+              const pulse = isActiveStage
+                ? Math.max(0, Math.sin(scrollSignal * 0.03 + index * 0.8))
+                : 0;
+              const shouldHighlight = isActiveStage && pulse > 0.9;
+              const backgroundColor = shouldHighlight
+                ? '#ffffff'
+                : isCompletedStage
+                  ? 'rgba(59, 130, 246, 0.92)'
+                  : isActiveStage
+                    ? `rgba(37, 99, 235, ${0.45 + pulse * 0.3})`
+                    : `rgba(37, 99, 235, ${0.16 + stageActivation * 0.22})`;
+              const boxShadow = shouldHighlight
+                ? '0 0 18px rgba(255,255,255,0.78)'
+                : isCompletedStage
+                  ? '0 0 16px rgba(59,130,246,0.35)'
+                  : isActiveStage
+                    ? '0 0 12px rgba(59,130,246,0.2)'
+                    : 'none';
 
-              <div className="absolute inset-x-0 bottom-14 top-4 flex items-end gap-4">
-                {pipeline.map((stage, stageIndex) => {
-                  const stageProgress = progressAcrossStages - stageIndex;
-                  const stageReveal = clamp(stageProgress);
-                  const isCompleted = stageProgress >= 1;
-                  const isActive = stageIndex === currentStageIndex;
-                  const pulseIndex = isActive ? Math.min(stage.bars.length - 1, Math.floor(clamp(stageReveal) * stage.bars.length)) : -1;
-
-                  return (
-                    <div key={stage.title} className="flex min-w-0 flex-1 flex-col justify-end gap-4">
-                      <div className="flex h-full items-end gap-1.5">
-                        {stage.bars.map((barValue, barIndex) => {
-                          const barReveal = isCompleted
-                            ? 1
-                            : clamp((stageReveal - barIndex * 0.12) / 0.48);
-                          const baseHeight = 14 + barValue * 24;
-                          const expandedHeight = 28 + barValue * 58;
-                          const height = baseHeight + (expandedHeight - baseHeight) * barReveal;
-                          const isPulseBar = isActive && pulseIndex === barIndex && barReveal > 0.35;
-                          const background = isPulseBar
-                            ? '#ffffff'
-                            : isCompleted
-                              ? 'rgba(59, 130, 246, 0.9)'
-                              : `rgba(37, 99, 235, ${0.22 + barReveal * 0.56})`;
-                          const boxShadow = isPulseBar
-                            ? '0 0 18px rgba(255,255,255,0.7)'
-                            : isCompleted
-                              ? '0 0 18px rgba(59,130,246,0.32)'
-                              : 'none';
-
-                          return (
-                            <div
-                              key={`${stage.title}-${barIndex}`}
-                              className="flex-1 rounded-t-sm transition-[height,background-color,box-shadow] duration-300"
-                              style={{
-                                height: `${height}%`,
-                                backgroundColor: background,
-                                boxShadow,
-                              }}
-                            />
-                          );
-                        })}
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-blue-300">
-                          {stage.title}
-                        </div>
-                        <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-gray-500">
-                          {stage.output}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+              return (
+                <div
+                  key={`${bar.stageIndex}-${index}`}
+                  className="flex-1 rounded-t-[4px] transition-[height,background-color,box-shadow] duration-200"
+                  style={{
+                    height: `${finalHeight}%`,
+                    backgroundColor,
+                    boxShadow,
+                  }}
+                />
+              );
+            })}
           </div>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-8 text-xs font-mono text-gray-500">
-            <div className="flex items-center gap-2">
-              <div className="h-3 w-3 rounded-sm bg-blue-600" />
-              <span>{isBs ? 'Zavrsena faza' : 'Completed stage'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="h-3 w-3 rounded-sm bg-white shadow-[0_0_6px_white]" />
-              <span>{isBs ? 'Aktivni signal' : 'Active signal'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="h-3 w-3 rounded-sm bg-blue-900/70" />
-              <span>{isBs ? 'Naredni blok' : 'Queued block'}</span>
-            </div>
+          <div className="absolute inset-x-0 bottom-16 h-px bg-blue-500/25" />
+
+          <div className="absolute inset-x-0 bottom-0 grid grid-cols-5 gap-4">
+            {pipeline.map((stage, index) => {
+              const stageDelta = progressAcrossStages - index;
+              const textTone =
+                stageDelta >= 1
+                  ? 'text-blue-300'
+                  : stageDelta >= 0
+                    ? 'text-white'
+                    : 'text-gray-500';
+
+              return (
+                <div key={`${stage.title}-label`} className="space-y-1">
+                  <div className={`font-mono text-[11px] uppercase tracking-[0.24em] ${textTone}`}>
+                    {stage.title}
+                  </div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-gray-500">
+                    {stage.output}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-8 text-xs font-mono text-gray-500">
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-sm bg-blue-600" />
+            <span>{isBs ? 'Završena faza' : 'Completed stage'}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-sm bg-white shadow-[0_0_6px_white]" />
+            <span>{isBs ? 'Aktivni signal' : 'Active signal'}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-sm bg-blue-900/70" />
+            <span>{isBs ? 'Naredni blok' : 'Queued block'}</span>
           </div>
         </div>
       </div>

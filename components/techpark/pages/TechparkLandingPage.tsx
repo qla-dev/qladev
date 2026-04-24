@@ -23,6 +23,7 @@ import { TechparkHeroSection } from '../shared/TechparkHeroSection';
 import { TechparkPageShell } from '../shared/TechparkPageShell';
 import { TechparkStatCard } from '../shared/TechparkStatCard';
 import type { TechparkPageProps } from '../types';
+import { useScrollRoot } from '../../ScrollRootContext';
 
 type SpaceTabId = 'location' | 'layout' | 'rhythm';
 
@@ -44,12 +45,25 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   const isBs = lang === 'bs';
   const [activeSpaceTab, setActiveSpaceTab] = React.useState<SpaceTabId>('location');
   const techparkPeopleCount = '0/15';
+  const amenitiesSectionRef = React.useRef<HTMLElement>(null);
+  const amenityCardRefs = React.useRef<(HTMLElement | null)[]>([]);
+  const scrollRootRef = useScrollRoot();
+  const amenityRevealOrder = React.useMemo(() => {
+    const order = Array.from({ length: amenities.length }, (_, index) => index);
+
+    for (let index = order.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [order[index], order[swapIndex]] = [order[swapIndex], order[index]];
+    }
+
+    return order;
+  }, []);
 
   const labels = {
     title: isBs ? 'TECHPARK ZA NOVU DIGITALNU GENERACIJU' : 'TECHPARK FOR THE NEXT DIGITAL GENERATION',
     subtitle: isBs
-      ? 'Techpark je osmišljen kao strukturiran prostor za djecu i mlade: open-space dio dostupan je od 08:00 do 16:00 za produktivan rad u tech okruženju, učenje i boravak, dok od 17:00 počinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
-      : 'Open space runs from 08:00 to 16:00, programs start from 17:00, and the entire space is built for children and youth who want to combine productive work, learning, and chill time.',
+      ? 'Techpark je osmišljen kao strukturiran prostor za djecu i mlade u Sarajevu: open-space dio dostupan je od 08:00 do 16:00 za produktivan rad, učenje i boravak, dok od 17:00 počinju boot-camp programi sa mentorisanim radom i jasnim razvojnim fokusom.'
+      : 'Techpark is a structured space for children and youth in Sarajevo, with open space from 08:00 to 16:00 and mentor-led boot-camp programs from 17:00 onward.',
     heroStats: {
       membership: isBs ? 'Open-space boravak' : 'Open-space stay',
       instructions: isBs ? 'Boot-camp programi' : 'Boot-camp programs',
@@ -58,7 +72,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     },
     amenitiesTitle: isBs ? 'AMBIJENT + SADRŽAJ' : 'AMBIENT + AMENITIES',
     amenitiesSubtitle: isBs
-      ? '15-place coding + chill lounge, PS5, VR, 3D printer, rooftop lokacija i sve ostalo što Techpark čini mjestom u koje se ulazi da se napravi nešto dobro.'
+      ? '15 AI coding mjesta + chill lounge, PS5, VR, 3D printer, rooftop lokacija i sve ostalo što Techpark čini mjestom u koje se ulazi da se napravi nešto dobro.'
       : 'A 15-place coding + chill lounge, PS5, VR, 3D printer, rooftop location, and everything else that makes Techpark a space you enter to build something meaningful.',
     spaceTitle: isBs ? 'PROSTOR + LOKACIJA' : 'SPACE + LOCATION',
     spaceSubtitle: isBs
@@ -120,14 +134,14 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     pricingCards: {
       membership: {
         eyebrow: isBs ? 'OPEN SPACE' : 'OPEN SPACE',
-        title: isBs ? 'Mjesecni pass' : 'Monthly pass',
+        title: isBs ? 'Mjesečni pass' : 'Monthly pass',
         price: '60 KM',
         oldPrice: '100 KM',
         badge: isBs ? '40% POPUST DO 1. MAJA' : '40% OFF BEFORE MAY 1',
         items: isBs
           ? ['08:00 - 16:00 pristup', '2 termina dnevno po 2h', 'Maksimalno 15 ljudi', 'Chill lounge, gaming i snack zona']
           : ['08:00 - 16:00 access', '2 daily slots of 2h', 'Maximum 15 people', 'Chill lounge, gaming, and snack zone'],
-        button: isBs ? 'REZERVISI MEMBERSHIP' : 'RESERVE MEMBERSHIP',
+        button: isBs ? 'Učlani se u Techpark' : 'RESERVE MEMBERSHIP',
       },
       beginnerPrograms: {
         eyebrow: isBs ? 'BEGINNER PATH' : 'BEGINNER PATH',
@@ -138,7 +152,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         items: isBs
           ? ['180 KM po mjesecu', 'Trajanje: 3 mjeseca', `${programs.length} programa u ponudi`, 'Maksimalno 15 polaznika po grupi']
           : ['180 KM per month', 'Duration: 3 months', `${programs.length} programs available`, 'Maximum 15 students per group'],
-        button: isBs ? 'OTVORI BEGINNER' : 'OPEN BEGINNER',
+        button: isBs ? 'Započni boot-camp' : 'OPEN BEGINNER',
       },
       advancedPrograms: {
         eyebrow: isBs ? 'ADVANCED PATH' : 'ADVANCED PATH',
@@ -149,7 +163,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         items: isBs
           ? ['180 KM po mjesecu', 'Trajanje: 6 mjeseci', `${programs.length} programa u ponudi`, 'Maksimalno 15 polaznika po grupi']
           : ['180 KM per month', 'Duration: 6 months', `${programs.length} programs available`, 'Maximum 15 students per group'],
-        button: isBs ? 'OTVORI ADVANCED' : 'OPEN ADVANCED',
+        button: isBs ? 'Započni boot-camp' : 'OPEN ADVANCED',
       },
     },
     bundleBadge: isBs ? 'BUNDLE BONUS' : 'BUNDLE BONUS',
@@ -183,7 +197,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
             { title: 'Stalan parking', text: 'Parking je dostupan za više vozila, pa dolazak i preuzimanje ostaju jednostavni.' },
             { title: 'Laka orijentacija', text: 'Adresa je jasna, pristup jednostavan, a roditelji lako znaju gdje djeca dolaze.' },
             { title: 'Mirniji kontekst', text: 'Nije haotičan prolazni prostor, nego mjesto koje već na ulazu djeluje fokusirano.' },
-            { title: 'Sarajevska tačka', text: 'Lokacija je gradska, ali i dalje dovoljno mirna za dnevni ritam rada i programa.' },
+            { title: 'Dobra gradska lokacija', text: 'Lokacija je gradska, ali i dalje dovoljno mirna za dnevni ritam rada i programa.' },
           ]
         : [
             { title: 'Rooftop location', text: 'The top-floor position gives the room more calm, a better view, and a cleaner daytime feel.' },
@@ -254,6 +268,52 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   };
 
   const activeSpaceSection = spaceTabs.find((tab) => tab.id === activeSpaceTab) ?? spaceTabs[0];
+  const amenityTitleLines = isBs
+    ? [
+        ['15 AI Stanica', '+ Chill Lounge'],
+        ['PlayStation 5', 'Zona + Turniri'],
+        ['VR Kutak', 'i Virtualna Realnost'],
+        ['Stoni Fudbal', 'za Reset'],
+        ['3D Printer', '+ Besplatan Filament'],
+        ['Arduino', '+ Robotika Kitovi'],
+        ['Organizacija', 'takmičenja + hackatona'],
+        ['Parking', '+ Lak Dolazak'],
+        ['Rooftop', 'Lokacija + Pogled'],
+      ]
+    : [
+        ['15 AI Stations', '+ Chill Lounge'],
+        ['PlayStation 5', 'Zone + Tournaments'],
+        ['VR Corner', '+ Virtual Reality'],
+        ['Table Football', 'for Reset'],
+        ['3D Printer', '+ Free Filament'],
+        ['Arduino', '+ Robotics Kits'],
+        ['Competition', '+ Hackathon Hosting'],
+        ['Parking', '+ Easy Arrival'],
+        ['Rooftop', 'Location + View'],
+      ];
+  const amenityDescriptions = isBs
+    ? [
+        '15 AI coding mjesta i chill lounge za fokusiran rad, pauzu, gaming i reset tokom dana.',
+        'PS5 zona za pauzu, brze turnire, lokalni multiplayer i reset između sesija.',
+        'VR kutak i iskustva virtualne realnosti koja tehnologiju čine opipljivom, zabavnom i dovoljno stvarnom da ostanu u glavi.',
+        'Brza timska pauza za rivalstvo, smijeh i reset prije nego se opet vratiš na build.',
+        '3D print za prototipe, dijelove i školske projekte, uz filament spreman za test i izradu.',
+        'Robotika i elektronika za senzore, logiku, kretanje i stvarne prototipe koji rade u prostoru.',
+        'Techpark može biti baza za organizaciju takmičenja, hackatona, timskih izazova i događaja koji okupljaju djecu i mlade oko pravljenja.',
+        'Parking olakšava dolazak, čekanje i preuzimanje, bez gužve i nepotrebnog kruženja oko zgrade.',
+        'Vrh zgrade daje više svjetla, bolji pogled i mirniji rooftop osjećaj kroz cijeli dan.',
+      ]
+    : [
+        '15 AI coding places and a chill lounge for focused work, breaks, gaming, and reset through the day.',
+        'PS5 zone for breaks, quick tournaments, local multiplayer, and social reset between sessions.',
+        'A VR corner and virtual reality experiences that make technology feel immersive, tangible, fun, and easy to remember.',
+        'Fast team breaks for rivalry, laughter, and a quick reset before going back into build mode.',
+        '3D print for prototypes, parts, and school projects, with filament ready for testing and making.',
+        'Electronics and robotics kits for sensors, logic, movement, automation, and working prototypes.',
+        'Techpark can host competitions, hackathons, team challenges, and events that bring children and youth together around building.',
+        'Parking keeps arrival, waiting, and pickup simple, without unnecessary circling or friction around the building.',
+        'Top-floor placement gives more light, a better view, and a calmer rooftop feel all day.',
+      ];
   const heroTitle = isBs ? (
     <>
       <span className="block">TECHPARK ZA{' '}</span>
@@ -271,6 +331,43 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       <span className="block">DIGITAL GENERATION</span>
     </>
   );
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (!amenitiesSectionRef.current) return;
+
+      const { top, height } = amenitiesSectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const start = windowHeight * 0.68;
+      const end = -height * 0.18;
+
+      let progress = (start - top) / (start - end);
+      progress = Math.max(0, Math.min(1, progress));
+
+      amenityRevealOrder.forEach((cardIndex, orderIndex) => {
+        const card = amenityCardRefs.current[cardIndex];
+        if (!card) return;
+
+        const staggerStart = orderIndex * 0.08;
+        const revealWindow = 0.24;
+        const localProgress = Math.max(0, Math.min(1, (progress - 0.22 - staggerStart) / revealWindow));
+        const scale = 0.78 + localProgress * 0.22;
+        const translateY = (1 - localProgress) * 34;
+        const rotateX = (1 - localProgress) * 18;
+
+        card.style.opacity = localProgress.toString();
+        card.style.transform = `perspective(900px) translateY(${translateY}px) scale(${scale}) rotateX(${rotateX}deg)`;
+        card.style.boxShadow = `0 ${8 + localProgress * 18}px ${18 + localProgress * 30}px rgba(0,0,0,${0.18 + localProgress * 0.18})`;
+      });
+    };
+
+    const scrollTarget = scrollRootRef?.current ?? window;
+
+    scrollTarget.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => scrollTarget.removeEventListener('scroll', handleScroll);
+  }, [amenityRevealOrder, scrollRootRef]);
 
   return (
     <TechparkPageShell>
@@ -319,31 +416,43 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         }
       />
 
-      <section id="techpark-ambijent" className="py-16 sm:py-20 lg:py-24">
+      <section ref={amenitiesSectionRef} id="techpark-ambijent" className="py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.amenitiesTitle} subtitle={labels.amenitiesSubtitle} />
           <div className="-mx-4 sm:mx-0">
             <div
               id="techpark-sadrzaj"
               className="grid grid-flow-col auto-cols-[86%] gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 px-4 pb-2 touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:snap-none sm:px-0 xl:grid-cols-3"
-            >
-              {amenities.map((amenity) => {
-                const Icon = amenity.icon;
+              >
+              {amenities.map((amenity, index) => {
+                  const Icon = index === 6 ? CalendarDays : amenity.icon;
+                  const title = isBs ? amenity.titleBs : amenity.title;
+                const description = amenityDescriptions[index] ?? (isBs ? amenity.descriptionBs : amenity.description);
+                const [titleLineOne, titleLineTwo] = amenityTitleLines[index] ?? [title, '\u00A0'];
+
                 return (
                   <article
-                    key={isBs ? amenity.titleBs : amenity.title}
-                    className="snap-start rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#05070c] to-black p-5 sm:p-8"
+                    key={title}
+                    ref={(el) => {
+                      amenityCardRefs.current[index] = el;
+                    }}
+                    className="snap-start rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-950/20 via-[#05070c] to-black p-5 sm:p-8 will-change-[opacity,transform]"
+                    style={{
+                      opacity: 0,
+                      transform: 'perspective(900px) translateY(34px) scale(0.78) rotateX(18deg)',
+                    }}
                   >
                     <div className="flex h-14 w-14 sm:h-20 sm:w-20">
                       <div className="flex h-14 w-14 items-center justify-center rounded-[1rem] bg-blue-600 text-white shadow-[0_0_30px_rgba(37,99,235,0.35)] sm:h-20 sm:w-20 sm:rounded-[1.35rem]">
                         <Icon className="h-6 w-6 sm:h-8 sm:w-8" />
                       </div>
                     </div>
-                    <h3 className="mt-5 text-xl font-black leading-tight sm:mt-8 sm:text-3xl">
-                      {isBs ? amenity.titleBs : amenity.title}
+                    <h3 className="mt-5 flex min-h-[4.7rem] flex-col justify-start text-xl font-black leading-[0.95] sm:mt-8 sm:min-h-[6.1rem] sm:text-3xl">
+                      <span className="block">{titleLineOne}</span>
+                      <span className="block">{titleLineTwo}</span>
                     </h3>
-                    <p className="mt-4 text-sm text-gray-300 font-mono leading-relaxed sm:mt-5 sm:text-lg">
-                      {isBs ? amenity.descriptionBs : amenity.description}
+                    <p className="mt-4 min-h-[7rem] text-sm font-mono leading-relaxed text-gray-300 sm:mt-5 sm:min-h-[6.8rem] sm:text-lg">
+                      {description}
                     </p>
                   </article>
                 );
@@ -353,7 +462,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         </div>
       </section>
 
-      <section id="techpark-lokacija" className="border-t border-white/5 py-16 sm:py-20 lg:py-24">
+      <section id="techpark-lokacija" className="border-t border-white/10 py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.spaceTitle} subtitle={labels.spaceSubtitle} />
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
@@ -436,7 +545,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         </div>
       </section>
 
-      <section id="techpark-pricing" className="border-t border-white/5 py-16 sm:py-20 lg:py-24">
+      <section id="techpark-pricing" className="border-t border-white/10 py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title={labels.pricingTitle} subtitle={labels.pricingSubtitle} />
           <div className="grid gap-6 xl:grid-cols-3">

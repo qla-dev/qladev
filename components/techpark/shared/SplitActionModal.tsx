@@ -52,6 +52,8 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
 
   const promoPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-1' : 'order-2';
   const contentPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-2' : 'order-1';
+  const mobileBottomNavOffset = 'calc(env(safe-area-inset-bottom) + 4rem + 0.75rem)';
+  const mobileFooterScrollPadding = 'calc(env(safe-area-inset-bottom) + 12rem)';
 
   return createPortal(
     <div className="fixed inset-0 z-[80] bg-black/88 backdrop-blur-md">
@@ -63,7 +65,10 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
       >
         <X className="h-5 w-5" />
       </button>
-      <div className={`h-full overflow-y-auto ${mobileFooter ? 'pb-[calc(env(safe-area-inset-bottom)+7rem)] sm:pb-0' : ''}`}>
+      <div
+        className="h-full overflow-y-auto sm:pb-0"
+        style={mobileFooter ? { paddingBottom: mobileFooterScrollPadding } : undefined}
+      >
         <div className="min-h-full">
           <div className="w-full lg:h-screen">
             <div className="grid w-full bg-[#05070d] lg:h-full lg:overflow-hidden lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
@@ -99,7 +104,10 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
         </div>
       </div>
       {mobileFooter ? (
-        <div className="fixed inset-x-0 bottom-0 z-[90] border-t border-white/10 bg-[#04060b]/95 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] backdrop-blur-md sm:hidden">
+        <div
+          className="fixed inset-x-0 z-[90] border-t border-white/10 bg-[#04060b]/95 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] backdrop-blur-md sm:hidden"
+          style={{ bottom: mobileBottomNavOffset }}
+        >
           {mobileFooter}
         </div>
       ) : null}
