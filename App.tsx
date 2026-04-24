@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Navbar } from './components/Navbar';
+import { AccentEffectsStyles } from './components/AccentEffectsStyles';
 import { Hero } from './components/Hero';
 import { Stats } from './components/Stats';
 import { About } from './components/About';
@@ -606,6 +607,7 @@ const App: React.FC = () => {
 
   return (
     <div className="font-sans antialiased text-white selection:bg-blue-500 selection:text-white">
+      <AccentEffectsStyles />
       <div className="safari-tint-sentinel" aria-hidden="true"></div>
       <Navbar
         lang={lang}

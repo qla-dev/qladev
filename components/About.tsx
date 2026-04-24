@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Translations } from '../types';
-import { Bot, Database, Code2, Globe, HeartHandshake, Server } from 'lucide-react';
+import { Bot, Cloud, Database, Code2, Globe, HeartHandshake, Server } from 'lucide-react';
 import { useScrollRoot } from './ScrollRootContext';
 
 interface AboutProps {
@@ -138,10 +138,11 @@ export const About: React.FC<AboutProps> = ({ t }) => {
     { text: t.p3, color: 'bg-blue-600', icon: <HeartHandshake className="w-4 h-4 text-white" /> },
   ];
   const techBadges = [
-    { label: 'BACKEND', icon: <Server className="h-5 w-5 text-blue-500" /> },
+    { label: 'BACKEND', icon: <Server className="h-5 w-5 text-rose-400" /> },
     { label: 'NATIVE', icon: <Code2 className="h-5 w-5 text-cyan-500" /> },
     { label: 'WEB', icon: <Globe className="h-5 w-5 text-orange-400" /> },
     { label: 'DB', icon: <Database className="h-5 w-5 text-emerald-400" /> },
+    { label: 'CLOUD', icon: <Cloud className="h-5 w-5 text-blue-500" /> },
     { label: 'AI', icon: <Bot className="h-5 w-5 text-fuchsia-400" /> },
   ];
 
@@ -159,9 +160,9 @@ export const About: React.FC<AboutProps> = ({ t }) => {
         {/* LEFT ALIGNED TITLE STYLE */}
         <div className="flex items-center gap-6 mb-16">
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-left uppercase whitespace-nowrap">
-                <span className="text-blue-600">/</span> {t.title}
+                <span className="techpark-accent-slash">/</span> {t.title}
             </h2>
-            <div className="h-px bg-gradient-to-r from-blue-600 to-transparent flex-grow opacity-50"></div>
+            <div className="techpark-accent-line h-px flex-grow opacity-70"></div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -180,7 +181,7 @@ export const About: React.FC<AboutProps> = ({ t }) => {
                 />
              </div>
 
-             <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5 sm:gap-4">
+             <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-6 sm:gap-4">
                 {techBadges.map((badge, idx) => (
                   <div
                     key={badge.label}

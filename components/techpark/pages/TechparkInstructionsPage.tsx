@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { ExternalLink, Lock } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { ChevronDown, ExternalLink, Lock } from 'lucide-react';
+import { useScrollRoot } from '../../ScrollRootContext';
 import { getProgramAgenda } from '../agenda';
 import { programs } from '../data';
 import { ProgramCard } from '../instructions/ProgramCard';
@@ -44,6 +46,7 @@ const getEnglishCountdownLabel = (unit: 'days' | 'hours' | 'minutes' | 'seconds'
 
 export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, onNavigate }) => {
   const isBs = lang === 'bs';
+  const scrollRootRef = useScrollRoot();
   const [selectedProgramId, setSelectedProgramId] = useState(programs[0].id);
   const [selectedLevel, setSelectedLevel] = useState<ProgramLevel>('beginner');
   const [formData, setFormData] = useState({ fullName: '', age: '', guardianContact: '', email: '', motivation: '' });
@@ -52,6 +55,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
   const [isAgendaModalOpen, setIsAgendaModalOpen] = useState(false);
   const [programStartDate] = useState(() => PROGRAM_START_DATE);
   const [countdown, setCountdown] = useState(() => getCountdownParts(programStartDate));
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const selectedProgram = programs.find((program) => program.id === selectedProgramId) ?? programs[0];
   const selectedAgenda = getProgramAgenda(selectedProgramId, selectedLevel);
@@ -71,6 +75,26 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
 
     return () => window.clearInterval(intervalId);
   }, [programStartDate]);
+
+  useEffect(() => {
+    const getScrollTop = () => scrollRootRef?.current?.scrollTop ?? window.scrollY ?? window.pageYOffset ?? 0;
+
+    const handleScroll = () => {
+      const progress = Math.min(getScrollTop() / 220, 1);
+      setScrollProgress(progress);
+    };
+
+    const scrollTarget = scrollRootRef?.current ?? window;
+
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    handleScroll();
+
+    return () => {
+      scrollTarget.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [scrollRootRef]);
 
   const labels = {
     sectionTitle: 'BOOT-CAMP',
@@ -141,6 +165,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     tutorProfile: 'LinkedIn',
     tutorBlocked: isBs ? 'Uskoro' : 'Coming soon',
     weeksCount: isBs ? 'sedmica' : 'weeks',
+    scrollPrompt: isBs ? 'Skrolaj za camp info' : 'Scroll for camp info',
   };
 
   const beginnerLabel = isBs ? 'BEGINNER · 3 MJESECA' : 'BEGINNER · 3 MONTHS';
@@ -249,6 +274,34 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     summary: isBs ? week.summaryBs : week.summary,
     points: isBs ? week.pointsBs : week.points,
   }));
+  const scrollHintOpacity = Math.max(0, 1 - scrollProgress);
+  const scrollHintTranslateY = scrollProgress * 36;
+  const scrollHintScale = 1 - scrollProgress * 0.08;
+  const showScrollHint = !isJoinModalOpen && !isAgendaModalOpen;
+  const scrollHint =
+    showScrollHint && typeof document !== 'undefined'
+      ? createPortal(
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed left-1/2 bottom-[calc(env(safe-area-inset-bottom)+5.5rem)] z-[5100] flex flex-col items-center gap-2 md:hidden"
+            style={{
+              opacity: scrollHintOpacity,
+              transform: `translate3d(-50%, ${scrollHintTranslateY}px, 0) scale(${scrollHintScale})`,
+            }}
+          >
+            <div className="flex flex-col items-center gap-1.5" style={{ animation: 'campScrollFloat 2.8s ease-in-out infinite' }}>
+              <div className="text-center text-[11px] font-mono tracking-[0.24em] uppercase text-white/75">
+                {labels.scrollPrompt}
+              </div>
+              <ChevronDown
+                className="h-5 w-5 text-blue-400"
+                style={{ animation: 'campScrollChevron 2.8s ease-in-out infinite' }}
+              />
+            </div>
+          </div>,
+          document.body
+        )
+      : null;
 
   return (
     <TechparkPageShell showBackdrop>
@@ -259,6 +312,19 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
         title={labels.sectionTitle}
         subtitle={sectionContent}
       />
+
+      {scrollHint}
+
+      <style>{`
+        @keyframes campScrollFloat {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-9px); }
+        }
+        @keyframes campScrollChevron {
+          0%, 100% { transform: translateY(0px); opacity: 0.9; }
+          50% { transform: translateY(7px); opacity: 1; }
+        }
+      `}</style>
 
       <section className="pt-3 pb-24 lg:pt-5 lg:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

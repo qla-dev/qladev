@@ -184,11 +184,11 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex items-center gap-4 mb-8">
-          <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50" />
+          <div className="techpark-accent-line techpark-accent-line-reverse h-px flex-grow opacity-70" />
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-center uppercase">
-            <span className="text-blue-600">/</span> {t.title}
+            <span className="techpark-accent-slash">/</span> {t.title}
           </h2>
-          <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50" />
+          <div className="techpark-accent-line h-px flex-grow opacity-70" />
         </div>
 
         <div className="text-center mb-12 max-w-3xl mx-auto px-4">

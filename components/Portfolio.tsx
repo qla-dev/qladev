@@ -52,9 +52,9 @@ export const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
         {/* LEFT ALIGNED TITLE STYLE */}
         <div className="flex items-center gap-6 mb-8">
              <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-left uppercase whitespace-nowrap">
-                <span className="text-blue-600">/</span> {t.title}
+                <span className="techpark-accent-slash">/</span> {t.title}
             </h2>
-            <div className="h-px bg-gradient-to-r from-blue-600 to-transparent flex-grow opacity-50"></div>
+            <div className="techpark-accent-line h-px flex-grow opacity-70"></div>
         </div>
 
         <div className="text-left mb-16 max-w-3xl pl-2">

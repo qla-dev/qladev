@@ -33,6 +33,8 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
     const previousOverflow = document.body.style.overflow;
     const previousPosition = document.body.style.position;
     const previousWidth = document.body.style.width;
+    const isMobile = window.innerWidth < 768;
+    
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
@@ -40,8 +42,11 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
     };
 
     document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
+    // Only apply position: fixed on mobile to prevent scroll issues on desktop
+    if (isMobile) {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    }
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
@@ -58,7 +63,7 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
 
   const promoPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-1' : 'order-2';
   const contentPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-2' : 'order-1';
-  const mobileBottomNavOffset = 'calc(env(safe-area-inset-bottom) + 3.6rem)';
+  const mobileBottomNavOffset = 'calc(env(safe-area-inset-bottom) + 3rem)';
   const mobileFooterScrollPadding = 'calc(env(safe-area-inset-bottom) + 10rem)';
 
   return createPortal(
@@ -72,7 +77,7 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
         <X className="h-5 w-5" />
       </button>
       <div
-        className="h-full overflow-y-auto sm:pb-0"
+        className="h-full overflow-y-auto md:overflow-y-hidden sm:pb-0"
         style={mobileFooter ? { paddingBottom: mobileFooterScrollPadding } : undefined}
       >
         <div className="min-h-full">

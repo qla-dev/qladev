@@ -264,7 +264,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onNavigateRoute('/techpark');
                   setIsMobileMenuOpen(false);
                 }}
-                  className="inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono leading-none text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                  className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono leading-none text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
                 >
                   {t.techpark}
                 </button>
@@ -274,7 +274,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onPrimaryAction();
                   setIsMobileMenuOpen(false);
                 }}
-                className="inline-flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono leading-none text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-sm bg-blue-600 px-5 text-sm font-bold font-mono leading-none text-white transition-all hover:bg-blue-700 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)]"
               >
                 {primaryActionLabel}
               </button>
@@ -301,9 +301,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="bg-gray-900 inline-flex items-center justify-center p-1.5 rounded-sm text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none"
+                className="inline-flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-sm bg-gray-900 text-gray-400 transition-colors hover:bg-gray-800 hover:text-white focus:outline-none"
               >
-                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {isMobileMenuOpen ? <X className="h-[18px] w-[18px]" /> : <Menu className="h-[18px] w-[18px]" />}
               </button>
             </div>
           </div>

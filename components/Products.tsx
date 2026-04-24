@@ -13,11 +13,11 @@ export const Products: React.FC<ProductsProps> = ({ t, lang }) => {
     <section id="products" className="py-16 lg:py-24 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex items-center gap-4 mb-8">
-             <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+             <div className="techpark-accent-line techpark-accent-line-reverse h-px flex-grow opacity-70"></div>
              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight font-mono text-center">
-                <span className="text-blue-600">/</span> {t.title}
+                <span className="techpark-accent-slash techpark-accent-slash-white">/</span> {t.title}
             </h2>
-            <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+            <div className="techpark-accent-line h-px flex-grow opacity-70"></div>
         </div>
 
         <div className="text-center mb-16 max-w-3xl mx-auto px-4">

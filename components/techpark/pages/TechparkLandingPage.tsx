@@ -46,6 +46,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   const [activeSpaceTab, setActiveSpaceTab] = React.useState<SpaceTabId>('location');
   const techparkPeopleCount = '0/15';
   const amenitiesSectionRef = React.useRef<HTMLElement>(null);
+  const amenitiesScrollerRef = React.useRef<HTMLDivElement>(null);
   const amenityCardRefs = React.useRef<(HTMLElement | null)[]>([]);
   const scrollRootRef = useScrollRoot();
   const amenityRevealOrder = React.useMemo(() => {
@@ -333,8 +334,22 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   );
 
   React.useEffect(() => {
+    const resetCardStyles = () => {
+      amenityCardRefs.current.forEach((card) => {
+        if (!card) return;
+
+        card.style.opacity = '1';
+        card.style.transform = 'none';
+        card.style.boxShadow = '0 8px 18px rgba(0,0,0,0.18)';
+      });
+    };
+
     const handleScroll = () => {
       if (!amenitiesSectionRef.current) return;
+      if (window.innerWidth < 640) {
+        resetCardStyles();
+        return;
+      }
 
       const { top, height } = amenitiesSectionRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
@@ -363,11 +378,80 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
 
     const scrollTarget = scrollRootRef?.current ?? window;
 
-    scrollTarget.addEventListener('scroll', handleScroll);
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
     handleScroll();
 
-    return () => scrollTarget.removeEventListener('scroll', handleScroll);
+    return () => {
+      scrollTarget.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, [amenityRevealOrder, scrollRootRef]);
+
+  React.useEffect(() => {
+    const scroller = amenitiesScrollerRef.current;
+
+    if (!scroller) return;
+
+    let startX = 0;
+    let startY = 0;
+    let lastY = 0;
+    let isVerticalGesture = false;
+
+    const handleTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0];
+
+      if (!touch) return;
+
+      startX = touch.clientX;
+      startY = touch.clientY;
+      lastY = touch.clientY;
+      isVerticalGesture = false;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const touch = event.touches[0];
+
+      if (!touch) return;
+
+      const deltaX = Math.abs(touch.clientX - startX);
+      const deltaY = Math.abs(touch.clientY - startY);
+
+      if (!isVerticalGesture && deltaY > 10 && deltaY > deltaX) {
+        isVerticalGesture = true;
+      }
+
+      if (!isVerticalGesture) return;
+
+      const offsetY = touch.clientY - lastY;
+      const scrollTarget = scrollRootRef?.current;
+
+      if (scrollTarget) {
+        scrollTarget.scrollTop -= offsetY;
+      } else {
+        window.scrollBy({ top: -offsetY, left: 0, behavior: 'auto' });
+      }
+
+      lastY = touch.clientY;
+      event.preventDefault();
+    };
+
+    const handleTouchEnd = () => {
+      isVerticalGesture = false;
+    };
+
+    scroller.addEventListener('touchstart', handleTouchStart, { passive: true });
+    scroller.addEventListener('touchmove', handleTouchMove, { passive: false });
+    scroller.addEventListener('touchend', handleTouchEnd);
+    scroller.addEventListener('touchcancel', handleTouchEnd);
+
+    return () => {
+      scroller.removeEventListener('touchstart', handleTouchStart);
+      scroller.removeEventListener('touchmove', handleTouchMove);
+      scroller.removeEventListener('touchend', handleTouchEnd);
+      scroller.removeEventListener('touchcancel', handleTouchEnd);
+    };
+  }, [scrollRootRef]);
 
   return (
     <TechparkPageShell>
@@ -421,9 +505,10 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
           <SectionHeader title={labels.amenitiesTitle} subtitle={labels.amenitiesSubtitle} />
           <div className="-mx-4 sm:mx-0">
             <div
+              ref={amenitiesScrollerRef}
               id="techpark-sadrzaj"
-              className="grid grid-flow-col auto-cols-[86%] gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:snap-none sm:px-0 xl:grid-cols-3"
-              >
+              className="grid grid-flow-col auto-cols-[84%] gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:snap-none sm:px-0 xl:grid-cols-3"
+            >
               {amenities.map((amenity, index) => {
                   const Icon = index === 6 ? CalendarDays : amenity.icon;
                   const title = isBs ? amenity.titleBs : amenity.title;
@@ -586,14 +671,14 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
                     </div>
                   ))}
                 </div>
-                <button
-                  type="button"
-                  onClick={card.onClick}
-                  className="mt-8 inline-flex items-center gap-2 rounded-sm border border-blue-500 bg-blue-500/10 px-5 py-4 text-sm font-bold font-mono uppercase tracking-[0.18em] text-white transition-colors hover:border-white/15 hover:bg-white/5"
-                >
-                  {card.button}
-                  <ArrowRight className="h-4 w-4" />
-                </button>
+                  <button
+                    type="button"
+                    onClick={card.onClick}
+                    className="mt-8 inline-flex items-center gap-2 rounded-sm border border-blue-500 bg-blue-500/10 px-5 py-4 text-sm font-bold font-mono uppercase tracking-[0.18em] text-white transition-all hover:border-blue-700 hover:bg-blue-600 hover:shadow-[0_0_18px_rgba(37,99,235,0.55)]"
+                  >
+                    {card.button}
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
               </div>
             ))}
           </div>
@@ -603,4 +688,3 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     </TechparkPageShell>
   );
 };
-

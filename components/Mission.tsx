@@ -111,11 +111,11 @@ class QlaDev extends Future {
         
         {/* UNIFIED TITLE */}
         <div className="flex items-center gap-4 mb-16">
-            <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+            <div className="techpark-accent-line techpark-accent-line-reverse h-px flex-grow opacity-70"></div>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono text-center uppercase">
-                <span className="text-blue-600">/</span> {tMission.title}
+                <span className="techpark-accent-slash">/</span> {tMission.title}
             </h2>
-            <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-grow opacity-50"></div>
+            <div className="techpark-accent-line h-px flex-grow opacity-70"></div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

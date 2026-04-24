@@ -24,9 +24,9 @@ export const TechparkSubnavSection: React.FC<TechparkSubnavSectionProps> = ({
         {title ? (
           <div className="order-2 flex min-w-0 items-center gap-4 xl:order-1 xl:flex-1">
             <h1 className="shrink-0 text-3xl md:text-4xl font-black text-white tracking-tight font-mono uppercase whitespace-nowrap">
-              <span className="text-blue-600">/</span> {title}
+              <span className="techpark-accent-slash">/</span> {title}
             </h1>
-            <div className="hidden h-px flex-1 bg-gradient-to-r from-blue-600 to-transparent opacity-50 xl:block"></div>
+            <div className="techpark-accent-line hidden h-px flex-1 opacity-70 xl:block"></div>
           </div>
         ) : null}
         <div className={title ? 'order-1 xl:order-2 xl:flex xl:justify-end' : ''}>
