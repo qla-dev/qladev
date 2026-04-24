@@ -97,7 +97,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
     },
     algorithm: {
       title: 'THE ALGORITHM',
-      subtitle: 'Scroll to execute our core processing logic. We believe in clean code and cleaner solutions.',
+      subtitle: 'Scroll through the qla.dev delivery pipeline, from scoped input to release-ready systems.',
       codeComment: '// Executing core business logic...'
     },
     portfolio: {
@@ -206,7 +206,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
     },
     algorithm: {
       title: 'ALGORITAM',
-      subtitle: 'Skrolajte da izvršite našu osnovnu logiku. Vjerujemo u čist kod i još čistija rješenja.',
+      subtitle: 'Skrolajte kroz qla.dev delivery pipeline, od jasnog briefa do sistema spremnog za produkciju.',
       codeComment: '// Izvršavanje poslovne logike...'
     },
     portfolio: {

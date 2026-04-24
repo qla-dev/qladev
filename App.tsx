@@ -580,7 +580,7 @@ const App: React.FC = () => {
           <Services t={t.services} />
         </div>
 
-        <Algorithm t={t.algorithm} />
+        <Algorithm lang={lang} t={t.algorithm} />
         <Portfolio t={t.portfolio} />
         <News t={t.news} />
         <Contact t={t.contact} />

@@ -1,15 +1,67 @@
-import React from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Translations } from '../types';
 import { SERVICES_DATA } from '../constants';
 import * as LucideIcons from 'lucide-react';
+import { useScrollRoot } from './ScrollRootContext';
 
 interface ServicesProps {
   t: Translations['services'];
 }
 
 export const Services: React.FC<ServicesProps> = ({ t }) => {
+  const containerRef = useRef<HTMLElement>(null);
+  const serviceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollRootRef = useScrollRoot();
+  const serviceRevealOrder = useMemo(() => {
+    const order = Array.from({ length: SERVICES_DATA.length }, (_, index) => index);
+
+    for (let index = order.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [order[index], order[swapIndex]] = [order[swapIndex], order[index]];
+    }
+
+    return order;
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+
+      const { top, height } = containerRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const start = windowHeight * 0.68;
+      const end = -height * 0.18;
+
+      let progress = (start - top) / (start - end);
+      progress = Math.max(0, Math.min(1, progress));
+
+      serviceRevealOrder.forEach((cardIndex, orderIndex) => {
+        const card = serviceCardRefs.current[cardIndex];
+        if (!card) return;
+
+        const staggerStart = orderIndex * 0.08;
+        const revealWindow = 0.24;
+        const localProgress = Math.max(0, Math.min(1, (progress - 0.22 - staggerStart) / revealWindow));
+        const scale = 0.78 + localProgress * 0.22;
+        const translateY = (1 - localProgress) * 34;
+        const rotateX = (1 - localProgress) * 18;
+
+        card.style.opacity = localProgress.toString();
+        card.style.transform = `perspective(900px) translateY(${translateY}px) scale(${scale}) rotateX(${rotateX}deg)`;
+        card.style.boxShadow = `0 ${8 + localProgress * 18}px ${18 + localProgress * 30}px rgba(0,0,0,${0.18 + localProgress * 0.18})`;
+      });
+    };
+
+    const scrollTarget = scrollRootRef?.current ?? window;
+
+    scrollTarget.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => scrollTarget.removeEventListener('scroll', handleScroll);
+  }, [scrollRootRef, serviceRevealOrder]);
+
   return (
-    <section id="services" className="pb-16 lg:pb-24 bg-transparent relative z-10">
+    <section ref={containerRef} id="services" className="pb-16 lg:pb-24 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* LEFT ALIGNED TITLE STYLE */}
@@ -32,7 +84,17 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
                 const Icon = LucideIcons[service.iconName] || LucideIcons.HelpCircle;
 
                 return (
-                    <div key={idx} className="group relative p-1 rounded-2xl overflow-hidden bg-white/10 hover:bg-white/20 transition-all duration-300 hover:-translate-y-2">
+                    <div
+                        key={idx}
+                        ref={(el) => {
+                            serviceCardRefs.current[idx] = el;
+                        }}
+                        className="group relative p-1 rounded-2xl overflow-hidden bg-white/10 transition-all duration-300 will-change-[opacity,transform]"
+                        style={{
+                            opacity: 0,
+                            transform: 'perspective(900px) translateY(34px) scale(0.78) rotateX(18deg)',
+                        }}
+                    >
                         
                         <div className="relative h-full bg-blue-950/40 backdrop-blur-md rounded-xl p-8 flex flex-col items-start border border-blue-400/20 group-hover:border-blue-400/50 transition-colors">
                              <div className="mb-6 relative">
