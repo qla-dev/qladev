@@ -150,7 +150,7 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
       const scrollTop = scrollRootRef?.current?.scrollTop ?? window.scrollY;
       const { top, height } = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      const start = windowHeight * 0.78;
+      const start = windowHeight * 1.2;
       const end = -height * 0.22;
 
       let nextProgress = (start - top) / (start - end);
@@ -174,8 +174,6 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
 
   const progressAcrossStages = progress * pipeline.length;
   const currentStageIndex = Math.min(pipeline.length - 1, Math.floor(progressAcrossStages));
-  const activeStage = pipeline[currentStageIndex];
-  const ActiveStageIcon = activeStage.icon;
 
   return (
     <section
@@ -197,41 +195,7 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
           <p className="text-blue-100 text-lg font-mono">{t.subtitle}</p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,340px)_1fr] lg:items-start">
-          <div className="rounded-[1.6rem] border border-white/10 bg-black/25 p-5 md:p-6 shadow-[0_18px_48px_rgba(0,0,0,0.28)]">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-[11px] font-mono uppercase tracking-[0.22em] text-blue-300">
-              <Workflow className="h-4 w-4" />
-              {t.codeComment}
-            </div>
-
-            <div className="mt-6 flex items-start gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-blue-400/30 bg-blue-600/15 text-blue-300 shadow-[0_0_24px_rgba(37,99,235,0.18)]">
-                <ActiveStageIcon className="h-6 w-6" strokeWidth={1.8} />
-              </div>
-              <div className="min-w-0">
-                <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-blue-300">
-                  {activeStage.eyebrow}
-                </p>
-                <h3 className="mt-2 text-2xl font-black tracking-tight text-white">
-                  {activeStage.title}
-                </h3>
-              </div>
-            </div>
-
-            <p className="mt-5 font-mono text-sm leading-relaxed text-blue-100/80">
-              {activeStage.description}
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-gray-300">
-                {isBs ? 'Aktivna faza' : 'Current stage'} {currentStageIndex + 1}/{pipeline.length}
-              </span>
-              <span className="rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-blue-300">
-                {isBs ? 'Izlaz' : 'Output'}: {activeStage.output}
-              </span>
-            </div>
-          </div>
-
+        <div>
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
             {pipeline.map((stage, index) => {
               const stageDelta = progressAcrossStages - index;

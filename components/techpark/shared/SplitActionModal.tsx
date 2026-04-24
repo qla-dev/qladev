@@ -52,8 +52,8 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
 
   const promoPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-1' : 'order-2';
   const contentPanelOrder = mobileColumnOrder === 'promo-first' ? 'order-2' : 'order-1';
-  const mobileBottomNavOffset = 'calc(env(safe-area-inset-bottom) + 4rem + 0.75rem)';
-  const mobileFooterScrollPadding = 'calc(env(safe-area-inset-bottom) + 12rem)';
+  const mobileBottomNavOffset = 'calc(env(safe-area-inset-bottom) + 3rem)';
+  const mobileFooterScrollPadding = 'calc(env(safe-area-inset-bottom) + 9rem)';
 
   return createPortal(
     <div className="fixed inset-0 z-[80] bg-black/88 backdrop-blur-md">

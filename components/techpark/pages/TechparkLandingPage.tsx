@@ -422,7 +422,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
           <div className="-mx-4 sm:mx-0">
             <div
               id="techpark-sadrzaj"
-              className="grid grid-flow-col auto-cols-[86%] gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 px-4 pb-2 touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:snap-none sm:px-0 xl:grid-cols-3"
+              className="grid grid-flow-col auto-cols-[86%] gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:snap-none sm:px-0 xl:grid-cols-3"
               >
               {amenities.map((amenity, index) => {
                   const Icon = index === 6 ? CalendarDays : amenity.icon;
@@ -589,7 +589,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
                 <button
                   type="button"
                   onClick={card.onClick}
-                  className="mt-8 inline-flex items-center gap-2 rounded-sm border border-white/15 px-5 py-4 text-sm font-bold font-mono uppercase tracking-[0.18em] text-white transition-colors hover:border-blue-500 hover:bg-blue-500/10"
+                  className="mt-8 inline-flex items-center gap-2 rounded-sm border border-blue-500 bg-blue-500/10 px-5 py-4 text-sm font-bold font-mono uppercase tracking-[0.18em] text-white transition-colors hover:border-white/15 hover:bg-white/5"
                 >
                   {card.button}
                   <ArrowRight className="h-4 w-4" />

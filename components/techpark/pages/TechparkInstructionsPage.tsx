@@ -151,7 +151,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     ? (isBs ? '3 mjeseca' : '3 months')
     : (isBs ? '6 mjeseci' : '6 months');
   const countdownLabels = {
-    eyebrow: isBs ? 'POČETAK PROGRAMA' : 'PROGRAM START',
+    eyebrow: isBs ? 'POČETAK SLJEDEĆEG CIKLUSA' : 'PROGRAM START',
   };
   const countdownDate = isBs ? '1. JUNI 2026. godine' : 'JUNE 1, 2026';
   const countdownUnits = [
