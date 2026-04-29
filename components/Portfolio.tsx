@@ -1,13 +1,22 @@
 import React from 'react';
+import { ExternalLink } from 'lucide-react';
 import { Translations } from '../types';
-import { CLIENTS_DATA } from '../constants';
+import { REAL_CLIENTS } from '../constants';
 
 interface PortfolioProps {
   t: Translations['portfolio'];
 }
 
 export const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
-  const marqueeItems = [...CLIENTS_DATA, ...CLIENTS_DATA];
+  const marqueeItems = [...REAL_CLIENTS];
+  const crpIndex = marqueeItems.findIndex((client) => client.link === 'https://crp.ba/');
+
+  if (crpIndex >= 0) {
+    const [crpClient] = marqueeItems.splice(crpIndex, 1);
+    marqueeItems.splice(2, 0, crpClient);
+  }
+
+  const loopingItems = [...marqueeItems, ...marqueeItems];
 
   return (
     <section id="portfolio" className="py-16 lg:py-24 bg-black relative">
@@ -24,12 +33,12 @@ export const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
         }
 
         .clients-marquee-left {
-          animation: clients-marquee-left 42s linear infinite;
+          animation: clients-marquee-left 60s linear infinite;
           will-change: transform;
         }
 
         .clients-marquee-right {
-          animation: clients-marquee-right 46s linear infinite;
+          animation: clients-marquee-right 66s linear infinite;
           will-change: transform;
         }
 
@@ -67,13 +76,11 @@ export const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
 
           <div className="mb-4 overflow-hidden">
             <div className="clients-marquee-left flex min-w-max gap-4 px-4 md:gap-6 md:px-6">
-              {marqueeItems.map((client, idx) => (
-                <ClientCard
+              {loopingItems.map((client, idx) => (
+                <MarqueeClientCard
                   key={`client-row-a-${client.name}-${idx}`}
-                  name={client.name}
-                  sector={client.sector}
-                  mark={client.mark}
-                  summary={client.summary}
+                  client={client}
+                  visualIndex={idx}
                 />
               ))}
             </div>
@@ -81,13 +88,11 @@ export const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
 
           <div className="overflow-hidden">
             <div className="clients-marquee-right flex min-w-max gap-4 px-4 md:gap-6 md:px-6">
-              {[...marqueeItems].reverse().map((client, idx) => (
-                <ClientCard
+              {[...loopingItems].reverse().map((client, idx) => (
+                <MarqueeClientCard
                   key={`client-row-b-${client.name}-${idx}`}
-                  name={client.name}
-                  sector={client.sector}
-                  mark={client.mark}
-                  summary={client.summary}
+                  client={client}
+                  visualIndex={idx}
                 />
               ))}
             </div>
@@ -98,42 +103,57 @@ export const Portfolio: React.FC<PortfolioProps> = ({ t }) => {
   );
 };
 
-interface ClientCardProps {
-  name: string;
-  sector: string;
-  mark: string;
-  summary: string;
+interface MarqueeClientCardProps {
+  client: (typeof REAL_CLIENTS)[number];
+  visualIndex: number;
 }
 
-const ClientCard: React.FC<ClientCardProps> = ({ name, sector, mark, summary }) => (
-  <div className="w-[260px] shrink-0 rounded-[1.5rem] border border-white/10 bg-white/5 p-5 backdrop-blur-sm md:w-[340px] md:p-6">
-    <div className="mb-7 flex items-start justify-between gap-4">
-      <DummyPartnerLogo name={name} mark={mark} />
-      <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.24em] text-gray-400">
-        {sector}
-      </span>
-    </div>
+const MarqueeClientCard: React.FC<MarqueeClientCardProps> = ({ client, visualIndex }) => {
+  const resolvedLogoSurface = client.logoSurface ?? (visualIndex % 2 === 0 ? 'light' : 'dark');
+  const logoSurfaceClass = resolvedLogoSurface === 'dark'
+    ? 'bg-[#0a1020] shadow-[inset_0_0_0_1px_rgba(59,130,246,0.12)]'
+    : 'bg-white shadow-[inset_0_0_0_1px_rgba(15,23,42,0.06)]';
+  const logoSizeClass = client.logoSize === 'large'
+    ? 'h-16 md:h-20'
+    : 'h-12 md:h-14';
 
-    <p className="max-w-[18rem] font-mono text-sm leading-relaxed text-blue-100/80">
-      {summary}
-    </p>
-  </div>
-);
+  return (
+    <a
+      href={client.link}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="group min-h-[280px] w-[260px] shrink-0 rounded-[1.5rem] border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-colors hover:border-blue-500/40 hover:bg-blue-500/10 md:w-[340px] md:p-6"
+    >
+      <div className={`mb-6 w-full rounded-[1.25rem] p-4 ${logoSurfaceClass}`}>
+        <div className="flex min-h-[72px] w-full items-center justify-center md:min-h-[84px]">
+          <img
+            src={client.logo}
+            alt={client.name}
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            className={`mx-auto w-auto max-w-full object-contain ${logoSizeClass}`}
+          />
+        </div>
+      </div>
 
-interface DummyPartnerLogoProps {
-  name: string;
-  mark: string;
-}
+      <div className="min-w-0 space-y-4">
+        <div>
+          <span className="inline-flex rounded-full border border-white/10 bg-black/30 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.24em] text-gray-400">
+            {client.industry}
+          </span>
+        </div>
 
-const DummyPartnerLogo: React.FC<DummyPartnerLogoProps> = ({ name, mark }) => (
-  <div className="flex min-w-0 items-center gap-3">
-    <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-blue-400/30 bg-blue-600/20 md:h-14 md:w-14">
-      <span className="relative text-lg font-black tracking-[0.2em] text-blue-300 md:text-xl">{mark}</span>
-    </div>
+        <div className="flex items-center justify-between gap-4">
+          <h3 className="min-w-0 text-lg font-black tracking-tight text-white md:text-xl">{client.name}</h3>
+          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/30 text-blue-300 transition-colors group-hover:border-blue-500/40 group-hover:bg-blue-500/10">
+            <ExternalLink className="h-4 w-4" />
+          </span>
+        </div>
 
-    <div className="min-w-0">
-      <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-blue-400">Partner</p>
-      <h3 className="truncate text-lg font-black tracking-tight text-white md:text-xl">{name}</h3>
-    </div>
-  </div>
-);
+        <p className="max-w-[18rem] font-mono text-sm leading-relaxed text-blue-100/80">
+          {client.description}
+        </p>
+      </div>
+    </a>
+  );
+};

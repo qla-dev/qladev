@@ -50,14 +50,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   const amenityCardRefs = React.useRef<(HTMLElement | null)[]>([]);
   const scrollRootRef = useScrollRoot();
   const amenityRevealOrder = React.useMemo(() => {
-    const order = Array.from({ length: amenities.length }, (_, index) => index);
-
-    for (let index = order.length - 1; index > 0; index -= 1) {
-      const swapIndex = Math.floor(Math.random() * (index + 1));
-      [order[index], order[swapIndex]] = [order[swapIndex], order[index]];
-    }
-
-    return order;
+    return Array.from({ length: amenities.length }, (_, index) => index);
   }, []);
 
   const labels = {
@@ -334,6 +327,12 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   );
 
   React.useEffect(() => {
+    const revealLead = 0.22;
+    const revealWindow = 0.24;
+    const staggerStep = amenityRevealOrder.length > 1
+      ? Math.max(0, 1 - revealLead - revealWindow) / (amenityRevealOrder.length - 1)
+      : 0;
+
     const resetCardStyles = () => {
       amenityCardRefs.current.forEach((card) => {
         if (!card) return;
@@ -363,9 +362,8 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
         const card = amenityCardRefs.current[cardIndex];
         if (!card) return;
 
-        const staggerStart = orderIndex * 0.08;
-        const revealWindow = 0.24;
-        const localProgress = Math.max(0, Math.min(1, (progress - 0.22 - staggerStart) / revealWindow));
+        const staggerStart = orderIndex * staggerStep;
+        const localProgress = Math.max(0, Math.min(1, (progress - revealLead - staggerStart) / revealWindow));
         const scale = 0.78 + localProgress * 0.22;
         const translateY = (1 - localProgress) * 34;
         const rotateX = (1 - localProgress) * 18;

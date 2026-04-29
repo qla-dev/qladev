@@ -13,14 +13,7 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
   const serviceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollRootRef = useScrollRoot();
   const serviceRevealOrder = useMemo(() => {
-    const order = Array.from({ length: SERVICES_DATA.length }, (_, index) => index);
-
-    for (let index = order.length - 1; index > 0; index -= 1) {
-      const swapIndex = Math.floor(Math.random() * (index + 1));
-      [order[index], order[swapIndex]] = [order[swapIndex], order[index]];
-    }
-
-    return order;
+    return Array.from({ length: SERVICES_DATA.length }, (_, index) => index);
   }, []);
 
   useEffect(() => {

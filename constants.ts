@@ -1,5 +1,5 @@
 
-import { Translations, Product, Service, NewsItem, StatItem } from './types';
+import { Translations, Product, Service, NewsItem, StatItem, Client, RealClient } from './types';
 import { Monitor, Smartphone, Server, Scan, Bot, Cloud } from 'lucide-react';
 
 // Environment variable for resources, defaulting to the production domain
@@ -264,7 +264,105 @@ export const SERVICES_DATA: Service[] = [
   { title: 'Cloud Development', description: 'Scalable infrastructure and storage.', iconName: 'Cloud' },
 ];
 
-export const CLIENTS_DATA = [
+export const REAL_CLIENTS: RealClient[] = [
+  {
+    name: 'Centar za razvoj poduzetništva',
+    subtitle: 'Entrepreneurship Development Center',
+    industry: 'Incubator',
+    description: 'Sarajevo entrepreneurship center and incubator supporting startups, scaleups, and small businesses through incubation, acceleration, education, mentorship, and grants.',
+    logo: 'https://crp.ba/wp-content/uploads/2025/04/CRP-Logo-H.png',
+    logoSurface: 'light',
+    link: 'https://crp.ba/',
+  },
+  {
+    name: 'MaxMedia',
+    subtitle: 'Digital Marketing + Media Agency',
+    industry: 'Outdoor Media',
+    description: 'Bosnia and Herzegovina media company focused on outdoor advertising, indoor placements, LED network coverage, and digital marketing for broad campaign visibility.',
+    logo: 'https://maxmedia.ba/wp-content/uploads/2023/12/imageedit_0_4084366946.png',
+    logoSurface: 'light',
+    link: 'https://maxmedia.ba/',
+  },
+  {
+    name: 'JICA',
+    subtitle: 'Japan International Cooperation Agency',
+    industry: 'Development',
+    description: 'Japan\'s international cooperation agency supporting developing regions through technical cooperation, ODA grants, ODA loans, partnerships, and recovery initiatives.',
+    logo: 'https://www.jica.go.jp/english/assets/img/logo-en.png',
+    link: 'https://www.jica.go.jp/english/',
+  },
+  {
+    name: 'Bonaco Media',
+    subtitle: 'Media Production + Creative Studio',
+    industry: 'Creative Agency',
+    description: 'Sarajevo digital marketing and creative agency covering social media, SEO, web design, graphic design, event management, photography, and video production.',
+    logo: 'https://bonacomedia.com/wp-content/uploads/2024/09/IMG-464ae62e583541c1741590a1929839bc-V.png',
+    logoSurface: 'dark',
+    link: 'http://bonacomedia.com/',
+  },
+  {
+    name: 'No+Vello',
+    subtitle: 'Beauty + Wellness Brand',
+    industry: 'Laser Aesthetics',
+    description: 'Beauty franchise in Bosnia and Herzegovina focused on laser epilation and photoepilation, with 9 centers, modern equipment, and medically supervised treatments.',
+    logo: 'https://nomasvello.ba/_next/static/images/Nomasvello-Logo-fab54f2e731e115fd018e130b0b62af2.png',
+    link: 'https://nomasvello.ba/',
+  },
+  {
+    name: 'jumpCLICK',
+    subtitle: 'Digital Marketing Agency',
+    industry: 'Performance Media',
+    description: 'Global media agency built around media buying, performance-based ad campaigns, proprietary analytics, and high-volume lead generation for advertisers.',
+    logo: 'https://www.jumpclick.com/images/jumpclick-final-white.png',
+    logoSurface: 'dark',
+    link: 'https://www.jumpclick.com/',
+  },
+  {
+    name: 'ABC 1968 doo',
+    subtitle: 'Citroen Dealership',
+    industry: 'Auto Retail',
+    description: 'Official Bosnian Citroen reseller and service center offering new vehicles, used vehicles, servicing, test drives, and aftersales support.',
+    logo: 'https://logos-world.net/wp-content/uploads/2021/09/Citroen-Logo.png',
+    link: 'https://koncesionar.citroen.ba/abc1968',
+  },
+  {
+    name: 'MobitelBA',
+    subtitle: 'Consumer Electronics + Gadget Store',
+    industry: 'E-Commerce',
+    description: 'Bosnia and Herzegovina online electronics retailer focused on mobile phones, tablets, smartwatches, gaming, audio gear, and a broad catalog of tech accessories.',
+    logo: 'https://mobitelba.ba/resources/img/logo-novi2.png',
+    logoSurface: 'dark',
+    link: 'https://mobitelba.ba/',
+  },
+  {
+    name: 'TRENDY CNC',
+    subtitle: 'Metal Processing + CNC Manufacturing',
+    industry: 'Manufacturing',
+    description: 'Metal-processing company with more than 20 CNC machines, focused on machining, milling, turning, welding, and serial metal parts for export-oriented industrial production.',
+    logo: 'https://enalog.app/images/logo/TrendyCNC.png',
+    logoSize: 'large',
+    link: 'https://www.trendy-doo.com/',
+  },
+  {
+    name: 'Doc.ba',
+    subtitle: 'Web + Mobile + GIS Development',
+    industry: 'Software Studio',
+    description: 'Sarajevo software studio focused on web development, mobile apps, GIS, branding, UI/UX, hosting, and digital marketing.',
+    logo: 'https://doc.ba/static/media/logo-white.7491fb41.svg',
+    logoSurface: 'dark',
+    link: 'https://doc.ba/',
+  },
+  {
+    name: 'BoWido',
+    subtitle: 'B2B Windows + Doors Partner',
+    industry: 'Building Systems',
+    description: 'Dutch B2B supplier of kunststof and aluminium windows and doors, with extranet ordering, technical support, delivery logistics, and aftersales service.',
+    logo: 'https://bowido.nl/wp-content/uploads/2025/10/Bowido-logo-oranje.svg',
+    link: 'https://bowido.nl/',
+  },
+];
+
+export const CLIENTS_DATA: Client[] = [
   { name: 'AETHER LOGISTICS', sector: 'Logistics', mark: 'AL', summary: 'Routing, warehouse visibility, and fleet operations.' },
   { name: 'NOVA RETAIL', sector: 'Retail', mark: 'NR', summary: 'Store systems, loyalty flows, and checkout automation.' },
   { name: 'HELIX HEALTH', sector: 'Healthcare', mark: 'HH', summary: 'Patient workflows, booking layers, and data dashboards.' },

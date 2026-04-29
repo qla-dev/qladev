@@ -23,6 +23,24 @@ export interface Service {
   iconName: string;
 }
 
+export interface Client {
+  name: string;
+  sector: string;
+  mark: string;
+  summary: string;
+}
+
+export interface RealClient {
+  name: string;
+  subtitle: string;
+  industry: string;
+  description: string;
+  logo: string;
+  logoSurface?: 'light' | 'dark';
+  logoSize?: 'default' | 'large';
+  link: string;
+}
+
 export interface NewsItem {
   date: string;
   title: string;
