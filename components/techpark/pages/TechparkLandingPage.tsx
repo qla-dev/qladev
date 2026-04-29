@@ -2,19 +2,19 @@ import React from 'react';
 import {
   ArrowRight,
   Blocks,
-  Building2,
   CalendarDays,
   CarFront,
   Clock3,
   Gamepad2,
   GraduationCap,
-  LayoutGrid,
   MapPin,
   Monitor,
+  Search,
   ShieldCheck,
   SunMedium,
   Ticket,
   Users,
+  X,
   type LucideIcon,
 } from 'lucide-react';
 import { amenities, programs } from '../data';
@@ -25,11 +25,18 @@ import { TechparkStatCard } from '../shared/TechparkStatCard';
 import type { TechparkPageProps } from '../types';
 import { useScrollRoot } from '../../ScrollRootContext';
 
-type SpaceTabId = 'location' | 'layout' | 'rhythm';
+type SpaceTabId = 'location' | 'details' | 'rhythm';
 
 interface SpaceTabCard {
   title: string;
   text: string;
+}
+
+interface SpaceGalleryCard {
+  title: string;
+  text: string;
+  image: string;
+  previewPosition: string;
 }
 
 interface SpaceTab {
@@ -37,13 +44,16 @@ interface SpaceTab {
   label: string;
   mobileLabel: string;
   icon: LucideIcon;
+  headline?: string;
   description: string;
-  cards: SpaceTabCard[];
+  cards?: SpaceTabCard[];
+  gallery?: SpaceGalleryCard[];
 }
 
 export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavigate }) => {
   const isBs = lang === 'bs';
   const [activeSpaceTab, setActiveSpaceTab] = React.useState<SpaceTabId>('location');
+  const [zoomedSpaceImage, setZoomedSpaceImage] = React.useState<SpaceGalleryCard | null>(null);
   const techparkPeopleCount = '0/15';
   const amenitiesSectionRef = React.useRef<HTMLElement>(null);
   const amenitiesScrollerRef = React.useRef<HTMLDivElement>(null);
@@ -52,6 +62,27 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
   const amenityRevealOrder = React.useMemo(() => {
     return Array.from({ length: amenities.length }, (_, index) => index);
   }, []);
+
+  React.useEffect(() => {
+    if (!zoomedSpaceImage) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setZoomedSpaceImage(null);
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [zoomedSpaceImage]);
 
   const labels = {
     title: isBs ? 'TECHPARK ZA NOVU DIGITALNU GENERACIJU' : 'TECHPARK FOR THE NEXT DIGITAL GENERATION',
@@ -175,6 +206,57 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     { value: 'U18', label: labels.heroStats.under18, icon: ShieldCheck },
   ];
 
+  const locationGallery: SpaceGalleryCard[] = [
+    {
+      title: isBs ? 'No\u0107ni kadar 01' : 'Night Frame 01',
+      text: isBs
+        ? '\u0160iri pogled na objekat, raskrsnicu i qla.dev signage iz prvog prilaza.'
+        : 'A wider view of the building, junction, and qla.dev sign from the first approach.',
+      image: '/techpark-hero.png',
+      previewPosition: 'center 74%',
+    },
+    {
+      title: isBs ? 'No\u0107ni kadar 02' : 'Night Frame 02',
+      text: isBs
+        ? 'Kadar koji vi\u0161e hvata sam objekat i svjetlo koje ga izdvaja no\u0107u.'
+        : 'A frame that leans more on the building itself and the light that sets it apart at night.',
+      image: '/techpark-gallery-source.png',
+      previewPosition: 'center 70%',
+    },
+    {
+      title: isBs ? 'Prilaz + sign' : 'Approach + Sign',
+      text: isBs
+        ? 'U fokusu ostaju putanja dolaska, raskrsnica i prepoznatljiv natpis na vrhu.'
+        : 'The arrival path, junction, and rooftop sign stay in focus together.',
+      image: '/techpark-hero.png',
+      previewPosition: '28% 76%',
+    },
+    {
+      title: isBs ? 'Ugao objekta' : 'Building Angle',
+      text: isBs
+        ? 'Bo\u010dni ugao pokazuje kako lokacija izgleda iz uli\u010dnog pravca pri dolasku.'
+        : 'The side angle shows how the location reads from the street on arrival.',
+      image: '/techpark-gallery-source.png',
+      previewPosition: '76% 68%',
+    },
+    {
+      title: isBs ? 'Raskrsnica + ulaz' : 'Junction + Entry',
+      text: isBs
+        ? 'Fotografija zadr\u017eava i promet i ulazni kontekst, \u0161to poma\u017ee za orijentaciju.'
+        : 'This frame keeps both traffic and entry context visible, which helps orientation.',
+      image: '/techpark-hero.png',
+      previewPosition: '74% 82%',
+    },
+    {
+      title: isBs ? 'Svjetlo lokacije' : 'Location Glow',
+      text: isBs
+        ? 'Drugi kadar sa ceste dodatno nagla\u0161ava kako objekat izgleda pod no\u0107nim svjetlom.'
+        : 'The second street-side shot pushes the way the building reads under night lighting.',
+      image: '/techpark-gallery-source.png',
+      previewPosition: '22% 78%',
+    },
+  ];
+
   const spaceTabs: SpaceTab[] = [
     {
       id: 'location',
@@ -203,13 +285,13 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
           ],
     },
     {
-      id: 'layout',
-      label: '140M2',
-      mobileLabel: '140M2',
-      icon: Building2,
+      id: 'details',
+      label: isBs ? 'POGLED + PRISTUP' : 'VIEW + ACCESS',
+      mobileLabel: isBs ? 'PRISTUP' : 'ACCESS',
+      icon: MapPin,
       description: isBs
-        ? 'Na 140m2 Techpark spaja 15 AI coding mjesta, chill lounge, gaming kutke, maker opremu i dovoljno prostora da i rad i pauza imaju smisla.'
-        : 'Across 140m2, Techpark combines 15 AI coding places, a chill lounge, gaming corners, maker equipment, and enough breathing room for both work and breaks to make sense.',
+        ? 'Techpark je na adresi Bra\u0107e Muli\u0107 81, na vrhu zgrade, sa otvorenim pogledom, prirodnim svjetlom i suncem koje prostor dr\u017ei \u017eivim kroz \u010ditav dan.'
+        : 'Techpark is located at Bra\u0107e Muli\u0107 81, at the top of the building, with an open view, natural light, and steady sunlight that keeps the space alive through the day.',
       cards: isBs
         ? [
             { title: '15 AI mjesta', text: 'Svaka stanica je pripremljena za učenje, testiranje ideja i brzi rad uz AI alate.' },
@@ -256,12 +338,17 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     },
   ];
   const spaceCardIcons: Record<SpaceTabId, LucideIcon[]> = {
-    location: [Building2, SunMedium, CarFront, MapPin, ShieldCheck, MapPin],
-    layout: [Monitor, LayoutGrid, GraduationCap, Gamepad2, Blocks, LayoutGrid],
+    location: [Search, Search, Search, Search, Search, Search],
+    details: [Monitor, SunMedium, CarFront, MapPin, ShieldCheck, MapPin],
     rhythm: [Monitor, Gamepad2, Clock3, Users, ShieldCheck, CalendarDays],
   };
 
   const activeSpaceSection = spaceTabs.find((tab) => tab.id === activeSpaceTab) ?? spaceTabs[0];
+  const locationOverviewSection = spaceTabs.find((tab) => tab.id === 'location');
+  const locationGalleryTitle = isBs ? 'GALERIJA LOKACIJE' : 'LOCATION GALLERY';
+  const locationGalleryDescription = isBs
+    ? 'Prvi pregled lokacije kroz galeriju: nekoliko kadrova istog mjesta koji pokazuju prilaz, znak, okolinu i no\u0107ni karakter objekta prije detalja o samom prostoru.'
+    : 'A first look at the location through a gallery: several frames of the same place showing the approach, sign, surroundings, and nighttime character before the space details.';
   const amenityTitleLines = isBs
     ? [
         ['15 AI Stanica', '+ Chill Lounge'],
@@ -577,32 +664,75 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
               </div>
 
               <div key={activeSpaceSection.id} className="mt-8">
+                {activeSpaceSection.id === 'location' ? (
+                  <div className="mb-4 text-xs font-mono uppercase tracking-[0.22em] text-blue-300">
+                    {locationGalleryTitle}
+                  </div>
+                ) : null}
                 <p className="max-w-full border-l-2 border-blue-500 pl-4 font-mono text-sm leading-7 text-blue-100 sm:pl-6 sm:text-base md:text-[1.35rem] md:leading-[1.65]">
-                  {activeSpaceSection.description}
+                  {activeSpaceSection.id === 'location'
+                    ? locationGalleryDescription
+                    : activeSpaceSection.id === 'details'
+                      ? locationOverviewSection?.description ?? activeSpaceSection.description
+                      : activeSpaceSection.description}
                 </p>
 
                 <div className="mt-8 grid gap-4 md:grid-cols-2">
-                  {activeSpaceSection.cards.map((card, index) => {
-                    const Icon = spaceCardIcons[activeSpaceSection.id][index] ?? activeSpaceSection.icon;
-
-                    return (
-                      <div key={card.title} className="rounded-[1.7rem] border border-white/10 bg-black/55 p-5 sm:p-6">
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-500/10 text-blue-300">
-                            <Icon className="h-5 w-5" />
+                  {activeSpaceSection.id === 'location'
+                    ? locationGallery.map((card) => (
+                        <button
+                          key={card.title}
+                          type="button"
+                          onClick={() => setZoomedSpaceImage(card)}
+                          className="rounded-[1.7rem] border border-white/10 bg-black/55 p-5 text-left transition-colors hover:border-blue-500/40 sm:p-6"
+                        >
+                          <div className="overflow-hidden rounded-[1.3rem] border border-white/10 bg-[#060b13]">
+                            <img
+                              src={card.image}
+                              alt={card.title}
+                              className="h-56 w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+                              style={{ objectPosition: card.previewPosition }}
+                            />
                           </div>
-                          <div>
-                            <div className="text-base font-mono leading-relaxed text-gray-100 sm:text-[1.05rem]">
-                              {card.title}
+                          <div className="mt-5 flex items-start justify-between gap-4">
+                            <div>
+                              <div className="text-base font-mono leading-relaxed text-gray-100 sm:text-[1.05rem]">
+                                {card.title}
+                              </div>
+                              <p className="mt-3 text-xs font-mono leading-relaxed text-gray-400 sm:text-sm">
+                                {card.text}
+                              </p>
                             </div>
-                            <p className="mt-3 text-xs font-mono leading-relaxed text-gray-400 sm:text-sm">
-                              {card.text}
-                            </p>
+                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-500/10 text-blue-300">
+                              <Search className="h-5 w-5" />
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                        </button>
+                      ))
+                    : (activeSpaceSection.id === 'details'
+                        ? locationOverviewSection?.cards ?? []
+                        : activeSpaceSection.cards ?? []
+                      ).map((card, index) => {
+                        const Icon = spaceCardIcons[activeSpaceSection.id][index] ?? activeSpaceSection.icon;
+
+                        return (
+                          <div key={card.title} className="rounded-[1.7rem] border border-white/10 bg-black/55 p-5 sm:p-6">
+                            <div className="flex items-center gap-3">
+                              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-500/10 text-blue-300">
+                                <Icon className="h-5 w-5" />
+                              </div>
+                              <div>
+                                <div className="text-base font-mono leading-relaxed text-gray-100 sm:text-[1.05rem]">
+                                  {card.title}
+                                </div>
+                                <p className="mt-3 text-xs font-mono leading-relaxed text-gray-400 sm:text-sm">
+                                  {card.text}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
                 </div>
               </div>
             </div>
@@ -627,6 +757,38 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
           </div>
         </div>
       </section>
+
+      {zoomedSpaceImage ? (
+        <div
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-black/88 px-4 py-8 backdrop-blur-sm"
+          onClick={() => setZoomedSpaceImage(null)}
+        >
+          <div
+            className="relative w-full max-w-5xl rounded-[2rem] border border-white/10 bg-[#05070c] p-4 shadow-[0_25px_100px_rgba(0,0,0,0.6)] sm:p-5"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setZoomedSpaceImage(null)}
+              className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/55 text-gray-200 transition-colors hover:border-blue-500/40 hover:text-white"
+              aria-label={isBs ? 'Zatvori pregled slike' : 'Close image preview'}
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-black">
+              <img
+                src={zoomedSpaceImage.image}
+                alt={zoomedSpaceImage.title}
+                className="max-h-[78vh] w-full object-contain"
+              />
+            </div>
+            <div className="mt-5 pr-14">
+              <div className="text-lg font-mono text-white sm:text-xl">{zoomedSpaceImage.title}</div>
+              <p className="mt-2 text-sm font-mono leading-relaxed text-gray-400 sm:text-base">{zoomedSpaceImage.text}</p>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <section id="techpark-pricing" className="border-t border-white/10 py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

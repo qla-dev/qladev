@@ -39,8 +39,19 @@ export const TechparkHeroSection: React.FC<TechparkHeroSectionProps> = ({
   subtitleClassName = 'mt-6 max-w-3xl text-lg text-gray-300 font-mono leading-relaxed border-l-2 border-blue-500 pl-6',
 }) => (
   <section className="relative overflow-hidden border-b border-white/10 bg-qla-dark">
-    <TechHeroBackdrop />
-    <div className={containerClassName}>
+    <div className="absolute inset-0 z-0 overflow-hidden">
+      <img
+        src="/techpark-hero.png"
+        alt=""
+        aria-hidden="true"
+        className="h-full w-full object-cover object-[center_58%] opacity-50 scale-[1.02]"
+      />
+    </div>
+    <div className="absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(4,6,11,0.42),rgba(4,6,11,0.58)_45%,rgba(4,6,11,0.84)_100%)]" />
+    <div className="absolute inset-0 z-[2] pointer-events-none">
+      <TechHeroBackdrop />
+    </div>
+    <div className={`relative z-[3] ${containerClassName}`}>
       {showSubnav ? (
         <div className="mb-6">
           <TechparkSubnav current={current} lang={lang} onNavigate={onNavigate} />
