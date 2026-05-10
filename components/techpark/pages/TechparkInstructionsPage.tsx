@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { ChevronDown, ExternalLink, Lock } from 'lucide-react';
 import { getProgramAgenda } from '../agenda';
 import { programs } from '../data';
@@ -284,29 +283,26 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
   const scrollHintScale = 1 - scrollProgress * 0.08;
   const showScrollHint = isJoinModalOpen && !isAgendaModalOpen;
   const scrollHint =
-    showScrollHint && typeof document !== 'undefined'
-      ? createPortal(
-          <div
-            aria-hidden="true"
-            className="pointer-events-none fixed left-1/2 bottom-[calc(env(safe-area-inset-bottom)+17rem)] z-[5100] flex flex-col items-center gap-2 md:hidden"
-            style={{
-              opacity: scrollHintOpacity,
-              transform: `translate3d(-50%, ${scrollHintTranslateY}px, 0) scale(${scrollHintScale})`,
-            }}
-          >
-            <div className="flex flex-col items-center gap-1.5" style={{ animation: 'campScrollFloat 2.8s ease-in-out infinite' }}>
-              <div className="text-center text-[11px] font-mono tracking-[0.24em] uppercase text-white/75">
-                {labels.scrollPrompt}
-              </div>
-              <ChevronDown
-                className="h-5 w-5 text-blue-400"
-                style={{ animation: 'campScrollChevron 2.8s ease-in-out infinite' }}
-              />
-            </div>
-          </div>,
-          document.body
-        )
-      : null;
+    showScrollHint ? (
+      <div
+        aria-hidden="true"
+        className="flex flex-col items-center gap-2 md:hidden"
+        style={{
+          opacity: scrollHintOpacity,
+          transform: `translate3d(0, ${scrollHintTranslateY}px, 0) scale(${scrollHintScale})`,
+        }}
+      >
+        <div className="flex flex-col items-center gap-1.5" style={{ animation: 'campScrollFloat 2.8s ease-in-out infinite' }}>
+          <div className="text-center text-[11px] font-mono tracking-[0.24em] uppercase text-white/75">
+            {labels.scrollPrompt}
+          </div>
+          <ChevronDown
+            className="h-5 w-5 text-blue-400"
+            style={{ animation: 'campScrollChevron 2.8s ease-in-out infinite' }}
+          />
+        </div>
+      </div>
+    ) : null;
 
   return (
     <TechparkPageShell showBackdrop>
@@ -317,8 +313,6 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
         title={labels.sectionTitle}
         subtitle={sectionContent}
       />
-
-      {scrollHint}
 
       <style>{`
         @keyframes campScrollFloat {
@@ -365,6 +359,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
         open={isJoinModalOpen}
         onClose={() => setIsJoinModalOpen(false)}
         scrollContainerRef={joinModalScrollRef}
+        mobileFooterAccessory={scrollHint}
         eyebrow=""
         title=""
         description=""

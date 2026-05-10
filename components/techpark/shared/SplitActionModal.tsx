@@ -11,6 +11,7 @@ interface SplitActionModalProps {
   promoPanel: React.ReactNode;
   children: React.ReactNode;
   mobileFooter?: React.ReactNode;
+  mobileFooterAccessory?: React.ReactNode;
   mobileColumnOrder?: 'content-first' | 'promo-first';
   scrollContainerRef?: React.Ref<HTMLDivElement>;
 }
@@ -24,6 +25,7 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
   promoPanel,
   children,
   mobileFooter,
+  mobileFooterAccessory,
   mobileColumnOrder = 'content-first',
   scrollContainerRef,
 }) => {
@@ -122,7 +124,14 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
           className="fixed inset-x-0 z-[90] border-t border-white/10 bg-[#04060b]/95 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] backdrop-blur-md sm:hidden"
           style={{ bottom: mobileBottomNavOffset }}
         >
-          {mobileFooter}
+          <div className="relative">
+            {mobileFooterAccessory ? (
+              <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2">
+                {mobileFooterAccessory}
+              </div>
+            ) : null}
+            {mobileFooter}
+          </div>
         </div>
       ) : null}
     </div>,
