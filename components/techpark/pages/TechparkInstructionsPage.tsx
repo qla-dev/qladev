@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronDown, ExternalLink, Lock } from 'lucide-react';
-import { useScrollRoot } from '../../ScrollRootContext';
 import { getProgramAgenda } from '../agenda';
 import { programs } from '../data';
 import { ProgramCard } from '../instructions/ProgramCard';
@@ -46,7 +45,7 @@ const getEnglishCountdownLabel = (unit: 'days' | 'hours' | 'minutes' | 'seconds'
 
 export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, onNavigate }) => {
   const isBs = lang === 'bs';
-  const scrollRootRef = useScrollRoot();
+  const joinModalScrollRef = React.useRef<HTMLDivElement>(null);
   const [selectedProgramId, setSelectedProgramId] = useState(programs[0].id);
   const [selectedLevel, setSelectedLevel] = useState<ProgramLevel>('beginner');
   const [formData, setFormData] = useState({ fullName: '', age: '', guardianContact: '', email: '', motivation: '' });
@@ -77,24 +76,30 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
   }, [programStartDate]);
 
   useEffect(() => {
-    const getScrollTop = () => scrollRootRef?.current?.scrollTop ?? window.scrollY ?? window.pageYOffset ?? 0;
+    if (!isJoinModalOpen || isAgendaModalOpen) {
+      setScrollProgress(0);
+      return;
+    }
+
+    const scrollTarget = joinModalScrollRef.current;
+
+    if (!scrollTarget) {
+      setScrollProgress(0);
+      return;
+    }
 
     const handleScroll = () => {
-      const progress = Math.min(getScrollTop() / 220, 1);
+      const progress = Math.min(scrollTarget.scrollTop / 220, 1);
       setScrollProgress(progress);
     };
 
-    const scrollTarget = scrollRootRef?.current ?? window;
-
     scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
     handleScroll();
 
     return () => {
       scrollTarget.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
     };
-  }, [scrollRootRef]);
+  }, [isAgendaModalOpen, isJoinModalOpen]);
 
   const labels = {
     sectionTitle: 'BOOT-CAMP',
@@ -277,13 +282,13 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
   const scrollHintOpacity = Math.max(0, 1 - scrollProgress);
   const scrollHintTranslateY = scrollProgress * 36;
   const scrollHintScale = 1 - scrollProgress * 0.08;
-  const showScrollHint = !isJoinModalOpen && !isAgendaModalOpen;
+  const showScrollHint = isJoinModalOpen && !isAgendaModalOpen;
   const scrollHint =
     showScrollHint && typeof document !== 'undefined'
       ? createPortal(
           <div
             aria-hidden="true"
-            className="pointer-events-none fixed left-1/2 bottom-[calc(env(safe-area-inset-bottom)+5.5rem)] z-[5100] flex flex-col items-center gap-2 md:hidden"
+            className="pointer-events-none fixed left-1/2 bottom-[calc(env(safe-area-inset-bottom)+17rem)] z-[5100] flex flex-col items-center gap-2 md:hidden"
             style={{
               opacity: scrollHintOpacity,
               transform: `translate3d(-50%, ${scrollHintTranslateY}px, 0) scale(${scrollHintScale})`,
@@ -359,6 +364,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
       <SplitActionModal
         open={isJoinModalOpen}
         onClose={() => setIsJoinModalOpen(false)}
+        scrollContainerRef={joinModalScrollRef}
         eyebrow=""
         title=""
         description=""

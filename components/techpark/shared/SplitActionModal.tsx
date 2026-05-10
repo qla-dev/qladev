@@ -12,6 +12,7 @@ interface SplitActionModalProps {
   children: React.ReactNode;
   mobileFooter?: React.ReactNode;
   mobileColumnOrder?: 'content-first' | 'promo-first';
+  scrollContainerRef?: React.Ref<HTMLDivElement>;
 }
 
 export const SplitActionModal: React.FC<SplitActionModalProps> = ({
@@ -24,6 +25,7 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
   children,
   mobileFooter,
   mobileColumnOrder = 'content-first',
+  scrollContainerRef,
 }) => {
   React.useEffect(() => {
     if (!open) {
@@ -77,6 +79,7 @@ export const SplitActionModal: React.FC<SplitActionModalProps> = ({
         <X className="h-5 w-5" />
       </button>
       <div
+        ref={scrollContainerRef}
         className="h-full overflow-y-auto md:overflow-y-hidden sm:pb-0"
         style={mobileFooter ? { paddingBottom: mobileFooterScrollPadding } : undefined}
       >
