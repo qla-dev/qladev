@@ -419,6 +419,9 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
     const staggerStep = amenityRevealOrder.length > 1
       ? Math.max(0, 1 - revealLead - revealWindow) / (amenityRevealOrder.length - 1)
       : 0;
+    const desktopMediaQuery = window.matchMedia('(min-width: 640px)');
+    let frameId = 0;
+    let mobileStylesApplied = false;
 
     const resetCardStyles = () => {
       amenityCardRefs.current.forEach((card) => {
@@ -432,11 +435,15 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
 
     const handleScroll = () => {
       if (!amenitiesSectionRef.current) return;
-      if (window.innerWidth < 640) {
-        resetCardStyles();
+      if (!desktopMediaQuery.matches) {
+        if (!mobileStylesApplied) {
+          resetCardStyles();
+          mobileStylesApplied = true;
+        }
         return;
       }
 
+      mobileStylesApplied = false;
       const { top, height } = amenitiesSectionRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       const start = windowHeight * 0.68;
@@ -461,82 +468,32 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       });
     };
 
+    const queueScrollUpdate = () => {
+      if (frameId !== 0) return;
+
+      frameId = window.requestAnimationFrame(() => {
+        frameId = 0;
+        handleScroll();
+      });
+    };
+
     const scrollTarget = scrollRootRef?.current ?? window;
 
-    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-    handleScroll();
+    scrollTarget.addEventListener('scroll', queueScrollUpdate, { passive: true });
+    window.addEventListener('resize', queueScrollUpdate);
+    desktopMediaQuery.addEventListener('change', queueScrollUpdate);
+    queueScrollUpdate();
 
     return () => {
-      scrollTarget.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      scrollTarget.removeEventListener('scroll', queueScrollUpdate);
+      window.removeEventListener('resize', queueScrollUpdate);
+      desktopMediaQuery.removeEventListener('change', queueScrollUpdate);
+
+      if (frameId !== 0) {
+        window.cancelAnimationFrame(frameId);
+      }
     };
   }, [amenityRevealOrder, scrollRootRef]);
-
-  React.useEffect(() => {
-    const scroller = amenitiesScrollerRef.current;
-
-    if (!scroller) return;
-
-    let startX = 0;
-    let startY = 0;
-    let lastY = 0;
-    let isVerticalGesture = false;
-
-    const handleTouchStart = (event: TouchEvent) => {
-      const touch = event.touches[0];
-
-      if (!touch) return;
-
-      startX = touch.clientX;
-      startY = touch.clientY;
-      lastY = touch.clientY;
-      isVerticalGesture = false;
-    };
-
-    const handleTouchMove = (event: TouchEvent) => {
-      const touch = event.touches[0];
-
-      if (!touch) return;
-
-      const deltaX = Math.abs(touch.clientX - startX);
-      const deltaY = Math.abs(touch.clientY - startY);
-
-      if (!isVerticalGesture && deltaY > 10 && deltaY > deltaX) {
-        isVerticalGesture = true;
-      }
-
-      if (!isVerticalGesture) return;
-
-      const offsetY = touch.clientY - lastY;
-      const scrollTarget = scrollRootRef?.current;
-
-      if (scrollTarget) {
-        scrollTarget.scrollTop -= offsetY;
-      } else {
-        window.scrollBy({ top: -offsetY, left: 0, behavior: 'auto' });
-      }
-
-      lastY = touch.clientY;
-      event.preventDefault();
-    };
-
-    const handleTouchEnd = () => {
-      isVerticalGesture = false;
-    };
-
-    scroller.addEventListener('touchstart', handleTouchStart, { passive: true });
-    scroller.addEventListener('touchmove', handleTouchMove, { passive: false });
-    scroller.addEventListener('touchend', handleTouchEnd);
-    scroller.addEventListener('touchcancel', handleTouchEnd);
-
-    return () => {
-      scroller.removeEventListener('touchstart', handleTouchStart);
-      scroller.removeEventListener('touchmove', handleTouchMove);
-      scroller.removeEventListener('touchend', handleTouchEnd);
-      scroller.removeEventListener('touchcancel', handleTouchEnd);
-    };
-  }, [scrollRootRef]);
 
   return (
     <TechparkPageShell>
@@ -592,7 +549,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
             <div
               ref={amenitiesScrollerRef}
               id="techpark-sadrzaj"
-              className="grid grid-flow-col auto-cols-[84%] gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:snap-none sm:px-0 xl:grid-cols-3"
+              className="grid grid-flow-col auto-cols-[84%] gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:snap-none sm:px-0 xl:grid-cols-3"
             >
               {amenities.map((amenity, index) => {
                   const Icon = index === 6 ? CalendarDays : amenity.icon;
