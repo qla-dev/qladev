@@ -84,7 +84,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       title: 'PRODUCTS',
       active: 'ACTIVE',
       launchDay: 'LAUNCH DAY',
-      subtitle: 'Our flagship products are developed entirely in-house, showcasing our capability to build scalable, mission-critical systems from the ground up.',
+      subtitle: 'Our key products are developed entirely in-house, largely for local users and the real needs of the market around us. We build them from the ground up as scalable, dependable systems with a clear function, a distinct identity, and long-term impact on both the market and society.',
     },
     mission: {
       title: 'POWERING THE DIGITAL REVOLUTION',
@@ -190,10 +190,10 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       p3: 'Naša posvećenost seže dalje od isporuke. Pružamo posvećenu podršku i kontinuiranu optimizaciju, osiguravajući da vaša digitalna infrastruktura napreduje i raste u okruženju koje se stalno mijenja.'
     },
     products: {
-      title: 'PROIZVODI',
+      title: 'DOMAĆI PROIZVODI',
       active: 'AKTIVNO',
       launchDay: 'DAN LANSIRANJA',
-      subtitle: 'Naši vodeći proizvodi su razvijeni u potpunosti interno, pokazujući našu sposobnost da izgradimo skalabilne sisteme od kritičnog značaja od nule.',
+      subtitle: 'Naši ključni proizvodi razvijaju se u potpunosti interno, u najvećoj mjeri za domaće korisnike i stvarne potrebe našeg okruženja. Gradimo ih od nule kao skalabilne i pouzdane sisteme od kritičnog značaja, sa jasnom funkcijom, prepoznatljivim identitetom i dugoročnim uticajem na tržište i društvo.',
     },
     mission: {
       title: 'POKREĆEMO DIGITALNU REVOLUCIJU',
@@ -210,8 +210,8 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       codeComment: '// Izvršavanje poslovne logike...'
     },
     portfolio: {
-      title: 'NASI PARTNERI',
-      subtitle: 'Rastuca mreza brendova, operatera i institucija koji vjeruju qla.dev timu za dizajn, integraciju i razvoj digitalnih sistema iza svog poslovanja.'
+      title: 'NAŠI PARTNERI',
+      subtitle: 'Rastuća mreža brendova, operatera i institucija koji vjeruju qla.dev timu za dizajn, integraciju i razvoj digitalnih sistema iza svog poslovanja.'
     },
     news: {
       title: 'NAJNOVIJE VIJESTI',
@@ -231,19 +231,70 @@ export const PRODUCTS_DATA: Product[] = [
     status: 'active',
     title: 'deklarant.ai',
     description: 'An AI-powered platform that scans invoices, extracts data, and automatically fills customs declarations. It suggests correct tariff codes and streamlines documentation.',
-    image: `${RESOURCES_URL}/comp-min-e1736531140565.png`,
+    image: 'https://deklarant.ai/build/images/homepage/img/korak-3.png',
     logo: `${RESOURCES_URL}/logo-light-ai-1024x133.png`,
     cta: 'REGISTER',
-    secondaryCta: 'WEB'
+    primaryUrl: 'https://deklarant.ai/',
+    secondaryCta: 'WEB',
+    secondaryUrl: 'https://deklarant.ai/'
   },
   {
     status: 'active',
-    title: 'Property Management',
-    description: 'A comprehensive Property Management and Booking System designed for modern hospitality needs.',
+    title: 'Restingo',
+    description: 'A hospitality booking and property platform designed for modern stays, discovery, availability search, and listing management.',
     image: `${RESOURCES_URL}/laptab-min-e1736282362439.png`,
-    logo: `${RESOURCES_URL}/logo1-1-1024x150.png`,
+    logo: 'https://restingo.com/wp-content/uploads/2025/10/logo-resting.png',
+    logoSurface: 'light',
     cta: 'WEBAPP',
+    primaryUrl: 'https://restingo.com/',
     secondaryCta: 'ADMIN'
+  },
+  {
+    status: 'active',
+    title: 'eNalog.app',
+    description: 'An operations dashboard for work orders, purchasing, materials, and reporting, built for teams that need one clear control layer across daily production admin.',
+    image: '/enalog-app-preview.svg',
+    cta: 'OPEN APP',
+    primaryUrl: 'https://enalog.app/'
+  },
+  {
+    status: 'active',
+    title: 'trackpal.app',
+    description: 'A pallet-return and logistics platform focused on QR scans, client balances, collection workflows, and operational visibility across transport and warehouse flow.',
+    image: '/trackpal-app-preview.svg',
+    logo: '/trackpal-logo.png',
+    logoSurface: 'light',
+    cta: 'OPEN APP',
+    primaryUrl: 'https://trackpal.app/'
+  },
+  {
+    status: 'active',
+    title: 'GeoVizija',
+    description: 'A magazine-style editorial portal for nature, travel, society, and technology stories, built around a strong visual front page and category-led publishing.',
+    image: '/geovizija-preview.svg',
+    cta: 'OPEN SITE',
+    primaryUrl: 'https://geovizija.com/'
+  },
+  {
+    status: 'active',
+    title: 'NFFIS',
+    description: 'A forest-fire intelligence and early-warning platform that combines live conditions, weather metrics, and risk analysis in a map-driven national monitoring interface.',
+    image: '/nffis-preview.svg',
+    cta: 'OPEN APP',
+    primaryUrl: 'https://nffis.com/'
+  },
+  {
+    status: 'active',
+    title: 'snovi.fm',
+    description: 'A sleep-focused audio platform with bedtime stories, calming narration, and peaceful wind-down rituals designed for both children and adults.',
+    image: '/snovi-fm-cover.jpg',
+    logo: '/snovi-fm-logo.png',
+    logoSurface: 'light',
+    logoClassName: 'max-h-[3.75rem]',
+    cta: 'LISTEN',
+    primaryUrl: 'http://snovi.fm/',
+    secondaryCta: 'WEB',
+    secondaryUrl: 'http://snovi.fm/'
   },
   {
     status: 'launch',

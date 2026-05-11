@@ -1,0 +1,76 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="enalog-bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7F7FB"/>
+      <stop offset="1" stop-color="#ECEEF6"/>
+    </linearGradient>
+    <linearGradient id="enalog-card" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F7F8FC"/>
+    </linearGradient>
+    <linearGradient id="enalog-chart" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#FFB35A"/>
+      <stop offset="1" stop-color="#F58A33"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" rx="36" fill="url(#enalog-bg)"/>
+  <rect x="28" y="28" width="1144" height="619" rx="28" fill="#FFFFFF" stroke="#E2E5F0"/>
+
+  <rect x="28" y="28" width="186" height="619" rx="28" fill="#FFFFFF"/>
+  <circle cx="78" cy="94" r="21" fill="#5A667F"/>
+  <circle cx="78" cy="94" r="17" fill="#39465E"/>
+  <text x="120" y="103" fill="#56637D" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">eNalog.app</text>
+
+  <text x="68" y="178" fill="#9AA5BE" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">RADNI NALOZI</text>
+  <text x="68" y="234" fill="#5E6883" font-family="Segoe UI, Arial, sans-serif" font-size="16">Upravljanje nalozima</text>
+  <text x="68" y="286" fill="#5E6883" font-family="Segoe UI, Arial, sans-serif" font-size="16">Skeniraj nalog</text>
+  <text x="68" y="382" fill="#9AA5BE" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">NARUDZBE</text>
+  <text x="68" y="438" fill="#5E6883" font-family="Segoe UI, Arial, sans-serif" font-size="16">Upravljanje narudzbama</text>
+  <text x="68" y="534" fill="#9AA5BE" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">ADMINISTRACIJA</text>
+  <text x="68" y="590" fill="#5E6883" font-family="Segoe UI, Arial, sans-serif" font-size="16">Korisnici i izvjestaji</text>
+
+  <rect x="236" y="58" width="900" height="64" rx="18" fill="#FFFFFF" stroke="#E7EAF2"/>
+  <rect x="910" y="60" width="216" height="58" rx="16" fill="#FFFFFF" stroke="#E7EAF2"/>
+  <circle cx="942" cy="89" r="14" fill="#32C56C"/>
+  <text x="972" y="95" fill="#32C56C" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Dobrodosli</text>
+
+  <rect x="236" y="154" width="328" height="268" rx="24" fill="#EEF1F7"/>
+  <rect x="302" y="220" width="120" height="82" rx="18" fill="#D7DEEC"/>
+  <rect x="284" y="308" width="154" height="78" rx="18" fill="#FFFFFF"/>
+  <text x="284" y="456" fill="#6E7591" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">CET 24</text>
+  <text x="358" y="454" fill="#59607B" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">GROB-WERKE</text>
+  <text x="358" y="488" fill="#7A819B" font-family="Segoe UI, Arial, sans-serif" font-size="18">Sastanak o kapacitetu, rokovima</text>
+  <text x="358" y="514" fill="#7A819B" font-family="Segoe UI, Arial, sans-serif" font-size="18">i obradi metalnih naloga</text>
+
+  <rect x="586" y="154" width="550" height="92" rx="22" fill="#FFFFFF" stroke="#ECEEF5"/>
+  <circle cx="650" cy="200" r="26" fill="#FFF1E7"/>
+  <text x="686" y="194" fill="#5F6480" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="600">30.910</text>
+  <text x="686" y="222" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Radni nalozi</text>
+  <circle cx="826" cy="200" r="26" fill="#ECFBFF"/>
+  <text x="862" y="194" fill="#5F6480" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="600">88</text>
+  <text x="862" y="222" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Kupci</text>
+  <circle cx="994" cy="200" r="26" fill="#F3F7FF"/>
+  <text x="1030" y="194" fill="#5F6480" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="600">13.181</text>
+  <text x="1030" y="222" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Proizvodi</text>
+
+  <rect x="586" y="270" width="550" height="272" rx="24" fill="#FFFFFF" stroke="#ECEEF5"/>
+  <text x="618" y="314" fill="#646B86" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Izvjestaj o radnim nalozima</text>
+  <g opacity="0.94">
+    <rect x="684" y="420" width="16" height="96" rx="8" fill="url(#enalog-chart)"/>
+    <rect x="744" y="388" width="16" height="128" rx="8" fill="url(#enalog-chart)"/>
+    <rect x="804" y="404" width="16" height="112" rx="8" fill="url(#enalog-chart)"/>
+    <rect x="864" y="370" width="16" height="146" rx="8" fill="url(#enalog-chart)"/>
+    <rect x="924" y="398" width="16" height="118" rx="8" fill="url(#enalog-chart)"/>
+    <rect x="984" y="426" width="16" height="90" rx="8" fill="url(#enalog-chart)"/>
+    <rect x="1044" y="450" width="16" height="66" rx="8" fill="url(#enalog-chart)"/>
+  </g>
+  <path d="M664 560H1080" stroke="#D8DCE8" stroke-width="2"/>
+  <text x="666" y="592" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Jan</text>
+  <text x="734" y="592" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Feb</text>
+  <text x="798" y="592" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Mar</text>
+  <text x="858" y="592" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Apr</text>
+  <text x="918" y="592" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Maj</text>
+  <text x="978" y="592" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Jun</text>
+  <text x="1038" y="592" fill="#8F95AB" font-family="Segoe UI, Arial, sans-serif" font-size="15">Jul</text>
+</svg>

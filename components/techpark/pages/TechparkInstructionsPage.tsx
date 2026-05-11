@@ -13,6 +13,12 @@ import type { FormStatus, ProgramLevel, TechparkPageProps } from '../types';
 
 const PROGRAM_START_DATE = new Date(2026, 5, 1, 0, 0, 0, 0);
 
+interface TechparkInstructionsPageProps extends TechparkPageProps {
+  linkedProgramId: string | null;
+  onLinkProgram: (programId: string, historyMode?: 'push' | 'replace') => void;
+  onClearLinkedProgram: (historyMode?: 'push' | 'replace') => void;
+}
+
 const getCountdownParts = (targetDate: Date) => {
   const diff = Math.max(targetDate.getTime() - Date.now(), 0);
 
@@ -42,7 +48,13 @@ const getEnglishCountdownLabel = (unit: 'days' | 'hours' | 'minutes' | 'seconds'
   return value === 1 ? 'SEC' : 'SECS';
 };
 
-export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, onNavigate }) => {
+export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> = ({
+  lang,
+  onNavigate,
+  linkedProgramId,
+  onLinkProgram,
+  onClearLinkedProgram,
+}) => {
   const isBs = lang === 'bs';
   const joinModalScrollRef = React.useRef<HTMLDivElement>(null);
   const [selectedProgramId, setSelectedProgramId] = useState(programs[0].id);
@@ -73,6 +85,24 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
 
     return () => window.clearInterval(intervalId);
   }, [programStartDate]);
+
+  useEffect(() => {
+    if (!linkedProgramId) {
+      setIsJoinModalOpen(false);
+      return;
+    }
+
+    const linkedProgram = programs.find((program) => program.id === linkedProgramId);
+
+    if (!linkedProgram) {
+      return;
+    }
+
+    setSelectedProgramId(linkedProgram.id);
+    setStatus(null);
+    setIsAgendaModalOpen(false);
+    setIsJoinModalOpen(true);
+  }, [linkedProgramId]);
 
   useEffect(() => {
     if (!isJoinModalOpen || isAgendaModalOpen) {
@@ -227,13 +257,21 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
     setSelectedProgramId(programId);
     setSelectedLevel(level);
     setStatus(null);
+    setIsAgendaModalOpen(false);
     setIsJoinModalOpen(true);
+    onLinkProgram(programId, 'push');
   };
 
   const openAgenda = (programId: string, level: ProgramLevel) => {
     setSelectedProgramId(programId);
     setSelectedLevel(level);
     setIsAgendaModalOpen(true);
+  };
+
+  const closeJoinModal = () => {
+    setIsJoinModalOpen(false);
+    setStatus(null);
+    onClearLinkedProgram('replace');
   };
 
   const openMembershipOffer = () => {
@@ -293,7 +331,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
         }}
       >
         <div className="flex flex-col items-center gap-1.5" style={{ animation: 'campScrollFloat 2.8s ease-in-out infinite' }}>
-          <div className="text-center text-[11px] font-mono tracking-[0.24em] uppercase text-white/75">
+          <div className="whitespace-nowrap text-center text-[11px] font-mono tracking-[0.24em] uppercase text-white/75">
             {labels.scrollPrompt}
           </div>
           <ChevronDown
@@ -357,7 +395,7 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
 
       <SplitActionModal
         open={isJoinModalOpen}
-        onClose={() => setIsJoinModalOpen(false)}
+        onClose={closeJoinModal}
         scrollContainerRef={joinModalScrollRef}
         mobileFooterAccessory={scrollHint}
         eyebrow=""
@@ -405,7 +443,15 @@ export const TechparkInstructionsPage: React.FC<TechparkPageProps> = ({ lang, on
         <form id="bootcamp-enrollment-form" onSubmit={handleEnroll} className="flex flex-col pb-6 sm:pb-0 lg:min-h-full">
           <div className="space-y-4">
             <div className="text-xl font-bold">{labels.joinTitle}</div>
-            <select value={selectedProgramId} onChange={(event) => setSelectedProgramId(event.target.value)} className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white focus:border-blue-500 focus:outline-none">
+            <select
+              value={selectedProgramId}
+              onChange={(event) => {
+                setSelectedProgramId(event.target.value);
+                setStatus(null);
+                onLinkProgram(event.target.value, 'replace');
+              }}
+              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-white focus:border-blue-500 focus:outline-none"
+            >
               {programs.map((program) => (
                 <option key={program.id} value={program.id}>
                   {isBs ? program.titleBs : program.title}

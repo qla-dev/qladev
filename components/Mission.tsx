@@ -17,9 +17,9 @@ export const Mission: React.FC<MissionProps> = ({ lang, tMission, tAlgo }) => {
   const missionMeta = lang === 'bs'
     ? {
         systemsTitle: 'SOFTVER + HARDVER',
-        systemsText: 'Od digitalnog proizvoda do integracije fizickih uredjaja i infrastrukture.',
+        systemsText: 'Od digitalnog proizvoda do integracije fizičkih uređaja i infrastrukture.',
         teamTitle: 'ISKUSNI + MLADI',
-        teamText: 'Tim koji spaja seniorsko iskustvo sa novom inzenjerskom energijom.',
+        teamText: 'Tim koji spaja seniorsko iskustvo sa novom inženjerskom energijom.',
         primaryLabel: 'PIONIRSKI PRAVAC',
         secondaryLabel: 'MODEL ISPORUKE',
       }

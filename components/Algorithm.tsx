@@ -247,7 +247,7 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
         </div>
 
         <div className="relative mt-10 h-[22rem] md:h-[29rem]">
-          <div className="absolute inset-x-0 top-0 bottom-16 grid grid-cols-5 gap-4">
+          <div className="absolute inset-x-0 bottom-16 top-10 grid grid-cols-5 gap-4 sm:top-0">
             {pipeline.map((stage, index) => {
               const stageDelta = progressAcrossStages - index;
               const laneClass =
@@ -266,7 +266,7 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
             })}
           </div>
 
-          <div className="absolute inset-x-0 top-4 bottom-16 flex items-end gap-1.5">
+          <div className="absolute inset-x-0 bottom-16 top-14 flex items-end gap-1.5 sm:top-4">
             {equalizerBars.map((bar, index) => {
               const stageDelta = progressAcrossStages - bar.stageIndex;
               const stageActivation = clamp(stageDelta + 0.18);

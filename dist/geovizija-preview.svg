@@ -1,0 +1,59 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="geo-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#D6DFE4"/>
+      <stop offset="1" stop-color="#F4F5F1"/>
+    </linearGradient>
+    <linearGradient id="geo-water" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#2F7669"/>
+      <stop offset="1" stop-color="#1E534A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" rx="36" fill="#F5F5F0"/>
+  <rect x="28" y="28" width="1144" height="619" rx="28" fill="#FFFFFF"/>
+
+  <rect x="28" y="28" width="1144" height="84" rx="28" fill="#12110F"/>
+  <rect x="28" y="76" width="1144" height="36" fill="#12110F"/>
+  <rect x="144" y="46" width="24" height="48" fill="#11C486"/>
+  <text x="182" y="81" fill="#FFFFFF" font-family="Georgia, 'Times New Roman', serif" font-size="33" font-weight="700">GEOVIZIJA</text>
+  <text x="374" y="82" fill="#A9A19D" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">PRIRODA</text>
+  <text x="498" y="82" fill="#A9A19D" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">PUTOVANJA</text>
+  <text x="654" y="82" fill="#A9A19D" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">DRUSTVO</text>
+  <text x="798" y="82" fill="#A9A19D" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">TEHNOLOGIJA</text>
+
+  <rect x="28" y="112" width="760" height="507" fill="url(#geo-sky)"/>
+  <polygon points="28,338 186,184 324,256 520,148 730,250 788,200 788,619 28,619" fill="#A3ABB0"/>
+  <polygon points="112,332 254,214 426,282 586,176 788,286 788,619 112,619" fill="#8B929A"/>
+  <rect x="28" y="428" width="760" height="191" fill="url(#geo-water)"/>
+  <polygon points="288,619 410,472 520,428 616,472 742,619" fill="#68452A"/>
+  <polygon points="342,619 450,488 520,454 584,488 688,619" fill="#8B633C"/>
+  <polygon points="408,619 484,520 520,494 554,520 632,619" fill="#4F3421"/>
+
+  <rect x="820" y="112" width="322" height="507" fill="#FFFFFF"/>
+  <text x="852" y="158" fill="#171412" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700">NAJNOVIJE</text>
+  <rect x="852" y="176" width="254" height="3" fill="#11C486"/>
+
+  <rect x="852" y="226" width="116" height="84" fill="#7B624B"/>
+  <rect x="986" y="232" width="112" height="30" fill="#16A6D4"/>
+  <text x="998" y="253" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">TEHNOLOGIJA</text>
+  <text x="986" y="292" fill="#1E1814" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700">Revolucija zelenog vodika</text>
+  <text x="986" y="320" fill="#1E1814" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700">u Hrvatskoj</text>
+
+  <rect x="852" y="368" width="116" height="84" fill="#8D7A62"/>
+  <rect x="986" y="374" width="132" height="30" fill="#F36B16"/>
+  <text x="999" y="395" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">STANOVNISTVO</text>
+  <text x="986" y="434" fill="#1E1814" font-family="Georgia, 'Times New Roman', serif" font-size="23" font-weight="700">Nestajanje sela:</text>
+  <text x="986" y="462" fill="#1E1814" font-family="Georgia, 'Times New Roman', serif" font-size="23" font-weight="700">Demografski izazovi</text>
+
+  <rect x="852" y="510" width="116" height="84" fill="#234138"/>
+  <rect x="986" y="516" width="120" height="30" fill="#4D62FF"/>
+  <text x="1000" y="537" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">SKOLSTVO</text>
+  <text x="986" y="576" fill="#1E1814" font-family="Georgia, 'Times New Roman', serif" font-size="23" font-weight="700">Eko-skole i buducnost</text>
+  <text x="986" y="604" fill="#1E1814" font-family="Georgia, 'Times New Roman', serif" font-size="23" font-weight="700">obrazovanja</text>
+
+  <rect x="72" y="520" width="146" height="34" rx="8" fill="#14B888"/>
+  <text x="90" y="542" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">PUTOVANJA</text>
+  <text x="72" y="590" fill="#FFFFFF" font-family="Georgia, 'Times New Roman', serif" font-size="40" font-weight="700">Najbolje destinacije</text>
+  <text x="72" y="632" fill="#FFFFFF" font-family="Georgia, 'Times New Roman', serif" font-size="40" font-weight="700">za 2026. godinu</text>
+</svg>

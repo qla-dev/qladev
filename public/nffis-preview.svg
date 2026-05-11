@@ -1,0 +1,76 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="nffis-bg" x1="124" y1="42" x2="1036" y2="624" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D1630"/>
+      <stop offset="0.58" stop-color="#091222"/>
+      <stop offset="1" stop-color="#050B15"/>
+    </linearGradient>
+    <linearGradient id="nffis-panel" x1="160" y1="114" x2="990" y2="564" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#141F3A"/>
+      <stop offset="1" stop-color="#0A1220"/>
+    </linearGradient>
+    <linearGradient id="nffis-accent" x1="156" y1="214" x2="544" y2="372" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2B4F9C"/>
+      <stop offset="1" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <linearGradient id="nffis-risk" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#EF4444"/>
+      <stop offset="0.45" stop-color="#F59E0B"/>
+      <stop offset="1" stop-color="#10B981"/>
+    </linearGradient>
+    <radialGradient id="nffis-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(970 126) rotate(129.741) scale(333.68 381.663)">
+      <stop stop-color="#3B82F6" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" rx="36" fill="#040913"/>
+  <rect x="34" y="34" width="1132" height="607" rx="28" fill="url(#nffis-bg)"/>
+  <rect x="34" y="34" width="1132" height="607" rx="28" fill="url(#nffis-glow)"/>
+
+  <rect x="92" y="90" width="1016" height="498" rx="28" fill="url(#nffis-panel)" stroke="rgba(255,255,255,0.1)"/>
+  <rect x="92" y="90" width="1016" height="76" rx="28" fill="rgba(255,255,255,0.03)"/>
+
+  <rect x="136" y="108" width="50" height="50" rx="16" fill="#07101F" stroke="rgba(34,197,94,0.35)"/>
+  <path d="M161 120L151 146H156L161 132L166 146H171L161 120Z" fill="#16A34A"/>
+
+  <text x="210" y="143" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">NFFIS</text>
+  <text x="210" y="166" fill="#93C5FD" font-family="Segoe UI, Arial, sans-serif" font-size="14" letter-spacing="0.2em">NATIONAL FOREST FIRE INFORMATION SYSTEM</text>
+
+  <rect x="156" y="200" width="410" height="170" rx="26" fill="url(#nffis-accent)"/>
+  <text x="190" y="242" fill="#DBEAFE" font-family="Segoe UI, Arial, sans-serif" font-size="14" letter-spacing="0.18em">CURRENT CONDITIONS</text>
+  <text x="190" y="326" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="92" font-weight="800">8°</text>
+  <text x="330" y="294" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="600">Partly Cloudy</text>
+  <text x="330" y="326" fill="#BFDBFE" font-family="Segoe UI, Arial, sans-serif" font-size="18">Feels like 5°</text>
+
+  <rect x="598" y="200" width="456" height="170" rx="26" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="636" y="242" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="14" letter-spacing="0.18em">FIRE RISK ANALYSIS (LIVE)</text>
+  <text x="636" y="284" fill="#E2E8F0" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="600">Angstrom Index</text>
+  <rect x="636" y="302" width="360" height="12" rx="6" fill="rgba(255,255,255,0.08)"/>
+  <rect x="636" y="302" width="360" height="12" rx="6" fill="url(#nffis-risk)"/>
+  <text x="1018" y="286" fill="#10B981" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" text-anchor="end">LOW</text>
+
+  <text x="636" y="336" fill="#E2E8F0" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="600">KBDI (Drought)</text>
+  <rect x="636" y="354" width="360" height="12" rx="6" fill="rgba(255,255,255,0.08)"/>
+  <rect x="636" y="354" width="246" height="12" rx="6" fill="#F59E0B"/>
+  <text x="1018" y="338" fill="#F59E0B" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" text-anchor="end">MODERATE</text>
+
+  <rect x="156" y="404" width="898" height="132" rx="26" fill="rgba(5,10,18,0.82)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="190" y="446" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="14" letter-spacing="0.18em">WEATHER + FIRE DATA</text>
+
+  <rect x="190" y="466" width="192" height="46" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+  <text x="214" y="486" fill="#93C5FD" font-family="Segoe UI, Arial, sans-serif" font-size="13" letter-spacing="0.12em">WIND</text>
+  <text x="214" y="505" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">8 km/h</text>
+
+  <rect x="406" y="466" width="192" height="46" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+  <text x="430" y="486" fill="#93C5FD" font-family="Segoe UI, Arial, sans-serif" font-size="13" letter-spacing="0.12em">HUMIDITY</text>
+  <text x="430" y="505" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">79%</text>
+
+  <rect x="622" y="466" width="192" height="46" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+  <text x="646" y="486" fill="#93C5FD" font-family="Segoe UI, Arial, sans-serif" font-size="13" letter-spacing="0.12em">PRESSURE</text>
+  <text x="646" y="505" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">1013 hPa</text>
+
+  <rect x="838" y="466" width="192" height="46" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+  <text x="862" y="486" fill="#93C5FD" font-family="Segoe UI, Arial, sans-serif" font-size="13" letter-spacing="0.12em">FORECAST</text>
+  <text x="862" y="505" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">24-Hour</text>
+</svg>

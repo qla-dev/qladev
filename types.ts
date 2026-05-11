@@ -12,8 +12,12 @@ export interface Product {
   description: string;
   image: string;
   logo?: string;
+  logoSurface?: 'light' | 'dark';
+  logoClassName?: string;
   cta: string;
+  primaryUrl?: string;
   secondaryCta?: string;
+  secondaryUrl?: string;
   launchDate?: string;
 }
 

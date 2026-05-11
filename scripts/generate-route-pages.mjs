@@ -1,6 +1,11 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  BOOTCAMP_PROGRAMS,
+  getBootCampProgramMeta,
+  getBootCampProgramPath,
+} from '../components/techpark/bootcampProgramLinks.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -15,7 +20,7 @@ const pages = [
     locale: 'bs_BA',
     alternateLocale: 'en_US',
     title: 'qla.dev Techpark - Kreativni tech prostor za djecu i mlade u Sarajevu',
-    description: 'Techpark je kreativni tech prostor za djecu i mlade, sa boot-camp programima, open-space članstvom, gaming sadržajem i 3D print opremom.',
+    description: 'Techpark je kreativni tech prostor za djecu i mlade, sa boot-camp programima, open-space clanstvom, gaming sadrzajem i 3D print opremom.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
@@ -24,7 +29,7 @@ const pages = [
     locale: 'bs_BA',
     alternateLocale: 'en_US',
     title: 'qla.dev Techpark - Boot-camp programi',
-    description: 'Prijavi se na jedan od boot-camp programa unutar qla.dev Techparka. Izaberi između Web Deva, App Deva, AI-a, 3D-a, UI/UX-a, Robotike, Game Deva, Robloxa i Video Editinga.',
+    description: 'Prijavi se na jedan od boot-camp programa unutar qla.dev Techparka. Izaberi izmedju Web Deva, App Deva, AI-a, 3D-a, UI/UX-a, Robotike, Game Deva, Robloxa i Video Editinga.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
@@ -33,7 +38,7 @@ const pages = [
     locale: 'bs_BA',
     alternateLocale: 'en_US',
     title: 'qla.dev Techpark - Membership rezervacije',
-    description: 'Rezerviši Techpark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.',
+    description: 'Rezervisi Techpark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
@@ -42,7 +47,7 @@ const pages = [
     locale: 'bs_BA',
     alternateLocale: 'en_US',
     title: 'qla.dev Techpark - Line-Follower Hackathon',
-    description: '48h robotički sprint sa istim kitom za sve timove, Beginner i Advanced trackovima, i mapama koje se otkrivaju na startu.',
+    description: '48h roboticki sprint sa istim kitom za sve timove, Beginner i Advanced trackovima, i mapama koje se otkrivaju na startu.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
@@ -50,10 +55,27 @@ const pages = [
     lang: 'bs',
     locale: 'bs_BA',
     alternateLocale: 'en_US',
-    title: 'qla.dev Techpark - Prijava članova',
-    description: 'Višekorak prijava za Techpark članove, rezervacije, programe i budući attendance check-in.',
+    title: 'qla.dev Techpark - Prijava clanova',
+    description: 'Visekorak prijava za Techpark clanove, rezervacije, programe i buduci attendance check-in.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
+  ...BOOTCAMP_PROGRAMS.map((program) => {
+    const meta = getBootCampProgramMeta('bs', program.id);
+
+    if (!meta) {
+      throw new Error(`Missing boot-camp metadata for ${program.id}`);
+    }
+
+    return {
+      route: getBootCampProgramPath(program.id),
+      lang: 'bs',
+      locale: 'bs_BA',
+      alternateLocale: 'en_US',
+      title: meta.title,
+      description: meta.description,
+      image: `${siteOrigin}/logo-techpark.png`,
+    };
+  }),
 ];
 
 const escapeHtml = (value) =>

@@ -101,8 +101,8 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
       : 'A 15-place coding + chill lounge, PS5, VR, 3D printer, rooftop location, and everything else that makes Techpark a space you enter to build something meaningful.',
     spaceTitle: isBs ? 'PROSTOR + LOKACIJA' : 'SPACE + LOCATION',
     spaceSubtitle: isBs
-      ? 'Tri pogleda na isti prostor: gdje smo, kako je složen i zašto dnevni ritam ostaje siguran i jasan za djecu, mlade i roditelje.'
-      : 'Three ways to read the same space: where it is, how it is laid out, and why the daytime rhythm stays safe and clear for kids, youth, and parents.',
+      ? 'Na vrhu zgrade, sa prelijepim pogledom na grad, pristupom terasi i cjelodnevnim izvorom prirodne svjetlosti, Techpark nudi inspirativan prostor za rad, učenje, druženje i razvoj novih ideja.'
+      : 'At the top of the building, with a beautiful city view, terrace access, and natural daylight throughout the day, Techpark offers an inspiring space for work, learning, social time, and building new ideas.',
     flowEyebrow: isBs ? 'DNEVNI FLOW' : 'DAILY FLOW',
     flowCards: [
       {
@@ -271,7 +271,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
             { title: 'Rooftop lokacija', text: 'Vrh zgrade daje više mira, bolji pogled i čišći dnevni osjećaj prostora.' },
             { title: 'Prirodno svjetlo', text: 'Sunce i otvorenost prostora čine boravak ugodnijim i manje napornim.' },
             { title: 'Stalan parking', text: 'Parking je dostupan za više vozila, pa dolazak i preuzimanje ostaju jednostavni.' },
-            { title: 'Laka orijentacija', text: 'Adresa je jasna, pristup jednostavan, a roditelji lako znaju gdje djeca dolaze.' },
+            { title: 'Jednostavan dolazak', text: 'Lokacija je laka za pronaći, pristup zgradi pregledan, a dolazak i preuzimanje djece ostaju jednostavni i bez nepotrebnog lutanja.' },
             { title: 'Mirniji kontekst', text: 'Nije haotičan prolazni prostor, nego mjesto koje već na ulazu djeluje fokusirano.' },
             { title: 'Dobra gradska lokacija', text: 'Lokacija je gradska, ali i dalje dovoljno mirna za dnevni ritam rada i programa.' },
           ]
@@ -279,7 +279,7 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
             { title: 'Rooftop location', text: 'The top-floor position gives the room more calm, a better view, and a cleaner daytime feel.' },
             { title: 'Natural light', text: 'Sunlight and openness make longer stays more pleasant and less draining.' },
             { title: 'Permanent parking', text: 'Parking is available for multiple vehicles, keeping drop-off and pickup simple.' },
-            { title: 'Easy to find', text: 'The address is clear, access is straightforward, and parents always know where kids arrive.' },
+            { title: 'Easy arrival', text: 'The location is easy to find, the building approach is straightforward, and drop-off or pickup stays simple without unnecessary confusion.' },
             { title: 'Calmer context', text: 'It is not a chaotic pass-through space, but a place that already feels focused on entry.' },
             { title: 'City access', text: 'The location is urban and connected, while still calm enough for daily work and programs.' },
           ],

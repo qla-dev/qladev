@@ -24,7 +24,7 @@ export const Contact: React.FC<ContactProps> = ({ t }) => {
               <div className="bg-white/10 backdrop-blur p-6 rounded-lg">
                 <Mail className="w-8 h-8 mb-4 text-cyan-300" />
                 <h3 className="font-bold text-lg mb-2">{t.email}</h3>
-                <p className="text-blue-100 text-sm font-mono text-xl">contact@qla.dev</p>
+                <p className="text-blue-100 text-sm font-mono text-xl">info@qla.dev</p>
               </div>
 
               <div className="bg-white/10 backdrop-blur p-6 rounded-lg">

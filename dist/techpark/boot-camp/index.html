@@ -10,7 +10,7 @@
     <!-- Primary Meta Tags -->
     <title>qla.dev Techpark - Boot-camp programi</title>
     <meta name="title" content="qla.dev Techpark - Boot-camp programi">
-    <meta name="description" content="Prijavi se na jedan od boot-camp programa unutar qla.dev Techparka. Izaberi između Web Deva, App Deva, AI-a, 3D-a, UI/UX-a, Robotike, Game Deva, Robloxa i Video Editinga.">
+    <meta name="description" content="Prijavi se na jedan od boot-camp programa unutar qla.dev Techparka. Izaberi izmedju Web Deva, App Deva, AI-a, 3D-a, UI/UX-a, Robotike, Game Deva, Robloxa i Video Editinga.">
     <meta name="keywords" content="software development, hardware solutions, in-house software, AI, IoT, cloud computing, web development, mobile apps, qla.dev, Sarajevo, Bosnia, tech innovation">
     <meta name="author" content="qla.dev">
     <meta name="robots" content="index, follow">
@@ -20,7 +20,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://qla.dev/techpark/boot-camp">
     <meta property="og:title" content="qla.dev Techpark - Boot-camp programi">
-    <meta property="og:description" content="Prijavi se na jedan od boot-camp programa unutar qla.dev Techparka. Izaberi između Web Deva, App Deva, AI-a, 3D-a, UI/UX-a, Robotike, Game Deva, Robloxa i Video Editinga.">
+    <meta property="og:description" content="Prijavi se na jedan od boot-camp programa unutar qla.dev Techparka. Izaberi izmedju Web Deva, App Deva, AI-a, 3D-a, UI/UX-a, Robotike, Game Deva, Robloxa i Video Editinga.">
     <meta property="og:image" content="https://qla.dev/logo-techpark.png">
     <meta property="og:site_name" content="qla.dev">
     <meta property="og:locale" content="bs_BA">
@@ -30,7 +30,7 @@
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://qla.dev/techpark/boot-camp">
     <meta property="twitter:title" content="qla.dev Techpark - Boot-camp programi">
-    <meta property="twitter:description" content="Prijavi se na jedan od boot-camp programa unutar qla.dev Techparka. Izaberi između Web Deva, App Deva, AI-a, 3D-a, UI/UX-a, Robotike, Game Deva, Robloxa i Video Editinga.">
+    <meta property="twitter:description" content="Prijavi se na jedan od boot-camp programa unutar qla.dev Techparka. Izaberi izmedju Web Deva, App Deva, AI-a, 3D-a, UI/UX-a, Robotike, Game Deva, Robloxa i Video Editinga.">
     <meta property="twitter:image" content="https://qla.dev/logo-techpark.png">
 
     <script>
@@ -49,8 +49,87 @@
           '/techpark/instructions': '/techpark/boot-camp',
           '/techpark/line-follower-hackathon': '/techpark/line-follower-hackathone'
         };
+        var bootCampPrograms = {
+          'web-dev': { title: 'Web Dev', titleBs: 'Web Dev' },
+          '3d-modeling': { title: '3D Modeling and 3D Print', titleBs: '3D Modeling and 3D Print' },
+          'app-dev': { title: 'App Dev', titleBs: 'App Dev' },
+          'ui-ux': { title: 'UI/UX Graphic Design', titleBs: 'UI/UX Graphic Design' },
+          'ai-program': { title: 'AI Program', titleBs: 'AI Program' },
+          'arduino-robotics': { title: 'Arduino and Robotics', titleBs: 'Arduino i Robotika' },
+          'game-dev': { title: 'Game Dev', titleBs: 'Game Dev' },
+          'roblox-game-dev': { title: 'Roblox Game Dev', titleBs: 'Roblox Game Dev' },
+          'video-editing': { title: 'Video Editing', titleBs: 'Video Editing' }
+        };
+        var bootCampRoutePrefixes = [
+          '/techpark/boot-camp/',
+          '/techpark/instructions/',
+          '/technopark/boot-camp/',
+          '/technopark/instructions/'
+        ];
+        var getBootCampProgramIdFromPath = function (pathname) {
+          for (var prefixIndex = 0; prefixIndex < bootCampRoutePrefixes.length; prefixIndex += 1) {
+            var prefix = bootCampRoutePrefixes[prefixIndex];
+
+            if (!pathname.startsWith(prefix)) {
+              continue;
+            }
+
+            var candidate = pathname.slice(prefix.length).split('/')[0];
+
+            if (candidate && bootCampPrograms[candidate]) {
+              return candidate;
+            }
+          }
+
+          return null;
+        };
+        var getBootCampProgramIdFromSearch = function (search) {
+          var params = new URLSearchParams(search);
+          var preferred = params.get('program') || params.get('camp');
+
+          if (preferred && bootCampPrograms[preferred]) {
+            return preferred;
+          }
+
+          var entries = Array.from(params.entries());
+          for (var entryIndex = 0; entryIndex < entries.length; entryIndex += 1) {
+            var entry = entries[entryIndex];
+            var key = entry[0];
+            var value = entry[1];
+
+            if (bootCampPrograms[key]) {
+              return key;
+            }
+
+            if ((key === 'program' || key === 'camp') && value && bootCampPrograms[value]) {
+              return value;
+            }
+          }
+
+          return null;
+        };
+        var getBootCampProgramMeta = function (currentLang, programId) {
+          var program = bootCampPrograms[programId];
+
+          if (!program) {
+            return null;
+          }
+
+          if (currentLang === 'bs') {
+            return {
+              title: 'qla.dev Techpark - ' + program.titleBs + ' boot-camp prijava',
+              description: 'Otvori direktnu prijavu za ' + program.titleBs + ' program unutar qla.dev Techparka. Pregledaj program, Beginner i Advanced put, mentora i uđi odmah u prijavni modal.'
+            };
+          }
+
+          return {
+            title: 'qla.dev Techpark - ' + program.title + ' Boot-camp Enrollment',
+            description: 'Open the direct enrollment flow for the ' + program.title + ' program inside qla.dev Techpark. Review the program, compare Beginner and Advanced tracks, and land straight in the application modal.'
+          };
+        };
         var cleanPath = trimTrailingSlash(window.location.pathname);
         var currentRoute = '/';
+        var bootCampProgramId = getBootCampProgramIdFromPath(cleanPath);
 
         if (legacyRouteRedirects[cleanPath]) {
           currentRoute = legacyRouteRedirects[cleanPath];
@@ -58,11 +137,15 @@
 
         if (currentRoute === '/') {
           for (var i = 1; i < routes.length; i += 1) {
-            if (cleanPath === routes[i] || cleanPath.endsWith(routes[i])) {
+            if (cleanPath === routes[i] || cleanPath.endsWith(routes[i]) || cleanPath.indexOf(routes[i] + '/') !== -1) {
               currentRoute = routes[i];
               break;
             }
           }
+        }
+
+        if (!bootCampProgramId && currentRoute === '/techpark/boot-camp') {
+          bootCampProgramId = getBootCampProgramIdFromSearch(window.location.search);
         }
 
         var lang = currentRoute.startsWith('/techpark') ? 'bs' : 'en';
@@ -121,7 +204,9 @@
           }
         };
 
-        var meta = metaMap[lang][currentRoute];
+        var meta = currentRoute === '/techpark/boot-camp' && bootCampProgramId
+          ? getBootCampProgramMeta(lang, bootCampProgramId)
+          : metaMap[lang][currentRoute];
         var setMetaContent = function (selector, content) {
           var element = document.head.querySelector(selector);
           if (element) {
@@ -290,7 +375,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/assets/index-DjUwjQul.js"></script>
+  <script type="module" crossorigin src="/assets/index-DLAX98sO.js"></script>
 </head>
   <body>
     <div id="root"></div>

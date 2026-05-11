@@ -20,6 +20,13 @@ import {
   TechparkMembershipPage,
   TechparkSignInPage,
 } from './components/techpark';
+import {
+  getBootCampProgramIdFromPath,
+  getBootCampProgramIdFromSearch,
+  getBootCampProgramMeta,
+  getBootCampProgramPath,
+  isBootCampProgramId,
+} from './components/techpark/bootcampProgramLinks.js';
 import { TEXT_CONTENT } from './constants';
 import { Language } from './types';
 
@@ -47,6 +54,60 @@ const LEGACY_ROUTE_REDIRECTS: Partial<Record<string, AppRoute>> = {
 };
 
 const trimTrailingSlash = (value: string) => (value.length > 1 && value.endsWith('/') ? value.slice(0, -1) : value);
+const ROUTE_MATCHERS = [...ROUTES.filter((route) => route !== '/'), ...Object.keys(LEGACY_ROUTE_REDIRECTS)].sort((a, b) => b.length - a.length);
+const BOOT_CAMP_ROUTE = '/techpark/boot-camp';
+const LEGACY_BOOT_CAMP_ROUTE_PREFIXES = [
+  '/techpark/instructions/',
+  '/technopark/boot-camp/',
+  '/technopark/instructions/',
+];
+
+const findRouteIndex = (pathname: string, route: string) => {
+  const routeIndex = pathname.indexOf(route);
+
+  if (routeIndex < 0) {
+    return -1;
+  }
+
+  const routeEndIndex = routeIndex + route.length;
+  const nextChar = pathname.charAt(routeEndIndex);
+
+  if (routeEndIndex === pathname.length || nextChar === '/') {
+    return routeIndex;
+  }
+
+  return -1;
+};
+
+const getPathWithoutBase = (pathname: string, basePath: string) => {
+  const cleanPath = trimTrailingSlash(pathname);
+
+  if (basePath && cleanPath.startsWith(basePath)) {
+    return cleanPath.slice(basePath.length) || '/';
+  }
+
+  return cleanPath || '/';
+};
+
+const resolveCanonicalPath = (pathWithoutBase: string) => {
+  const directRedirect = LEGACY_ROUTE_REDIRECTS[pathWithoutBase];
+
+  if (directRedirect) {
+    return directRedirect;
+  }
+
+  if (pathWithoutBase.startsWith(`${BOOT_CAMP_ROUTE}/`)) {
+    return BOOT_CAMP_ROUTE;
+  }
+
+  for (const legacyPrefix of LEGACY_BOOT_CAMP_ROUTE_PREFIXES) {
+    if (pathWithoutBase.startsWith(legacyPrefix)) {
+      return BOOT_CAMP_ROUTE;
+    }
+  }
+
+  return pathWithoutBase;
+};
 
 interface PageMeta {
   title: string;
@@ -110,24 +171,18 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
 
 const detectBasePath = (pathname: string) => {
   const cleanPath = trimTrailingSlash(pathname);
-  const routeMatchers = [...ROUTES.filter((route) => route !== '/'), ...Object.keys(LEGACY_ROUTE_REDIRECTS)];
-  const matchedRoute = routeMatchers.find(
-    (route) => cleanPath === route || cleanPath.endsWith(route)
-  );
+  const matchedRoute = ROUTE_MATCHERS.find((route) => findRouteIndex(cleanPath, route) >= 0);
 
   if (matchedRoute) {
-    return cleanPath.slice(0, -matchedRoute.length);
+    return cleanPath.slice(0, findRouteIndex(cleanPath, matchedRoute));
   }
 
   return cleanPath === '/' ? '' : cleanPath;
 };
 
 const normalizeRoute = (pathname: string, basePath: string): AppRoute => {
-  const cleanPath = trimTrailingSlash(pathname);
-  const pathWithoutBase = basePath && cleanPath.startsWith(basePath)
-    ? cleanPath.slice(basePath.length) || '/'
-    : cleanPath || '/';
-  const canonicalPath = LEGACY_ROUTE_REDIRECTS[pathWithoutBase] ?? pathWithoutBase;
+  const pathWithoutBase = getPathWithoutBase(pathname, basePath);
+  const canonicalPath = resolveCanonicalPath(pathWithoutBase);
 
   if (canonicalPath === '' || canonicalPath === '/') {
     return '/';
@@ -137,15 +192,29 @@ const normalizeRoute = (pathname: string, basePath: string): AppRoute => {
 };
 
 const getLegacyRedirectRoute = (pathname: string, basePath: string) => {
-  const cleanPath = trimTrailingSlash(pathname);
-  const pathWithoutBase = basePath && cleanPath.startsWith(basePath)
-    ? cleanPath.slice(basePath.length) || '/'
-    : cleanPath || '/';
+  const pathWithoutBase = getPathWithoutBase(pathname, basePath);
 
   return LEGACY_ROUTE_REDIRECTS[pathWithoutBase] ?? null;
 };
 
 const buildPath = (route: AppRoute, basePath: string) => (route === '/' ? `${basePath || ''}/` : `${basePath}${route}`);
+const buildBootCampProgramPath = (programId: string, basePath: string) => `${basePath}${getBootCampProgramPath(programId)}`;
+const getBootCampProgramIdFromLocation = (pathname: string, search: string, basePath: string) => {
+  const pathWithoutBase = getPathWithoutBase(pathname, basePath);
+  const programIdFromPath = getBootCampProgramIdFromPath(pathWithoutBase);
+
+  if (programIdFromPath) {
+    return programIdFromPath;
+  }
+
+  const canonicalPath = resolveCanonicalPath(pathWithoutBase);
+
+  if (canonicalPath !== BOOT_CAMP_ROUTE) {
+    return null;
+  }
+
+  return getBootCampProgramIdFromSearch(search);
+};
 const getAnchorNavOffset = () => {
   const nav = document.querySelector('nav');
   return nav instanceof HTMLElement ? nav.offsetHeight : 80;
@@ -159,6 +228,9 @@ const App: React.FC = () => {
   const [basePath] = useState(() => detectBasePath(window.location.pathname));
   const [route, setRoute] = useState<AppRoute>(() => normalizeRoute(window.location.pathname, basePath));
   const [displayRoute, setDisplayRoute] = useState<AppRoute>(() => normalizeRoute(window.location.pathname, basePath));
+  const [linkedBootCampProgramId, setLinkedBootCampProgramId] = useState<string | null>(() =>
+    getBootCampProgramIdFromLocation(window.location.pathname, window.location.search, basePath),
+  );
   const [pendingRouteSection, setPendingRouteSection] = useState<{ route: AppRoute; sectionId: string } | null>(null);
   const [routeTransition, setRouteTransition] = useState<{
     phase: RouteTransitionPhase;
@@ -228,12 +300,31 @@ const App: React.FC = () => {
   }, [basePath]);
 
   useEffect(() => {
+    const programId = getBootCampProgramIdFromLocation(window.location.pathname, window.location.search, basePath);
+    const currentRoute = normalizeRoute(window.location.pathname, basePath);
+
+    setLinkedBootCampProgramId(programId);
+
+    if (!programId || currentRoute !== BOOT_CAMP_ROUTE) {
+      return;
+    }
+
+    const canonicalPath = buildBootCampProgramPath(programId, basePath);
+    const currentPath = trimTrailingSlash(window.location.pathname);
+
+    if (trimTrailingSlash(canonicalPath) !== currentPath || window.location.search) {
+      window.history.replaceState({}, '', canonicalPath);
+    }
+  }, [basePath, linkedBootCampProgramId, route]);
+
+  useEffect(() => {
     const handlePopState = () => {
       const legacyRedirectRoute = getLegacyRedirectRoute(window.location.pathname, basePath);
       if (legacyRedirectRoute) {
         window.history.replaceState({}, '', buildPath(legacyRedirectRoute, basePath));
       }
       setRoute(normalizeRoute(window.location.pathname, basePath));
+      setLinkedBootCampProgramId(getBootCampProgramIdFromLocation(window.location.pathname, window.location.search, basePath));
       setPendingRouteSection(null);
     };
 
@@ -267,6 +358,12 @@ const App: React.FC = () => {
       window.clearTimeout(switchTimer);
     };
   }, [displayRoute, route]);
+
+  useEffect(() => {
+    if (route !== BOOT_CAMP_ROUTE && linkedBootCampProgramId !== null) {
+      setLinkedBootCampProgramId(null);
+    }
+  }, [linkedBootCampProgramId, route]);
 
   useEffect(() => {
     if (routeTransition.phase !== 'enter') {
@@ -336,8 +433,14 @@ const App: React.FC = () => {
   }, [displayRoute, pendingRouteSection]);
 
   useEffect(() => {
-    const meta = PAGE_META[lang][route];
-    const pageUrl = new URL(buildPath(route, basePath), window.location.origin).toString();
+    const programMeta = route === BOOT_CAMP_ROUTE && linkedBootCampProgramId
+      ? getBootCampProgramMeta(lang, linkedBootCampProgramId)
+      : null;
+    const meta = programMeta ?? PAGE_META[lang][route];
+    const pagePath = route === BOOT_CAMP_ROUTE && linkedBootCampProgramId
+      ? buildBootCampProgramPath(linkedBootCampProgramId, basePath)
+      : buildPath(route, basePath);
+    const pageUrl = new URL(pagePath, window.location.origin).toString();
     const ogLocale = lang === 'bs' ? 'bs_BA' : 'en_US';
 
     document.title = meta.title;
@@ -364,7 +467,7 @@ const App: React.FC = () => {
     setMetaContent('meta[property="twitter:title"]', meta.title);
     setMetaContent('meta[property="twitter:description"]', meta.description);
     setMetaContent('meta[property="twitter:url"]', pageUrl);
-  }, [basePath, lang, route]);
+  }, [basePath, lang, linkedBootCampProgramId, route]);
 
   const pushRoute = (nextRoute: AppRoute) => {
     const targetPath = buildPath(nextRoute, basePath);
@@ -377,9 +480,61 @@ const App: React.FC = () => {
     setRoute(nextRoute);
   };
 
+  const setBootCampProgramRoute = (programId: string, historyMode: 'push' | 'replace' = 'push') => {
+    if (!isBootCampProgramId(programId)) {
+      return;
+    }
+
+    const targetPath = buildBootCampProgramPath(programId, basePath);
+    const currentPath = trimTrailingSlash(window.location.pathname);
+
+    if (trimTrailingSlash(targetPath) !== currentPath || window.location.search) {
+      if (historyMode === 'replace') {
+        window.history.replaceState({}, '', targetPath);
+      } else {
+        window.history.pushState({}, '', targetPath);
+      }
+    }
+
+    setLinkedBootCampProgramId(programId);
+    setRoute(BOOT_CAMP_ROUTE);
+  };
+
+  const clearBootCampProgramRoute = (historyMode: 'push' | 'replace' = 'replace') => {
+    const targetPath = buildPath(BOOT_CAMP_ROUTE, basePath);
+    const currentPath = trimTrailingSlash(window.location.pathname);
+
+    if (trimTrailingSlash(targetPath) !== currentPath || window.location.search) {
+      if (historyMode === 'replace') {
+        window.history.replaceState({}, '', targetPath);
+      } else {
+        window.history.pushState({}, '', targetPath);
+      }
+    }
+
+    setLinkedBootCampProgramId(null);
+    setRoute(BOOT_CAMP_ROUTE);
+  };
+
   const navigateToRoute = (nextRoute: AppRoute) => {
     setStartQuoteMode(false);
     setPendingRouteSection(null);
+
+    if (nextRoute !== BOOT_CAMP_ROUTE) {
+      setLinkedBootCampProgramId(null);
+      pushRoute(nextRoute);
+      return;
+    }
+
+    const currentBootCampPath = trimTrailingSlash(buildPath(BOOT_CAMP_ROUTE, basePath));
+    const activePath = trimTrailingSlash(window.location.pathname);
+
+    if (activePath === currentBootCampPath || activePath.startsWith(`${currentBootCampPath}/`)) {
+      clearBootCampProgramRoute('replace');
+      return;
+    }
+
+    setLinkedBootCampProgramId(null);
     pushRoute(nextRoute);
   };
 
@@ -544,7 +699,15 @@ const App: React.FC = () => {
     }
 
     if (displayRoute === '/techpark/boot-camp') {
-      return <TechparkInstructionsPage lang={lang} onNavigate={navigateToRoute} />;
+      return (
+        <TechparkInstructionsPage
+          lang={lang}
+          onNavigate={navigateToRoute}
+          linkedProgramId={linkedBootCampProgramId}
+          onLinkProgram={setBootCampProgramRoute}
+          onClearLinkedProgram={clearBootCampProgramRoute}
+        />
+      );
     }
 
     if (displayRoute === '/techpark/membership') {
