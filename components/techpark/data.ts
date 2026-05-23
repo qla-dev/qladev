@@ -22,6 +22,7 @@ import type {
   MembershipDayKey,
   MembershipSlot,
   MembershipSlotKey,
+  ProgramMentor,
   Program,
 } from './types';
 
@@ -125,7 +126,7 @@ export const amenities: Amenity[] = [
   },
 ];
 
-const genericTutor: Program['tutor'] = {
+const genericMentor: ProgramMentor = {
   name: 'Techpark Team',
   title: 'Coming soon',
   titleBs: 'Uskoro',
@@ -149,13 +150,15 @@ export const programs: Program[] = [
     enrolled: { beginner: 6, advanced: 4 },
     seats: 15,
     icon: Code2,
-    tutor: {
-      name: 'Nedim Kulašin',
-      title: 'Software Engineer',
-      titleBs: 'Software inžinjer',
-      image: '/generic-tutor-avatar-flat.svg',
-      link: 'https://ba.linkedin.com/in/nedim-kula%C5%A1in-64673911a',
-    },
+    mentors: [
+      {
+        name: 'Nedim Kulašin',
+        title: 'Software Engineer',
+        titleBs: 'Software inžinjer',
+        image: '/mentors/nedim-kulasin.jpg',
+        link: 'https://ba.linkedin.com/in/nedim-kula%C5%A1in-64673911a',
+      },
+    ],
   },
   {
     id: '3d-modeling',
@@ -172,13 +175,15 @@ export const programs: Program[] = [
     enrolled: { beginner: 5, advanced: 3 },
     seats: 15,
     icon: Cuboid,
-    tutor: {
-      name: 'Amer Viteškić',
-      title: 'Mechanical Engineer',
-      titleBs: 'Mašinski inženjer',
-      image: 'https://media.licdn.com/dms/image/v2/D4E03AQFRNAVBRcN2Xw/profile-displayphoto-shrink_200_200/B4EZeNd3MrHIAY-/0/1750425106177?e=2147483647&v=beta&t=xDSvlbk4xe5TDUhquDO7ynnnbYj75fZIGgW9xclsZz8',
-      link: 'https://ba.linkedin.com/in/amerviteskic?trk=people-guest_people_search-card',
-    },
+    mentors: [
+      {
+        name: 'Amer Viteškić',
+        title: 'Mechanical Engineer',
+        titleBs: 'Mašinski inženjer',
+        image: 'https://media.licdn.com/dms/image/v2/D4E03AQFRNAVBRcN2Xw/profile-displayphoto-shrink_200_200/B4EZeNd3MrHIAY-/0/1750425106177?e=2147483647&v=beta&t=xDSvlbk4xe5TDUhquDO7ynnnbYj75fZIGgW9xclsZz8',
+        link: 'https://ba.linkedin.com/in/amerviteskic?trk=people-guest_people_search-card',
+      },
+    ],
   },
   {
     id: 'app-dev',
@@ -195,24 +200,43 @@ export const programs: Program[] = [
     enrolled: { beginner: 6, advanced: 4 },
     seats: 15,
     icon: Smartphone,
-    tutor: genericTutor,
+    mentors: [genericMentor],
   },
   {
     id: 'ui-ux',
     title: 'UI/UX Graphic Design',
     titleBs: 'UI/UX Graphic Design',
-    description: 'Develop a strong eye for interfaces, layout, color, typography, and user flow so design becomes both attractive and functional. The program takes students from rough wireframes to polished visual systems and presentation-ready prototypes.',
-    descriptionBs: 'Razvij osjećaj za interfejs, raspored, boje, tipografiju i korisničke tokove kako bi dizajn bio i privlačan i funkcionalan. Program vodi polaznike od početnih wireframea do dotjeranih vizuelnih sistema i prototipa spremnih za prezentaciju.',
+    description: 'Develop a strong eye for interfaces, layout, color, typography, and user flow so design becomes both attractive and functional. The program takes students from rough wireframes to polished visual systems and presentation-ready prototypes. Beyond screens, students also work on brand identity direction, presentation logic, print-ready materials such as flyers and promo assets, and the full workflow of turning one idea into a cohesive visual brand.',
+    descriptionBs: 'Razvij osjećaj za interfejs, raspored, boje, tipografiju i korisničke tokove kako bi dizajn bio i privlačan i funkcionalan. Program vodi polaznike od početnih wireframea do dotjeranih vizuelnih sistema i prototipa spremnih za prezentaciju. Pored ekrana, radi se i na smjeru identiteta brenda, logici prezentacije, print materijalima poput letaka, flyera i promo vizuala, te kompletnom workflowu kojim jedna ideja postaje zaokružen vizuelni brend.',
     schedule: 'Thu-Sat · Time coming soon',
     scheduleBs: 'Čet-Sub · Uskoro satnica',
-    beginnerFocus: 'Layout, typography, wireframes, and design habits.',
-    beginnerFocusBs: 'Layout, tipografija, wireframe i dobre design navike.',
-    advancedFocus: 'Design systems, product flows, and polished prototypes.',
-    advancedFocusBs: 'Design sistemi, product flow i dotjerani prototipi.',
+    beginnerFocus: 'Company branding foundations, logo direction, typography, color systems, flyer basics, and structured work in Figma.',
+    beginnerFocusBs: 'Osnove brandinga firme, smjer logotipa, tipografija, sistemi boja, osnove flyera i strukturiran rad u Figmi.',
+    advancedFocus: 'Mobile app branding, Figma UI work, branded screens, flyers, promo assets, and a polished end-to-end visual package.',
+    advancedFocusBs: 'Branding mobilne aplikacije, rad u Figmi, brandirani screenovi, flyeri, promo materijali i dotjeran finalni vizuelni paket.',
     enrolled: { beginner: 4, advanced: 3 },
     seats: 15,
     icon: Palette,
-    tutor: genericTutor,
+    mentors: [
+      {
+        name: 'Iman Muslim',
+        title: 'Senior Graphic Designer',
+        titleBs: 'Senior Grafički dizajner',
+        image: '/mentors/iman-muslim.jpg',
+        link: 'https://ba.linkedin.com/in/iman-muslim-9a245b249',
+      },
+      {
+        name: 'Amina Muslim',
+        title: 'Senior Graphic Designer',
+        titleBs: 'Senior Grafički dizajner',
+        image: '/mentors/amina-muslim.jpg',
+        link: 'https://ba.linkedin.com/in/amina-muslim-160802189',
+      },
+    ],
+    agendaMentorByLevel: {
+      beginner: 0,
+      advanced: 1,
+    },
   },
   {
     id: 'ai-program',
@@ -229,7 +253,7 @@ export const programs: Program[] = [
     enrolled: { beginner: 6, advanced: 5 },
     seats: 15,
     icon: Bot,
-    tutor: genericTutor,
+    mentors: [genericMentor],
   },
   {
     id: 'arduino-robotics',
@@ -246,7 +270,7 @@ export const programs: Program[] = [
     enrolled: { beginner: 5, advanced: 4 },
     seats: 15,
     icon: Cpu,
-    tutor: genericTutor,
+    mentors: [genericMentor],
   },
   {
     id: 'game-dev',
@@ -263,7 +287,7 @@ export const programs: Program[] = [
     enrolled: { beginner: 6, advanced: 4 },
     seats: 15,
     icon: Gamepad2,
-    tutor: genericTutor,
+    mentors: [genericMentor],
   },
   {
     id: 'roblox-game-dev',
@@ -280,7 +304,7 @@ export const programs: Program[] = [
     enrolled: { beginner: 5, advanced: 4 },
     seats: 15,
     icon: Gamepad2,
-    tutor: genericTutor,
+    mentors: [genericMentor],
   },
   {
     id: 'video-editing',
@@ -297,6 +321,6 @@ export const programs: Program[] = [
     enrolled: { beginner: 4, advanced: 3 },
     seats: 15,
     icon: Video,
-    tutor: genericTutor,
+    mentors: [genericMentor],
   },
 ];

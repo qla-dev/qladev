@@ -11,7 +11,7 @@ import { TechparkPageShell } from '../shared/TechparkPageShell';
 import { TechparkSubnavSection } from '../shared/TechparkSubnavSection';
 import type { FormStatus, ProgramLevel, TechparkPageProps } from '../types';
 
-const PROGRAM_START_DATE = new Date(2026, 5, 1, 0, 0, 0, 0);
+const PROGRAM_START_TIMESTAMP = Date.parse('2026-07-01T00:00:00+02:00');
 
 interface TechparkInstructionsPageProps extends TechparkPageProps {
   linkedProgramId: string | null;
@@ -19,8 +19,8 @@ interface TechparkInstructionsPageProps extends TechparkPageProps {
   onClearLinkedProgram: (historyMode?: 'push' | 'replace') => void;
 }
 
-const getCountdownParts = (targetDate: Date) => {
-  const diff = Math.max(targetDate.getTime() - Date.now(), 0);
+const getCountdownParts = (targetTimestamp: number) => {
+  const diff = Math.max(targetTimestamp - Date.now(), 0);
 
   return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
@@ -63,8 +63,8 @@ export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> =
   const [status, setStatus] = useState<FormStatus | null>(null);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const [isAgendaModalOpen, setIsAgendaModalOpen] = useState(false);
-  const [programStartDate] = useState(() => PROGRAM_START_DATE);
-  const [countdown, setCountdown] = useState(() => getCountdownParts(programStartDate));
+  const [programStartTimestamp] = useState(() => PROGRAM_START_TIMESTAMP);
+  const [countdown, setCountdown] = useState(() => getCountdownParts(programStartTimestamp));
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const selectedProgram = programs.find((program) => program.id === selectedProgramId) ?? programs[0];
@@ -80,11 +80,11 @@ export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> =
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
-      setCountdown(getCountdownParts(programStartDate));
+      setCountdown(getCountdownParts(programStartTimestamp));
     }, 1000);
 
     return () => window.clearInterval(intervalId);
-  }, [programStartDate]);
+  }, [programStartTimestamp]);
 
   useEffect(() => {
     if (!linkedProgramId) {
@@ -212,7 +212,7 @@ export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> =
   const countdownLabels = {
     eyebrow: isBs ? 'POČETAK SLJEDEĆEG CIKLUSA' : 'PROGRAM START',
   };
-  const countdownDate = isBs ? '1. JUNI 2026. godine' : 'JUNE 1, 2026';
+  const countdownDate = isBs ? '1. JULI 2026. godine' : 'JULY 1, 2026';
   const countdownUnits = [
     {
       label: isBs ? getBosnianCountdownLabel('days', countdown.days) : getEnglishCountdownLabel('days', countdown.days),
@@ -306,8 +306,6 @@ export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> =
     setFormData({ fullName: '', age: '', guardianContact: '', email: '', motivation: '' });
   };
 
-  const selectedTutorTitle = isBs ? selectedProgram.tutor.titleBs : selectedProgram.tutor.title;
-  const hasTutorLink = Boolean(selectedProgram.tutor.link);
   const agendaOverview = isBs ? selectedAgenda.overviewBs : selectedAgenda.overview;
   const agendaWeeks = selectedAgenda.weeks.map((week) => ({
     ...week,
@@ -316,6 +314,70 @@ export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> =
     summary: isBs ? week.summaryBs : week.summary,
     points: isBs ? week.pointsBs : week.points,
   }));
+  const agendaMentorIndex = selectedProgram.agendaMentorByLevel?.[selectedLevel];
+  const agendaMentors =
+    typeof agendaMentorIndex === 'number' && selectedProgram.mentors[agendaMentorIndex]
+      ? [selectedProgram.mentors[agendaMentorIndex]]
+      : selectedProgram.mentors;
+  const selectedMentorCards = agendaMentors.map((mentor) => {
+    const mentorTitle = isBs ? mentor.titleBs : mentor.title;
+
+    if (mentor.link) {
+      return (
+        <a
+          key={mentor.name}
+          href={mentor.link}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="group flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 p-4 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div className="flex min-w-0 items-center gap-4">
+            <img
+              src={mentor.image}
+              alt={mentor.name}
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              className="h-14 w-14 shrink-0 rounded-2xl object-cover"
+            />
+            <div className="min-w-0">
+              <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{labels.mentor}</div>
+              <div className="mt-1 truncate text-lg font-bold">{mentor.name}</div>
+              <p className="text-sm font-mono text-gray-300">{mentorTitle}</p>
+            </div>
+          </div>
+          <span className="inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors group-hover:border-blue-500 group-hover:bg-blue-500/20">
+            {labels.tutorProfile}
+            <ExternalLink className="h-3.5 w-3.5" />
+          </span>
+        </a>
+      );
+    }
+
+    return (
+      <div key={mentor.name} className="rounded-2xl border border-white/10 bg-black/30 p-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 items-center gap-4">
+            <img
+              src={mentor.image}
+              alt={mentor.name}
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              className="h-14 w-14 shrink-0 rounded-2xl object-cover"
+            />
+            <div className="min-w-0">
+              <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{labels.mentor}</div>
+              <div className="mt-1 truncate text-lg font-bold">{mentor.name}</div>
+              <p className="text-sm font-mono text-gray-300">{mentorTitle}</p>
+            </div>
+          </div>
+          <span className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-gray-400">
+            {labels.tutorBlocked}
+            <Lock className="h-3.5 w-3.5" />
+          </span>
+        </div>
+      </div>
+    );
+  });
   const scrollHintOpacity = Math.max(0, 1 - scrollProgress);
   const scrollHintTranslateY = scrollProgress * 36;
   const scrollHintScale = 1 - scrollProgress * 0.08;
@@ -519,56 +581,9 @@ export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> =
                 <div className="mt-2 text-[11px] text-gray-400 font-mono sm:text-xs">{agendaWeeks.length} {labels.weeksCount}</div>
               </div>
             </div>
-            {hasTutorLink ? (
-              <a
-                href={selectedProgram.tutor.link ?? undefined}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="group flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 p-4 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div className="flex min-w-0 items-center gap-4">
-                  <img
-                    src={selectedProgram.tutor.image}
-                    alt={selectedProgram.tutor.name}
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                    className="h-14 w-14 shrink-0 rounded-2xl object-cover"
-                  />
-                  <div className="min-w-0">
-                    <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{labels.mentor}</div>
-                    <div className="mt-1 truncate text-lg font-bold">{selectedProgram.tutor.name}</div>
-                    <p className="text-sm font-mono text-gray-300">{selectedTutorTitle}</p>
-                  </div>
-                </div>
-                <span className="inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-white transition-colors group-hover:border-blue-500 group-hover:bg-blue-500/20">
-                  {labels.tutorProfile}
-                  <ExternalLink className="h-3.5 w-3.5" />
-                </span>
-              </a>
-            ) : (
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex min-w-0 items-center gap-4">
-                    <img
-                      src={selectedProgram.tutor.image}
-                      alt={selectedProgram.tutor.name}
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
-                      className="h-14 w-14 shrink-0 rounded-2xl object-cover"
-                    />
-                    <div className="min-w-0">
-                      <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{labels.mentor}</div>
-                      <div className="mt-1 truncate text-lg font-bold">{selectedProgram.tutor.name}</div>
-                      <p className="text-sm font-mono text-gray-300">{selectedTutorTitle}</p>
-                    </div>
-                  </div>
-                  <span className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-mono font-bold tracking-[0.16em] uppercase text-gray-400">
-                    {labels.tutorBlocked}
-                    <Lock className="h-3.5 w-3.5" />
-                  </span>
-                </div>
-              </div>
-            )}
+            <div className={`grid gap-3 ${agendaMentors.length > 1 ? 'md:grid-cols-2' : ''}`}>
+              {selectedMentorCards}
+            </div>
           </div>
         }
       >

@@ -33,6 +33,14 @@ export interface Amenity {
   icon: LucideIcon;
 }
 
+export interface ProgramMentor {
+  name: string;
+  title: string;
+  titleBs: string;
+  image: string;
+  link: string | null;
+}
+
 export interface Program {
   id: string;
   title: string;
@@ -51,13 +59,8 @@ export interface Program {
   };
   seats: number;
   icon: LucideIcon;
-  tutor: {
-    name: string;
-    title: string;
-    titleBs: string;
-    image: string;
-    link: string | null;
-  };
+  mentors: [ProgramMentor] | [ProgramMentor, ProgramMentor];
+  agendaMentorByLevel?: Partial<Record<ProgramLevel, number>>;
 }
 
 export interface ProgramAgendaWeek {
