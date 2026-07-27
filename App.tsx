@@ -2,24 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { AccentEffectsStyles } from './components/AccentEffectsStyles';
 import { Hero } from './components/Hero';
-import { Stats } from './components/Stats';
-import { About } from './components/About';
-import { Products } from './components/Products';
-import { Services } from './components/Services';
-import { Mission } from './components/Mission';
-import { Algorithm } from './components/Algorithm';
-import { News } from './components/News';
-import { Portfolio } from './components/Portfolio';
-import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ScrollRootProvider } from './components/ScrollRootContext';
-import {
-  TechparkInstructionsPage,
-  TechparkLandingPage,
-  TechparkLineFollowerHackathonePage,
-  TechparkMembershipPage,
-  TechparkSignInPage,
-} from './components/techpark';
 import {
   getBootCampProgramIdFromPath,
   getBootCampProgramIdFromSearch,
@@ -29,6 +13,97 @@ import {
 } from './components/techpark/bootcampProgramLinks.js';
 import { TEXT_CONTENT } from './constants';
 import { Language } from './types';
+
+const Stats = React.lazy(() => import('./components/Stats').then((module) => ({ default: module.Stats })));
+const About = React.lazy(() => import('./components/About').then((module) => ({ default: module.About })));
+const Products = React.lazy(() => import('./components/Products').then((module) => ({ default: module.Products })));
+const Services = React.lazy(() => import('./components/Services').then((module) => ({ default: module.Services })));
+const Mission = React.lazy(() => import('./components/Mission').then((module) => ({ default: module.Mission })));
+const Algorithm = React.lazy(() => import('./components/Algorithm').then((module) => ({ default: module.Algorithm })));
+const News = React.lazy(() => import('./components/News').then((module) => ({ default: module.News })));
+const Portfolio = React.lazy(() => import('./components/Portfolio').then((module) => ({ default: module.Portfolio })));
+const Contact = React.lazy(() => import('./components/Contact').then((module) => ({ default: module.Contact })));
+
+const TechparkLandingPage = React.lazy(() =>
+  import('./components/techpark/pages/TechparkLandingPage').then((module) => ({
+    default: module.TechparkLandingPage,
+  })),
+);
+const TechparkInstructionsPage = React.lazy(() =>
+  import('./components/techpark/pages/TechparkInstructionsPage').then((module) => ({
+    default: module.TechparkInstructionsPage,
+  })),
+);
+const TechparkMembershipPage = React.lazy(() =>
+  import('./components/techpark/pages/TechparkMembershipPage').then((module) => ({
+    default: module.TechparkMembershipPage,
+  })),
+);
+const TechparkLineFollowerHackathonePage = React.lazy(() =>
+  import('./components/techpark/pages/TechparkLineFollowerHackathonePage').then((module) => ({
+    default: module.TechparkLineFollowerHackathonePage,
+  })),
+);
+const TechparkSignInPage = React.lazy(() =>
+  import('./components/techpark/pages/TechparkSignInPage').then((module) => ({
+    default: module.TechparkSignInPage,
+  })),
+);
+
+const SectionFallback = ({ minHeight = '50vh' }: { minHeight?: string }) => (
+  <div
+    aria-hidden="true"
+    className="bg-gradient-to-b from-[#071127] to-black"
+    style={{ minHeight }}
+  />
+);
+
+const DeferredSection = ({
+  children,
+  minHeight,
+  placeholderId,
+}: {
+  children: React.ReactNode;
+  minHeight: string;
+  placeholderId?: string;
+}) => {
+  const placeholderRef = useRef<HTMLDivElement>(null);
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    const placeholder = placeholderRef.current;
+
+    if (!placeholder || !('IntersectionObserver' in window)) {
+      setShouldRender(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        setShouldRender(true);
+        observer.disconnect();
+      },
+      { rootMargin: '600px 0px' },
+    );
+
+    observer.observe(placeholder);
+    return () => observer.disconnect();
+  }, []);
+
+  if (shouldRender) {
+    return <>{children}</>;
+  }
+
+  return (
+    <div ref={placeholderRef} id={placeholderId}>
+      <SectionFallback minHeight={minHeight} />
+    </div>
+  );
+};
 
 type AppRoute =
   | '/'
@@ -730,24 +805,56 @@ const App: React.FC = () => {
           startQuoteMode={startQuoteMode}
           setStartQuoteMode={setStartQuoteMode}
         />
-        <Stats t={t.stats} />
+        <DeferredSection minHeight="30vh">
+          <React.Suspense fallback={<SectionFallback minHeight="30vh" />}>
+            <Stats t={t.stats} />
+          </React.Suspense>
+        </DeferredSection>
 
         <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)] [background-size:6px_6px] opacity-20 mix-blend-overlay pointer-events-none"></div>
-          <About t={t.about} />
-          <Mission lang={lang} tMission={t.mission} tAlgo={t.algorithm} />
+          <DeferredSection minHeight="120vh" placeholderId="about">
+            <React.Suspense fallback={<SectionFallback minHeight="120vh" />}>
+              <About t={t.about} />
+              <Mission lang={lang} tMission={t.mission} tAlgo={t.algorithm} />
+            </React.Suspense>
+          </DeferredSection>
         </div>
 
         <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)] [background-size:6px_6px] opacity-20 mix-blend-overlay pointer-events-none"></div>
-          <Products t={t.products} lang={lang} />
-          <Services t={t.services} />
+          <DeferredSection minHeight="90vh" placeholderId="products">
+            <React.Suspense fallback={<SectionFallback minHeight="90vh" />}>
+              <Products t={t.products} lang={lang} />
+            </React.Suspense>
+          </DeferredSection>
+          <DeferredSection minHeight="140vh" placeholderId="services">
+            <React.Suspense fallback={<SectionFallback minHeight="140vh" />}>
+              <Services t={t.services} />
+            </React.Suspense>
+          </DeferredSection>
         </div>
 
-        <Algorithm lang={lang} t={t.algorithm} />
-        <Portfolio t={t.portfolio} />
-        <News t={t.news} />
-        <Contact t={t.contact} />
+        <DeferredSection minHeight="70vh">
+          <React.Suspense fallback={<SectionFallback minHeight="70vh" />}>
+            <Algorithm lang={lang} t={t.algorithm} />
+          </React.Suspense>
+        </DeferredSection>
+        <DeferredSection minHeight="70vh" placeholderId="portfolio">
+          <React.Suspense fallback={<SectionFallback minHeight="70vh" />}>
+            <Portfolio t={t.portfolio} />
+          </React.Suspense>
+        </DeferredSection>
+        <DeferredSection minHeight="60vh" placeholderId="news">
+          <React.Suspense fallback={<SectionFallback minHeight="60vh" />}>
+            <News t={t.news} />
+          </React.Suspense>
+        </DeferredSection>
+        <DeferredSection minHeight="60vh" placeholderId="contact">
+          <React.Suspense fallback={<SectionFallback minHeight="60vh" />}>
+            <Contact t={t.contact} />
+          </React.Suspense>
+        </DeferredSection>
       </main>
     );
   };
@@ -766,7 +873,17 @@ const App: React.FC = () => {
           : routeTransition.direction === 'forward'
             ? 'opacity-0 translate-x-12 blur-sm scale-95 pointer-events-none select-none'
             : 'opacity-0 -translate-x-12 blur-sm scale-95 pointer-events-none select-none';
-  const routeContent = renderMainContent();
+  const routeContent = (
+    <React.Suspense
+      fallback={
+        <div className="grid min-h-screen place-items-center bg-[#050912]">
+          <span className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-blue-500" />
+        </div>
+      }
+    >
+      {renderMainContent()}
+    </React.Suspense>
+  );
 
   return (
     <div className="font-sans antialiased text-white selection:bg-blue-500 selection:text-white">

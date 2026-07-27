@@ -12,20 +12,16 @@ const root = ReactDOM.createRoot(rootElement);
 
 const BootstrappedApp = () => {
   React.useEffect(() => {
-    let secondFrame = 0;
     const firstFrame = window.requestAnimationFrame(() => {
-      secondFrame = window.requestAnimationFrame(() => {
-        document.documentElement.classList.add('app-ready');
+      document.documentElement.classList.add('app-ready');
 
-        window.setTimeout(() => {
-          document.getElementById('app-boot')?.remove();
-        }, 650);
-      });
+      window.setTimeout(() => {
+        document.getElementById('app-boot')?.remove();
+      }, 450);
     });
 
     return () => {
       window.cancelAnimationFrame(firstFrame);
-      window.cancelAnimationFrame(secondFrame);
     };
   }, []);
 
