@@ -72,8 +72,8 @@ export interface Translations {
   hero: {
     titleParts: string[];
     subtitle: string;
+    business: string;
     quote: string;
-    call: string;
     highPerformance: string;
     secureArchitecture: string;
     terminal: {

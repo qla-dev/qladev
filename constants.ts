@@ -26,8 +26,8 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
         'OF TECH'
       ],
       subtitle: 'Building powerful and tailored software and hardware for in-house as well as for businesses of all sizes.',
+      business: 'BUSINESS',
       quote: 'GET A QUOTE',
-      call: 'CALL',
       highPerformance: 'HIGH PERFORMANCE',
       secureArchitecture: 'SECURE ARCHITECTURE',
       terminal: {
@@ -135,8 +135,8 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
         'TEHNOLOGIJE'
       ],
       subtitle: 'Izrada moćnih i prilagođenih softverskih i hardverskih rješenja za in-house potrebe kao i za sve vrste i oblike biznisa.',
+      business: 'BUSINESS',
       quote: 'ZATRAŽI PONUDU',
-      call: 'POZOVI',
       highPerformance: 'VISOKE PERFORMANSE',
       secureArchitecture: 'SIGURNA ARHITEKTURA',
       terminal: {

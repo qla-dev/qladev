@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Translations, Language } from '../types';
-import { ArrowRight, Phone, Cpu, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Cpu, ShieldCheck } from 'lucide-react';
 import { TechHeroBackdrop } from './TechHeroBackdrop';
 
 interface HeroProps {
@@ -335,19 +335,22 @@ export const Hero: React.FC<HeroProps> = ({ t, lang, startQuoteMode, setStartQuo
                     </p>
 
                     <div className="mt-10 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
-                      <button 
-                        onClick={handleGetQuote}
+                      <a
+                        href="https://business.qla.dev/"
                         className="relative flex min-w-0 items-center justify-center overflow-hidden rounded-sm bg-blue-600 px-4 py-4 text-[11px] font-bold font-mono tracking-[0.12em] text-white group cursor-pointer z-20 sm:w-auto sm:px-8 sm:text-base sm:tracking-wider"
                       >
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <span className="relative flex items-center justify-center gap-2 whitespace-nowrap">
-                          {t.quote} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                          {t.business} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
-                      </button>
+                      </a>
                       
-                      <button className="flex min-w-0 items-center justify-center gap-2 rounded-sm border border-gray-700 bg-transparent px-4 py-4 text-[11px] font-bold font-mono tracking-[0.12em] text-white transition-all group z-20 hover:border-blue-500 hover:text-blue-400 sm:w-auto sm:px-8 sm:text-base sm:tracking-wider">
-                        <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                        <span className="whitespace-nowrap">{t.call}</span>
+                      <button
+                        onClick={handleGetQuote}
+                        className="flex min-w-0 items-center justify-center gap-2 rounded-sm border border-gray-700 bg-transparent px-4 py-4 text-[11px] font-bold font-mono tracking-[0.12em] text-white transition-all group z-20 hover:border-blue-500 hover:text-blue-400 sm:w-auto sm:px-8 sm:text-base sm:tracking-wider"
+                      >
+                        <span className="whitespace-nowrap">{t.quote}</span>
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                       </button>
                     </div>
                     
