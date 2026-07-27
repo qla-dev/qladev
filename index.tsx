@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './styles.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -8,8 +9,31 @@ if (!rootElement) {
 }
 
 const root = ReactDOM.createRoot(rootElement);
+
+const BootstrappedApp = () => {
+  React.useEffect(() => {
+    let secondFrame = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(() => {
+        document.documentElement.classList.add('app-ready');
+
+        window.setTimeout(() => {
+          document.getElementById('app-boot')?.remove();
+        }, 650);
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+    };
+  }, []);
+
+  return <App />;
+};
+
 root.render(
   <React.StrictMode>
-    <App />
+    <BootstrappedApp />
   </React.StrictMode>
 );
