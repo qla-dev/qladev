@@ -13,7 +13,7 @@ export const TechparkPageShell: React.FC<TechparkPageShellProps> = ({ children, 
         <TechHeroBackdrop />
       </div>
     ) : null}
-    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+    <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)] [background-size:6px_6px] opacity-20 mix-blend-overlay pointer-events-none"></div>
     <div className="relative z-10">{children}</div>
   </div>
 );

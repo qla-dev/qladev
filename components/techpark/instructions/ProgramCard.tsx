@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, CalendarDays, Clock3, ExternalLink, FileText, Lock, Shield, Users } from 'lucide-react';
 import { getProgramScheduleBadgeLabel, getTrackScheduleTimeLabel } from '../programSchedule';
 import type { Program, ProgramLevel } from '../types';
+import { LazyImage } from '../../LazyImage';
 
 interface ProgramCardProps {
   program: Program;
@@ -94,12 +95,12 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
           className="group flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-black/40 p-4 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10 sm:flex-row sm:items-center sm:justify-between"
         >
           <div className="flex min-w-0 items-center gap-4">
-            <img
+            <LazyImage
               src={mentor.image}
               alt={mentor.name}
-              loading="lazy"
               referrerPolicy="no-referrer"
-              className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-none"
+              containerClassName="h-14 w-14 shrink-0 rounded-2xl"
+              className="h-full w-full rounded-2xl object-cover shadow-none"
             />
             <div className="min-w-0">
               <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{tutorLabels.title}</div>
@@ -125,12 +126,12 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({
       >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 items-center gap-4">
-            <img
+            <LazyImage
               src={mentor.image}
               alt={mentor.name}
-              loading="lazy"
               referrerPolicy="no-referrer"
-              className="h-14 w-14 shrink-0 rounded-2xl object-cover shadow-none"
+              containerClassName="h-14 w-14 shrink-0 rounded-2xl"
+              className="h-full w-full rounded-2xl object-cover shadow-none"
             />
             <div className="min-w-0">
               <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{tutorLabels.title}</div>

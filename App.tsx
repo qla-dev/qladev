@@ -733,13 +733,13 @@ const App: React.FC = () => {
         <Stats t={t.stats} />
 
         <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)] [background-size:6px_6px] opacity-20 mix-blend-overlay pointer-events-none"></div>
           <About t={t.about} />
           <Mission lang={lang} tMission={t.mission} tAlgo={t.algorithm} />
         </div>
 
         <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)] [background-size:6px_6px] opacity-20 mix-blend-overlay pointer-events-none"></div>
           <Products t={t.products} lang={lang} />
           <Services t={t.services} />
         </div>

@@ -23,6 +23,7 @@ import { TechparkHeroSection } from '../shared/TechparkHeroSection';
 import { TechparkPageShell } from '../shared/TechparkPageShell';
 import { TechparkStatCard } from '../shared/TechparkStatCard';
 import type { TechparkPageProps } from '../types';
+import { LazyImage } from '../../LazyImage';
 import { useScrollRoot } from '../../ScrollRootContext';
 
 type SpaceTabId = 'location' | 'details' | 'rhythm';
@@ -644,10 +645,11 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
                           className="rounded-[1.7rem] border border-white/10 bg-black/55 p-5 text-left transition-colors hover:border-blue-500/40 sm:p-6"
                         >
                           <div className="overflow-hidden rounded-[1.3rem] border border-white/10 bg-[#060b13]">
-                            <img
+                            <LazyImage
                               src={card.image}
                               alt={card.title}
-                              className="h-56 w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+                              containerClassName="h-56 w-full"
+                              className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
                               style={{ objectPosition: card.previewPosition }}
                             />
                           </div>
@@ -733,9 +735,10 @@ export const TechparkLandingPage: React.FC<TechparkPageProps> = ({ lang, onNavig
               <X className="h-5 w-5" />
             </button>
             <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-black">
-              <img
+              <LazyImage
                 src={zoomedSpaceImage.image}
                 alt={zoomedSpaceImage.title}
+                containerClassName="max-h-[78vh] w-full"
                 className="max-h-[78vh] w-full object-contain"
               />
             </div>

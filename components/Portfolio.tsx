@@ -2,6 +2,7 @@ import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Translations } from '../types';
 import { REAL_CLIENTS } from '../constants';
+import { LazyImage } from './LazyImage';
 
 interface PortfolioProps {
   t: Translations['portfolio'];
@@ -126,12 +127,12 @@ const MarqueeClientCard: React.FC<MarqueeClientCardProps> = ({ client, visualInd
     >
       <div className={`mb-6 w-full rounded-[1.25rem] p-4 ${logoSurfaceClass}`}>
         <div className="flex min-h-[72px] w-full items-center justify-center md:min-h-[84px]">
-          <img
+          <LazyImage
             src={client.logo}
             alt={client.name}
-            loading="lazy"
             referrerPolicy="no-referrer"
-            className={`mx-auto w-auto max-w-full object-contain ${logoSizeClass}`}
+            containerClassName="mx-auto h-[84px] w-full"
+            className={`h-full w-full object-contain ${logoSizeClass}`}
           />
         </div>
       </div>

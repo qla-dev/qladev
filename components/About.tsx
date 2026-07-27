@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { Translations } from '../types';
 import { Bot, Cloud, Database, Code2, Globe, HeartHandshake, Server } from 'lucide-react';
 import { useScrollRoot } from './ScrollRootContext';
+import { LazyImage } from './LazyImage';
 
 interface AboutProps {
   t: Translations['about'];
@@ -174,10 +175,11 @@ export const About: React.FC<AboutProps> = ({ t }) => {
                 className="relative overflow-hidden transition-transform duration-75 ease-linear will-change-transform lg:mr-[calc(50%-50vw)] lg:w-[calc(50vw+50%)] lg:max-w-none"
                 style={{ transformStyle: 'preserve-3d', opacity: 0 }}
              >
-                <img 
+                <LazyImage
                     src="https://deklarant.ai/build/images/homepage/img/korak-2.png" 
                     alt="In house solution" 
-                    className="w-full h-auto object-cover"
+                    containerClassName="block aspect-video w-full"
+                    className="h-full w-full object-cover"
                 />
              </div>
 

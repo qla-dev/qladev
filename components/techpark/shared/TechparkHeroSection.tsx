@@ -4,6 +4,7 @@ import { TechHeroBackdrop } from '../../TechHeroBackdrop';
 import { TechparkSubnav } from './TechparkSubnav';
 import type { TechparkRoute } from '../types';
 import type { Language } from '../../../types';
+import { LazyImage } from '../../LazyImage';
 
 interface TechparkHeroSectionProps {
   current: TechparkRoute;
@@ -40,10 +41,11 @@ export const TechparkHeroSection: React.FC<TechparkHeroSectionProps> = ({
 }) => (
   <section className="relative overflow-hidden border-b border-white/10 bg-qla-dark">
     <div className="absolute inset-0 z-0 overflow-hidden">
-      <img
+      <LazyImage
         src="/techpark-hero.png"
         alt=""
         aria-hidden="true"
+        containerClassName="h-full w-full"
         className="h-full w-full object-cover object-[center_58%] opacity-50 scale-[1.02]"
       />
     </div>

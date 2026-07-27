@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Boxes, BriefcaseBusiness, CalendarDays, LayoutGrid, Menu, Phone, Ticket, User, Users, X } from 'lucide-react';
 import { Language, Translations } from '../types';
 import type { TechparkRoute } from './techpark/types';
+import { LazyImage } from './LazyImage';
 
 interface NavbarProps {
   lang: Language;
@@ -42,9 +43,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   const showMobileTechparkBottomNav = isTechparkRoute;
   const logoSrc = isTechparkRoute ? '/logo-techpark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
   const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
-  const logoClassName = isTechparkRoute
-    ? 'h-11 w-auto object-contain sm:h-12'
-    : 'h-10 w-auto object-contain sm:h-11';
+  const logoContainerClassName = isTechparkRoute
+    ? 'h-11 w-44 sm:h-12'
+    : 'h-10 w-40 sm:h-11';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -163,10 +164,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const FlagIcon = ({ countryCode }: { countryCode: string }) => (
-    <img
+    <LazyImage
       src={`https://flagsapi.com/${countryCode}/flat/64.png`}
       alt={`${countryCode} Flag`}
-      className="w-6 h-6 object-contain"
+      containerClassName="h-6 w-6"
+      className="h-full w-full object-contain"
     />
   );
 
@@ -194,12 +196,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex-shrink-0 flex items-center cursor-pointer"
               aria-label={logoAlt}
             >
-              <img
+              <LazyImage
                 src={logoSrc}
                 alt={logoAlt}
-                className={logoClassName}
-                loading="eager"
-                decoding="async"
+                containerClassName={logoContainerClassName}
+                className="h-full w-full object-contain object-left"
               />
             </button>
 

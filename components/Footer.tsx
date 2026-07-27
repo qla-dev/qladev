@@ -1,5 +1,6 @@
 import React from 'react';
 import { Linkedin, Facebook, Instagram } from 'lucide-react';
+import { LazyImage } from './LazyImage';
 
 interface FooterProps {
   route: string;
@@ -39,12 +40,11 @@ export const Footer: React.FC<FooterProps> = ({ route }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
         
         <div className="mb-6 md:mb-0 text-center md:text-left">
-            <img
+            <LazyImage
               src={logoSrc}
               alt={logoAlt}
-              className="mb-2 block h-10 w-auto object-contain mx-auto md:mx-0"
-              loading="lazy"
-              decoding="async"
+              containerClassName="mb-2 h-10 w-40 mx-auto md:mx-0"
+              className="h-full w-full object-contain"
             />
             <p className="text-gray-500 text-sm">Shaping the tech of the future.</p>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Translations, Product } from '../types';
 import { PRODUCTS_DATA } from '../constants';
 import { ExternalLink } from 'lucide-react';
+import { LazyImage } from './LazyImage';
 
 interface ProductsProps {
   t: Translations['products'];
@@ -89,10 +90,11 @@ export const Products: React.FC<ProductsProps> = ({ t, lang }) => {
                 {/* Main Image (Mockup) */}
                 <div className="aspect-video bg-gray-900 relative overflow-hidden flex items-center justify-center">
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
-                  <img 
+                  <LazyImage
                       src={product.image} 
                       alt={product.title} 
-                      className={imageClassName}
+                      containerClassName="h-full w-full"
+                      className={`h-full w-full ${imageClassName}`}
                   />
                 </div>
 
@@ -100,10 +102,11 @@ export const Products: React.FC<ProductsProps> = ({ t, lang }) => {
                   <div className="mb-5 flex min-h-[7.5rem] flex-col items-center justify-center gap-3 text-center">
                     {product.logo ? (
                       <div className={`flex h-20 w-full items-center justify-center overflow-hidden rounded-2xl border px-3 py-4 ${logoSurfaceClass}`}>
-                        <img 
+                        <LazyImage
                           src={product.logo} 
                           alt={`${product.title} logo`} 
-                          className={`h-auto max-h-12 w-auto max-w-full object-contain object-center ${product.logoClassName ?? ''}`}
+                          containerClassName="h-12 w-full"
+                          className={`h-full w-full object-contain object-center ${product.logoClassName ?? ''}`}
                         />
                       </div>
                     ) : (

@@ -10,6 +10,7 @@ import { SplitActionModal } from '../shared/SplitActionModal';
 import { TechparkPageShell } from '../shared/TechparkPageShell';
 import { TechparkSubnavSection } from '../shared/TechparkSubnavSection';
 import type { FormStatus, ProgramLevel, TechparkPageProps } from '../types';
+import { LazyImage } from '../../LazyImage';
 
 const PROGRAM_START_TIMESTAMP = Date.parse('2026-07-01T00:00:00+02:00');
 
@@ -332,12 +333,12 @@ export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> =
           className="group flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 p-4 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10 sm:flex-row sm:items-center sm:justify-between"
         >
           <div className="flex min-w-0 items-center gap-4">
-            <img
+            <LazyImage
               src={mentor.image}
               alt={mentor.name}
-              loading="lazy"
               referrerPolicy="no-referrer"
-              className="h-14 w-14 shrink-0 rounded-2xl object-cover"
+              containerClassName="h-14 w-14 shrink-0 rounded-2xl"
+              className="h-full w-full rounded-2xl object-cover"
             />
             <div className="min-w-0">
               <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{labels.mentor}</div>
@@ -357,12 +358,12 @@ export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> =
       <div key={mentor.name} className="rounded-2xl border border-white/10 bg-black/30 p-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 items-center gap-4">
-            <img
+            <LazyImage
               src={mentor.image}
               alt={mentor.name}
-              loading="lazy"
               referrerPolicy="no-referrer"
-              className="h-14 w-14 shrink-0 rounded-2xl object-cover"
+              containerClassName="h-14 w-14 shrink-0 rounded-2xl"
+              className="h-full w-full rounded-2xl object-cover"
             />
             <div className="min-w-0">
               <div className="text-[11px] font-mono tracking-[0.16em] text-blue-400 uppercase">{labels.mentor}</div>
