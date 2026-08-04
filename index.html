@@ -252,32 +252,6 @@
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     </noscript>
     <style>
-      .initial-shell {
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 24px;
-        box-sizing: border-box;
-        background: #050912;
-        color: #fff;
-        font-family: Arial, sans-serif;
-        text-align: center;
-      }
-      .initial-shell-brand {
-        font-size: clamp(38px, 8vw, 58px);
-        font-weight: 800;
-        letter-spacing: -0.06em;
-      }
-      .initial-shell-brand span {
-        color: #159cff;
-      }
-      .initial-shell-status {
-        margin-top: 14px;
-        color: #8290a5;
-        font: 700 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-      }
       #app-boot {
         position: fixed;
         inset: 0;
@@ -290,7 +264,6 @@
           #050912;
         color: #fff;
         font-family: Inter, Arial, sans-serif;
-        pointer-events: none;
         opacity: 1;
         visibility: visible;
         transition: opacity 420ms ease, visibility 420ms ease;
@@ -312,9 +285,8 @@
       }
       .app-boot-brand {
         font-size: clamp(34px, 7vw, 52px);
-        font-family: "FacebookSansBold", Arial, sans-serif;
-        font-weight: 700;
-        letter-spacing: -0.055em;
+        font-weight: 800;
+        letter-spacing: -0.07em;
       }
       .app-boot-brand span {
         color: #159cff;
@@ -427,14 +399,16 @@
     </style>
 </head>
   <body>
-    <div id="root">
-      <div class="initial-shell" role="status" aria-label="Loading qla.dev">
-        <div>
-          <div class="initial-shell-brand">qla<span>.dev</span></div>
-          <div class="initial-shell-status">Loading</div>
+    <div id="app-boot" role="status" aria-label="Loading qla.dev">
+      <div class="app-boot-inner">
+        <div class="app-boot-brand">qla<span>.dev</span></div>
+        <div class="app-boot-status">Initializing system</div>
+        <div class="app-boot-track" aria-hidden="true">
+          <div class="app-boot-fill"></div>
         </div>
       </div>
     </div>
+    <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>

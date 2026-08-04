@@ -294,7 +294,7 @@ export const Hero: React.FC<HeroProps> = ({ t, lang, startQuoteMode, setStartQuo
                     }
                   `}
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-blue-500/30 rounded-full bg-blue-950/80">
+                    <div className="inline-flex -translate-y-[20px] items-center gap-2 px-3 py-1 mb-6 border border-blue-500/30 rounded-full bg-blue-950/80 sm:translate-y-0">
                       <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
@@ -318,12 +318,12 @@ export const Hero: React.FC<HeroProps> = ({ t, lang, startQuoteMode, setStartQuo
                     <div className="mt-10 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
                       <button
                         type="button"
-                        onClick={handleGetQuote}
+                        onClick={() => window.location.assign('https://business.qla.dev/')}
                         className="relative flex min-w-0 items-center justify-center overflow-hidden rounded-sm bg-blue-600 px-4 py-4 text-[11px] font-bold font-mono tracking-[0.12em] text-white group cursor-pointer z-20 sm:w-auto sm:px-8 sm:text-base sm:tracking-wider"
                       >
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <span className="relative flex items-center justify-center gap-2 whitespace-nowrap">
-                          {t.quote} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                          {t.business} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
                       </button>
                       

@@ -40,9 +40,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   const showMobileTechparkBottomNav = isTechparkRoute;
   const logoSrc = isTechparkRoute ? '/logo-techpark.png' : 'https://deklarant.ai/build/images/logo-qla-dark.png';
   const logoAlt = isTechparkRoute ? 'qla.dev Techpark' : 'qla.dev';
-  const logoContainerClassName = isTechparkRoute
-    ? 'h-11 w-44 sm:h-12'
-    : 'h-10 w-40 sm:h-11';
+  const logoClassName = isTechparkRoute
+    ? 'block h-auto w-44 sm:w-48'
+    : 'block h-auto w-40 sm:w-44';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -182,11 +182,15 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex-shrink-0 flex items-center cursor-pointer"
               aria-label={logoAlt}
             >
-              <LazyImage
+              <img
                 src={logoSrc}
                 alt={logoAlt}
-                containerClassName={logoContainerClassName}
-                className="h-full w-full object-contain object-left"
+                width={isTechparkRoute ? 876 : 320}
+                height={isTechparkRoute ? 330 : 100}
+                loading="eager"
+                decoding="sync"
+                fetchPriority="high"
+                className={logoClassName}
               />
             </button>
 
