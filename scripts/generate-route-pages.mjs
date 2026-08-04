@@ -42,12 +42,12 @@ const pages = [
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {
-    route: '/techpark/line-follower-hackathone',
+    route: '/techpark/adria-tech-arena-hackathon-2026',
     lang: 'bs',
     locale: 'bs_BA',
     alternateLocale: 'en_US',
-    title: 'qla.dev Techpark - Line-Follower Hackathon',
-    description: '48h roboticki sprint sa istim kitom za sve timove, Beginner i Advanced trackovima, i mapama koje se otkrivaju na startu.',
+    title: 'Adria Tech Arena Hackathon 2026 u qla.dev Techparku',
+    description: 'Prvi Adria Tech Arena dogadjaj: 24-satni startup hackathon za odabrane buildere, 12-13. septembra 2026. u qla.dev Techparku u Sarajevu.',
     image: `${siteOrigin}/logo-techpark.png`,
   },
   {

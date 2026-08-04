@@ -5,7 +5,7 @@ export type TechparkRoute =
   | '/techpark'
   | '/techpark/boot-camp'
   | '/techpark/membership'
-  | '/techpark/line-follower-hackathone'
+  | '/techpark/adria-tech-arena-hackathon-2026'
   | '/techpark/sign-in';
 
 export type MembershipDayKey =

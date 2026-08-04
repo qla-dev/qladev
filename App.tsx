@@ -40,9 +40,9 @@ const TechparkMembershipPage = React.lazy(() =>
     default: module.TechparkMembershipPage,
   })),
 );
-const TechparkLineFollowerHackathonePage = React.lazy(() =>
-  import('./components/techpark/pages/TechparkLineFollowerHackathonePage').then((module) => ({
-    default: module.TechparkLineFollowerHackathonePage,
+const TechparkAdriaTechArenaHackathon2026Page = React.lazy(() =>
+  import('./components/techpark/pages/TechparkAdriaTechArenaHackathon2026Page').then((module) => ({
+    default: module.TechparkAdriaTechArenaHackathon2026Page,
   })),
 );
 const TechparkSignInPage = React.lazy(() =>
@@ -111,13 +111,13 @@ type StaticAppRoute =
   | '/techpark'
   | '/techpark/boot-camp'
   | '/techpark/membership'
-  | '/techpark/line-follower-hackathone'
+  | '/techpark/adria-tech-arena-hackathon-2026'
   | '/techpark/sign-in';
 type AppRoute = StaticAppRoute | `/blog/${string}`;
 type TransitionDirection = 'forward' | 'backward' | 'auth';
 type RouteTransitionPhase = 'steady' | 'exit' | 'enter';
 
-const ROUTES: StaticAppRoute[] = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/line-follower-hackathone', '/techpark/sign-in'];
+const ROUTES: StaticAppRoute[] = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/adria-tech-arena-hackathon-2026', '/techpark/sign-in'];
 const ROUTE_SET = new Set<string>(ROUTES);
 const isStaticAppRoute = (route: string): route is StaticAppRoute => ROUTE_SET.has(route);
 const isBlogRoute = (route: string): route is `/blog/${string}` => /^\/blog\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(route);
@@ -128,7 +128,6 @@ const LEGACY_ROUTE_REDIRECTS: Partial<Record<string, StaticAppRoute>> = {
   '/technopark/membership': '/techpark/membership',
   '/technopark/sign-in': '/techpark/sign-in',
   '/techpark/instructions': '/techpark/boot-camp',
-  '/techpark/line-follower-hackathon': '/techpark/line-follower-hackathone',
 };
 
 const trimTrailingSlash = (value: string) => (value.length > 1 && value.endsWith('/') ? value.slice(0, -1) : value);
@@ -210,9 +209,9 @@ const PAGE_META: Record<Language, Record<StaticAppRoute, PageMeta>> = {
       title: 'qla.dev Techpark - Membership Reservations',
       description: 'Reserve Techpark open-space slots from 08:00 to 16:00 with a 15-person limit and a 4-hour daily maximum.',
     },
-    '/techpark/line-follower-hackathone': {
-      title: 'qla.dev Techpark - Line-Follower Hackathon',
-      description: '48-hour kit-based robotics sprint with Beginner and Advanced tracks. Build a line follower and race on maps revealed at kickoff.',
+    '/techpark/adria-tech-arena-hackathon-2026': {
+      title: 'Adria Tech Arena Hackathon 2026 at qla.dev Techpark',
+      description: 'The first Adria Tech Arena event: a 24-hour startup hackathon for selected builders, hosted at qla.dev Techpark in Sarajevo on 12–13 September 2026.',
     },
     '/techpark/sign-in': {
       title: 'qla.dev Techpark - Member Sign In',
@@ -236,9 +235,9 @@ const PAGE_META: Record<Language, Record<StaticAppRoute, PageMeta>> = {
       title: 'qla.dev Techpark - Membership rezervacije',
       description: 'Rezerviši Techpark open-space termine od 08:00 do 16:00, sa limitom od 15 osoba i maksimalno 4 sata dnevno.',
     },
-    '/techpark/line-follower-hackathone': {
-      title: 'qla.dev Techpark - Line-Follower Hackathon',
-      description: '48h robotički sprint sa istim kitom za sve timove, Beginner i Advanced trackovima, i mapama koje se otkrivaju na startu.',
+    '/techpark/adria-tech-arena-hackathon-2026': {
+      title: 'Adria Tech Arena Hackathon 2026 u qla.dev Techparku',
+      description: 'Prvi Adria Tech Arena događaj: 24-satni startup hackathon za odabrane buildere, 12–13. septembra 2026. u qla.dev Techparku u Sarajevu.',
     },
     '/techpark/sign-in': {
       title: 'qla.dev Techpark - Prijava članova',
@@ -738,8 +737,8 @@ const App: React.FC = () => {
       return <TechparkMembershipPage lang={lang} onNavigate={navigateToRoute} />;
     }
 
-    if (displayRoute === '/techpark/line-follower-hackathone') {
-      return <TechparkLineFollowerHackathonePage lang={lang} onNavigate={navigateToRoute} />;
+    if (displayRoute === '/techpark/adria-tech-arena-hackathon-2026') {
+      return <TechparkAdriaTechArenaHackathon2026Page lang={lang} onNavigate={navigateToRoute} />;
     }
 
     if (displayRoute === '/techpark/sign-in') {

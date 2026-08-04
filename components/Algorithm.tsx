@@ -257,8 +257,8 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
           </div>
         </div>
 
-        <div className="relative mt-10 h-[22rem] md:h-[29rem]">
-          <div className="absolute inset-x-0 bottom-16 top-10 grid grid-cols-5 gap-4 sm:top-0">
+        <div className="relative mt-10 h-[24rem] md:h-[29rem]">
+          <div className="absolute inset-x-0 bottom-24 top-10 grid grid-cols-5 gap-4 sm:bottom-16 sm:top-0">
             {pipeline.map((stage, index) => {
               const stageDelta = progressAcrossStages - index;
               const laneClass =
@@ -277,7 +277,7 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
             })}
           </div>
 
-          <div className="absolute inset-x-0 bottom-16 top-14 flex items-end gap-1.5 sm:top-4">
+          <div className="absolute inset-x-0 bottom-24 top-14 flex items-end gap-1.5 sm:bottom-16 sm:top-4">
             {equalizerBars.map((bar, index) => {
               const stageDelta = progressAcrossStages - bar.stageIndex;
               const stageActivation = clamp(stageDelta + 0.18);
@@ -323,9 +323,9 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
             })}
           </div>
 
-          <div className="absolute inset-x-0 bottom-16 h-px bg-blue-500/25" />
+          <div className="absolute inset-x-0 bottom-24 h-px bg-blue-500/25 sm:bottom-16" />
 
-          <div className="absolute inset-x-0 bottom-0 grid grid-cols-5 gap-4">
+          <div className="absolute inset-x-0 bottom-0 grid grid-cols-5 gap-2 sm:gap-4">
             {pipeline.map((stage, index) => {
               const stageDelta = progressAcrossStages - index;
               const textTone =
@@ -336,11 +336,11 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
                     : 'text-gray-500';
 
               return (
-                <div key={`${stage.title}-label`} className="space-y-1">
-                  <div className={`font-mono text-[11px] uppercase tracking-[0.24em] ${textTone}`}>
+                <div key={`${stage.title}-label`} className="min-w-0 space-y-1 px-0.5">
+                  <div className={`font-mono text-[9px] leading-[1.4] uppercase tracking-[0.1em] [overflow-wrap:anywhere] sm:text-[11px] sm:tracking-[0.24em] ${textTone}`}>
                     {stage.title}
                   </div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-gray-500">
+                  <div className="font-mono text-[8px] leading-[1.45] uppercase tracking-[0.08em] text-gray-500 [overflow-wrap:anywhere] sm:text-[10px] sm:tracking-[0.18em]">
                     {stage.output}
                   </div>
                 </div>

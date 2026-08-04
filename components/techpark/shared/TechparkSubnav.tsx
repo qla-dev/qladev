@@ -11,6 +11,7 @@ interface TechparkSubnavProps {
 export const TechparkSubnav: React.FC<TechparkSubnavProps> = ({ current, lang, onNavigate }) => {
   const items = [
     { path: '/techpark' as const, label: lang === 'bs' ? 'PREGLED' : 'OVERVIEW' },
+    { path: '/techpark/adria-tech-arena-hackathon-2026' as const, label: 'ARENA 2026' },
     { path: '/techpark/boot-camp' as const, label: 'BOOT-CAMP' },
     { path: '/techpark/membership' as const, label: lang === 'bs' ? 'ČLANSTVO' : 'MEMBERSHIP' },
   ];
