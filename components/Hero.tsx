@@ -50,28 +50,9 @@ const InteractiveTerminal: React.FC<TerminalProps> = ({ t, startQuoteMode, onRes
 
   const typeLine = async (text: string, delay: number, id: number) => {
     if (sequenceId.current !== id || !isMounted.current) return;
-
-    // Start new line
-    setHistory(prev => [...prev, ""]);
-    
-    let currentLineText = ""; 
-    
-    for (let i = 0; i < text.length; i++) {
-        if (sequenceId.current !== id || !isMounted.current) return;
-        await new Promise(resolve => setTimeout(resolve, delay));
-        if (sequenceId.current !== id || !isMounted.current) return;
-        
-        currentLineText += text[i];
-        
-        setHistory(prev => {
-            const newHistory = [...prev];
-            // Ensure we are updating the last line
-            if (newHistory.length > 0) {
-                 newHistory[newHistory.length - 1] = currentLineText;
-            }
-            return newHistory;
-        });
-    }
+    await new Promise(resolve => setTimeout(resolve, Math.max(40, delay * 2)));
+    if (sequenceId.current !== id || !isMounted.current) return;
+    setHistory(prev => [...prev, text]);
   };
 
   const delay = (ms: number, id: number) => {
@@ -346,13 +327,14 @@ export const Hero: React.FC<HeroProps> = ({ t, lang, startQuoteMode, setStartQuo
                         </span>
                       </button>
                       
-                      <a
-                        href="https://business.qla.dev/"
+                      <button
+                        type="button"
+                        onClick={handleGetQuote}
                         className="flex min-w-0 items-center justify-center gap-2 rounded-sm border border-gray-700 bg-transparent px-4 py-4 text-[11px] font-bold font-mono tracking-[0.12em] text-white transition-all group z-20 hover:border-blue-500 hover:text-blue-400 sm:w-auto sm:px-8 sm:text-base sm:tracking-wider"
                       >
-                        <span className="whitespace-nowrap">{t.business}</span>
+                        <span className="whitespace-nowrap">{lang === 'bs' ? 'ZATRAŽI PONUDU' : 'GET A QUOTE'}</span>
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </a>
+                      </button>
                     </div>
                     
                     <div className="mt-12 flex items-center gap-8 text-gray-500 font-mono text-xs">

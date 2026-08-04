@@ -8,7 +8,6 @@ interface NavbarProps {
   lang: Language;
   setLang: (lang: Language) => void;
   route: string;
-  scrollContainerRef?: React.RefObject<HTMLDivElement | null>;
   activeHomeSection?: string | null;
   t: Translations['nav'];
   primaryActionLabel: string;
@@ -23,7 +22,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   lang,
   setLang,
   route,
-  scrollContainerRef,
   activeHomeSection,
   t,
   primaryActionLabel,
@@ -37,7 +35,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isHomeRoute = route === '/';
   const isTechparkRoute = route.startsWith('/techpark');
-  const usesInternalScroll = isHomeRoute || isTechparkRoute;
   const techparkPeopleCount = '0/15';
   const showMobileMainBottomNav = isHomeRoute;
   const showMobileTechparkBottomNav = isTechparkRoute;
@@ -49,30 +46,19 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = usesInternalScroll
-        ? (scrollContainerRef?.current?.scrollTop ?? 0)
-        : (window.scrollY || window.pageYOffset || 0);
+      const scrollY = window.scrollY || window.pageYOffset || 0;
       setIsScrolled(scrollY > 50);
     };
 
     handleScroll();
-    if (usesInternalScroll) {
-      const scrollContainer = scrollContainerRef?.current;
-      scrollContainer?.addEventListener('scroll', handleScroll, { passive: true });
-
-      return () => scrollContainer?.removeEventListener('scroll', handleScroll);
-    }
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollContainerRef, usesInternalScroll]);
+  }, []);
 
   useEffect(() => {
-    const scrollY = usesInternalScroll
-      ? (scrollContainerRef?.current?.scrollTop ?? 0)
-      : (window.scrollY || window.pageYOffset || 0);
+    const scrollY = window.scrollY || window.pageYOffset || 0;
     setIsScrolled(scrollY > 50);
-  }, [route, scrollContainerRef, usesInternalScroll]);
+  }, [route]);
 
   const navLinks = [
     { kind: 'anchor' as const, id: 'hero', label: t.home },

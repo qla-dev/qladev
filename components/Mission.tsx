@@ -60,8 +60,9 @@ class QlaDev extends Future {
 
   useEffect(() => {
     const missionCardOrder = [0, 3, 2, 1];
+    let animationFrame = 0;
 
-    const handleScroll = () => {
+    const updateScrollEffects = () => {
       if (!containerRef.current) return;
       
       const { top, height } = containerRef.current.getBoundingClientRect();
@@ -95,11 +96,22 @@ class QlaDev extends Future {
       });
     };
 
+    const handleScroll = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = 0;
+        updateScrollEffects();
+      });
+    };
+
     const scrollTarget = scrollRootRef?.current ?? window;
 
-    scrollTarget.addEventListener('scroll', handleScroll);
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial calculation
-    return () => scrollTarget.removeEventListener('scroll', handleScroll);
+    return () => {
+      scrollTarget.removeEventListener('scroll', handleScroll);
+      window.cancelAnimationFrame(animationFrame);
+    };
   }, [scrollRootRef]);
 
   const charsToShow = Math.floor(progress * codeString.length);

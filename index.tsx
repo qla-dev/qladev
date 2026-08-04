@@ -5,31 +5,11 @@ import './styles.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
-  throw new Error("Could not find root element to mount to");
+  throw new Error('Could not find root element to mount to');
 }
 
-const root = ReactDOM.createRoot(rootElement);
-
-const BootstrappedApp = () => {
-  React.useEffect(() => {
-    const firstFrame = window.requestAnimationFrame(() => {
-      document.documentElement.classList.add('app-ready');
-
-      window.setTimeout(() => {
-        document.getElementById('app-boot')?.remove();
-      }, 450);
-    });
-
-    return () => {
-      window.cancelAnimationFrame(firstFrame);
-    };
-  }, []);
-
-  return <App />;
-};
-
-root.render(
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <BootstrappedApp />
-  </React.StrictMode>
+    <App />
+  </React.StrictMode>,
 );

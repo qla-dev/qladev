@@ -144,7 +144,9 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
   );
 
   useEffect(() => {
-    const handleScroll = () => {
+    let animationFrame = 0;
+
+    const updateScrollEffects = () => {
       if (!containerRef.current) return;
 
       const scrollTop = scrollRootRef?.current?.scrollTop ?? window.scrollY;
@@ -160,15 +162,24 @@ export const Algorithm: React.FC<AlgorithmProps> = ({ lang, t }) => {
       setScrollSignal(scrollTop);
     };
 
+    const handleScroll = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = 0;
+        updateScrollEffects();
+      });
+    };
+
     const scrollTarget = scrollRootRef?.current ?? window;
 
-    scrollTarget.addEventListener('scroll', handleScroll);
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
     handleScroll();
 
     return () => {
       scrollTarget.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
+      window.cancelAnimationFrame(animationFrame);
     };
   }, [scrollRootRef]);
 

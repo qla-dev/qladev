@@ -1,12 +1,14 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Translations } from '../types';
 import { SERVICES_DATA } from '../constants';
-import * as LucideIcons from 'lucide-react';
+import { Bot, Cloud, HelpCircle, Monitor, Scan, Server, Smartphone } from 'lucide-react';
 import { useScrollRoot } from './ScrollRootContext';
 
 interface ServicesProps {
   t: Translations['services'];
 }
+
+const SERVICE_ICONS = { Bot, Cloud, Monitor, Scan, Server, Smartphone } as const;
 
 export const Services: React.FC<ServicesProps> = ({ t }) => {
   const containerRef = useRef<HTMLElement>(null);
@@ -17,7 +19,9 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let animationFrame = 0;
+
+    const updateScrollEffects = () => {
       if (!containerRef.current) return;
 
       const { top, height } = containerRef.current.getBoundingClientRect();
@@ -45,12 +49,23 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
       });
     };
 
+    const handleScroll = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = 0;
+        updateScrollEffects();
+      });
+    };
+
     const scrollTarget = scrollRootRef?.current ?? window;
 
-    scrollTarget.addEventListener('scroll', handleScroll);
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    return () => scrollTarget.removeEventListener('scroll', handleScroll);
+    return () => {
+      scrollTarget.removeEventListener('scroll', handleScroll);
+      window.cancelAnimationFrame(animationFrame);
+    };
   }, [scrollRootRef, serviceRevealOrder]);
 
   return (
@@ -73,8 +88,7 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {SERVICES_DATA.map((service, idx) => {
-                // @ts-ignore
-                const Icon = LucideIcons[service.iconName] || LucideIcons.HelpCircle;
+                const Icon = SERVICE_ICONS[service.iconName as keyof typeof SERVICE_ICONS] || HelpCircle;
 
                 return (
                     <div

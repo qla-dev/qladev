@@ -4,7 +4,7 @@ const ScrollRootContext = createContext<React.RefObject<HTMLDivElement | null> |
 
 interface ScrollRootProviderProps {
   children: React.ReactNode;
-  value: React.RefObject<HTMLDivElement | null>;
+  value: React.RefObject<HTMLDivElement | null> | null;
 }
 
 export const ScrollRootProvider: React.FC<ScrollRootProviderProps> = ({ children, value }) => (

@@ -25,8 +25,8 @@ const TechParticles: React.FC = () => {
     ];
 
     const tempParticles = [];
-    const rows = 8;
-    const cols = 8;
+    const rows = 4;
+    const cols = 4;
     let idCounter = 0;
 
     for (let row = 0; row < rows; row++) {

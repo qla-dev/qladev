@@ -18,7 +18,7 @@ export const About: React.FC<AboutProps> = ({ t }) => {
   useEffect(() => {
     let animationFrame: number;
 
-    const handleScroll = () => {
+    const updateScrollEffects = () => {
       if (!containerRef.current) return;
       
       const windowHeight = window.innerHeight;
@@ -114,7 +114,11 @@ export const About: React.FC<AboutProps> = ({ t }) => {
         }
       });
       
-      animationFrame = requestAnimationFrame(handleScroll);
+    };
+
+    const handleScroll = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(updateScrollEffects);
     };
 
     // Initial call

@@ -325,44 +325,17 @@ const App: React.FC = () => {
     direction: TransitionDirection;
   }>({ phase: 'steady', direction: 'forward' });
   const [activeHomeSection, setActiveHomeSection] = useState<string | null>(null);
-  const appScrollContainerRef = useRef<HTMLDivElement | null>(null);
   const lang = displayRoute.startsWith('/techpark') ? techparkLang : siteLang;
   const t = TEXT_CONTENT[lang];
 
-  const getScrollContainer = (_targetRoute: AppRoute) => appScrollContainerRef.current;
+  const getScrollTop = (_targetRoute: AppRoute) => window.scrollY || window.pageYOffset || 0;
 
-  const getScrollTop = (targetRoute: AppRoute) => {
-    const scrollContainer = getScrollContainer(targetRoute);
-    return scrollContainer ? scrollContainer.scrollTop : (window.scrollY || window.pageYOffset || 0);
-  };
-
-  const scrollViewportTo = (targetRoute: AppRoute, top: number, behavior: ScrollBehavior) => {
-    const scrollContainer = getScrollContainer(targetRoute);
-
-    if (scrollContainer) {
-      scrollContainer.scrollTo({ top, behavior });
-      return;
-    }
-
+  const scrollViewportTo = (_targetRoute: AppRoute, top: number, behavior: ScrollBehavior) => {
     window.scrollTo({ top, left: 0, behavior });
   };
 
   const scrollElementIntoViewport = (targetRoute: AppRoute, element: HTMLElement, behavior: ScrollBehavior) => {
     const navOffset = getAnchorNavOffset();
-    const scrollContainer = getScrollContainer(targetRoute);
-
-    if (scrollContainer) {
-      const top = Math.max(
-        0,
-        scrollContainer.scrollTop
-          + element.getBoundingClientRect().top
-          - scrollContainer.getBoundingClientRect().top
-          - navOffset
-      );
-      scrollContainer.scrollTo({ top, behavior });
-      return;
-    }
-
     const top = Math.max(0, getScrollTop(targetRoute) + element.getBoundingClientRect().top - navOffset);
     window.scrollTo({ top, left: 0, behavior });
   };
@@ -692,60 +665,10 @@ const App: React.FC = () => {
     ? (lang === 'bs' ? 'PRIJAVA' : 'SIGN IN')
     : t.hero.business;
   const isTechparkRoute = displayRoute.startsWith('/techpark');
-  const usesInternalScrollShell = displayRoute === '/' || isTechparkRoute;
-
-  useEffect(() => {
-    const root = document.documentElement;
-    root.classList.toggle('techpark-ios-fix-active', usesInternalScrollShell);
-
-    return () => {
-      root.classList.remove('techpark-ios-fix-active');
-    };
-  }, [usesInternalScrollShell]);
-
-  useEffect(() => {
-    if (!usesInternalScrollShell) {
-      return;
-    }
-
-    const root = document.documentElement;
-    root.classList.add('ios26-tint-refresh');
-
-    const rafId = window.requestAnimationFrame(() => {
-      root.classList.remove('ios26-tint-refresh');
-    });
-
-    return () => {
-      window.cancelAnimationFrame(rafId);
-      root.classList.remove('ios26-tint-refresh');
-    };
-  }, [displayRoute, usesInternalScrollShell]);
-
-  useEffect(() => {
-    if (!usesInternalScrollShell) {
-      return;
-    }
-
-    const previousHtmlOverflow = document.documentElement.style.overflow;
-    const previousBodyOverflow = document.body.style.overflow;
-
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.documentElement.style.overflow = previousHtmlOverflow;
-      document.body.style.overflow = previousBodyOverflow;
-    };
-  }, [usesInternalScrollShell]);
 
   useEffect(() => {
     if (displayRoute !== '/') {
       setActiveHomeSection(null);
-      return;
-    }
-
-    const scrollContainer = appScrollContainerRef.current;
-    if (!scrollContainer) {
       return;
     }
 
@@ -767,11 +690,11 @@ const App: React.FC = () => {
     };
 
     updateActiveHomeSection();
-    scrollContainer.addEventListener('scroll', updateActiveHomeSection, { passive: true });
+    window.addEventListener('scroll', updateActiveHomeSection, { passive: true });
     window.addEventListener('resize', updateActiveHomeSection);
 
     return () => {
-      scrollContainer.removeEventListener('scroll', updateActiveHomeSection);
+      window.removeEventListener('scroll', updateActiveHomeSection);
       window.removeEventListener('resize', updateActiveHomeSection);
     };
   }, [displayRoute]);
@@ -922,7 +845,6 @@ const App: React.FC = () => {
         lang={lang}
         setLang={handleSetLang}
         route={displayRoute}
-        scrollContainerRef={appScrollContainerRef}
         activeHomeSection={activeHomeSection}
         t={t.nav}
         primaryActionLabel={primaryActionLabel}
@@ -933,26 +855,11 @@ const App: React.FC = () => {
         onPrimaryAction={handlePrimaryAction}
       />
 
-      <ScrollRootProvider value={appScrollContainerRef}>
-        {usesInternalScrollShell ? (
-          <div
-            ref={appScrollContainerRef}
-            className="fixed inset-0 overflow-y-auto overscroll-y-contain bg-black"
-            style={{ WebkitOverflowScrolling: 'touch' }}
-          >
-            <div className={`min-h-full transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
-              {routeContent}
-              <Footer route={displayRoute} />
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className={`transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
-              {routeContent}
-            </div>
-            <Footer route={displayRoute} />
-          </>
-        )}
+      <ScrollRootProvider value={null}>
+        <div className={`min-h-screen transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
+          {routeContent}
+        </div>
+        <Footer route={displayRoute} />
       </ScrollRootProvider>
     </div>
   );
