@@ -103,7 +103,7 @@ export const Services: React.FC<ServicesProps> = ({ t }) => {
                         }}
                     >
                         
-                        <div className="relative h-full bg-blue-950/40 backdrop-blur-md rounded-xl p-8 flex flex-col items-start border border-blue-400/20 group-hover:border-blue-400/50 transition-colors">
+                        <div className="relative h-full bg-[#081329] rounded-xl p-8 flex flex-col items-start border border-blue-400/20 group-hover:border-blue-400/50 transition-colors">
                              <div className="mb-6 relative">
                                 <div className="absolute -inset-2 bg-white/10 rounded-full blur-lg group-hover:bg-white/30 transition-colors"></div>
                                 <div className="relative w-14 h-14 bg-blue-600 border border-blue-400/30 rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-all duration-300 shadow-lg">

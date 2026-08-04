@@ -167,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10' : 'bg-transparent'}`}>
+      <nav className={`fixed w-full z-50 transition-colors duration-200 ${isScrolled ? 'bg-black/95 border-b border-white/10' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <button
@@ -301,7 +301,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {isMobileMenuOpen && (
-          <div className="xl:hidden bg-black/95 backdrop-blur-xl border-b border-white/10">
+          <div className="xl:hidden bg-black border-b border-white/10">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {isTechparkRoute ? (
                 <>
@@ -380,7 +380,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </nav>
 
       {showMobileMainBottomNav && (
-        <nav className="techpark-bottom-nav fixed bottom-0 left-0 right-0 z-[5000] grid h-16 grid-cols-4 items-center border-t border-white/10 bg-black/80 px-2 py-1.5 backdrop-blur-md shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
+        <nav className="techpark-bottom-nav fixed bottom-0 left-0 right-0 z-[5000] grid h-16 grid-cols-4 items-center border-t border-white/10 bg-black px-2 py-1.5 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
           {mainBottomNavItems.map((action) => {
             const Icon = action.icon;
 
@@ -406,7 +406,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       )}
 
       {showMobileTechparkBottomNav && (
-        <nav className="techpark-bottom-nav fixed bottom-0 left-0 right-0 z-[5000] grid h-16 grid-cols-4 items-center border-t border-white/10 bg-black/80 px-2 py-1.5 backdrop-blur-md shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
+        <nav className="techpark-bottom-nav fixed bottom-0 left-0 right-0 z-[5000] grid h-16 grid-cols-4 items-center border-t border-white/10 bg-black px-2 py-1.5 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] xl:hidden">
           {techparkBottomNavItems.map((action) => {
             const isActive = route === action.path;
             const Icon = action.icon;

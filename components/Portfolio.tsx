@@ -123,7 +123,7 @@ const MarqueeClientCard: React.FC<MarqueeClientCardProps> = ({ client, visualInd
       href={client.link}
       target="_blank"
       rel="noreferrer noopener"
-      className="group min-h-[280px] w-[260px] shrink-0 rounded-[1.5rem] border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-colors hover:border-blue-500/40 hover:bg-blue-500/10 md:w-[340px] md:p-6"
+      className="group min-h-[280px] w-[260px] shrink-0 rounded-[1.5rem] border border-white/10 bg-[#0b0b0b] p-5 transition-colors hover:border-blue-500/40 hover:bg-blue-950/30 md:w-[340px] md:p-6"
     >
       <div className={`mb-6 w-full rounded-[1.25rem] p-4 ${logoSurfaceClass}`}>
         <div className="flex min-h-[72px] w-full items-center justify-center md:min-h-[84px]">

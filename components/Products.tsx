@@ -77,7 +77,7 @@ export const Products: React.FC<ProductsProps> = ({ t, lang }) => {
                 
                 {/* Status Badge */}
                 <div className="absolute top-4 left-4 z-20">
-                  <span className={`inline-flex items-center gap-2 font-mono text-xs font-bold px-3 py-1 rounded-full border backdrop-blur-md ${
+                  <span className={`inline-flex items-center gap-2 font-mono text-xs font-bold px-3 py-1 rounded-full border ${
                       product.status === 'active' 
                       ? 'text-green-400 border-green-500/30 bg-green-500/10' 
                       : 'text-orange-400 border-orange-500/30 bg-orange-500/10'

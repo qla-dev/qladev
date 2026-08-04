@@ -194,7 +194,7 @@ export const About: React.FC<AboutProps> = ({ t }) => {
                     ref={(el) => {
                       badgeRefs.current[idx] = el;
                     }}
-                    className="rounded-xl border border-white/10 bg-black/55 p-3 text-center shadow-lg backdrop-blur-sm will-change-[opacity,transform]"
+                    className="rounded-xl border border-white/10 bg-black/80 p-3 text-center shadow-lg will-change-[opacity,transform]"
                     style={{ opacity: 0, transform: 'perspective(900px) translateY(34px) scale(0.78) rotateX(18deg)' }}
                   >
                     <div className="mb-1 flex justify-center">{badge.icon}</div>

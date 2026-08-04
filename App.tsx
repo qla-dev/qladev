@@ -761,7 +761,7 @@ const App: React.FC = () => {
         </DeferredSection>
 
         <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)] [background-size:6px_6px] opacity-20 mix-blend-overlay pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)] [background-size:6px_6px] opacity-20 pointer-events-none"></div>
           <DeferredSection minHeight="120vh" placeholderId="about">
             <React.Suspense fallback={<SectionFallback minHeight="120vh" />}>
               <About t={t.about} />
@@ -771,7 +771,7 @@ const App: React.FC = () => {
         </div>
 
         <div className="relative bg-gradient-to-b from-blue-900 via-[#0a0f1c] to-black overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)] [background-size:6px_6px] opacity-20 mix-blend-overlay pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.16)_0.7px,transparent_0.7px)] [background-size:6px_6px] opacity-20 pointer-events-none"></div>
           <DeferredSection minHeight="90vh" placeholderId="products">
             <React.Suspense fallback={<SectionFallback minHeight="90vh" />}>
               <Products t={t.products} lang={lang} />
@@ -856,7 +856,7 @@ const App: React.FC = () => {
       />
 
       <ScrollRootProvider value={null}>
-        <div className={`min-h-screen transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform ${routeContentClassName}`}>
+        <div className="min-h-screen">
           {routeContent}
         </div>
         <Footer route={displayRoute} />

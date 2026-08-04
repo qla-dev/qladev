@@ -252,12 +252,31 @@
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     </noscript>
     <style>
-      @font-face {
-        font-family: "FacebookSansBold";
-        src: url("/FacebookSansBold.ttf") format("truetype");
-        font-display: swap;
-        font-style: normal;
-        font-weight: 700;
+      .initial-shell {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        box-sizing: border-box;
+        background: #050912;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      .initial-shell-brand {
+        font-size: clamp(38px, 8vw, 58px);
+        font-weight: 800;
+        letter-spacing: -0.06em;
+      }
+      .initial-shell-brand span {
+        color: #159cff;
+      }
+      .initial-shell-status {
+        margin-top: 14px;
+        color: #8290a5;
+        font: 700 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
       }
       #app-boot {
         position: fixed;
@@ -399,7 +418,6 @@
       
       .glass-card {
         background: rgba(10, 10, 10, 0.7);
-        backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
 
@@ -409,7 +427,14 @@
     </style>
 </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="initial-shell" role="status" aria-label="Loading qla.dev">
+        <div>
+          <div class="initial-shell-brand">qla<span>.dev</span></div>
+          <div class="initial-shell-status">Loading</div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>

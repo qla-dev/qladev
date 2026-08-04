@@ -21,19 +21,19 @@ export const Contact: React.FC<ContactProps> = ({ t }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div className="space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white/10 backdrop-blur p-6 rounded-lg">
+              <div className="bg-white/10 p-6 rounded-lg">
                 <Mail className="w-8 h-8 mb-4 text-cyan-300" />
                 <h3 className="font-bold text-lg mb-2">{t.email}</h3>
                 <p className="text-blue-100 text-sm font-mono text-xl">info@qla.dev</p>
               </div>
 
-              <div className="bg-white/10 backdrop-blur p-6 rounded-lg">
+              <div className="bg-white/10 p-6 rounded-lg">
                 <Phone className="w-8 h-8 mb-4 text-cyan-300" />
                 <h3 className="font-bold text-lg mb-2">{t.call}</h3>
                 <p className="text-blue-100 text-sm font-mono text-xl">+387 67 10 46 240</p>
               </div>
 
-              <div className="bg-white/10 backdrop-blur p-6 rounded-lg md:col-span-2">
+              <div className="bg-white/10 p-6 rounded-lg md:col-span-2">
                 <MapPin className="w-8 h-8 mb-4 text-cyan-300" />
                 <h3 className="font-bold text-lg mb-2">{t.visit}</h3>
                 <p className="text-blue-100 text-sm">
@@ -60,7 +60,7 @@ export const Contact: React.FC<ContactProps> = ({ t }) => {
               className="w-full h-full"
             />
 
-            <div className="absolute inset-0 bg-blue-500/10 pointer-events-none mix-blend-overlay" />
+            <div className="absolute inset-0 bg-blue-500/10 pointer-events-none" />
             <div className="absolute inset-0 border border-white/5 pointer-events-none group-hover:border-blue-500/50 transition-colors duration-500 rounded-2xl" />
           </div>
         </div>
