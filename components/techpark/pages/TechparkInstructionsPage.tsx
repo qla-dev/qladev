@@ -12,7 +12,7 @@ import { TechparkSubnavSection } from '../shared/TechparkSubnavSection';
 import type { FormStatus, ProgramLevel, TechparkPageProps } from '../types';
 import { LazyImage } from '../../LazyImage';
 
-const PROGRAM_START_TIMESTAMP = Date.parse('2026-07-01T00:00:00+02:00');
+const PROGRAM_START_TIMESTAMP = Date.parse('2026-10-01T00:00:00+02:00');
 
 interface TechparkInstructionsPageProps extends TechparkPageProps {
   linkedProgramId: string | null;
@@ -213,7 +213,7 @@ export const TechparkInstructionsPage: React.FC<TechparkInstructionsPageProps> =
   const countdownLabels = {
     eyebrow: isBs ? 'POČETAK SLJEDEĆEG CIKLUSA' : 'PROGRAM START',
   };
-  const countdownDate = isBs ? '1. JULI 2026. godine' : 'JULY 1, 2026';
+  const countdownDate = isBs ? '1. OKTOBAR 2026. godine' : 'OCTOBER 1, 2026';
   const countdownUnits = [
     {
       label: isBs ? getBosnianCountdownLabel('days', countdown.days) : getEnglishCountdownLabel('days', countdown.days),
