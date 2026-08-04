@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qla.dev — News Admin</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #030303; color: #f5f5f5; }
+      main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 80px; }
+      header { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid #222; }
+      h1 { margin: 0; font-size: clamp(28px, 5vw, 52px); letter-spacing: -.05em; }
+      .slash, a { color: #168cff; }
+      .muted { color: #858585; font-size: 12px; }
+      .layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); gap: 48px; margin-top: 40px; }
+      form { display: grid; gap: 18px; }
+      label { display: grid; gap: 8px; color: #a8a8a8; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+      input, textarea { width: 100%; border: 1px solid #292929; background: #090909; color: white; padding: 14px; font: inherit; outline: none; }
+      input:focus, textarea:focus { border-color: #168cff; }
+      textarea { min-height: 92px; resize: vertical; }
+      textarea[name="content"] { min-height: 220px; }
+      button { border: 0; background: #147ce5; color: white; padding: 14px 20px; font: 700 12px inherit; letter-spacing: .12em; cursor: pointer; }
+      button:hover { background: #2694ff; }
+      button:disabled { cursor: wait; opacity: .6; }
+      #status { min-height: 20px; font-size: 12px; color: #74b9ff; }
+      #posts { display: grid; gap: 1px; background: #222; border: 1px solid #222; }
+      .post { display: grid; grid-template-columns: 72px 1fr auto; gap: 14px; align-items: center; background: #070707; padding: 12px; }
+      .post img, .placeholder { width: 72px; height: 54px; object-fit: cover; background: #111; }
+      .post h2 { margin: 0 0 6px; font: 700 14px system-ui, sans-serif; }
+      .delete { padding: 8px; background: transparent; color: #888; }
+      .delete:hover { color: #ff5a5a; background: transparent; }
+      @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } header { align-items: start; flex-direction: column; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div><div class="muted">CONTENT MANAGEMENT</div><h1><span class="slash">/</span> NEWS</h1></div>
+        <a href="/">VIEW WEBSITE ↗</a>
+      </header>
+      <div class="layout">
+        <section>
+          <form id="post-form">
+            <label>Title<input name="title" maxlength="255" required /></label>
+            <label>Short excerpt<textarea name="excerpt" maxlength="1000" required></textarea></label>
+            <label>Article content<textarea name="content" required></textarea></label>
+            <label>Publish date<input name="publishedAt" type="datetime-local" required /></label>
+            <label>Cover image (JPG, PNG, WebP or GIF; max 5 MB)<input name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif" /></label>
+            <button type="submit">PUBLISH POST</button>
+            <div id="status" role="status"></div>
+          </form>
+        </section>
+        <section><div class="muted" style="margin-bottom: 12px">PUBLISHED POSTS</div><div id="posts"></div></section>
+      </div>
+    </main>
+    <script>
+      const form = document.querySelector('#post-form');
+      const postsElement = document.querySelector('#posts');
+      const statusElement = document.querySelector('#status');
+      const publishInput = form.elements.publishedAt;
+      const localNow = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+      publishInput.value = localNow;
+
+      const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
+
+      async function loadPosts() {
+        const response = await fetch('/api/admin/blog-posts');
+        if (!response.ok) throw new Error('Could not load posts.');
+        const posts = await response.json();
+        postsElement.innerHTML = posts.length ? posts.map((post) => `
+          <article class="post">
+            ${post.imageUrl ? `<img src="${escapeHtml(post.imageUrl)}" alt="" />` : '<div class="placeholder"></div>'}
+            <div><h2><a href="/blog/${encodeURIComponent(post.slug)}" target="_blank">${escapeHtml(post.title)}</a></h2><div class="muted">${new Date(post.publishedAt).toLocaleDateString()}</div></div>
+            <button class="delete" data-id="${post.id}" aria-label="Delete ${escapeHtml(post.title)}">DELETE</button>
+          </article>`).join('') : '<div class="post muted">No posts yet.</div>';
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const button = form.querySelector('button[type="submit"]');
+        button.disabled = true;
+        statusElement.textContent = 'Publishing…';
+        try {
+          const response = await fetch('/api/admin/blog-posts', { method: 'POST', body: new FormData(form) });
+          const result = response.status === 204 ? null : await response.json();
+          if (!response.ok) throw new Error(result?.error || 'Could not publish post.');
+          form.reset();
+          publishInput.value = localNow;
+          statusElement.textContent = 'Post published.';
+          await loadPosts();
+        } catch (error) {
+          statusElement.textContent = error.message;
+        } finally {
+          button.disabled = false;
+        }
+      });
+
+      postsElement.addEventListener('click', async (event) => {
+        const button = event.target.closest('.delete');
+        if (!button || !confirm('Delete this post?')) return;
+        const response = await fetch(`/api/admin/blog-posts/${button.dataset.id}`, { method: 'DELETE' });
+        if (response.ok) loadPosts();
+      });
+
+      loadPosts().catch((error) => { statusElement.textContent = error.message; });
+    </script>
+  </body>
+</html>

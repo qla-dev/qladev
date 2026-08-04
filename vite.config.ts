@@ -5,6 +5,13 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   base: '/', // Production is served from the domain root, so assets must resolve from /assets on deep links
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3000',
+      '/uploads': 'http://localhost:3000',
+      '/admin': 'http://localhost:3000',
+    },
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

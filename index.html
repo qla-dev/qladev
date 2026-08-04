@@ -128,6 +128,7 @@
           };
         };
         var cleanPath = trimTrailingSlash(window.location.pathname);
+        var isBlogRoute = /\/blog\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(cleanPath);
         var currentRoute = '/';
         var bootCampProgramId = getBootCampProgramIdFromPath(cleanPath);
 
@@ -214,21 +215,23 @@
           }
         };
 
-        document.documentElement.lang = lang;
-        document.title = meta.title;
-        setMetaContent('meta[name="title"]', meta.title);
-        setMetaContent('meta[name="description"]', meta.description);
-        setMetaContent('meta[property="og:title"]', meta.title);
-        setMetaContent('meta[property="og:description"]', meta.description);
-        setMetaContent('meta[property="og:url"]', window.location.href);
-        setMetaContent('meta[property="og:locale"]', lang === 'bs' ? 'bs_BA' : 'en_US');
-        setMetaContent('meta[property="twitter:title"]', meta.title);
-        setMetaContent('meta[property="twitter:description"]', meta.description);
-        setMetaContent('meta[property="twitter:url"]', window.location.href);
+        if (!isBlogRoute) {
+          document.documentElement.lang = lang;
+          document.title = meta.title;
+          setMetaContent('meta[name="title"]', meta.title);
+          setMetaContent('meta[name="description"]', meta.description);
+          setMetaContent('meta[property="og:title"]', meta.title);
+          setMetaContent('meta[property="og:description"]', meta.description);
+          setMetaContent('meta[property="og:url"]', window.location.href);
+          setMetaContent('meta[property="og:locale"]', lang === 'bs' ? 'bs_BA' : 'en_US');
+          setMetaContent('meta[property="twitter:title"]', meta.title);
+          setMetaContent('meta[property="twitter:description"]', meta.description);
+          setMetaContent('meta[property="twitter:url"]', window.location.href);
 
-        var canonical = document.head.querySelector('link[rel="canonical"]');
-        if (canonical) {
-          canonical.setAttribute('href', window.location.href);
+          var canonical = document.head.querySelector('link[rel="canonical"]');
+          if (canonical) {
+            canonical.setAttribute('href', window.location.href);
+          }
         }
       })();
     </script>

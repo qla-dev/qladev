@@ -335,23 +335,24 @@ export const Hero: React.FC<HeroProps> = ({ t, lang, startQuoteMode, setStartQuo
                     </p>
 
                     <div className="mt-10 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-4">
-                      <a
-                        href="https://business.qla.dev/"
+                      <button
+                        type="button"
+                        onClick={handleGetQuote}
                         className="relative flex min-w-0 items-center justify-center overflow-hidden rounded-sm bg-blue-600 px-4 py-4 text-[11px] font-bold font-mono tracking-[0.12em] text-white group cursor-pointer z-20 sm:w-auto sm:px-8 sm:text-base sm:tracking-wider"
                       >
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <span className="relative flex items-center justify-center gap-2 whitespace-nowrap">
-                          {t.business} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                          {t.quote} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
-                      </a>
+                      </button>
                       
-                      <button
-                        onClick={handleGetQuote}
+                      <a
+                        href="https://business.qla.dev/"
                         className="flex min-w-0 items-center justify-center gap-2 rounded-sm border border-gray-700 bg-transparent px-4 py-4 text-[11px] font-bold font-mono tracking-[0.12em] text-white transition-all group z-20 hover:border-blue-500 hover:text-blue-400 sm:w-auto sm:px-8 sm:text-base sm:tracking-wider"
                       >
-                        <span className="whitespace-nowrap">{t.quote}</span>
+                        <span className="whitespace-nowrap">{t.business}</span>
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </button>
+                      </a>
                     </div>
                     
                     <div className="mt-12 flex items-center gap-8 text-gray-500 font-mono text-xs">

@@ -1,20 +1,20 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# qla.dev
 
-# Run and deploy your AI Studio app
+## Run locally
 
-This contains everything you need to run your app locally.
+1. Install Node.js and run `npm install`.
+2. Copy `.env.example` to `.env` and add the MySQL and admin credentials.
+3. Build and run the complete site:
 
-View your app in AI Studio: https://ai.studio/apps/drive/12Te0iMqieaFUsm9ron82DxrtcbqSpizK
+   ```bash
+   npm run build
+   npm start
+   ```
 
-## Run Locally
+The site runs at `http://localhost:3000`; the protected news editor is at
+`http://localhost:3000/admin`. Express creates the `blog_posts` table on
+startup if it does not exist. Uploaded images are stored in `uploads/`, so
+that directory must use persistent storage in production.
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+For frontend development, run `npm run dev:server` and `npm run dev` in
+separate terminals. Vite proxies API, upload, and admin requests to Express.

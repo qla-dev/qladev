@@ -21,6 +21,7 @@ const Services = React.lazy(() => import('./components/Services').then((module) 
 const Mission = React.lazy(() => import('./components/Mission').then((module) => ({ default: module.Mission })));
 const Algorithm = React.lazy(() => import('./components/Algorithm').then((module) => ({ default: module.Algorithm })));
 const News = React.lazy(() => import('./components/News').then((module) => ({ default: module.News })));
+const BlogPage = React.lazy(() => import('./components/BlogPage').then((module) => ({ default: module.BlogPage })));
 const Portfolio = React.lazy(() => import('./components/Portfolio').then((module) => ({ default: module.Portfolio })));
 const Contact = React.lazy(() => import('./components/Contact').then((module) => ({ default: module.Contact })));
 
@@ -105,20 +106,22 @@ const DeferredSection = ({
   );
 };
 
-type AppRoute =
+type StaticAppRoute =
   | '/'
   | '/techpark'
   | '/techpark/boot-camp'
   | '/techpark/membership'
   | '/techpark/line-follower-hackathone'
   | '/techpark/sign-in';
+type AppRoute = StaticAppRoute | `/blog/${string}`;
 type TransitionDirection = 'forward' | 'backward' | 'auth';
 type RouteTransitionPhase = 'steady' | 'exit' | 'enter';
 
-const ROUTES: AppRoute[] = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/line-follower-hackathone', '/techpark/sign-in'];
+const ROUTES: StaticAppRoute[] = ['/', '/techpark', '/techpark/boot-camp', '/techpark/membership', '/techpark/line-follower-hackathone', '/techpark/sign-in'];
 const ROUTE_SET = new Set<string>(ROUTES);
-const isAppRoute = (route: string): route is AppRoute => ROUTE_SET.has(route);
-const LEGACY_ROUTE_REDIRECTS: Partial<Record<string, AppRoute>> = {
+const isStaticAppRoute = (route: string): route is StaticAppRoute => ROUTE_SET.has(route);
+const isBlogRoute = (route: string): route is `/blog/${string}` => /^\/blog\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(route);
+const LEGACY_ROUTE_REDIRECTS: Partial<Record<string, StaticAppRoute>> = {
   '/technopark': '/techpark',
   '/technopark/instructions': '/techpark/boot-camp',
   '/technopark/boot-camp': '/techpark/boot-camp',
@@ -189,7 +192,7 @@ interface PageMeta {
   description: string;
 }
 
-const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
+const PAGE_META: Record<Language, Record<StaticAppRoute, PageMeta>> = {
   en: {
     '/': {
       title: 'qla.dev - Developing the Next Generation of Tech',
@@ -246,6 +249,12 @@ const PAGE_META: Record<Language, Record<AppRoute, PageMeta>> = {
 
 const detectBasePath = (pathname: string) => {
   const cleanPath = trimTrailingSlash(pathname);
+  const blogRouteIndex = findRouteIndex(cleanPath, '/blog');
+
+  if (blogRouteIndex >= 0) {
+    return cleanPath.slice(0, blogRouteIndex);
+  }
+
   const matchedRoute = ROUTE_MATCHERS.find((route) => findRouteIndex(cleanPath, route) >= 0);
 
   if (matchedRoute) {
@@ -263,7 +272,11 @@ const normalizeRoute = (pathname: string, basePath: string): AppRoute => {
     return '/';
   }
 
-  return isAppRoute(canonicalPath) ? canonicalPath : '/';
+  if (isBlogRoute(canonicalPath)) {
+    return canonicalPath;
+  }
+
+  return isStaticAppRoute(canonicalPath) ? canonicalPath : '/';
 };
 
 const getLegacyRedirectRoute = (pathname: string, basePath: string) => {
@@ -508,6 +521,10 @@ const App: React.FC = () => {
   }, [displayRoute, pendingRouteSection]);
 
   useEffect(() => {
+    if (isBlogRoute(route)) {
+      return;
+    }
+
     const programMeta = route === BOOT_CAMP_ROUTE && linkedBootCampProgramId
       ? getBootCampProgramMeta(lang, linkedBootCampProgramId)
       : null;
@@ -673,7 +690,7 @@ const App: React.FC = () => {
 
   const primaryActionLabel = displayRoute.startsWith('/techpark')
     ? (lang === 'bs' ? 'PRIJAVA' : 'SIGN IN')
-    : t.nav.cta;
+    : t.hero.business;
   const isTechparkRoute = displayRoute.startsWith('/techpark');
   const usesInternalScrollShell = displayRoute === '/' || isTechparkRoute;
 
@@ -769,6 +786,15 @@ const App: React.FC = () => {
   };
 
   const renderMainContent = () => {
+    if (isBlogRoute(displayRoute)) {
+      return (
+        <BlogPage
+          slug={displayRoute.slice('/blog/'.length)}
+          onBackToNews={() => navigateToRouteSection('/', 'news')}
+        />
+      );
+    }
+
     if (displayRoute === '/techpark') {
       return <TechparkLandingPage lang={lang} onNavigate={navigateToRoute} />;
     }
@@ -847,7 +873,10 @@ const App: React.FC = () => {
         </DeferredSection>
         <DeferredSection minHeight="60vh" placeholderId="news">
           <React.Suspense fallback={<SectionFallback minHeight="60vh" />}>
-            <News t={t.news} />
+            <News
+              t={t.news}
+              onNavigateToPost={(slug) => pushRoute(`/blog/${slug}`)}
+            />
           </React.Suspense>
         </DeferredSection>
         <DeferredSection minHeight="60vh" placeholderId="contact">

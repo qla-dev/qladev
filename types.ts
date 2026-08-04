@@ -45,10 +45,14 @@ export interface RealClient {
   link: string;
 }
 
-export interface NewsItem {
-  date: string;
+export interface BlogPost {
+  id: number;
+  slug: string;
   title: string;
   excerpt: string;
+  content: string;
+  imageUrl: string | null;
+  publishedAt: string;
 }
 
 export interface StatItem {

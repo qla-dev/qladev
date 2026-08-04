@@ -1,5 +1,5 @@
 
-import { Translations, Product, Service, NewsItem, StatItem, Client, RealClient } from './types';
+import { Translations, Product, Service, StatItem, Client, RealClient } from './types';
 import { Monitor, Smartphone, Server, Scan, Bot, Cloud } from 'lucide-react';
 
 // Environment variable for resources, defaulting to the production domain
@@ -27,7 +27,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       ],
       subtitle: 'Building powerful and tailored software and hardware for in-house as well as for businesses of all sizes.',
       business: 'BUSINESS',
-      quote: 'GET A QUOTE',
+      quote: 'START A PROJECT',
       highPerformance: 'HIGH PERFORMANCE',
       secureArchitecture: 'SECURE ARCHITECTURE',
       terminal: {
@@ -136,7 +136,7 @@ export const TEXT_CONTENT: Record<'en' | 'bs', Translations> = {
       ],
       subtitle: 'Izrada moćnih i prilagođenih softverskih i hardverskih rješenja za in-house potrebe kao i za sve vrste i oblike biznisa.',
       business: 'BUSINESS',
-      quote: 'ZATRAŽI PONUDU',
+      quote: 'ZAPOČNI PROJEKAT',
       highPerformance: 'VISOKE PERFORMANSE',
       secureArchitecture: 'SIGURNA ARHITEKTURA',
       terminal: {
@@ -297,6 +297,27 @@ export const PRODUCTS_DATA: Product[] = [
     secondaryUrl: 'http://snovi.fm/'
   },
   {
+    status: 'active',
+    title: 'Misery Meter',
+    description: 'A party game of terrible decisions where players build a Misery Lane, rank disasters from 0 to 100, and steal cards from friends on iOS and Android.',
+    image: 'https://miserymeter.app/misery-og.png',
+    logo: 'https://miserymeter.app/misery-logo.svg',
+    logoSurface: 'dark',
+    cta: 'OPEN APP',
+    primaryUrl: 'https://miserymeter.app/'
+  },
+  {
+    status: 'active',
+    title: 'Varalica',
+    description: 'A collection of eight party games for friends, couples, and house parties—played together on one phone with no preparation required.',
+    image: 'https://varalica.qla.dev/varalica-favicon.png',
+    logo: 'https://varalica.qla.dev/varalica-favicon.png',
+    logoSurface: 'dark',
+    logoClassName: 'max-h-[4rem]',
+    cta: 'PLAY NOW',
+    primaryUrl: 'https://varalica.qla.dev/'
+  },
+  {
     status: 'launch',
     title: 'Social Media App',
     description: 'A social media app leaning towards web shopping, NFC/QR technologies for on-table self-ordering, and room service.',
@@ -423,12 +444,6 @@ export const CLIENTS_DATA: Client[] = [
   { name: 'ATLAS INDUSTRIES', sector: 'Manufacturing', mark: 'AI', summary: 'Operations planning, traceability, and machine data sync.' },
   { name: 'FLUX MEDIA', sector: 'Media', mark: 'FM', summary: 'Content ops, campaign tooling, and publishing workflows.' },
 ] as const;
-
-export const NEWS_DATA: NewsItem[] = [
-  { date: 'OCT 24, 2024', title: 'qla.dev Expands AI Capabilities', excerpt: 'We have integrated new generative models into our Deklarant platform.' },
-  { date: 'SEP 15, 2024', title: 'Partnership with Local University', excerpt: 'Fostering the next generation of engineers through our internship program.' },
-  { date: 'AUG 01, 2024', title: 'Launch of Property Manager V2', excerpt: 'Better booking engines and faster sync times for all our clients.' },
-];
 
 export const STATS_DATA: Omit<StatItem, 'label'>[] = [
   { value: 12, suffix: 'y' },
