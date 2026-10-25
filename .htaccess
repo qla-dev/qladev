@@ -12,6 +12,9 @@ RewriteRule ^techpark/line-follower-hackathon/?$ /techpark/line-follower-hackath
 # Prevent rewrite loops once the request is already inside /dist.
 RewriteRule ^dist/ - [L]
 
+# The redeploy script runs from the site root, outside dist/.
+RewriteRule ^redeploy\.php$ - [L]
+
 # Hideya's Laravel API is deployed in dist/hideya/endpoints; hand every
 # /hideya/endpoints URL to it so its own .htaccess routes into public/.
 RewriteRule ^hideya/endpoints(/.*)?$ dist/hideya/endpoints$1 [L]
