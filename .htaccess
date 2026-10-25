@@ -19,6 +19,13 @@ RewriteRule ^redeploy\.php$ - [L]
 # /hideya/endpoints URL to it so its own .htaccess routes into public/.
 RewriteRule ^hideya/endpoints(/.*)?$ dist/hideya/endpoints$1 [L]
 
+# Hideya's website: the hideya-web repo is cloned in dist/hideya/web and its
+# committed build in dist/ is served as /hideya. The slash keeps its relative
+# asset URLs inside /hideya/.
+RewriteRule ^hideya$ /hideya/ [R=301,L]
+RewriteRule ^hideya/redeploy\.php$ dist/hideya/web/redeploy.php [L]
+RewriteRule ^hideya/(.*)$ dist/hideya/web/dist/$1 [L]
+
 # Always serve the built entry file instead of the Vite source index.html.
 RewriteRule ^index\.html$ dist/index.html [L]
 
