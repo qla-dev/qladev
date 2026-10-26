@@ -26,12 +26,12 @@ RewriteRule ^hideya$ /hideya/ [R=301,L]
 RewriteRule ^hideya/redeploy\.php$ dist/hideya/web/redeploy.php [L]
 RewriteRule ^hideya/(.*)$ dist/hideya/web/dist/$1 [L]
 
-# Helem Nejse offer: the helem-nejse repo is cloned in dist/helem-nejse/web and
+# Helem Nejse offer: the helem-nejse repo is cloned in dist/helem-nejse and
 # its committed build in dist/ is served as /helem-nejse. Its own .htaccess
 # sends app routes (/helem-nejse/igra/...) to its index.html.
 RewriteRule ^helem-nejse$ /helem-nejse/ [R=301,L]
-RewriteRule ^helem-nejse/redeploy\.php$ dist/helem-nejse/web/redeploy.php [L]
-RewriteRule ^helem-nejse/(.*)$ dist/helem-nejse/web/dist/$1 [L]
+RewriteRule ^helem-nejse/redeploy\.php$ dist/helem-nejse/redeploy.php [L]
+RewriteRule ^helem-nejse/(.*)$ dist/helem-nejse/dist/$1 [L]
 
 # Always serve the built entry file instead of the Vite source index.html.
 RewriteRule ^index\.html$ dist/index.html [L]
