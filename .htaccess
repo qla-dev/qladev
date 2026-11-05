@@ -33,6 +33,13 @@ RewriteRule ^helem-nejse$ /helem-nejse/ [R=301,L]
 RewriteRule ^helem-nejse/redeploy\.php$ dist/helem-nejse/redeploy.php [L]
 RewriteRule ^helem-nejse/(.*)$ dist/helem-nejse/dist/$1 [L]
 
+# Bonaco Media: the qla-dev/bonaco repo is checked out in dist/bonaco and its
+# committed build (npm run build:qla) in dist/bonaco/dist is served as /bonaco.
+# Redeploy with /bonaco/redeploy.php (dist/bonaco-redeploy.php in this repo).
+RewriteRule ^bonaco$ /bonaco/ [R=301,L]
+RewriteRule ^bonaco/redeploy\.php$ dist/bonaco-redeploy.php [L]
+RewriteRule ^bonaco/(.*)$ dist/bonaco/dist/$1 [L]
+
 # Always serve the built entry file instead of the Vite source index.html.
 RewriteRule ^index\.html$ dist/index.html [L]
 
