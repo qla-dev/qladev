@@ -17,6 +17,7 @@ RewriteRule ^redeploy\.php$ - [L]
 
 # GTA VI AI Companion: Laravel API in dist/gta-vi-ai-companion/endpoints,
 # frontend build in dist/gta-vi-ai-companion/web/dist.
+RewriteRule ^gta-vi-ai-companion/setup\.php$ dist/gta-setup.php [L]
 RewriteRule ^gta-vi-ai-companion/endpoints(/.*)?$ dist/gta-vi-ai-companion/endpoints$1 [L]
 RewriteRule ^gta-vi-ai-companion$ /gta-vi-ai-companion/ [R=301,L]
 RewriteRule ^gta-vi-ai-companion/(.*)$ dist/gta-vi-ai-companion/web/dist/$1 [L]
