@@ -44,6 +44,16 @@ foreach(['/usr/local/bin/php','/usr/bin/php','/opt/cpanel/ea-php82/root/usr/bin/
     if(is_file($p)&&is_executable($p)){$php=$p;break;}
 if(!$php){$write("No PHP CLI.\n");exit(127);}
 $write("PHP: {$php}\n");
+// Set HOME/COMPOSER_HOME so Composer can write its cache
+$composerHome=$targetDir.'/.composer';
+$composerCache=$composerHome.'/cache';
+foreach([$composerHome,$composerCache] as $d){if(!is_dir($d))mkdir($d,0755,true);}
+putenv('HOME='.$composerHome);
+putenv('COMPOSER_HOME='.$composerHome);
+putenv('COMPOSER_CACHE_DIR='.$composerCache);
+putenv('COMPOSER_ALLOW_SUPERUSER=1');
+putenv('COMPOSER_NO_INTERACTION=1');
+
 $phar=$targetDir.'/composer.phar'; $composer=null;
 if(is_file($phar)&&filesize($phar)>1000){$composer=escapeshellarg($php).' '.escapeshellarg($phar);$write("composer.phar: ".filesize($phar)." bytes\n");}
 else{$write("Downloading composer via curl...\n");$run('curl -sS -o '.escapeshellarg($phar).' https://getcomposer.org/download/latest-stable/composer.phar',$targetDir);
